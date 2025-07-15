@@ -503,6 +503,8 @@ label choose_inicial_girl:
     $ all_girls_list[girl_index] = load_json(premiun_girl_tutorial_selected_localization)
     
     python:
+        # I know, this is literally a class but without using a class, The idea is making instances of all_girls_list, I realized it too late, now it's a pain to change it, so I won't -Rec3ks
+        # It's less elegant but it work so don't touch it. -rec3ks
         all_girls_list[girl_index].setdefault("obedience",0)
         all_girls_list[girl_index].setdefault("aura",{
         "fear": 0,
@@ -530,8 +532,9 @@ label choose_inicial_girl:
         all_girls_list[girl_index].setdefault("style_plus",0)
         all_girls_list[girl_index].setdefault("exotic_plus",0)
         all_girls_list[girl_index].setdefault("mood",0)
+        all_girls_list[girl_index].setdefault("mood_temporal",0)
+        all_girls_list[girl_index].setdefault("past_mood",0)
         all_girls_list[girl_index].setdefault("worn_mood",0)
-        all_girls_list[girl_index].setdefault("worn_comfortable",False)
         all_girls_list[girl_index].setdefault("mood_state",{})
         all_girls_list[girl_index].setdefault("beaten_ever",False)
         all_girls_list[girl_index].setdefault("domini_dictum_ever",False)
@@ -548,6 +551,7 @@ label choose_inicial_girl:
         all_girls_list[girl_index].setdefault("daring",0)
         all_girls_list[girl_index].setdefault("energised",0)
         all_girls_list[girl_index].setdefault("suicide_rate",0)
+        all_girls_list[girl_index].setdefault("mood_label","")
         all_girls_list[girl_index]["mood_state"].setdefault("good_mood",{})
         all_girls_list[girl_index]["mood_state"].setdefault("bad_mood",{})
         for key in dic_slave_mood["good_mood"]:
@@ -883,7 +887,8 @@ label choose_inicial_girl:
                 if all_girls_list[girl_index]["attributes"]["pride"] > 0:
                     all_girls_list[girl_index]["attributes"]["pride"] -= 1         
                 if all_girls_list[girl_index]["attributes"]["nature"] < 5:
-                    all_girls_list[girl_index]["attributes"]["nature"] += 1        
+                    all_girls_list[girl_index]["attributes"]["nature"] += 1    
+        # WIP TRIBU AND OCUPATION
         
         
         

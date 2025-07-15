@@ -1,98 +1,26 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/home.rpy", line 519, in script
-    call screen slave_equipment_menu()
-  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
-    store._return = renpy.call_screen(name, *args, **kwargs)
-  File "game/home.rpy", line 1589, in execute
-    screen slave_equipment_menu():
-  File "game/home.rpy", line 1589, in execute
-    screen slave_equipment_menu():
-  File "game/home.rpy", line 1808, in execute
-    if available_options == 2:
-  File "game/home.rpy", line 1809, in execute
-    vbox:
-  File "game/home.rpy", line 1814, in execute
-    for values in range(0,len(inventory_type[equipment_choice])):
-  File "game/home.rpy", line 1815, in execute
-    if all_girls_list[girl_index]["equipment"][equipment_choice] != dic_combat_full[inventory_type[equipment_choice][values]]:
-  File "game/home.rpy", line 1816, in execute
-    if equipment_choice == "armour":
-  File "game/home.rpy", line 1868, in execute
-    if all_girls_list[girl_index]["equipment"]["weapon"] != dic_combat_full[inventory_type[equipment_choice][values]] or all_girls_list[girl_index]["equipment"]["weapon"] == "Fist":
-  File "game/home.rpy", line 1869, in execute
-    if values == 0:
-  File "game/home.rpy", line 1870, in execute
-    textbutton "- Remove -" xalign 1.0:
-  File "game/home.rpy", line 1870, in keywords
-    textbutton "- Remove -" xalign 1.0:
-  File "game/home.rpy", line 1872, in <module>
-    action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice,"Fist"),SetDict(inventory, inventory_track_weapon2, inventory[inventory_track_weapon2]+1),SetVariable("inventory_track_weapon2", ""),Jump("Home")
-KeyError: 'Shuriken'
+  File "game/home.rpy", line 337, in script
+    python:
+  File "game/home.rpy", line 341, in <module>
+    all_girls_list[girl_index]["supermacy"] = all_girls_list[girl_index]["attributes"]["temperament"] + all_girls_list[girl_index]["attributes"]["nature"] + 5 - all_girls_list[girl_index]["attributes"]["pride"] + all_girls_list[girl_index]["attributes"]["endurance"] + all_girls_list[girl_index]["attributes"]["intelligence"] - 3
+KeyError: 1
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/home.rpy", line 519, in script
-    call screen slave_equipment_menu()
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 1987, in execute
-    self.call("execute")
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 1966, in call
-    return renpy.statements.call(method, parsed, *args, **kwargs)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\statements.py", line 374, in call
-    return method(parsed, *args, **kwargs)
-  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
-    store._return = renpy.call_screen(name, *args, **kwargs)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\exports\statementexports.py", line 345, in call_screen
-    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ui.py", line 301, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2218, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in interact_core
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 480, in visit_all
-    callback(self)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in <lambda>
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 491, in per_interact
-    self.update()
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 700, in update
-    self.screen.function(**self.scope)
-  File "game/home.rpy", line 1589, in execute
-    screen slave_equipment_menu():
-  File "game/home.rpy", line 1589, in execute
-    screen slave_equipment_menu():
-  File "game/home.rpy", line 1808, in execute
-    if available_options == 2:
-  File "game/home.rpy", line 1809, in execute
-    vbox:
-  File "game/home.rpy", line 1814, in execute
-    for values in range(0,len(inventory_type[equipment_choice])):
-  File "game/home.rpy", line 1815, in execute
-    if all_girls_list[girl_index]["equipment"][equipment_choice] != dic_combat_full[inventory_type[equipment_choice][values]]:
-  File "game/home.rpy", line 1816, in execute
-    if equipment_choice == "armour":
-  File "game/home.rpy", line 1868, in execute
-    if all_girls_list[girl_index]["equipment"]["weapon"] != dic_combat_full[inventory_type[equipment_choice][values]] or all_girls_list[girl_index]["equipment"]["weapon"] == "Fist":
-  File "game/home.rpy", line 1869, in execute
-    if values == 0:
-  File "game/home.rpy", line 1870, in execute
-    textbutton "- Remove -" xalign 1.0:
-  File "game/home.rpy", line 1870, in keywords
-    textbutton "- Remove -" xalign 1.0:
-  File "game/home.rpy", line 1872, in <module>
-    action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice,"Fist"),SetDict(inventory, inventory_track_weapon2, inventory[inventory_track_weapon2]+1),SetVariable("inventory_track_weapon2", ""),Jump("Home")
-KeyError: 'Shuriken'
+  File "game/home.rpy", line 337, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 341, in <module>
+    all_girls_list[girl_index]["supermacy"] = all_girls_list[girl_index]["attributes"]["temperament"] + all_girls_list[girl_index]["attributes"]["nature"] + 5 - all_girls_list[girl_index]["attributes"]["pride"] + all_girls_list[girl_index]["attributes"]["endurance"] + all_girls_list[girl_index]["attributes"]["intelligence"] - 3
+KeyError: 1
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
 JONT Port by Rec3ks ver. 0.0.16
-Sat Jul 12 00:22:26 2025
+Tue Jul 15 01:33:58 2025

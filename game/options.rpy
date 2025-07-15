@@ -23,7 +23,7 @@ define gui.show_name = True
 
 ## The version of the game.
 
-define config.version = "Port by Rec3ks ver. 0.0.16"
+define config.version = "Port by Rec3ks ver. 0.0.49"
 
 
 ## Text that is placed on the game's about screen. Place the text between the

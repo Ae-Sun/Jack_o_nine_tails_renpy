@@ -1,2 +1,3 @@
 "1 - From the main menu, if you click Preferences, Credits, or go to the Save screen and then click the Load button, a right-click will take you back to the Save screen. Then, another right-click is needed to return, and may required addicional one. Instead of requiring just one right-click, it requires two or three
 I know what causes this bug and I can probably fix it, but it will take a lot of time. It's a consequence of building a house using the wrong materials."
+"2 - Going back may cause some minor bugs"

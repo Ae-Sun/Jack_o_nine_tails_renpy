@@ -43,3 +43,4 @@
 - Food delivery. Why not? (No longer need to go the pub every single day, cost extra 5 sparks per decade, free if you live in bull) - WIP some day
 - clothes delivery. Why not again (cost extra 2 sparks per item, can be accesible on slave equipment screen ) - WIP
 - the game doesn't difference between doble handed weapon and single handed ( Code problem, the equipment code it's already very complex, I dont want to make it even more complex. I will take other approch(If left or rigth hand has a doble handed weapon and left or rigth hand have a weapon will recieve a penalty in combat ))
+- the slaves mood formula has been reformulated, should work very similar to the original one (the gool is to be the same, but the original code about mood is really extense, so pardon me)

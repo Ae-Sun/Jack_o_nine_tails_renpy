@@ -90,19 +90,6 @@ define dic_slave_misc ={
     "hair_style": ["Tangled Hair", "Combed Hair", "Orderly Hair", "Orderly Hair", "Orderly Hair", "Neat Hair", "Neat Hair", "Stylish Hair"],
     "slave_tattoo": ["No Tattoos", "Small Tattoo", "Tattoo Outline", "Colorful Tattoo", "Traced Body", "Adorned Body"]
 }
-define dic_slave_moodlevel ={
-    -5: "Depressed",
-    -4: "Dysphoric",
-    -3: "Sullen",
-    -2: "Melancholic",
-    -1: "Pessimistic",
-    0: "Calm",
-    1: "Hopeful",
-    2: "Optimistic",
-    3: "Pleased",
-    4: "Euphoric",
-    5: "Ecstatic"
-}
 define dic_slave_mood ={
     "good_mood": {
         "slave_winner"           : "[all_girls_list[girl_index][name]]\n- Hooray, we won! That was amazing. I feel much more confident.",
@@ -2501,4 +2488,18 @@ define dic_girl_equipment_neck_mod = {
         "price": 20,
         "escape": False,
     },
+}
+define dic_slave_moodlevel = {
+    0:  "{color=#cd0000}Depressed{/color}",
+    1:  "{color=#be0000}Dysphoric{/color}",
+    2:  "{color=#af0000}Sullen{/color}",
+    3:  "{color=#a00000}Melancholic{/color}",
+    4:  "{color=#910000}Pessimistic{/color}",
+    5:  "{color=#0D0D0D}Calm{/color}",
+    6:  "{color=#EA0090}Hopeful{/color}",
+    7:  "{color=#6B0084}Optimistic{/color}",
+    8:  "{color=#0000D8}Pleased{/color}",
+    9:  "{color=#009FEF}Euphoric{/color}",
+    10: "{color=#009900}Ecstatic{/color}",
+    11: "{color=#009900}Ecstatic+{/color}"
 }
