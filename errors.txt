@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 605: expected statement.
-    slave_rebellion_attack = False
-                           ^
+File "game/home.rpy", line 3308: keyword argument 'pos' appears more than once in a hbox statement.
+    pos(0.01,0.02)
+       ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Tue Jul 15 20:55:05 2025
+Thu Jul 17 01:17:09 2025
