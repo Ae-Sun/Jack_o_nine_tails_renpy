@@ -295,6 +295,22 @@ define dic_traits_skills = {
     "ponytrait":         ["Average", "Good Pony", "Excellent Pony", "Disastrous Pony", "Bad Pony"],
     "cowtrait":          ["Average", "Good Cow", "Excellent Cow", "Disastrous Cow", "Bad Cow"]
 }
+define dic_slave_mood_show = {
+    "mood":[
+    "{color=#cd0000}Depressed{/color}",
+    "{color=#be0000}Dysphoric{/color}",
+    "{color=#af0000}Sullen{/color}",
+    "{color=#a00000}Melancholic{/color}",
+    "{color=#910000}Pessimistic{/color}",
+    "{color=#0D0D0D}Calm{/color}",
+    "{color=#EA0090}Hopeful{/color}",
+    "{color=#6B0084}Optimistic{/color}",
+    "{color=#0000D8}Pleased{/color}",
+    "{color=#009FEF}Euphoric{/color}",
+    "{color=#009900}Ecstatic{/color}",
+    "{color=#009900}Ecstatic+{/color}"
+    ]
+}
 define dic_traits_skills_descriptions = {
     "cookingtrait": [
         "Null",
@@ -2503,3 +2519,59 @@ define dic_slave_moodlevel = {
     10: "{color=#009900}Ecstatic{/color}",
     11: "{color=#009900}Ecstatic+{/color}"
 }
+
+# I know is part is a bullshit, but it works
+define dic_slave_moodlevel_no_color = {
+    "{color=#cd0000}Depressed{/color}": "Depressed",
+    "Depressed": "Depressed",
+    "{color=#be0000}Dysphoric{/color}": "Dysphoric",
+    "Dysphoric": "Dysphoric",
+    "{color=#af0000}Sullen{/color}": "Sullen",
+    "Sullen": "Sullen",
+    "{color=#a00000}Melancholic{/color}": "Melancholic",
+    "Melancholic": "Melancholic",
+    "{color=#910000}Pessimistic{/color}": "Pessimistic",
+    "Pessimistic": "Pessimistic",
+    "{color=#0D0D0D}Calm{/color}": "Calm",
+    "Calm": "Calm",
+    "{color=#EA0090}Hopeful{/color}": "Hopeful",
+    "Hopeful": "Hopeful",
+    "{color=#6B0084}Optimistic{/color}": "Optimistic",
+    "Optimistic": "Optimistic",
+    "{color=#0000D8}Pleased{/color}": "Pleased",
+    "Pleased": "Pleased",
+    "{color=#009FEF}Euphoric{/color}": "Euphoric",
+    "Euphoric": "Euphoric",
+    "{color=#009900}Ecstatic{/color}": "Ecstatic",
+    "Ecstatic": "Ecstatic",
+    "{color=#009900}Ecstatic+{/color}": "Ecstatic+",
+    "Ecstatic+": "Ecstatic+"
+}
+define dic_slave_moodlevel2 = {
+    "Depressed": "{color=#cd0000}Depressed{/color}",
+    "{color=#cd0000}Depressed{/color}": "{color=#cd0000}Depressed{/color}",
+    "Dysphoric": "{color=#be0000}Dysphoric{/color}",
+    "{color=#be0000}Dysphoric{/color}": "{color=#be0000}Dysphoric{/color}",
+    "Sullen": "{color=#af0000}Sullen{/color}",
+    "{color=#af0000}Sullen{/color}": "{color=#af0000}Sullen{/color}",
+    "Melancholic": "{color=#a00000}Melancholic{/color}",
+    "{color=#a00000}Melancholic{/color}": "{color=#a00000}Melancholic{/color}",
+    "Pessimistic": "{color=#910000}Pessimistic{/color}",
+    "{color=#910000}Pessimistic{/color}": "{color=#910000}Pessimistic{/color}",
+    "Calm": "{color=#0D0D0D}Calm{/color}",
+    "{color=#0D0D0D}Calm{/color}": "{color=#0D0D0D}Calm{/color}",
+    "Hopeful": "{color=#EA0090}Hopeful{/color}",
+    "{color=#EA0090}Hopeful{/color}": "{color=#EA0090}Hopeful{/color}",
+    "Optimistic": "{color=#6B0084}Optimistic{/color}",
+    "{color=#6B0084}Optimistic{/color}": "{color=#6B0084}Optimistic{/color}",
+    "Pleased": "{color=#0000D8}Pleased{/color}",
+    "{color=#0000D8}Pleased{/color}": "{color=#0000D8}Pleased{/color}",
+    "Euphoric": "{color=#009FEF}Euphoric{/color}",
+    "{color=#009FEF}Euphoric{/color}": "{color=#009FEF}Euphoric{/color}",
+    "Ecstatic": "{color=#009900}Ecstatic{/color}",
+    "{color=#009900}Ecstatic{/color}": "{color=#009900}Ecstatic{/color}",
+    "Ecstatic+": "{color=#009900}Ecstatic+{/color}",
+    "{color=#009900}Ecstatic+{/color}": "{color=#009900}Ecstatic+{/color}"
+}
+
+

@@ -626,8 +626,16 @@ style aura_description_button_text:
     color "#000000"
     font "fonts/Philosopher-Regular.ttf"
     hover_color "#ffff00"
-
-
+style slave_mood_style is default
+style slave_mood_style_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    hover_color "#ffff00"
+style attribute_mood is default
+style attribute_mood_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    hover_color "#ffff00"
 style leftalign:
     xalign 0.0
     yalign 0.0

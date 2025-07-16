@@ -1665,7 +1665,7 @@ screen slave_anatomy_menu():
 
         text "{color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["beauty"]] + "}Beauty{/color}{color=#0000D8} ={/color} {color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["natural_beauty"]] + "} Natural Beauty{/color}{color=#0000D8} +{/color} Neoplasty{color=#0000D8} - ({/color} No Scars{color=#0000D8} +{/color} Bruises{color=#0000D8} +{/color} Physique{color=#0000D8}){/color}" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf" 
         text "{color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["style"]] + "}Style{/color} {color=#0000D8}={/color} Clothes{color=#0000D8} +{/color} {color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["natural_beauty"]] + "} Natural Beauty{/color}{color=#0000D8} +{/color} Tangled Hair{color=#0000D8} +{/color} Scent, Nails & Pelage{color=#0000D8} +{/color} Natural Grace{color=#0000D8} -{/color} Hygiene" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf" 
-        text "{color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["exoticism"]] + "}Exoticism{/color} {color=#0000D8}={/color} Natural Exoticism{color=#0000D8} +{/color} No Tattoos{color=#0000D8} +{/color} No Piercings{color=#0000D8} +{/color} Clothes" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf"
+        text "{color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["exoticism"]] + "}Exoticism{/color} {color=#0000D8}={/color} {color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["natural_exoticism"]] + "}Natural Exoticism{/color}{color=#0000D8} +{/color} No Tattoos{color=#0000D8} +{/color} No Piercings{color=#0000D8} +{/color} Clothes" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf"
         add "spacer" size(0,2)
         if is_auspex_active:
             spacing(-2)
@@ -2798,7 +2798,11 @@ screen screen_rules():
                     action SetVariable("attribute_track_index",key),SetVariable("attribute_track_basic",key),SetVariable("dictionary_track_index",7),SetVariable("dictionary_name",dic_slave_attributes),SetVariable("attribute_checkbox",True),SetVariable("attributeisphysical",True),Jump("Home")                    
                     hovered Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", key)
                     unhovered Hide("description_slave_attributes")
-        text "Mood" size 16 color "#000000" font "fonts/Segoe Print.ttf"
+        textbutton all_girls_list[girl_index]["mood_label"]:
+            style "attribute_custom_slave0"
+            action Show("mood_attributes")
+            hovered SetDict(all_girls_list[girl_index],"mood_label",dic_slave_moodlevel_no_color[all_girls_list[girl_index]["mood_label"]])
+            unhovered SetDict(all_girls_list[girl_index],"mood_label",dic_slave_moodlevel2[all_girls_list[girl_index]["mood_label"]])
         text "{u}TRAITS{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf"
         python:
             traits_skills = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]
@@ -2855,7 +2859,7 @@ screen screen_rules():
 
                 textbutton label_text:
                     style style_used
-                    action SetVariable("attribute_track_index", key), SetVariable("dictionary_track_index", val), SetVariable("dictionary_name", dic_traits_sexual_description), SetVariable("customboxcheck", True), Jump("Home")
+                    action SetVariable("attribute_track_index", "mood"), SetVariable("dictionary_track_index", wip), SetVariable("dictionary_name", dic_slave_mood_show), SetVariable("customboxcheck", True), Jump("Home")
                     hovered Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "default")
                     unhovered Hide("description_slave_attributes")
         for key, values in dic_traits_miscellaneous.items():
@@ -3029,43 +3033,36 @@ screen description_slave_attributes():
             pos(curx ,cury + 50)
             style "description_slave_attributes_frame"
             text "Fear " + str(all_girls_list[girl_index]["aura"]["fear"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["fear"]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["aura"]["fear"]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["aura"]["fear"]]) + ")" style "description_slave_attributes_frame_text"
-
     if description_slave_attributes_track_value == "despair":
         frame:
             pos(curx ,cury + 50)
             style "description_slave_attributes_frame"
             text "Despair " + str(all_girls_list[girl_index]["aura"]["despair"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["despair"]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["aura"]["despair"]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["aura"]["despair"]]) + ")" style "description_slave_attributes_frame_text"
-
     if description_slave_attributes_track_value == "awareness":
         frame:
             pos(curx ,cury + 50)
             style "description_slave_attributes_frame"
             text "Awareness " + str(all_girls_list[girl_index]["aura"]["awareness"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["awareness"]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["aura"]["awareness"]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["aura"]["awareness"]]) + ")" style "description_slave_attributes_frame_text"
-
     if description_slave_attributes_track_value == "taming":
         frame:
             pos(curx ,cury + 50)
             style "description_slave_attributes_frame"  
             text "Taming " + str(all_girls_list[girl_index]["aura"]["taming"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["taming"]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["aura"]["taming"]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["aura"]["taming"]]) + ")" style "description_slave_attributes_frame_text"
-
     if description_slave_attributes_track_value == "habit":
         frame:
             pos(curx ,cury + 50)
             style "description_slave_attributes_frame"
             text "Habit " + str(all_girls_list[girl_index]["aura"]["habit"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["habit"]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["aura"]["habit"]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["aura"]["habit"]]) + ")" style "description_slave_attributes_frame_text"
-
     if description_slave_attributes_track_value == "spoil":
         frame:
             pos(curx ,cury + 50)
             style "description_slave_attributes_frame"
             text "Spoil " + str(all_girls_list[girl_index]["aura"]["spoil"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["spoil"]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["aura"]["spoil"]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["aura"]["spoil"]]) + ")" style "description_slave_attributes_frame_text"
-
     if description_slave_attributes_track_value == "devotion":
         frame:
             pos(curx ,cury + 50)
             style "description_slave_attributes_frame"
             text "Devotion " + str(all_girls_list[girl_index]["aura"]["devotion"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["devotion"]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["aura"]["devotion"]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["aura"]["devotion"]]) + ")" style "description_slave_attributes_frame_text"
-    
     if description_slave_attributes_track_value == "obedience":
         frame:
             pos(curx,cury +50)
@@ -3100,7 +3097,11 @@ screen home_attributes_menu():
             add "blank_ava.webp" size(140,140) anchor (0.5,0.5)
         add "spacer" size(0,-38)
         if girl_index in all_girls_list and "ava_clear" in all_girls_list[girl_index]:
-            text all_girls_list[girl_index]["mood_label"] anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
+            textbutton all_girls_list[girl_index]["mood_label"] anchor (0.5,0.5):
+                style "slave_mood_style"
+                action Show("mood_attributes")
+                hovered SetDict(all_girls_list[girl_index],"mood_label",dic_slave_moodlevel_no_color[all_girls_list[girl_index]["mood_label"]])
+                unhovered SetDict(all_girls_list[girl_index],"mood_label",dic_slave_moodlevel2[all_girls_list[girl_index]["mood_label"]])
             text "No achievements" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
             text "Pristine" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
         else:
@@ -3160,3 +3161,47 @@ screen msg(msg_text):
         hover "buttons/ok-icon_hover.webp"
         action Hide("msg")
     key "K_SPACE" action Hide("msg")
+screen mood_attributes():
+    zorder 5
+    add "gui/confirm_frame.png" at truecenter
+    vbox:
+        pos (0.5, 0.28)
+        text "MOOD":
+            color "#191970" 
+            anchor (0.5,0.5)
+            size 20
+            font "fonts/Segoe Print.ttf"
+        for values in range(11):  # 0 to 10 inclusive
+            textbutton dic_slave_mood_show["mood"][values] anchor (0.5,0.5):
+                style "attribute_mood"
+                action NullAction()
+                #WIP add hoved effect, someday maybe -rec3ks
+    text " Press space to close this window.":
+        pos (0.33, 0.65)
+        color "#191970"
+        size 14
+        font "fonts/Segoe Print.ttf"
+    imagebutton:
+        idle "buttons/ok-icon.webp" pos (0.5, 0.7)
+        hover "buttons/ok-icon_hover.webp"
+        action Hide("mood_attributes"),Show("mood_attributes2")
+    key "K_SPACE" action Hide("mood_attributes"),Show("mood_attributes2")
+    #WIP need mood_attrbutes 2 
+screen mood_attributes2():
+    zorder 5
+    add "gui/confirm_frame.png" at truecenter
+    text "{b}MOOD:{/b}\n  Mood decide how well the Slave will learn skills. Bad Mood such as 'Depressive' let the Slave learn slowly. Good Mood like 'Happy' make it faster. Also affect slave psy-status and some aura daily gain" xmaximum  445:
+        pos (0.33, 0.28)
+        color "#191970"
+        size 14
+        font "fonts/Segoe Print.ttf"
+    text " Press space to close this window.":
+        pos (0.33, 0.65)
+        color "#191970"
+        size 14
+        font "fonts/Segoe Print.ttf"
+    imagebutton:
+        idle "buttons/ok-icon.webp" pos (0.5, 0.7)
+        hover "buttons/ok-icon_hover.webp"
+        action Hide("mood_attributes2"),Jump(infobox_jump)
+    key "K_SPACE" action Hide("mood_attributes2"),Jump(infobox_jump)
