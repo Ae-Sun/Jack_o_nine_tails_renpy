@@ -484,6 +484,43 @@ style slave_traits_good2_text:
     color "#009900"
     size 16
     hover_color "#ffff00"
+style injuries_display1 is default
+style injuries_display1_text:
+    font "fonts/Segoe Print.ttf"
+    color "#CD0000"
+    size 16
+    hover_color "#ffff00"
+style injuries_display2 is default
+style injuries_display2_text:
+    font "fonts/Segoe Print.ttf"
+    color "#EA0190"
+    size 16
+    hover_color "#ffff00"
+style injuries_display3 is default
+style injuries_display3_text:
+    font "fonts/Segoe Print.ttf"
+    color "#FF4FBB"
+    size 16
+    hover_color "#ffff00"
+style injuries_display4 is default
+style injuries_display4_text:
+    font "fonts/Segoe Print.ttf"
+    color "#6C0184"
+    size 16
+    hover_color "#ffff00"
+style injuries_display5 is default
+style injuries_display5_text:
+    font "fonts/Segoe Print.ttf"
+    color "#A300CC"
+    size 16
+    hover_color "#ffff00"
+style injuries_display6 is default
+style injuries_display6_text:
+    font "fonts/Segoe Print.ttf"
+    color "#009900"
+    size 16
+    hover_color "#ffff00"
+
 #######################################################
 style attribute_check_slave0 is default
 style attribute_check_slave0_text:

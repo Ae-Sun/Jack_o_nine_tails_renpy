@@ -443,15 +443,15 @@ label Lecture:
 label choose_inicial_girl:
     $ strength_value_1 = 3
     $ personality_value_2 = 3
-    $ allure_value_3 = 3
+    $ allure_value_3 = 5
     $ libido_value_4 = 3
     $ dominance_value_5 = 3
     $ brand_reputation_value_6 = 3
     $ guild_reputation_value_7 = 3
     $ standard_of_living_value_8 = 3
-    $ hygiene_value_9 = 3
+    $ hygiene_value_9 = 5
     $ mood_value_10 = 3
-    $ injuries_value_11 = 3
+    $ injuries_value_11 = 5
     $ teaching_value_12 = 3
     $ stewardship_value_13 = 3
     $ artistry_value_14 = 3

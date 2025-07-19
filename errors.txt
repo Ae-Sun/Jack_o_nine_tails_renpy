@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 3308: keyword argument 'pos' appears more than once in a hbox statement.
-    pos(0.01,0.02)
-       ^
+File "game/home.rpy", line 3321: 'msg' is not a keyword argument or valid child of the imagebutton statement.
+    action Show msg("Buyers look beyond rank and specialization. Most expect charm (see Anatomy tab) to match or exceed rank. Most reject slaves who are exhausted, pregnant, wounded or recovering from medical procedures. Some have other requirements. If a buyer rejects a slave for lack of charm, you can try again after a decade.")
+                   ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Thu Jul 17 01:17:09 2025
+Sat Jul 19 19:41:32 2025

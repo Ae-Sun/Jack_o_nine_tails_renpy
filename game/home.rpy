@@ -3311,8 +3311,46 @@ screen master_attributes_screen():
     vbox:
         pos(0.01,0.02)
         text "Slaver: " + mc size 16 color "#000000" font "fonts/Segoe Print.ttf"
-        text "Age: " + dic_girl_age_text[all_girls_list[girl_index]["age"]] size 16 color "#000000" font "fonts/Segoe Print.ttf"
-        text "Owned for: " + str(day_tracker - all_girls_list[girl_index]["day_bought"]) + " days" size 16 color "#000000" font "fonts/Segoe Print.ttf"
-        text "Rank:" size 16 color "#000000" font "fonts/Segoe Print.ttf"
+        add "spacer" size(0,20)
+        text "{u}CHARACTERISTICS{/u}: "  size 16 color "#000000" font "fonts/Segoe Print.ttf"
+        textbutton dic_mc_attribute["STRENGTH"][strength_value_1]:
+            style "attribute_button_custom" + str(strength_value_1 + 1)
+            action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "STRENGTH")
+        textbutton dic_mc_attribute["PERSONALITY"][personality_value_2]:
+            style "attribute_button_custom" + str(personality_value_2 + 1)
+            action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "PERSONALITY")
+        textbutton dic_mc_attribute["ALLURE"][allure_value_3]:
+            style "attribute_button_custom" + str(allure_value_3 + 1)
+            action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "ALLURE")
+        textbutton dic_mc_attribute["LIBIDO"][libido_value_4]:
+            style "attribute_button_custom" + str(libido_value_4 + 1)
+            action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "LIBIDO")
+        textbutton dic_mc_attribute["DOMINANCE"][dominance_value_5]:
+            style "attribute_button_custom" + str(dominance_value_5 + 1)
+            action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "DOMINANCE")
+        textbutton dic_mc_attribute["BRAND REPUTATION"][brand_reputation_value_6]:
+            style "attribute_button_custom" + str(brand_reputation_value_6 + 1)
+            action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "BRAND REPUTATION")
+        textbutton dic_mc_attribute["GUILD REPUTATION"][guild_reputation_value_7]:
+            style "attribute_button_custom" + str(guild_reputation_value_7 + 1)
+            action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "GUILD REPUTATION")
+        textbutton dic_mc_attribute["STANDARD OF LIVING"][standard_of_living_value_8]:
+            style "attribute_button_custom" + str(standard_of_living_value_8 + 1)
+            action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "STANDARD OF LIVING")
+        textbutton dic_mc_attribute["HYGIENE"][hygiene_value_9]:
+            style "attribute_button_custom" + str(hygiene_value_9 + 1)
+            action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "HYGIENE")
+        textbutton "MOOD WIP":
+            style "attribute_button_custom2" 
+            action NullAction()
+        textbutton dic_mc_attribute["INJURIES"][injuries_value_11]:
+            style "injuries_display" + str(injuries_value_11 + 1)
+            action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "INJURIES")
+            # WIP half done NEED TO CHANGE INJURIES COLOURS 
+            # why customboxcheck trigger tutorial_description ??? well idc,it works fine -rec3ks
+    imagebutton pos(180,60):
+        idle "buttons/info_5.webp" 
+        hover "buttons/info_5_hover.webp"
+        action Show("msg", msg_text="Buyers look beyond rank and specialization. Most expect charm (see Anatomy tab) to match or exceed rank. Most reject slaves who are exhausted, pregnant, wounded or recovering from medical procedures. Some have other requirements. If a buyer rejects a slave for lack of charm, you can try again after a decade.")
 
 # screen master_storage():
