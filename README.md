@@ -28,6 +28,8 @@ Si hiciste otra versión del juego, por favor contáctame.
 
 -----
 # CREDITS
+2014 - Original author (until version 1.2.1): Old Huntsman
+Mail for contact: Old_huntsman@yahoo.com
 "This game was built on the AERO QSP platform and was designed for use with the FastQSP player by Graylor. You can check the author's blog here for other games (untranslated) from this author. If you want to support the author in creating new games or just thank him for this one, don't be shy to send your donations via Yandex-money or PayPal, all necessary information is available for this in his [BLOG](https://oldhuntergames.blogspot.com/?zx=ba52e1890e307066).
 
 Thanks to qwertyu12359 for leading the 2.0 project to completion and continuing to lead the team since 2019. Thanks to Powerairmax for all his tedious work that made the post HF rebirth possible. Thanks to Lokplart for his crucial work done in v2.2. Thanks to ImperatorAugustus for taking up the role of lead developer since 2020. Thanks to all the F95Zone community users for reviews, suggestions, help with bugs, playthrough guides, and mods.
