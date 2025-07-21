@@ -163,6 +163,16 @@ default inventory = {
     "anal_tail": 0,
     "":0 # this is necessary -rec3ks
 }
+default autocast = {
+    "auspex": False ,
+    "magna_magnifika": False,
+    "sententia_veritas": False,
+}
+default special_action = {
+    "food_delivery": 0,
+    "eat_slave_food": False,
+    "eat_best_food": False,
+}
 default magna_magnifika = 0
 default item_supermacy_bonus = 0
 label iniciation_label:
@@ -176,6 +186,9 @@ label iniciation_label:
                     inventory[key] = 1
         jump equipment_check
     else:
+        python:
+            injuries_value_11 = 5
+            hygiene_value_9 = 5
         if is_normal_start == True:
             $mc_image = dic_custom_character_selection[mc][0]
             $mc_image2 = dic_custom_character_selection[mc][1]
@@ -2688,7 +2701,6 @@ screen slave_rules_menu():
             textbutton "Enforce rules -" xalign 1.0:
                 style "slave_screen_order_button"
                 action SetDict(all_girls_list[girl_index]["rules"], "enforce_rules", True),SetVariable("text_slave_conditions_index","enforce_rules"), Jump("Home")
-
 screen screen_attributes_skills_sexual_slave():   
     add bgstyle3 xsize 1280 ysize 720
     add home_decoration_mini xsize 795 ysize 535 pos(0.5028,0.42) anchor (0.5,0.5)
@@ -3346,11 +3358,157 @@ screen master_attributes_screen():
         textbutton dic_mc_attribute["INJURIES"][injuries_value_11]:
             style "injuries_display" + str(injuries_value_11 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "INJURIES")
-            # WIP half done NEED TO CHANGE INJURIES COLOURS 
-            # why customboxcheck trigger tutorial_description ??? well idc,it works fine -rec3ks
+        text "{u}AUTO CASTING{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf"
+        add "spacer" size(0,10)
+        if magic_value_17 >= 0:
+            if autocast["auspex"]:
+                imagebutton:
+                    idle "buttons/sel_button.webp"
+                    hover "buttons/sel_button_hover.webp"
+                    action SetDict(autocast, "auspex", False), Jump("Home")
+            else:
+                imagebutton:
+                    idle "buttons/unsel_button.webp"
+                    hover "buttons/unsel_button_hover.webp"
+                    action SetDict(autocast, "auspex", True), Jump("Home")
+        else:
+            imagebutton:
+                idle "buttons/unactive_button.webp"
+                hover "buttons/unactive_button_hover.webp"
+                action NullAction()
+        add "spacer" size(0,10)
+        if magic_value_17 > 0:
+            if autocast["magna_magnifika"]:
+                imagebutton:
+                    idle "buttons/sel_button.webp"
+                    hover "buttons/sel_button_hover.webp"
+                    action SetDict(autocast, "magna_magnifika", False), Jump("Home")
+            else:
+                imagebutton:
+                    idle "buttons/unsel_button.webp"
+                    hover "buttons/unsel_button_hover.webp"
+                    action SetDict(autocast, "magna_magnifika", True), Jump("Home")
+        else:
+            imagebutton:
+                idle "buttons/unactive_button.webp"
+                hover "buttons/unactive_button_hover.webp"
+                action NullAction()
+        add "spacer" size(0,10)
+        if magic_value_17 > 1:
+            if autocast["sententia_veritas"]:
+                imagebutton:
+                    idle "buttons/sel_button.webp"
+                    hover "buttons/sel_button_hover.webp"
+                    action SetDict(autocast, "sententia_veritas", False), Jump("Home")
+            else:
+                imagebutton:
+                    idle "buttons/unsel_button.webp"
+                    hover "buttons/unsel_button_hover.webp"
+                    action SetDict(autocast, "sententia_veritas", True), Jump("Home")
+        else:
+            imagebutton:
+                idle "buttons/unactive_button.webp"
+                hover "buttons/unactive_button_hover.webp"
+                action NullAction()
+        add "spacer" size(0,10)
+        text "{u}SPECIAL ACTIONS{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf"
+        add "spacer" size(0,10)
+        if special_action["food_delivery"] == 0:
+            imagebutton:
+                idle "buttons/unsel_button.webp"
+                hover "buttons/unsel_button_hover.webp"
+                action SetDict(special_action, "food_delivery", 1), Jump("Home")
+        elif special_action["food_delivery"] == 1:
+            imagebutton:
+                idle "buttons/sel_button.webp"
+                hover "buttons/sel_button_hover.webp"
+                action SetDict(special_action, "food_delivery", 2), Jump("Home")
+        else:
+            imagebutton:
+                idle "buttons/sel_button.webp"
+                hover "buttons/sel_button_hover.webp"
+                action SetDict(special_action, "food_delivery", 0), Jump("Home")
+        add "spacer" size(0,10)
+        if special_action["eat_slave_food"]:
+            imagebutton:
+                idle "buttons/sel_button.webp"
+                hover "buttons/sel_button_hover.webp"
+                action SetDict(special_action, "eat_slave_food", False), Jump("Home")
+        else:
+            imagebutton:
+                idle "buttons/unsel_button.webp"
+                hover "buttons/unsel_button_hover.webp"
+                action SetDict(special_action, "eat_slave_food", True), Jump("Home")
+
+
+    vbox:
+        pos(0.03,0.6)
+        spacing(4)
+        if magic_value_17 >= 0:
+            if autocast["auspex"]:
+                textbutton "- Auspex":
+                    style "autocastspellmastermenu"
+                    action SetDict(autocast, "auspex", False), Jump("Home")
+            else:
+                textbutton "- Auspex":
+                    style "autocastspellmastermenu"
+                    action SetDict(autocast, "auspex", True), Jump("Home")
+        else:
+            textbutton "- Auspex":
+                style "autocastspellmastermenu"
+                action NullAction()
+        if magic_value_17 > 0:
+            if autocast["magna_magnifika"]:
+                textbutton "- Magna Magnifika":
+                    style "autocastspellmastermenu"
+                    action SetDict(autocast, "auspex", False), Jump("Home")
+            else:
+                textbutton "- Magna Magnifika":
+                    style "autocastspellmastermenu"
+                    action SetDict(autocast, "auspex", True), Jump("Home")
+        else:
+            textbutton "- Magna Magnifika":
+                style "autocastspellmastermenu"
+                action NullAction()
+        if magic_value_17 > 1:
+            if autocast["sententia_veritas"]:
+                textbutton "- Sententia Veritas":
+                    style "autocastspellmastermenu"
+                    action SetDict(autocast, "sententia_veritas", False), Jump("Home")
+            else:
+                textbutton "- Sententia Veritas":
+                    style "autocastspellmastermenu"
+                    action SetDict(autocast, "sententia_veritas", True), Jump("Home")
+        else:
+            textbutton "- Sententia Veritas":
+                style "autocastspellmastermenu"
+                action NullAction()
+        add "spacer" size(0,33)
+        if special_action["food_delivery"] == 0:
+            textbutton "- Food delivery":
+                style "autocastspellmastermenu"
+                action SetDict(special_action, "food_delivery", 1), Jump("Home")
+        elif special_action["food_delivery"] == 1:
+            textbutton "- Food delivery 4$/D":
+                style "autocastspellmastermenu"                
+                action SetDict(special_action, "food_delivery", 2), Jump("Home")
+        else:
+            textbutton "- Food delivery 6$/D":
+                style "autocastspellmastermenu"
+                action SetDict(special_action, "food_delivery", 0), Jump("Home")
+        if special_action["eat_slave_food"]:
+            textbutton "- Eat slave food":
+                style "autocastspellmastermenu"
+                action SetDict(special_action, "eat_slave_food", False), Jump("Home")
+        else:
+            textbutton "- Eat slave food":
+                style "autocastspellmastermenu"
+                action SetDict(special_action, "eat_slave_food", True), Jump("Home")
+            
+
     imagebutton pos(180,60):
         idle "buttons/info_5.webp" 
         hover "buttons/info_5_hover.webp"
         action Show("msg", msg_text="Buyers look beyond rank and specialization. Most expect charm (see Anatomy tab) to match or exceed rank. Most reject slaves who are exhausted, pregnant, wounded or recovering from medical procedures. Some have other requirements. If a buyer rejects a slave for lack of charm, you can try again after a decade.")
 
-# screen master_storage():
+# WIP screen master_storage():

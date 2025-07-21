@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 3321: 'msg' is not a keyword argument or valid child of the imagebutton statement.
-    action Show msg("Buyers look beyond rank and specialization. Most expect charm (see Anatomy tab) to match or exceed rank. Most reject slaves who are exhausted, pregnant, wounded or recovering from medical procedures. Some have other requirements. If a buyer rejects a slave for lack of charm, you can try again after a decade.")
-                   ^
+File "game/home.rpy", line 3416: reached end of line when expecting ':'.
+    if special_action["food_delivery"] == 0
+                                           ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Sat Jul 19 19:41:32 2025
+Mon Jul 21 20:48:15 2025

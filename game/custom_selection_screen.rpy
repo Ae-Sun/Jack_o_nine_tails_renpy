@@ -179,11 +179,17 @@ screen custom_value_information():
             anchor (0.5,0.5)
             size 20
             font "fonts/Segoe Print.ttf"
-        
-        for values in range(6):
-            textbutton dic_mc_attribute.get(dic_mc_normal_selection_textdescription_value, [""]*6)[values] anchor (0.5,0.5):
-                style "attribute_check_slave" + str(values)
-                action  SetVariable("customboxcheck", False),Jump("Custom_Start")
+        if dic_mc_normal_selection_textdescription_value != "INJURIES":
+            for values in range(6):
+                textbutton dic_mc_attribute.get(dic_mc_normal_selection_textdescription_value, [""]*6)[values] anchor (0.5,0.5):
+                    style "attribute_check_slave" + str(values)
+                    action  NullAction()
+        else:
+            for values in range(6):
+                textbutton dic_mc_attribute.get(dic_mc_normal_selection_textdescription_value, [""]*6)[values] anchor (0.5,0.5):
+                    style "attribute_check_injuries" + str(values)
+                    action  NullAction()
+
 
     text " Press space to close this window.":
         pos (0.33, 0.65)
@@ -220,7 +226,6 @@ screen custom_value_information2():
 
 
     key "K_SPACE" action Hide("custom_value_information2"),SetVariable("customboxcheck", False)
-
 screen s_tier_button():
     zorder 2
     imagebutton:

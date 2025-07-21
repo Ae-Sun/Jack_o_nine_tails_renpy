@@ -220,6 +220,13 @@ style lecture_button_text:
     selected_color "#FB933B"
     selected_hover_color "#ffff00"
 ###########################################################################
+style autocastspellmastermenu is default
+style autocastspellmastermenu_text:
+    font "fonts/Segoe Print.ttf"
+    color "#000000"
+    size 16
+    hover_color "#ffff00"
+######################################################
 style attribute_custom_slave0 is default
 style attribute_custom_slave0_text:
     font "fonts/Segoe Print.ttf"
@@ -445,6 +452,55 @@ style attribute_check_slave6_text:
     color "#996515"
     size 20
     hover_color "#ffff00"
+####################################
+style attribute_check_injuries0 is default
+style attribute_check_injuries0_text:
+    font "fonts/Segoe Print.ttf"
+    color "#CD0000"
+    size 20
+    hover_color "#ffff00"
+
+style attribute_check_injuries1 is default
+style attribute_check_injuries1_text:
+    font "fonts/Segoe Print.ttf"
+    color "#EA0190"
+    size 20
+    hover_color "#ffff00"
+
+style attribute_check_injuries2 is default
+style attribute_check_injuries2_text:
+    font "fonts/Segoe Print.ttf"
+    color "#FF4FBB"
+    size 20
+    hover_color "#ffff00"
+
+style attribute_check_injuries3 is default
+style attribute_check_injuries3_text:
+    font "fonts/Segoe Print.ttf"
+    color "#6B0084"
+    size 20
+    hover_color "#ffff00"
+
+style attribute_check_injuries4 is default
+style attribute_check_injuries4_text:
+    font "fonts/Segoe Print.ttf"
+    color "#A300CC"
+    size 20
+    hover_color "#ffff00"
+
+style attribute_check_injuries5 is default
+style attribute_check_injuries5_text:
+    font "fonts/Segoe Print.ttf"
+    color "#009900"
+    size 20
+    hover_color "#ffff00"
+style attribute_check_injuries6 is default
+style attribute_check_injuries6_text:
+    font "fonts/Segoe Print.ttf"
+    color "#996515"
+    size 20
+    hover_color "#ffff00"
+
 #########################################################
 style day_tracker_button is default
 style day_tracker_button_text:
