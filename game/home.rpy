@@ -3614,11 +3614,139 @@ screen master_attributes_screen():
 screen description_master_attributes():
     $ curx, cury = renpy.get_mouse_pos()
     # WIP
-    if description_master_attributes_track_value in ["beauty","exoticism","style","fame"]:
+    if description_master_attributes_track_value == "STRENGTH":
         frame:
             pos(curx + 150,cury)
             style "description_slave_attributes_frame"
-            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]] style "description_slave_attributes_frame_text"
+            text dic_mc_attribute["STRENGTH"][strength_value_1] +" "+ dic_slave_tier_classification[strength_value_1] + " | " + str(strength_experience_value_1) + "/" + str(dic_master_cap["STRENGTH"][strength_value_1])  style "description_slave_attributes_frame_text"
+    elif description_master_attributes_track_value == "PERSONALITY":
+        frame:
+            pos(curx + 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["PERSONALITY"][personality_value_2] + " " + dic_slave_tier_classification[personality_value_2] + " | " + str(personality_experience_value_2) + "/" + str(dic_master_cap["PERSONALITY"][personality_value_2]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "ALLURE":
+        frame:
+            pos(curx + 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["ALLURE"][allure_value_3] + " " + dic_slave_tier_classification[allure_value_3] + " | " + str(allure_value_3) + "/" + str(dic_master_cap["ALLURE"][allure_value_3]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "LIBIDO":
+        frame:
+            pos(curx + 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["LIBIDO"][libido_value_4] + " " + dic_slave_tier_classification[libido_value_4] + " | " + str(libido_experience_value_4) + "/" + str(dic_master_cap["LIBIDO"][libido_value_4]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "DOMINANCE":
+        frame:
+            pos(curx + 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["DOMINANCE"][dominance_value_5] + " " + dic_slave_tier_classification[dominance_value_5] + " | " + str(dominance_experience_value_5) + "/" + str(dic_master_cap["DOMINANCE"][dominance_value_5]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "BRAND REPUTATION":
+        frame:
+            pos(curx + 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["BRAND REPUTATION"][brand_reputation_value_6] + " " + dic_slave_tier_classification[brand_reputation_value_6] + " | " + str(brand_reputation_experience_value_6) + "/" + str(dic_master_cap["BRAND REPUTATION"][brand_reputation_value_6]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "GUILD REPUTATION":
+        frame:
+            pos(curx + 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["GUILD REPUTATION"][guild_reputation_value_7] + " " + dic_slave_tier_classification[guild_reputation_value_7] + " | " + str(guild_reputation_experience_value_7) + "/" + str(dic_master_cap["GUILD REPUTATION"][guild_reputation_value_7]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "STANDARD OF LIVING":
+        frame:
+            pos(curx + 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["STANDARD OF LIVING"][standard_of_living_value_8] + " " + dic_slave_tier_classification[standard_of_living_value_8] + " | " + str(standard_of_living_value_8) + "/" + str(dic_master_cap["STANDARD OF LIVING"][standard_of_living_value_8]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "HYGIENE":
+        frame:
+            pos(curx + 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["HYGIENE"][hygiene_value_9] + " " + dic_slave_tier_classification[hygiene_value_9] + " | " + str(hygiene_value_9) + "/" + str(dic_master_cap["HYGIENE"][hygiene_value_9]) style "description_slave_attributes_frame_text"
+    elif description_master_attributes_track_value == "INJURIES":
+        frame:
+            pos(curx + 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["INJURIES"][injuries_value_11] + " " + dic_slave_tier_classification[injuries_value_11] + " | " + str(injuries_experience_value_11) + "/" + str(dic_master_cap["INJURIES"][injuries_value_11]) style "description_slave_attributes_frame_text"
+    elif description_master_attributes_track_value == "TEACHING":
+        frame:
+            pos(curx - 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["TEACHING"][teaching_value_12] + " " + dic_slave_tier_classification[teaching_value_12] + " | " + str(teaching_experience_value_12) + "/" + str(dic_master_cap["TEACHING"][teaching_value_12]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "STEWARDSHIP":
+        frame:
+            pos(curx - 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["STEWARDSHIP"][stewardship_value_13] + " " + dic_slave_tier_classification[stewardship_value_13] + " | " + str(stewardship_experience_value_13) + "/" + str(dic_master_cap["STEWARDSHIP"][stewardship_value_13]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "ARTISTRY":
+        frame:
+            pos(curx - 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["ARTISTRY"][artistry_value_14] + " " + dic_slave_tier_classification[artistry_value_14] + " | " + str(artistry_experience_value_14) + "/" + str(dic_master_cap["ARTISTRY"][artistry_value_14]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "MEDIC":
+        frame:
+            pos(curx - 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["MEDIC"][medic_value_15] + " " + dic_slave_tier_classification[medic_value_15] + " | " + str(medic_experience_value_15) + "/" + str(dic_master_cap["MEDIC"][medic_value_15]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "FIGHTER":
+        frame:
+            pos(curx - 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["FIGHTER"][fighter_value_16] + " " + dic_slave_tier_classification[fighter_value_16] + " | " + str(fighter_experience_value_16) + "/" + str(dic_master_cap["FIGHTER"][fighter_value_16]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "MAGIC":
+        frame:
+            pos(curx - 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["MAGIC"][magic_value_17] + " " + dic_slave_tier_classification[magic_value_17] + " | " + str(magic_experience_value_17) + "/" + str(dic_master_cap["MAGIC"][magic_value_17]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "FLAGELLATION":
+        frame:
+            pos(curx - 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["FLAGELLATION"][flagellation_value_18] + " " + dic_slave_tier_classification[flagellation_value_18] + " | " + str(flagellation_experience_value_18) + "/" + str(dic_master_cap["FLAGELLATION"][flagellation_value_18]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "TORTURE":
+        frame:
+            pos(curx - 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["TORTURE"][torture_value_19] + " " + dic_slave_tier_classification[torture_value_19] + " | " + str(torture_experience_value_19) + "/" + str(dic_master_cap["TORTURE"][torture_value_19]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "BINDING":
+        frame:
+            pos(curx - 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["BINDING"][binding_value_20] + " " + dic_slave_tier_classification[binding_value_20] + " | " + str(binding_experience_value_20) + "/" + str(dic_master_cap["BINDING"][binding_value_20]) style "description_slave_attributes_frame_text"
+    elif description_master_attributes_track_value == "PETTING":
+        frame:
+            pos(curx - 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["PETTING"][petting_value_21] + " " + dic_slave_tier_classification[petting_value_21] + " | " + str(petting_experience_value_21) + "/" + str(dic_master_cap["PETTING"][petting_value_21]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "ORAL SEX":
+        frame:
+            pos(curx - 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["ORAL SEX"][oral_sex_value_22] + " " + dic_slave_tier_classification[oral_sex_value_22] + " | " + str(oral_sex_experience_value_22) + "/" + str(dic_master_cap["ORAL SEX"][oral_sex_value_22]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "PENETRATION":
+        frame:
+            pos(curx - 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["PENETRATION"][penetration_value_23] + " " + dic_slave_tier_classification[penetration_value_23] + " | " + str(penetration_experience_value_23) + "/" + str(dic_master_cap["PENETRATION"][penetration_value_23]) style "description_slave_attributes_frame_text"
+
+    elif description_master_attributes_track_value == "FETISHISM":
+        frame:
+            pos(curx - 150, cury)
+            style "description_slave_attributes_frame"
+            text dic_mc_attribute["FETISHISM"][fetishism_value_24] + " " + dic_slave_tier_classification[fetishism_value_24] + " | " + str(fetishism_experience_value_24) + "/" + str(dic_master_cap["FETISHISM"][fetishism_value_24]) style "description_slave_attributes_frame_text"
 
 screen master_storage():
     add "bg/page_blank.webp" xsize 795 ysize 535 pos(0.5028,0.42) anchor (0.5,0.5)

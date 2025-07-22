@@ -328,6 +328,32 @@ define dic_master_screen_text = {
     "eat_best_food":"Even if a meal is already prepared, it will be replaced if a better one becomes available —potentially wasting the original food."
 }
 
+define dic_master_cap = {
+    "STRENGTH":          [10 , 25 , 50 , 160, 666, 9999],
+    "PERSONALITY":       [10 , 20 , 40 , 80 , 160, 9999],
+    "ALLURE":            [1  , 2  , 3  , 4  , 5  , 9999],
+    "LIBIDO":            [45 , 90 , 180, 360, 999, 9999],
+    "BRAND REPUTATION":  [5  , 15 , 30 , 70 , 100, 9999],
+    "GUILD REPUTATION":  [5  , 10 , 20 , 40 , 75 , 9999],
+    "STANDARD OF LIVING":[1  , 2  , 3  , 4  , 5  , 9999],
+    "HYGIENE":           [10 , 20 , 40 , 60 , 80 , 9999],
+    "INJURIES":          [160, 80 , 40 , 20 , 10 , 9999],
+    "TEACHING":          [15 , 75 , 150, 300, 600, 9999],
+    "STEWARDSHIP":       [15 , 75 , 150, 300, 600, 9999],
+    "ARTISTRY":          [15 , 75 , 150, 300, 600, 9999],
+    "MEDIC":             [15 , 75 , 150, 300, 600, 9999],
+    "FIGHTER":           [15 , 75 , 150, 300, 600, 9999],
+    "MAGIC":             [15 , 75 , 150, 300, 600, 9999],
+    "DOMINANCE":         [45 , 90 , 180, 360, 999, 9999],
+    "FLAGELLATION":      [1  , 20 , 40 , 80 , 160, 9999],
+    "TORTURE":           [1  , 20 , 40 , 80 , 160, 9999],
+    "BINDING":           [1  , 20 , 40 , 80 , 160, 9999],
+    "PETTING":           [1  , 45 , 90 , 180, 360, 9999],
+    "ORAL SEX":          [1  , 45 , 90 , 180, 360, 9999],
+    "PENETRATION":       [1  , 45 , 90 , 180, 360, 9999],
+    "FETISHISM":         [1  , 45 , 90 , 180, 360, 9999],
+}
+#"house_mess": [10, 20, 40, 60, 80, 9999],
 
 
 
@@ -400,13 +426,13 @@ default reputation_value_1 = 0
 ############################################# number value -rec3ks
 default strength_experience_value_1 = 0
 default personality_experience_value_2 = 0
-default allure_experience_value_3 = 0
+#default allure_experience_value_3 = 0
 default libido_experience_value_4 = 0
 default dominance_experience_value_5 = 0
 default brand_reputation_experience_value_6 = 0
 default guild_reputation_experience_value_7 = 0
-default standard_of_living_experience_value_8 = 0
-default hygiene_experience_value_9 = 0
+#default standard_of_living_experience_value_8 = 0
+#default hygiene_experience_value_9 = 0
 default mood_experience_value_10 = 0
 default injuries_experience_value_11 = 0
 default teaching_experience_value_12 = 0

@@ -1,29 +1,29 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/home.rpy", line 616, in script
-    call screen master_attributes_screen()
+  File "game/home.rpy", line 624, in script
+    call screen master_storage()
   File "renpy/common/000statements.rpy", line 671, in execute_call_screen
     store._return = renpy.call_screen(name, *args, **kwargs)
-  File "game/home.rpy", line 3226, in execute
-    screen master_attributes_screen():
-  File "game/home.rpy", line 3226, in execute
-    screen master_attributes_screen():
-  File "game/home.rpy", line 3408, in execute
-    vbox:
-  File "game/home.rpy", line 3410, in execute
-    textbutton "- Auspex":
-  File "game/home.rpy", line 3410, in keywords
-    textbutton "- Auspex":
-  File "game/home.rpy", line 3411, in <module>
-    style autocastspellmastermenu
-NameError: name 'autocastspellmastermenu' is not defined
+  File "game/home.rpy", line 3614, in execute
+    screen description_master_attributes():
+  File "game/home.rpy", line 3614, in execute
+    screen description_master_attributes():
+  File "game/home.rpy", line 3617, in execute
+    if description_master_attributes_track_value == "STRENGTH":
+  File "game/home.rpy", line 3659, in execute
+    frame:
+  File "game/home.rpy", line 3662, in execute
+    text dic_mc_attribute["STANDARD OF LIVING"][standard_of_living_value_8] + " " + dic_slave_tier_classification[standard_of_living_value_8] + " | " + str(standard_of_living_experience_value_8) + "/" + str(dic_master_cap["STANDARD OF LIVING"][standard_of_living_value_8]) style "description_slave_attributes_frame_text"
+  File "game/home.rpy", line 3662, in <module>
+    text dic_mc_attribute["STANDARD OF LIVING"][standard_of_living_value_8] + " " + dic_slave_tier_classification[standard_of_living_value_8] + " | " + str(standard_of_living_experience_value_8) + "/" + str(dic_master_cap["STANDARD OF LIVING"][standard_of_living_value_8]) style "description_slave_attributes_frame_text"
+KeyError: 'STANDARD OF LIVING'
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/home.rpy", line 616, in script
-    call screen master_attributes_screen()
+  File "game/home.rpy", line 624, in script
+    call screen master_storage()
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 1987, in execute
     self.call("execute")
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 1966, in call
@@ -54,21 +54,21 @@ Full traceback:
     self.update()
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 700, in update
     self.screen.function(**self.scope)
-  File "game/home.rpy", line 3226, in execute
-    screen master_attributes_screen():
-  File "game/home.rpy", line 3226, in execute
-    screen master_attributes_screen():
-  File "game/home.rpy", line 3408, in execute
-    vbox:
-  File "game/home.rpy", line 3410, in execute
-    textbutton "- Auspex":
-  File "game/home.rpy", line 3410, in keywords
-    textbutton "- Auspex":
-  File "game/home.rpy", line 3411, in <module>
-    style autocastspellmastermenu
-NameError: name 'autocastspellmastermenu' is not defined
+  File "game/home.rpy", line 3614, in execute
+    screen description_master_attributes():
+  File "game/home.rpy", line 3614, in execute
+    screen description_master_attributes():
+  File "game/home.rpy", line 3617, in execute
+    if description_master_attributes_track_value == "STRENGTH":
+  File "game/home.rpy", line 3659, in execute
+    frame:
+  File "game/home.rpy", line 3662, in execute
+    text dic_mc_attribute["STANDARD OF LIVING"][standard_of_living_value_8] + " " + dic_slave_tier_classification[standard_of_living_value_8] + " | " + str(standard_of_living_experience_value_8) + "/" + str(dic_master_cap["STANDARD OF LIVING"][standard_of_living_value_8]) style "description_slave_attributes_frame_text"
+  File "game/home.rpy", line 3662, in <module>
+    text dic_mc_attribute["STANDARD OF LIVING"][standard_of_living_value_8] + " " + dic_slave_tier_classification[standard_of_living_value_8] + " | " + str(standard_of_living_experience_value_8) + "/" + str(dic_master_cap["STANDARD OF LIVING"][standard_of_living_value_8]) style "description_slave_attributes_frame_text"
+KeyError: 'STANDARD OF LIVING'
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
 JONT Port by Rec3ks ver. 0.0.49
-Mon Jul 21 20:16:33 2025
+Tue Jul 22 19:37:26 2025
