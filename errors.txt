@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 3416: reached end of line when expecting ':'.
-    if special_action["food_delivery"] == 0
-                                           ^
+File "game/mc_stats_iniciation.rpy", line 328: unexpected EOF while parsing
+    }
+     ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Mon Jul 21 20:48:15 2025
+Tue Jul 22 17:12:13 2025
