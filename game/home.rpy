@@ -53,6 +53,7 @@ default gameover = False
 default pony_count = 0
 default master_screen_text = ""
 default slave_escape_type = 0
+default description_master_attributes_track_value = ""
 default home_estate ={
     "kitchen": 0,
     "barn": 0,
@@ -2733,8 +2734,6 @@ screen screen_attributes_skills_sexual_slave():
             ysize 40
             style "slave_screen_button"
             action SetVariable("current_menu", 103),Jump("Home")
-    
-    
     hbox: 
         pos(0.475,0.01)
         anchor (0.5,0.0)
@@ -2751,10 +2750,6 @@ screen screen_attributes_skills_sexual_slave():
         textbutton "Aura":
             style "slave_screen_button"
             action SetVariable("current_menu", 103),Jump("Home")   
-
-
-
-    
     hbox: 
         pos(0.525,0.005)
         anchor (0.50,0.0)
@@ -3230,13 +3225,13 @@ screen mood_attributes2():
         action Hide("mood_attributes2"),Jump(infobox_jump)
     key "K_SPACE" action Hide("mood_attributes2"),Jump(infobox_jump)
 screen master_attributes_screen():
-    key "K_SPACE" action SetVariable("current_menu", 0),SetVariable("master_screen_text",""),Jump("Home")
+    key "K_SPACE" action SetVariable("current_menu", 0),Hide("master_attributes_screen"),SetVariable("master_screen_text",""),Jump("Home")
     add bgstyle3 xsize 1280 ysize 720
     text dic_master_screen_text[master_screen_text] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.21,0.82) xmaximum 750
     imagebutton:
         idle "buttons/close_button.webp" pos (1004,1)
         hover "buttons/close_button_hover.webp"
-        action SetVariable("current_menu", 0),SetVariable("text_slave_conditions_index", "default"),SetVariable("master_screen_text",""),Jump("Home")
+        action SetVariable("current_menu", 0),Hide("master_attributes_screen"),SetVariable("text_slave_conditions_index", "default"),SetVariable("master_screen_text",""),Jump("Home")
     hbox:
         pos(0.475,0.01)
         anchor (0.5,0.0)
@@ -3261,8 +3256,6 @@ screen master_attributes_screen():
             ysize 40
             style "slave_screen_button"
             action SetVariable("current_menu", 203),Jump("Home")
-    
-    
     hbox: 
         pos(0.45,0.01)
         anchor (0.5,0.0)
@@ -3331,36 +3324,56 @@ screen master_attributes_screen():
         textbutton dic_mc_attribute["STRENGTH"][strength_value_1]:
             style "attribute_button_custom" + str(strength_value_1 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "STRENGTH")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "STRENGTH")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["PERSONALITY"][personality_value_2]:
             style "attribute_button_custom" + str(personality_value_2 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "PERSONALITY")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "PERSONALITY")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["ALLURE"][allure_value_3]:
             style "attribute_button_custom" + str(allure_value_3 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "ALLURE")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "ALLURE")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["LIBIDO"][libido_value_4]:
             style "attribute_button_custom" + str(libido_value_4 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "LIBIDO")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "LIBIDO")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["DOMINANCE"][dominance_value_5]:
             style "attribute_button_custom" + str(dominance_value_5 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "DOMINANCE")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "DOMINANCE")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["BRAND REPUTATION"][brand_reputation_value_6]:
             style "attribute_button_custom" + str(brand_reputation_value_6 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "BRAND REPUTATION")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "BRAND REPUTATION")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["GUILD REPUTATION"][guild_reputation_value_7]:
             style "attribute_button_custom" + str(guild_reputation_value_7 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "GUILD REPUTATION")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "GUILD REPUTATION")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["STANDARD OF LIVING"][standard_of_living_value_8]:
             style "attribute_button_custom" + str(standard_of_living_value_8 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "STANDARD OF LIVING")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "STANDARD OF LIVING")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["HYGIENE"][hygiene_value_9]:
             style "attribute_button_custom" + str(hygiene_value_9 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "HYGIENE")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "HYGIENE")
+            unhovered Hide("description_master_attributes")
         textbutton "MOOD WIP":
             style "attribute_button_custom2" 
             action NullAction()
         textbutton dic_mc_attribute["INJURIES"][injuries_value_11]:
             style "injuries_display" + str(injuries_value_11 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "INJURIES")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "INJURIES")
+            unhovered Hide("description_master_attributes")
         text "{u}AUTO CASTING{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf"
         add "spacer" size(0,10)
         if magic_value_17 >= 0:
@@ -3531,49 +3544,82 @@ screen master_attributes_screen():
         textbutton dic_mc_attribute["TEACHING"][teaching_value_12] xalign 1.0:
             style "attribute_button_custom" + str(teaching_value_12 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "TEACHING")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "TEACHING")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["STEWARDSHIP"][stewardship_value_13] xalign 1.0:
             style "attribute_button_custom" + str(stewardship_value_13 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "STEWARDSHIP")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "STEWARDSHIP")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["ARTISTRY"][artistry_value_14] xalign 1.0:
             style "attribute_button_custom" + str(artistry_value_14 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "ARTISTRY")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "ARTISTRY")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["MEDIC"][medic_value_15] xalign 1.0:
             style "attribute_button_custom" + str(medic_value_15 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "MEDIC")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "MEDIC")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["FIGHTER"][fighter_value_16] xalign 1.0:
             style "attribute_button_custom" + str(fighter_value_16 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "FIGHTER")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "FIGHTER")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["MAGIC"][magic_value_17] xalign 1.0:
             style "attribute_button_custom" + str(magic_value_17 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "MAGIC")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "MAGIC")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["FLAGELLATION"][flagellation_value_18] xalign 1.0:
             style "attribute_button_custom" + str(flagellation_value_18 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "FLAGELLATION")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "FLAGELLATION")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["TORTURE"][torture_value_19] xalign 1.0:
             style "attribute_button_custom" + str(torture_value_19 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "TORTURE")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "TORTURE")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["BINDING"][binding_value_20] xalign 1.0:
             style "attribute_button_custom" + str(binding_value_20 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "BINDING")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "BINDING")
+            unhovered Hide("description_master_attributes")
         text "{u}     SEX TECHNIQUES{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
         textbutton dic_mc_attribute["PETTING"][petting_value_21] xalign 1.0:
             style "attribute_button_custom" + str(petting_value_21 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "PETTING")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "PETTING")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["ORAL SEX"][oral_sex_value_22] xalign 1.0:
             style "attribute_button_custom" + str(oral_sex_value_22 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "ORAL SEX")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "ORAL SEX")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["PENETRATION"][penetration_value_23] xalign 1.0:
             style "attribute_button_custom" + str(penetration_value_23 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "PENETRATION")
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "PENETRATION")
+            unhovered Hide("description_master_attributes")
         textbutton dic_mc_attribute["FETISHISM"][fetishism_value_24] xalign 1.0:
             style "attribute_button_custom" + str(fetishism_value_24 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "FETISHISM")
-
-    
+            hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "FETISHISM")
+            unhovered Hide("description_master_attributes")
     imagebutton pos(180,60):
         idle "buttons/info_5.webp" 
         hover "buttons/info_5_hover.webp"
         action Show("msg", msg_text="Buyers look beyond rank and specialization. Most expect charm (see Anatomy tab) to match or exceed rank. Most reject slaves who are exhausted, pregnant, wounded or recovering from medical procedures. Some have other requirements. If a buyer rejects a slave for lack of charm, you can try again after a decade.")
+screen description_master_attributes():
+    $ curx, cury = renpy.get_mouse_pos()
+    # WIP
+    if description_master_attributes_track_value in ["beauty","exoticism","style","fame"]:
+        frame:
+            pos(curx + 150,cury)
+            style "description_slave_attributes_frame"
+            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]] style "description_slave_attributes_frame_text"
+
 screen master_storage():
     add "bg/page_blank.webp" xsize 795 ysize 535 pos(0.5028,0.42) anchor (0.5,0.5)
 # WIP screen master_storage
