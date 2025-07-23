@@ -51,14 +51,38 @@ default debt = 0
 default girl_index_save = 0
 default gameover = False
 default pony_count = 0
-default master_screen_text = ""
 default slave_escape_type = 0
-default description_master_attributes_track_value = ""
-default home_estate ={
-    "kitchen": 0,
-    "barn": 0,
-    "laboratory": 0,
+default cryostore_ingredients = 0
+default cryostore_ingredients_max = 0
+default laboratory_ingredients = 0
+default house_items = 0
+default home_estate = {
+    "kitchen": {
+        "Deplorable kitchen": 0,
+        "Basic kitchen": 0,
+        "Well-equipped kitchen": 0,
+        "Gourmet kitchen": 0
+    },
+    "barn": {
+        "Collapsing barn": 0,
+        "Worn barn": 0,
+        "Sturdy barn": 0,
+        "Masterwork barn": 0
+    },
+    "laboratory": {
+        "Makeshift lab": 0,
+        "Crude lab": 0,
+        "Proper lab": 0,
+        "Advanced laboratory": 0
+    },
+    "slaves_rooms": {
+        "squalid_room": 0,
+        "cramped_room": 0,
+        "comfortable_room": 0,
+        "luxurios_room": 0
+    }
 }
+
 default inventory = {
     "remove": "-",
     "Without armour": "-",
@@ -165,6 +189,60 @@ default inventory = {
     "anal_tail": 0,
     "":0 # this is necessary -rec3ks
 }
+default storage = {
+    "ingredients" : {
+        "Flour and Grains": 0,
+        "Herbs and Spices": 0,
+        "Cheese and Butter": 0,
+        "Vegetables": 0,
+        "Alcohol": 0,
+        "Eggs": 0,
+        "Milk": 0,
+        "Cream": 0,
+        "Virgin Meat": 0,
+        "Tenderloin": 0,
+        "Chopped Meat": 0,
+        "Spawn's Semen": 0,
+    },
+    "laboratory" : {
+        "ingredients" : {
+            "Fiend's mucus": 0,
+            "Elysian datura": 0,
+            "Kamrian resin": 0,
+            "Faeries' pollen": 0,
+            "Essence of oblivion": 0
+        },
+        "potion" : {
+            "Bacchic": 0,
+            "Tonic": 0,
+            "Balm": 0,
+            "Aphrodisiac": 0,
+            "Super-aphrodisiac": 0,
+            "Philtre": 0,
+            "Water of Lethe": 0
+        }
+    },
+    "house" : {
+        "artistic_material":{
+            "Art Material": 0,
+            "Percussion Instrument": 0,
+            "Woodwind Instrument": 0,
+            "String Instrument": 0,
+            "Piano": 0
+        },
+        "sex_items":{
+            "Vibrator": 0,
+            "V-balls": 0,
+            "Anal Pear": 0,
+            "Reliable Gag": 0,
+            "Chastity Belt": 0,
+            "Deprivation Suit": 0,
+            "Urinal Rack": 0,
+            "Toilet Seat": 0,
+            "Stethoscope": 0
+        }
+    }
+}
 default autocast = {
     "auspex": False ,
     "magna_magnifika": False,
@@ -186,6 +264,17 @@ label iniciation_label:
             for key, value in inventory.items():
                 if value != "-":
                     inventory[key] = 1
+            for key, value in storage["ingredients"].items():
+                storage["ingredients"][key] = 5
+            for key, value in storage["laboratory"]["ingredients"].items():
+                storage["laboratory"]["ingredients"][key] = 5
+            for key, value in storage["laboratory"]["potion"].items():
+                storage["laboratory"]["potion"][key] = 5
+            for key, value in storage["house"]["artistic_material"].items():
+                storage["house"]["artistic_material"][key] = 5
+            for key, value in storage["house"]["sex_items"].items():
+                storage["house"]["sex_items"][key] = 5
+            
         jump equipment_check
     else:
         python:
@@ -209,10 +298,6 @@ label next_day_label:
         day_tracker += 1
         save_girl_index = girl_index
         for girl_index in all_girls_list:
-            # save pass mood
-            all_girls_list[girl_index]["past_mood"] = all_girls_list[girl_index]["mood"]
-            # reset temporal mood always
-            all_girls_list[girl_index]["mood_temporal"] = 0
             if all_girls_list[girl_index]["conscience"]:
                 all_girls_list[girl_index]["epilation"] = max(all_girls_list[girl_index]["epilation"]-1,0)
                 all_girls_list[girl_index]["manicure"] = max(all_girls_list[girl_index]["manicure"]-1,0)
@@ -222,6 +307,7 @@ label next_day_label:
                 all_girls_list[girl_index]["daring"] = max(all_girls_list[girl_index]["daring"]- random.randint(0, 3),0)
                 if all_girls_list[girl_index]["energised"] > 5:
                     all_girls_list[girl_index]["energised"] = max(all_girls_list[girl_index]["energised"]- random.randint(0, 7),0)
+                #MOOD accustomed section
                 for key in dic_slave_mood["good_mood"]:
                     if not all_girls_list[girl_index]["mood_state"]["good_mood"][key]["permanent"]:
                         if not all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed"]:
@@ -292,11 +378,6 @@ label next_day_label:
                 #if not all_girls_list[girl_index]["assistant"]:
                     # WIP Cooking rule
                     #if home_estate["kitchen"] != 0: 
-
-                                    
-                
-                
-                
                 if all_girls_list[girl_index]["assistant"]:
                     if all_girls_list[girl_index]["attributes"]["nature"] < 3:
                         all_girls_list[girl_index]["experience"]["attributes"]["nature"] +=1
@@ -306,7 +387,7 @@ label next_day_label:
                 if all_girls_list[girl_index]["brand"] == 5:
                     all_girls_list[girl_index]["experience"]["aura"]["habit"] += 1
                 increase_check("aura","habit")
-            ### energy and sleep condition -half done
+                ### energy and sleep condition 
                 if all_girls_list[girl_index]["sleep"] != 4:
                     if all_girls_list[girl_index]["aura"]["devotion"] >= 3:
                         all_girls_list[girl_index]["energy"] = min(12, all_girls_list[girl_index]["energy"]//2 + all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2)
@@ -346,7 +427,14 @@ label next_day_label:
                 if all_girls_list[girl_index]["mood"] < 0:
                     all_girls_list[girl_index]["experience"]["aura"]["spoil"] -= all_girls_list[girl_index]["attributes"]["empathy"]
                 reduce_check( "aura","spoil")
-
+            # save pass mood slave
+            all_girls_list[girl_index]["past_mood"] = all_girls_list[girl_index]["mood"]
+            # reset temporal mood slave
+            all_girls_list[girl_index]["mood_temporal"] = 0
+            # save master pass mood
+            master_past_mood = mood_value_10
+            # reset temporal mood master
+            master_temporal_mood = 0
         slave_nearly_fainted = False
         girl_index = save_girl_index
     show screen home_menu
@@ -361,15 +449,70 @@ label Home:
     python:
         infobox_jump = "Home"
         # supermacy calculation
+        cryostore_ingredients = 0
+        for values in storage["ingredients"]:
+            cryostore_ingredients += storage["ingredients"][values]
+        cryostore_ingredients_max = 0
+        cryostore_ingredients_max += home_estate["kitchen"]["Deplorable kitchen"]*50
+        cryostore_ingredients_max += home_estate["kitchen"]["Basic kitchen"]*50
+        cryostore_ingredients_max += home_estate["kitchen"]["Well-equipped kitchen"]*50
+        cryostore_ingredients_max += home_estate["kitchen"]["Gourmet kitchen"]*50
+        laboratory_ingredients = 0
+        for values in storage["laboratory"]["ingredients"]:
+            laboratory_ingredients += storage["laboratory"]["ingredients"][values]
+        for values in storage["laboratory"]["potion"]:
+            laboratory_ingredients += storage["laboratory"]["potion"][values]
+        house_items = 0
+        for values in storage["house"]["artistic_material"]:
+            house_items += storage["house"]["artistic_material"][values]
+        for values in storage["house"]["sex_items"]:
+            house_items += storage["house"]["sex_items"][values]
+        mood_value_10 = 0
+        mood_value_10 += master_worn_bonus
+        mood_value_10 += master_temporal_mood
+        if master_past_mood > 0:
+            mood_value_10 += master_past_mood/3
+        else:
+            mood_value_10 += master_past_mood/2
+        for key in dic_master_mood["good_mood"]:
+            if master_mood_state["good_mood"][key]["active"]:
+                mood_value_10 += master_mood_state["good_mood"][key]["weight"]
+        for key in dic_master_mood["bad_mood"]:
+            if master_mood_state["bad_mood"][key]["active"]:
+                mood_value_10 -= master_mood_state["bad_mood"][key]["weight"]
+        if mood_value_10 <= -5:
+            mood_textvalue_10 = dic_slave_moodlevel[0]
+        elif mood_value_10 <= -4:
+            mood_textvalue_10 = dic_slave_moodlevel[1]
+        elif mood_value_10 <= -3:
+            mood_textvalue_10 = dic_slave_moodlevel[2]
+        elif mood_value_10 <= -2:
+            mood_textvalue_10 = dic_slave_moodlevel[3]
+        elif mood_value_10 <= -1:
+            mood_textvalue_10 = dic_slave_moodlevel[4]
+        elif mood_value_10 < 1:
+            mood_textvalue_10 = dic_slave_moodlevel[5]
+        elif mood_value_10 < 2:
+            mood_textvalue_10 = dic_slave_moodlevel[6]
+        elif mood_value_10 < 3:
+            mood_textvalue_10 = dic_slave_moodlevel[7]
+        elif mood_value_10 < 4:
+            mood_textvalue_10 = dic_slave_moodlevel[8]
+        elif mood_value_10 < 5:
+            mood_textvalue_10 = dic_slave_moodlevel[9]
+        elif mood_value_10 >= 5:
+            mood_textvalue_10 = dic_slave_moodlevel[10]
+        if mood_value_10 >= 5 and reputation_value_1 >= 5:
+            mood_textvalue_10 = dic_slave_moodlevel[11]
+
+
+
+        
+        
+
+
         if is_main_slave:
-            equipment_check2()
-            master_supermacy = personality_value_2 + allure_value_3 + dominance_value_5 + strength_value_1 + magna_magnifika
-            all_girls_list[girl_index]["supermacy"] = all_girls_list[girl_index]["attributes"]["temperament"] + all_girls_list[girl_index]["attributes"]["nature"] + 5 - all_girls_list[girl_index]["attributes"]["pride"] + all_girls_list[girl_index]["attributes"]["endurance"] + all_girls_list[girl_index]["attributes"]["intelligence"] - 3
             # obedience difficulty ajustment
-            if all_girls_list[girl_index]["beaten_ever"]:
-                all_girls_list[girl_index]["supermacy"] -= 1
-            if all_girls_list[girl_index]["domini_dictum_ever"]:
-                all_girls_list[girl_index]["supermacy"] -= 1
             if dic_custom_start_difficulty_selection_index_index == 0:
                 slave_obedience_bonus = 4
                 slave_difficulty = 2
@@ -381,28 +524,15 @@ label Home:
                 slave_difficulty = 14 - min(8, 4*all_girls_list[girl_index]["aura"]["devotion"])
             girl_index_save = girl_index
             for girl_index in all_girls_list:
-                # Obedience re-calculation
-                slave_nature = 5 - all_girls_list[girl_index]["attributes"]["pride"] + all_girls_list[girl_index]["attributes"]["temperament"] + all_girls_list[girl_index]["attributes"]["nature"] + all_girls_list[girl_index]["attributes"]["intelligence"]
-                if all_girls_list[girl_index]["aura"]["fear"] > 0:    
-                    if slave_nature < 11:
-                        all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2
-                    elif slave_nature == 11:
-                        all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 1
-                    elif slave_nature == 12:
-                        all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 2
-                    elif slave_nature == 13:
-                        all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 3
-                    elif slave_nature == 14:
-                        all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 4
-                    elif slave_nature > 14:
-                        all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 5
-                else:
-                    all_girls_list[girl_index]["bonus_fear"] = 0
-                all_girls_list[girl_index]["obedience"] = slave_obedience_bonus + all_girls_list[girl_index]["mood"] + all_girls_list[girl_index]["bonus_fear"] + all_girls_list[girl_index]["aura"]["devotion"]*4 + all_girls_list[girl_index]["aura"]["taming"] * 2 \
-                + int((1+all_girls_list[girl_index]["aura"]["despair"]) // 2) + all_girls_list[girl_index]["aura"]["awareness"] + all_girls_list[girl_index]["aura"]["habit"] - all_girls_list[girl_index]["aura"]["spoil"]*2 - int(slave_difficulty/2) - slave_nature
-                # set obedience to 100 if broken
-                if all_girls_list[girl_index]["psy_status"] == "broken":
-                    all_girls_list[girl_index]["obedience"] = 100
+                # equipment_doble_check
+                equipment_check2()
+                # supermacy calculation
+                master_supermacy = personality_value_2 + allure_value_3 + dominance_value_5 + strength_value_1 + magna_magnifika
+                all_girls_list[girl_index]["supermacy"] = all_girls_list[girl_index]["attributes"]["temperament"] + all_girls_list[girl_index]["attributes"]["nature"] + 5 - all_girls_list[girl_index]["attributes"]["pride"] + all_girls_list[girl_index]["attributes"]["endurance"] + all_girls_list[girl_index]["attributes"]["intelligence"] - 3
+                if all_girls_list[girl_index]["beaten_ever"]:
+                    all_girls_list[girl_index]["supermacy"] -= 1
+                if all_girls_list[girl_index]["domini_dictum_ever"]:
+                    all_girls_list[girl_index]["supermacy"] -= 1
                 # Cap aura values
                 for aura in ["fear","despair","awareness","taming","habit","spoil","devotion"]:
                     if all_girls_list[girl_index]["aura"][aura] == 0 and all_girls_list[girl_index]["experience"]["aura"][aura] < -10:
@@ -447,8 +577,52 @@ label Home:
                 ### define maxmotivation
                 maxmotivation = max(all_girls_list[girl_index]["aura"]["fear"],all_girls_list[girl_index]["aura"]["devotion"],all_girls_list[girl_index]["aura"]["spoil"],all_girls_list[girl_index]["aura"]["habit"],all_girls_list[girl_index]["aura"]["awareness"],all_girls_list[girl_index]["aura"]["taming"],all_girls_list[girl_index]["arousal"])
                 slave_psy_hardness = max(all_girls_list[girl_index]["attributes"]["temperament"],all_girls_list[girl_index]["attributes"]["nature"],(5 - all_girls_list[girl_index]["attributes"]["pride"]),all_girls_list[girl_index]["attributes"]["intelligence"])
-                ### Slaves psy status calculation
+                #### Mood define
+                # set mood to default 
+                all_girls_list[girl_index]["mood"] = 0
+                # only calculated if not broken
                 if all_girls_list[girl_index]["psy_status"] != "broken":
+                    # + clothes mood 
+                    all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["worn_mood"]
+                    # + all temporal mood
+                    all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["mood_temporal"]
+                    # + past mood, a slave that yesterday is depressing, will start more sad that one that was happy yesterday
+                    # + 1/2 if negative + 1/3 if positive because sadness stick longer that hapiness, like IRL
+                    if all_girls_list[girl_index]["past_mood"] > 0:
+                        all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/3
+                    else:
+                        all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/2
+                    for key in dic_slave_mood["good_mood"]:
+                        if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]:
+                            all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["mood_state"]["good_mood"][key]["weight"]
+                    for key in dic_slave_mood["bad_mood"]:
+                        if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
+                            all_girls_list[girl_index]["mood"] -= all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["weight"]
+                    if all_girls_list[girl_index]["mood"] <= -5:
+                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[0]
+                    elif all_girls_list[girl_index]["mood"] <= -4:
+                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[1]
+                    elif all_girls_list[girl_index]["mood"] <= -3:
+                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[2]
+                    elif all_girls_list[girl_index]["mood"] <= -2:
+                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[3]
+                    elif all_girls_list[girl_index]["mood"] <= -1:
+                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[4]
+                    elif all_girls_list[girl_index]["mood"] < 1:
+                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[5]
+                    elif all_girls_list[girl_index]["mood"] < 2:
+                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[6]
+                    elif all_girls_list[girl_index]["mood"] < 3:
+                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[7]
+                    elif all_girls_list[girl_index]["mood"] < 4:
+                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[8]
+                    elif all_girls_list[girl_index]["mood"] < 5:
+                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[9]
+                    elif all_girls_list[girl_index]["mood"] >= 5:
+                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[10]
+                    if all_girls_list[girl_index]["mood"] >= 5 and all_girls_list[girl_index]["aura"]["devotion"] >= 5:
+                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[11]
+                    ### Slaves psy status calculation
                     if all_girls_list[girl_index]["psy_status"] == "lachrymose" and all_girls_list[girl_index]["aura"]["devotion"] > 0:
                         all_girls_list[girl_index]["psy_status"] = "soft"
                     # if mood is positive - better psy status for slaves
@@ -487,50 +661,6 @@ label Home:
                                 all_girls_list[girl_index]["psy_status"] = "docile"
                             if maxmotivation == all_girls_list[girl_index]["arousal"] and all_girls_list[girl_index]["aura"]["devotion"] > 0:
                                 all_girls_list[girl_index]["psy_status"] = "horny"
-                #### Mood define
-                # set mood to default 
-                all_girls_list[girl_index]["mood"] = 0
-                if all_girls_list[girl_index]["psy_status"] != "broken":
-                    # + clothes mood 
-                    all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["worn_mood"]
-                    # + all temporal mood
-                    all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["mood_temporal"]
-                    # + past mood, a slave that yesterday is depressing, will start more sad that one that was happy yesterday
-                    # + 1/2 if negative + 1/3 if positive because sadness stick longer that hapiness, like IRL
-                    if all_girls_list[girl_index]["past_mood"] > 0:
-                        all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/3
-                    else:
-                        all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/2
-                    for key in dic_slave_mood["good_mood"]:
-                        if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]:
-                            all_girls_list[girl_index]["mood"] += 1
-                    for key in dic_slave_mood["bad_mood"]:
-                        if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
-                            all_girls_list[girl_index]["mood"] -= 1
-                    if all_girls_list[girl_index]["mood"] <= -5:
-                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[0]
-                    elif all_girls_list[girl_index]["mood"] <= -4:
-                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[1]
-                    elif all_girls_list[girl_index]["mood"] <= -3:
-                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[2]
-                    elif all_girls_list[girl_index]["mood"] <= -2:
-                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[3]
-                    elif all_girls_list[girl_index]["mood"] <= -1:
-                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[4]
-                    elif all_girls_list[girl_index]["mood"] < 1:
-                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[5]
-                    elif all_girls_list[girl_index]["mood"] < 2:
-                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[6]
-                    elif all_girls_list[girl_index]["mood"] < 3:
-                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[7]
-                    elif all_girls_list[girl_index]["mood"] < 4:
-                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[8]
-                    elif all_girls_list[girl_index]["mood"] < 5:
-                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[9]
-                    elif all_girls_list[girl_index]["mood"] >= 5:
-                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[10]
-                    if all_girls_list[girl_index]["mood"] >= 5 and all_girls_list[girl_index]["aura"]["devotion"] >= 5:
-                        all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[11]
                     # WIP            
                     # if dynslave_state = CONST_INT['slave_exist']:
                     # 	! state check is conscious only - ImperatorAugustus
@@ -538,26 +668,29 @@ label Home:
                     # 	dynslave_rate['mood'] += 10 + dynslave['mood']*2 + dynslave['moral'] + (dynslave['stamina'] - 3) + _
                     # 		- dynslave['arousal'] - dynslave['fear'] - dynslave['spoil'] - dynslave['angst']*2 _
                     # 		- dynslave['hygiene'] - (house_mess - 1) &! removed energy from this formula (handled elsewhere), doubled angst impact, adjusted carry over to reduce mood swings by applying a bonus representing half of the previous day mood (counting anything above depressed as positive) - ImperatorAugustus
-
-                        
-                
-                        
-
-
-
-
-
-                
-                    
-
-            
-
-
-
-
-
-
-        girl_index = girl_index_save
+                # Obedience re-calculation last
+                slave_nature = 5 - all_girls_list[girl_index]["attributes"]["pride"] + all_girls_list[girl_index]["attributes"]["temperament"] + all_girls_list[girl_index]["attributes"]["nature"] + all_girls_list[girl_index]["attributes"]["intelligence"]
+                if all_girls_list[girl_index]["aura"]["fear"] > 0:    
+                    if slave_nature < 11:
+                        all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2
+                    elif slave_nature == 11:
+                        all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 1
+                    elif slave_nature == 12:
+                        all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 2
+                    elif slave_nature == 13:
+                        all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 3
+                    elif slave_nature == 14:
+                        all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 4
+                    elif slave_nature > 14:
+                        all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 5
+                else:
+                    all_girls_list[girl_index]["bonus_fear"] = 0
+                all_girls_list[girl_index]["obedience"] = slave_obedience_bonus + all_girls_list[girl_index]["mood"] + all_girls_list[girl_index]["bonus_fear"] + all_girls_list[girl_index]["aura"]["devotion"]*4 + all_girls_list[girl_index]["aura"]["taming"] * 2 \
+                + int((1+all_girls_list[girl_index]["aura"]["despair"]) // 2) + all_girls_list[girl_index]["aura"]["awareness"] + all_girls_list[girl_index]["aura"]["habit"] - all_girls_list[girl_index]["aura"]["spoil"]*2 - int(slave_difficulty/2) - slave_nature
+                # set obedience to 100 if broken
+                if all_girls_list[girl_index]["psy_status"] == "broken":
+                    all_girls_list[girl_index]["obedience"] = 100
+            girl_index = girl_index_save
     if slave_rebellion_fight:
         jump slave_rebellion_fight_label
     if is_tutorial == True and current_menu == 0:
@@ -3366,7 +3499,7 @@ screen master_attributes_screen():
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "HYGIENE")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "HYGIENE")
             unhovered Hide("description_master_attributes")
-        textbutton "MOOD WIP":
+        textbutton mood_textvalue_10:
             style "attribute_button_custom2" 
             action NullAction()
         textbutton dic_mc_attribute["INJURIES"][injuries_value_11]:
@@ -3486,11 +3619,11 @@ screen master_attributes_screen():
             if autocast["magna_magnifika"]:
                 textbutton "- Magna Magnifika":
                     style "autocastspellmastermenu"
-                    action SetDict(autocast, "auspex", False),SetVariable("master_screen_text","magna_magnifika"), Jump("Home")
+                    action SetDict(autocast, "magna_magnifika", False),SetVariable("master_screen_text","magna_magnifika"), Jump("Home")
             else:
                 textbutton "- Magna Magnifika":
                     style "autocastspellmastermenu"
-                    action SetDict(autocast, "auspex", True),SetVariable("master_screen_text","magna_magnifika"), Jump("Home")
+                    action SetDict(autocast, "magna_magnifika", True),SetVariable("master_screen_text","magna_magnifika"), Jump("Home")
         else:
             textbutton "- Magna Magnifika":
                 style "autocastspellmastermenu"
@@ -3750,4 +3883,51 @@ screen description_master_attributes():
 
 screen master_storage():
     add "bg/page_blank.webp" xsize 795 ysize 535 pos(0.5028,0.42) anchor (0.5,0.5)
-# WIP screen master_storage
+    vbox:
+        pos(0.22,0.068)
+        spacing -2  
+        text "{u}CRYOSTORE{/u} [[[cryostore_ingredients]/[cryostore_ingredients_max]]:" size 16 color "#191970" font "fonts/Segoe Print.ttf" #f-string format -rec3ks
+        for values in storage["ingredients"]:
+            text values + ": " size 16 color "#191970" font "fonts/Segoe Print.ttf"
+    vbox:
+        pos(0.35,0.068)
+        spacing -2
+        text "" size 16 color "#191970" font "fonts/Segoe Print.ttf"
+        for values in storage["ingredients"]:
+            text str(storage["ingredients"][values]) size 16 color "#191970" font "fonts/Segoe Print.ttf"
+    vbox:
+        pos(0.40,0.068)
+        spacing -2
+        text "{u}LABORATORY{/u} [[[laboratory_ingredients]]:" size 16 color "#191970" font "fonts/Segoe Print.ttf" #f-string format -rec3ks
+        for values in storage["laboratory"]["ingredients"]:
+            text values + ": " size 16 color "#191970" font "fonts/Segoe Print.ttf"
+        add "spacer" size (0,20)
+        for values in storage["laboratory"]["potion"]:
+            text values + ": " size 16 color "#191970" font "fonts/Segoe Print.ttf"
+    vbox:
+        pos(0.53,0.068)
+        spacing -2
+        text "" size 16 color "#191970" font "fonts/Segoe Print.ttf"
+        for values in storage["laboratory"]["ingredients"]:
+            text str(storage["laboratory"]["ingredients"][values]) size 16 color "#191970" font "fonts/Segoe Print.ttf"
+        add "spacer" size (0,20)
+        for values in storage["laboratory"]["potion"]:
+            text str(storage["laboratory"]["potion"][values]) size 16 color "#191970" font "fonts/Segoe Print.ttf"
+    vbox:
+        pos(0.58,0.068)
+        spacing -2
+        text "{u}HOUSE{/u} [[[house_items]]:" size 16 color "#191970" font "fonts/Segoe Print.ttf" #f-string format -rec3ks
+        for values in storage["house"]["artistic_material"]:
+            text values + ": " size 16 color "#191970" font "fonts/Segoe Print.ttf"
+        add "spacer" size (0,20)
+        for values in storage["house"]["sex_items"]:
+            text values + ": " size 16 color "#191970" font "fonts/Segoe Print.ttf"
+    vbox:
+        pos(0.75,0.068)
+        spacing -2
+        text "" size 16 color "#191970" font "fonts/Segoe Print.ttf"
+        for values in storage["house"]["artistic_material"]:
+            text str(storage["house"]["artistic_material"][values]) size 16 color "#191970" font "fonts/Segoe Print.ttf"
+        add "spacer" size (0,20)
+        for values in storage["house"]["sex_items"]:
+            text str(storage["house"]["sex_items"][values]) size 16 color "#191970" font "fonts/Segoe Print.ttf"

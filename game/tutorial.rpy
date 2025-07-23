@@ -555,9 +555,9 @@ label choose_inicial_girl:
         all_girls_list[girl_index]["mood_state"].setdefault("good_mood",{})
         all_girls_list[girl_index]["mood_state"].setdefault("bad_mood",{})
         for key in dic_slave_mood["good_mood"]:
-            all_girls_list[girl_index]["mood_state"]["good_mood"].setdefault(key, {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False})
+            all_girls_list[girl_index]["mood_state"]["good_mood"].setdefault(key, {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1})
         for key in dic_slave_mood["bad_mood"]:
-            all_girls_list[girl_index]["mood_state"]["bad_mood"].setdefault(key, {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False})
+            all_girls_list[girl_index]["mood_state"]["bad_mood"].setdefault(key, {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1})
         all_girls_list[girl_index]["experience"].setdefault("aura", {})
         all_girls_list[girl_index]["experience"]["aura"].setdefault("fear", 0)
         all_girls_list[girl_index]["experience"]["aura"].setdefault("despair", 0)

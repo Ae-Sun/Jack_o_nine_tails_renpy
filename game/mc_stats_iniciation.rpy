@@ -354,7 +354,67 @@ define dic_master_cap = {
     "FETISHISM":         [1  , 45 , 90 , 180, 360, 9999],
 }
 #"house_mess": [10, 20, 40, 60, 80, 9999],
-
+define dic_master_mood = {
+    "good_mood": {
+        "pos_energy"         : "I am fresh and full of energy. Gotta put it to good use!",
+        "pos_new_slave"      : "A new day - a new slave. Shopping is always uplifting.",
+        "pos_housing"        : "I must admit that I have very decent housing.",
+        "pos_house_clean"    : "The house is in perfect cleanliness and order.",
+        "pos_master_cloth"   : "I have very comfortable clothes. It is important for comfort.",
+        "pos_self_clean"     : "There is nothing better than a good wash. Cleanliness is next to godliness!",
+        "pos_toilet"         : "My slave happened to be a great toilet. Much nicer than a conventional toilet.",
+        "pos_nice_slave"     : "Girl's education is progressing fine, I'm doing an excellent job.",
+        "pos_massage"        : "Mmmm… what bliss. It's nice to be taken care of by a beautiful and gentle woman…",
+        "pos_good_morning"   : "Morning blowjob - a perfect start to the day.",
+        "pos_satisfied"      : "After such fervent sex, the brain inevitably switches to a positive wave!",
+        "pos_optimism"       : "My slave is so cute that I want to communicate with her incessantly.",
+        "pos_good_pet"       : "No wonder people get cats - they relieve stress excellently. Even if it's not quite a cat…",
+        "pos_show"           : "I had a good time. Just what you need to dispel the boredom!",
+        "pos_self_food"      : "I ate well. Simply a holiday flavor!",
+        "pos_date"           : "I must say that the date went well.",
+        "pos_master_winner"  : "Nice to feel like a winner!",
+        "pos_deal"           : "Good deal. Now I have more sparks, which can be spent on something nice!",
+        "pos_wealth"         : "It's great when you do not need to limit yourself to money.",
+        "pos_kannabis"       : "Cough-cough… This weed is pretty decent I must say… A sudden calmness and serenity, but collecting thoughts together now is difficult…",
+        "pos_drunk"          : "Now I'm drunk and I feel that this rotten world full of fucking cannibals and sadistic bastards is not so bad! And I am also not such a bastard…",
+        "pos_opium"          : "Essence of oblivion gives peace and relief from all worries. I don't worry about anything right now, except that it can not last forever.",
+        "pos_bahus"          : "Why do I want to bite the shield? And why is it such a positive feeling? Nyaaaaarrrrgh!!!!",
+        "pos_master_precious": "This magic decoration is perfectly uplifting. When I touch it I immediately calm down and the world seems better. It is just so lovely!"
+    },
+    "bad_mood": {
+        "neg_master_loser"   : "I hate to lose. Although it is not my fault, the slave should have done better!",
+        "neg_boring"         : "I'm booooooored… You can not always just work and fuck. It's necessary to have some fun!",
+        "neg_tired"          : "Uuuuuhhhh… I'm tired. It is necessary to have a good rest, otherwise it's easy to lose health.",
+        "neg_drunk"          : "My head aches and mouth is dry. I need a drink. It is urgent to have a drink… there should have been a bottle somewhere in the closet…",
+        "neg_wounded"        : "My wounds ache under the bandages. Every wrong move hurts.",
+        "neg_no_koffe"       : "My eyes droop. Where is my morning cup of kamra?",
+        "neg_no_opium"       : "I'm having agonies. I'll start climbing the wall at this rate. Feels like I'll fucking die if oblivion is not urgently delivered.",
+        "neg_no_meth"        : "Oh, I feel shitty. Need to recover with the use of fairies' pollen - it'll get better immediately and the world will become colorful again.",
+        "neg_softcore"       : "Looks like I had too much sex. I had a blast but I feel depleted.",
+        "neg_boner"          : "My pants are bursting from the boner. I need urgently to relieve stress.",
+        "neg_blazing"        : "Why did I have to play chaste and ignore my sexual desires? Now it hurts like hell, I need to be relieved or it'll drive me insane!",
+        "neg_dirty"          : "Ugh, I stink. It is necessary to wash, I disgust myself.",
+        "neg_master_ill"     : "Damn it. My dick drips and burns whenever I go to the toilet. Some of these whores infected me with rotphilis!",
+        "neg_cleaning"       : "I hate messing around in the mud. I'm a fucking slave trainer. What, there's no one in this house to clean up?!",
+        "neg_cook"           : "To eat properly, I have to tinker in the kitchen with pans and dishes. What the hell?",
+        "neg_food"           : "This is some kind of shit, not food. Why do I eat worse than some slaves?",
+        "neg_housing"        : "I live in a decrepit hovel. No conditions for work and rest.",
+        "neg_house_mess"     : "The house is a dirty mess. Just disgusting to be in here.",
+        "neg_wealth"         : "I live just like some kind of beggar. Every penny has to be considered. I'm fed up with this!",
+        "neg_accounts"       : "I have to engage in all the paper work. Need a secretary!",
+        "neg_worn_clothes"   : "My clothes will not do! Just how long can I wash and mend them? I need to update my wardrobe.",
+        "neg_master_cloth"   : "These clothes are very impractical. Just how long will I need to dress up like this?",
+        "neg_alone"          : "I don't have a single slave at the moment. Somehow, it feels so lonely…",
+        "neg_escape"         : "My slave ran away overnight while I was asleep. What a waste of money and time. Now I have to buy a new slave.",
+        "neg_slave_suicidal" : "The ungrateful wretch tried to kill herself! My assistant managed to stop her, but no one slept well last night.",
+        "neg_slave_died"     : "I didn't save the slave. Maybe I should have taken her to the hospital… Now it's too late.",
+        "neg_slave_killed"   : "The slave died in training. I must be more careful with the merchandise in the future.",
+        "neg_slave_starved"  : "I should have fed the slave more. Now I have to take on a new one…",
+        "neg_rebell"         : "Slave doesn't listen to me at all. There's still a lot of work to be done…",
+        "neg_grumpy"         : "Damn, what a dull person my slave is! I don't even want to work - boredom.",
+        "neg_master_precious": "What a pity that I had to take my magic decoration off. It is my precious! I need to put it back and never take it off."
+    }
+}
 
 
 ###############################################################################################################################################################################################################
@@ -433,7 +493,7 @@ default brand_reputation_experience_value_6 = 0
 default guild_reputation_experience_value_7 = 0
 #default standard_of_living_experience_value_8 = 0
 #default hygiene_experience_value_9 = 0
-default mood_experience_value_10 = 0
+#default mood_experience_value_10 = 0
 default injuries_experience_value_11 = 0
 default teaching_experience_value_12 = 0
 default stewardship_experience_value_13 = 0
@@ -470,3 +530,69 @@ default sparks_37 =""
 default mc ="Jack"
 default characterOnlyNameIndex = 0
 default master_style = 0
+default master_worn_bonus = 0
+default master_temporal_mood = 0
+default master_past_mood = 0
+default master_screen_text = ""
+default description_master_attributes_track_value = ""
+default master_mood_state ={
+    "good_mood": {
+        "pos_energy"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_new_slave"      : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_housing"        : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_house_clean"    : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_master_cloth"   : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_self_clean"     : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_toilet"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_nice_slave"     : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_massage"        : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_good_morning"   : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_satisfied"      : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_optimism"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_good_pet"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_show"           : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_self_food"      : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_date"           : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_master_winner"  : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_deal"           : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_wealth"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_kannabis"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_drunk"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_opium"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_bahus"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "pos_master_precious": {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1}
+    },
+    "bad_mood": {
+        "neg_master_loser"   : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_boring"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_tired"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_drunk"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_wounded"        : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_no_koffe"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_no_opium"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_no_meth"        : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_softcore"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_boner"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_blazing"        : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_dirty"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_master_ill"     : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_cleaning"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_cook"           : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_food"           : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_housing"        : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_house_mess"     : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_wealth"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_accounts"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_worn_clothes"   : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_master_cloth"   : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_alone"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_escape"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_slave_suicidal" : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_slave_died"     : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_slave_killed"   : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_slave_starved"  : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_rebell"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_grumpy"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_master_precious": {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1}
+    }
+}

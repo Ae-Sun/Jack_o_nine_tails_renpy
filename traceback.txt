@@ -1,74 +1,26 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/home.rpy", line 624, in script
-    call screen master_storage()
-  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
-    store._return = renpy.call_screen(name, *args, **kwargs)
-  File "game/home.rpy", line 3614, in execute
-    screen description_master_attributes():
-  File "game/home.rpy", line 3614, in execute
-    screen description_master_attributes():
-  File "game/home.rpy", line 3617, in execute
-    if description_master_attributes_track_value == "STRENGTH":
-  File "game/home.rpy", line 3659, in execute
-    frame:
-  File "game/home.rpy", line 3662, in execute
-    text dic_mc_attribute["STANDARD OF LIVING"][standard_of_living_value_8] + " " + dic_slave_tier_classification[standard_of_living_value_8] + " | " + str(standard_of_living_experience_value_8) + "/" + str(dic_master_cap["STANDARD OF LIVING"][standard_of_living_value_8]) style "description_slave_attributes_frame_text"
-  File "game/home.rpy", line 3662, in <module>
-    text dic_mc_attribute["STANDARD OF LIVING"][standard_of_living_value_8] + " " + dic_slave_tier_classification[standard_of_living_value_8] + " | " + str(standard_of_living_experience_value_8) + "/" + str(dic_master_cap["STANDARD OF LIVING"][standard_of_living_value_8]) style "description_slave_attributes_frame_text"
-KeyError: 'STANDARD OF LIVING'
+  File "game/home.rpy", line 449, in script
+    python:
+  File "game/home.rpy", line 478, in <module>
+    if master_mood_state["good_mood"][key]["active"]:
+TypeError: 'bool' object is not subscriptable
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/home.rpy", line 624, in script
-    call screen master_storage()
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 1987, in execute
-    self.call("execute")
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 1966, in call
-    return renpy.statements.call(method, parsed, *args, **kwargs)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\statements.py", line 374, in call
-    return method(parsed, *args, **kwargs)
-  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
-    store._return = renpy.call_screen(name, *args, **kwargs)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\exports\statementexports.py", line 345, in call_screen
-    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ui.py", line 301, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2218, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in interact_core
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 480, in visit_all
-    callback(self)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in <lambda>
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 491, in per_interact
-    self.update()
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 700, in update
-    self.screen.function(**self.scope)
-  File "game/home.rpy", line 3614, in execute
-    screen description_master_attributes():
-  File "game/home.rpy", line 3614, in execute
-    screen description_master_attributes():
-  File "game/home.rpy", line 3617, in execute
-    if description_master_attributes_track_value == "STRENGTH":
-  File "game/home.rpy", line 3659, in execute
-    frame:
-  File "game/home.rpy", line 3662, in execute
-    text dic_mc_attribute["STANDARD OF LIVING"][standard_of_living_value_8] + " " + dic_slave_tier_classification[standard_of_living_value_8] + " | " + str(standard_of_living_experience_value_8) + "/" + str(dic_master_cap["STANDARD OF LIVING"][standard_of_living_value_8]) style "description_slave_attributes_frame_text"
-  File "game/home.rpy", line 3662, in <module>
-    text dic_mc_attribute["STANDARD OF LIVING"][standard_of_living_value_8] + " " + dic_slave_tier_classification[standard_of_living_value_8] + " | " + str(standard_of_living_experience_value_8) + "/" + str(dic_master_cap["STANDARD OF LIVING"][standard_of_living_value_8]) style "description_slave_attributes_frame_text"
-KeyError: 'STANDARD OF LIVING'
+  File "game/home.rpy", line 449, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 478, in <module>
+    if master_mood_state["good_mood"][key]["active"]:
+TypeError: 'bool' object is not subscriptable
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
 JONT Port by Rec3ks ver. 0.0.49
-Tue Jul 22 19:37:26 2025
+Wed Jul 23 21:15:56 2025
