@@ -888,7 +888,7 @@ label choose_inicial_girl:
                     all_girls_list[girl_index]["attributes"]["pride"] -= 1         
                 if all_girls_list[girl_index]["attributes"]["nature"] < 5:
                     all_girls_list[girl_index]["attributes"]["nature"] += 1    
-        # WIP TRIBU AND OCUPATION
+        # TODO TRIBU AND OCUPATION
         
         
         

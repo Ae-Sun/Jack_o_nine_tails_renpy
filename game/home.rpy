@@ -55,7 +55,14 @@ default slave_escape_type = 0
 default cryostore_ingredients = 0
 default cryostore_ingredients_max = 0
 default laboratory_ingredients = 0
+default master_objectives_index = ""
 default house_items = 0
+default guild_contract = {
+    "active": False,
+    "rank" : "D-",
+    "specialization": "Nah",
+    "time" : 0
+}
 default home_estate = {
     "kitchen": {
         "Deplorable kitchen": 0,
@@ -284,7 +291,15 @@ label iniciation_label:
             $ mc_image = dic_custom_character_selection[mc][0]
             $ mc_image2 = dic_custom_character_selection[mc][1]
             $ mc = dic_mc_inicial_stats[mc][0]
-            #WIP need to add sepia ver not hoved ver
+            if faction_36 == "Camira Great House":
+                $ master_house_reputation["camira_house"] = 1
+            if faction_36 == "Serpis Great House":
+                $ master_house_reputation["serpis_house"] = 1
+            if faction_36 == "Taurus Great House":
+                $ master_house_reputation["taurus_house"] = 1
+            if faction_36 == "Corvus Great House":
+                $ master_house_reputation["corvus_house"] = 1
+            #TODO need to add sepia ver not hoved ver
         else:
             $ mc_image = dic_custom_character_selection[dic_charactersOnlyName[characterOnlyNameIndex]][0]
             $ mc_image2 = dic_custom_character_selection[dic_charactersOnlyName[characterOnlyNameIndex]][1]
@@ -343,7 +358,7 @@ label next_day_label:
                                 if all_girls_list[girl_index]["conscience"]:
                                     if all_girls_list[girl_index]["assistant"]:
                                         n += all_girls_list[girl_index]["attributes"]["intelligence"] + all_girls_list[girl_index]["aura"]["devotion"]
-                            ### need assistant supervision code  - WIP
+                            ### need assistant supervision code  - TODO
                             roll = random.randint(1, n)
                             if roll == 1:
                                 if all_girls_list[girl_index]["aura"]["despair"] > 0:
@@ -376,7 +391,7 @@ label next_day_label:
                         else:
                             all_girls_list[girl_index]["suicide_rate"] = min(all_girls_list[girl_index]["suicide_rate"] - 3, 0)
                 #if not all_girls_list[girl_index]["assistant"]:
-                    # WIP Cooking rule
+                    # TODO Cooking rule
                     #if home_estate["kitchen"] != 0: 
                 if all_girls_list[girl_index]["assistant"]:
                     if all_girls_list[girl_index]["attributes"]["nature"] < 3:
@@ -661,7 +676,7 @@ label Home:
                                 all_girls_list[girl_index]["psy_status"] = "docile"
                             if maxmotivation == all_girls_list[girl_index]["arousal"] and all_girls_list[girl_index]["aura"]["devotion"] > 0:
                                 all_girls_list[girl_index]["psy_status"] = "horny"
-                    # WIP            
+                    # TODO            
                     # if dynslave_state = CONST_INT['slave_exist']:
                     # 	! state check is conscious only - ImperatorAugustus
                     # 	! carry over +0.2 mood for each level of previous day mood that was above -5 (+0.2 at Dysphoric, +0.4 at Sullen, +0.6 at Melancholic, +0.8 at Pessimistic, +1 at Calm, +2 at Ecstatic)
@@ -755,6 +770,16 @@ label Home:
         hide screen home_attributes_menu    
         show screen master_attributes_screen()
         call screen master_storage()
+    elif current_menu == 201:
+        hide screen sparks_menu
+        hide screen home_attributes_menu
+        show screen master_attributes_screen()
+        call screen master_objectives()
+    elif current_menu == 202:
+        hide screen sparks_menu
+        hide screen home_attributes_menu
+        show screen master_attributes_screen()
+        call screen master_equipment_menu()
 label slave_rebellion_fight_label:
     if slave_rebellion_attack:
         $ slave_rebellion_attack = False
@@ -2141,7 +2166,6 @@ screen slave_equipment_menu():
                             else:
                                 text str(inventory[inventory_type[equipment_choice][values]]) xalign 0.5:
                                     style "slave_equipment_menu_button_text"
-
     vbox:
         pos(0.62,0.068)
         spacing -2  
@@ -3327,7 +3351,7 @@ screen mood_attributes():
             textbutton dic_slave_mood_show["mood"][values] anchor (0.5,0.5):
                 style "attribute_mood"
                 action NullAction()
-                #WIP add hoved effect, someday maybe -rec3ks
+                #TODO add hoved effect, someday maybe -rec3ks
     text " Press space to close this window.":
         pos (0.33, 0.65)
         color "#191970"
@@ -3338,7 +3362,7 @@ screen mood_attributes():
         hover "buttons/ok-icon_hover.webp"
         action Hide("mood_attributes"),Show("mood_attributes2")
     key "K_SPACE" action Hide("mood_attributes"),Show("mood_attributes2")
-    #WIP need mood_attrbutes 2 
+    #TODO need mood_attrbutes 2 
 screen mood_attributes2():
     zorder 5
     add "gui/confirm_frame.png" at truecenter
@@ -3358,7 +3382,7 @@ screen mood_attributes2():
         action Hide("mood_attributes2"),Jump(infobox_jump)
     key "K_SPACE" action Hide("mood_attributes2"),Jump(infobox_jump)
 screen master_attributes_screen():
-    key "K_SPACE" action SetVariable("current_menu", 0),Hide("master_attributes_screen"),SetVariable("master_screen_text",""),Jump("Home")
+    key "K_SPACE" action SetVariable("current_menu", 0),Hide("master_attributes_screen"),Hide("master_objectives"),Hide("master_objectives2"),SetVariable("master_screen_text",""),Jump("Home")
     add bgstyle3 xsize 1280 ysize 720
     text dic_master_screen_text[master_screen_text] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.21,0.82) xmaximum 750
     imagebutton:
@@ -3746,7 +3770,6 @@ screen master_attributes_screen():
         action Show("msg", msg_text="Buyers look beyond rank and specialization. Most expect charm (see Anatomy tab) to match or exceed rank. Most reject slaves who are exhausted, pregnant, wounded or recovering from medical procedures. Some have other requirements. If a buyer rejects a slave for lack of charm, you can try again after a decade.")
 screen description_master_attributes():
     $ curx, cury = renpy.get_mouse_pos()
-    # WIP
     if description_master_attributes_track_value == "STRENGTH":
         frame:
             pos(curx + 150,cury)
@@ -3880,7 +3903,6 @@ screen description_master_attributes():
             pos(curx - 150, cury)
             style "description_slave_attributes_frame"
             text dic_mc_attribute["FETISHISM"][fetishism_value_24] + " " + dic_slave_tier_classification[fetishism_value_24] + " | " + str(fetishism_experience_value_24) + "/" + str(dic_master_cap["FETISHISM"][fetishism_value_24]) style "description_slave_attributes_frame_text"
-
 screen master_storage():
     add "bg/page_blank.webp" xsize 795 ysize 535 pos(0.5028,0.42) anchor (0.5,0.5)
     vbox:
@@ -3931,3 +3953,92 @@ screen master_storage():
         add "spacer" size (0,20)
         for values in storage["house"]["sex_items"]:
             text str(storage["house"]["sex_items"][values]) size 16 color "#191970" font "fonts/Segoe Print.ttf"
+screen master_objectives():
+    key "K_SPACE" action SetVariable("current_menu", 0),Hide("master_attributes_screen"),SetVariable("master_screen_text",""),Jump("Home")
+    add "bg/page_blank.webp" xsize 795 ysize 535 pos(0.5028,0.42) anchor (0.5,0.5)
+    vbox:
+        pos(0.22,0.068)
+        spacing 10 
+        if guild_contract["active"]:
+            textbutton "I need to complete the Guild contract":
+                style "attribute_button_custom4"
+                action Hide("master_objectives"),SetVariable("master_objectives_index", "guild_contract"),Show("master_objectives2")
+        if is_tutorial:
+            textbutton "I need to complete the Guild examination":
+                style "attribute_button_custom4"
+                action Hide("master_objectives"),SetVariable("master_objectives_index", "guild_examination"),Show("master_objectives2")
+        else:
+            textbutton "I need to continually work on my reputation":
+                style "attribute_button_custom4"
+                action Hide("master_objectives"),SetVariable("master_objectives_index", "reputation"),Show("master_objectives2")
+            textbutton "Very good idea to achieve the status of a patrician":
+                style "attribute_button_custom4"
+                action Hide("master_objectives"),SetVariable("master_objectives_index", "patrician"),Show("master_objectives2")
+        textbutton "Specialization Requirements":
+                style "attribute_button_custom4"
+                action Hide("master_objectives"),SetVariable("master_objectives_index", "specialization"),Show("master_objectives2")
+screen master_objectives2():
+    add "bg/page_blank.webp" xsize 795 ysize 535 pos(0.5028,0.42) anchor (0.5,0.5)
+    key "K_SPACE" action Hide("master_objectives2"),Show("master_objectives"),Jump("Home")
+    vbox:
+        pos(0.22,0.068)
+        spacing 10
+        if master_objectives_index == "guild_contract":
+            text "Wip"
+            # TODO: Add Guild Contract
+            # text "I received a contract from the Guild for training a slave as {{color=#187700}}{guild_contract["specialization"]}{{/color}}. She must meet the rating{color=#187700}{guild_contract["rank"]}{/color} as requested. I can bring any qualified slave to complete the contract, not only the one that was provided." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            # text "To prepare a slave for a specific specialization, I need to train her profile skills to at least {guild_contract["rank"]} level. These skills should also meet or exceed the slave's rating. If I have an assistant, she will tell me when the slave meets specialization requirements." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            # text "Usual time limit on the contract (after this, the speed award turns into a penalty):" size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            # text "When ordering {color=#187700}D-{/color} rank: {u}{color=#187700}{contract_time[1]}{/color}{/u} days,  When ordering {u}{color=#187700}{rating[2]}{/color}{/u}-rank: {u}{color=#187700}{contract_time[2]}{/color}{/u} days." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            # text "When ordering {color=#187700}C-{/color} rank: {u}{color=#187700}{contract_time[3]}{/color}{/u} days,  When ordering {u}{color=#187700}{rating[4]}{/color}{/u}-rank: {u}{color=#187700}{contract_time[4]}{/color}{/u} days." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            # text "When ordering {color=#187700}B-{/color} rank: {u}{color=#187700}{contract_time[5]}{/color}{/u} days,  When ordering {u}{color=#187700}{rating[6]}{/color}{/u}-rank: {u}{color=#187700}{contract_time[6]}{/color}{/u} days." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            # text "When ordering {color=#187700}A-{/color} rank: {u}{color=#187700}{contract_time[7]}{/color}{/u} days,  When ordering {u}{color=#187700}{rating[8]}{/color}{/u}-rank: {u}{color=#187700}{contract_time[8]}{/color}{/u} days." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            # text "When ordering {color=#187700}S-{/color} rank: {u}{color=#187700}{contract_time[9]}{/color}{/u} days,  When ordering {u}{color=#187700}{rating[10]}{/color}{/u}-rank: {u}{color=#187700}{contract_time[10]}{/color}{/u} days." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+
+        if master_objectives_index == "guild_examination":
+            text "To complete the Guild examination, I must raise the rating of my slave at least to {color=#6B0084}C+ rank{/color}" size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+        if master_objectives_index == "reputation":
+            textbutton dic_master_reputation_objectives["brand_fame"][reputation_value_1] xmaximum 750 :
+                style "attribute_button_custom" + str(reputation_value_1 +1)
+            textbutton dic_master_reputation_objectives["camira_fame"][reputation_value_1] xmaximum 750 :
+                style "attribute_button_custom" + str(master_house_reputation["camira_house"] +1)
+            textbutton dic_master_reputation_objectives["serpis_fame"][reputation_value_1] xmaximum 750 :
+                style "attribute_button_custom" + str(master_house_reputation["serpis_house"] +1)
+            textbutton dic_master_reputation_objectives["taurus_fame"][reputation_value_1] xmaximum 750 :
+                style "attribute_button_custom" + str(master_house_reputation["taurus_house"] +1)
+            textbutton dic_master_reputation_objectives["corvus_fame"][reputation_value_1] xmaximum 750 :
+                style "attribute_button_custom" + str(master_house_reputation["corvus_house"] +1)
+        if master_objectives_index == "patrician":
+            text "   In Rome, there are five persons who are able to give me the status of patrician and lead me to the category of honorary citizens:" size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            add "spacer" size (0,5)
+            text "Pope Ioann can give me the status of patrician of White Town. To gain his favor, I must have a very famous brand and enlist the support of one of the Cardinals." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            add "spacer" size (0,5)
+            text "If the Mistress of Camira House accepts me into her pack of 'dragons' I will be a big shot among non-humans. I just need to remember about their feud with the Taurus House." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            add "spacer" size (0,5)
+            text "The President of Serpis House can make me an honorary citizen if I earn the trust of the Serpents. The main thing is not to be too close to the undead of the Corvus House." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            add "spacer" size (0,5)
+            text "The King of Taurus House can initiate me into knighthood. I need to remember that the Bulls do not like beastmen. Close relationship with the Camira House shuts this way for me." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            add "spacer" size (0,5)
+            text "Finally, I can turn to the Prince of Corvus House. A title of nobility from the undead is a very important acquisition, but then I should not get too close to the Serpis House." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+        if master_objectives_index == "specialization":
+            text "All skills and attributes required by a specialization must be at least B+ in level and should meet or exceed the slave's rating. If I have an assistant, she will tell me when my slave meets specialization requirements." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            text "1. {u}Servant Specialization{/u} - Maid and Cooking" size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            add "spacer" size (0,-15)
+            text "2. {u}Assistant Specialization{/u} - Secretary and Elocution" size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            add "spacer" size (0,-15)
+            text "3. {u}Witch Doctor Specialization{/u} - Nursing, Alchemy and Witchcraft" size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            add "spacer" size (0,-15)
+            text "4. {u}Gladiatrix Specialization{/u} - Gladiatrix, Athletics, Nature and Temperament" size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            add "spacer" size (0,-15)
+            text "5. {u}Artist Specialization{/u} - Dancing, Music and Painting" size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            add "spacer" size (0,-15)
+            text "6. {u}Pet Ponygirl Specialization{/u} - Pet and Pony Racing" size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            add "spacer" size (0,-15)
+            text "7. {u}Cow Specialization{/u} - The slave must be accustomed to living as a cow, this being represented by a cow 'skill' (which is a big word)." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            add "spacer" size (0,-15)
+            text "8. {u}Concubine Specialization{/u} - Petting, Oral Pleasure, Demonstration and Penetration" size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+            text "Most customers requesting a concubine slave want her to be thin (Model or Slender physique). They also want her Beauty to be at least B+ and equal in level to her rating." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
+screen master_equipment_menu():
+    add "bg/page_blank.webp" xsize 795 ysize 535 pos(0.5028,0.42) anchor (0.5,0.5)
+    add equipment_choice_image + ".webp" xsize 160 ysize 120 pos(0.24,0.815)
+    text equipment_choice_image_text size 15 color "#000000" font "fonts/Consolas.ttf" pos(0.40,0.82) xmaximum 500

@@ -415,7 +415,52 @@ define dic_master_mood = {
         "neg_master_precious": "What a pity that I had to take my magic decoration off. It is my precious! I need to put it back and never take it off."
     }
 }
-
+define dic_master_reputation_objectives = {
+    "camira_fame" : [
+        "I am unknown by non-humans from the Camira House. But they will recognize me if I make at least one personal contract with a representative of this house. Some resident in the Quarter of the Outcasts must need a D+ slave!",
+        "Thanks to my customers, I have received permission to live in the Quarter of the Outcasts. But I need to find more customers to start to get respect. I must find a resident there who needs a C+ slave.",
+        "I know someone in the Camira House, but to get real influence and access to the Tierra del Citadel, I should make friends with some of the most influential non-humans. I must find one who wants a B+ slave.",
+        "I have enough friends in the Camira House to get a pass to the Tierra del Citadel and be introduced to the most notable representatives of the House. I can foresee great bargains!",
+        "Thanks to my friendship with the highest hierarchy of Camira House, I can get an interview with Mistress Tiamat, the leader of the Camira House.",
+        "Tiamat personally recognized me as \"one of her flock\". This means that the Camira House will stand up for me in any difficult situation!",
+        "Tiamat was pleased with her order. Nevertheless, I cannot become a patrician of Camira House, because I'm already a patrician.",
+    ],
+    "taurus_fame" :[
+        "I have no relationship with the Taurus House. I ought to do direct sales in their territory. Some resident of the Bull Quarter must need a D+ slave!",
+        "Someone from Taurus House heard of me already. That is enough to get permission to live in the Quarter of the Bull, but nothing more. I must find a resident there who needs a C+ slave.",
+        "I made some useful contacts with the representatives of the Taurus House. But to be admitted to the White Palace, it is necessary to make someone important my customer. I must find one who wants a B+ slave.",
+        "I have enough influential friends in the Taurus House to get access to the White Palace and start working with elite buyers!",
+        "Now that I made friends with one of the top members of the Taurus House, I can get an audience with the King himself!",
+        "The King personally initiated me into the knighthood and this means that now I am not just a man - Taurus House is behind me!",
+        "The King was pleased with his order. Nevertheless, I cannot become a patrician of Taurus House, because I'm already a patrician.",
+    ],
+    "serpis_fame" : [
+        "I am almost unknown to representatives of Serpis House. If I find at least a seedy client in the Serpentine Quarter - they will hear about me. Some resident in the Anthill must need a D+ slave!",
+        "I have enough contacts in the Serpis House to obtain a residence permit in the Anthill, but no more. I need to work on my reputation. I must find a resident there who needs a C+ slave.",
+        "Now I have a couple of friends, who are members of the Serpis House, but this is still not enough to access the Administrative Spires. It will be necessary to sell a slave to one of those big shots. I must find one who wants a B+ slave.",
+        "I have made many useful connections in the Serpis House and I have enough of influence to go to the Administrative Spires and meet with those who run that place.",
+        "Thanks to my acquaintance with the highest ranks of the Serpis House, I can get an audience with Mr. President and offer him my goods. A big step forward!",
+        "I received a certificate of Serpis House honorary citizen personally from the hands of Mr. President. This is not a mere formality - there is real strength behind me now!",
+        "The President was pleased with his order. Nevertheless, I cannot become a patrician of Serpis House, because I'm already a patrician.",
+    ],
+    "corvus_fame" : [
+        "The undead do not notice me, as if I do not exist at all. If I want to make a name in the Corvus House, I need someone from the ghouls to be my client. Some resident of the Necropolis must need a D+ slave!",
+        "Usually undead do not allow people like me to settle in the Necropolis, but I managed to achieve an exclusive status. However in the Corvus House I am still barely known. I must find a resident there who needs a C+ slave.",
+        "I have some of acquaintances in the Corvus House, but they are not enough to gain entry to the Raven Tower. I need some of the nobles to be my clients. I must find one who wants a B+ slave.",
+        "My fame as a supplier of slaves reached the Raven Tower and now I have the opportunity to meet with the high-ranking undead from Corvus House.",
+        "Because I earned approval from the senior hierarchy of Corvus House, I have the opportunity to ask for an audience with the Prince of the Undead himself!",
+        "The Prince of the Undead bestowed upon me a title of nobility. Now Corvus House will be on my side in any difficult situation!",
+        "The Prince was pleased with his order. Nevertheless, I cannot become a patrician of Corvus House, because I'm already a patrician.",
+    ],
+    "brand_fame" : [
+        "My brand is not known by anybody and this is bad for the price of slaves. I need to sell some slaves under my own brand or make them win competitions for me!",
+        "Among all the brands of my guild, mine is valued less than others, but if I sell good slaves under my own brand to influential customers, it will quickly change.",
+        "At least my brand is already known, even though it does not add special prices on slaves that I deliver. It is necessary to improve the quality of my goods to C+ or better!",
+        "I am known as a supplier of quality products and girls with my brand on a hip are worth something. But this is not the major league yet. It is necessary to improve the quality of my goods to B+ or better!",
+        "Work on my image has paid off. My brand is now known by everyone and I am recognized as a great trainer. Selling goods has never been so easy! But this is not the limit. I must improve the quality of my goods to A+ or better!",
+        "Maybe I am overestimating myself, but I think that my brand is the best among all members of the guild. Even if I put it on a piece of shit, I will get sparks for that shit!",
+    ]
+}
 
 ###############################################################################################################################################################################################################
 ###############################################################################################################################################################################################################
@@ -512,12 +557,12 @@ default master_supermacy = 0
 ############################################ textvalue track - herculean
 ############################################ value track - 5
 ############################################ number value track 999/999
-default armour_25 = ""
-default Shoulder_26 = ""
-default left_hand_27 = ""
-default righ_hand_28 = ""
-default sleeve_holster_29 = ""
-default boot_holster_30 = ""
+# default armour_25 = ""
+# default Shoulder_26 = ""
+# default left_hand_27 = ""
+# default righ_hand_28 = ""
+# default sleeve_holster_29 = ""
+# default boot_holster_30 = ""
 default clothes_31 = ""
 default headgear_32 = ""
 default earring_33 = ""
@@ -535,7 +580,7 @@ default master_temporal_mood = 0
 default master_past_mood = 0
 default master_screen_text = ""
 default description_master_attributes_track_value = ""
-default master_mood_state ={
+default master_mood_state = {
     "good_mood": {
         "pos_energy"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
         "pos_new_slave"      : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
@@ -595,4 +640,28 @@ default master_mood_state ={
         "neg_grumpy"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
         "neg_master_precious": {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1}
     }
+}
+default master_house_reputation = {
+    "camira_house": 0,
+    "serpis_house": 0,
+    "taurus_house": 0,
+    "corvus_house": 0,
+}
+default master_combat_equipment = {
+    "armour":"Without armour",
+    "weapon":"Fist",
+    "weapon2":"Fist",
+    "amulet":"",
+    "ring":"",
+}
+default master_equipment = {
+    "clothes":"Worn clothes",
+    "headgear":"",
+    "earrings":"",
+    "neck":"",
+    "accessories1":"",
+    "accessories2":"",
+    "accessories3":"",
+    "accessories4":"",
+    "accessories5":"",
 }

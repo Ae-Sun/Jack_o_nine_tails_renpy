@@ -135,7 +135,7 @@ define dic_spellbook_info = {
     "adverto": "Imposes magic indelibly as a seal on the victim's body. This seal will banish any foreign lifeforms from the body and restore her energy at the time of casting, and will help find the target if she runs away."
 }
 define dic_home_state = {
-    "slum_house": {
+    "poor_house": {
         "prestige": 0,
         "slaves_rooms":{
             "squalid_room": 1,
@@ -151,7 +151,7 @@ define dic_home_state = {
             "rent_increase": 2
         }
     },
-    "kamira_house":{
+    "middle_class_down_house":{
         "prestige": 1,
         "slaves_rooms":{
             "squalid_room": 0,
@@ -167,7 +167,7 @@ define dic_home_state = {
             "rent_increase": 5
         }
     },
-    "serpis_house":{
+    "middle_class_up_house":{
         "prestige": 2,
         "slaves_rooms":{
             "squalid_room": 0,
@@ -183,7 +183,7 @@ define dic_home_state = {
             "rent_increase": 10
         }
     },
-    "taurus_house":{
+    "rich_down_house":{
         "prestige": 3,
         "slaves_rooms":{
             "squalid_room": 0,
@@ -199,7 +199,7 @@ define dic_home_state = {
             "rent_increase": 15
         }
     },
-    "korvus_house":{
+    "rich_up_house":{
         "prestige": 4,
         "slaves_rooms":{
             "squalid_room": 0,
@@ -1582,6 +1582,32 @@ define spells_books_description = {
         "cast": "You direct the force of Sparks in your hand, and on the palm of your hand begins to brightly shine the symbol of your personal brand. One touch to the slave’s thigh and the symbol appears on her delicate skin, staying there forever.",
     }
 }
+define dic_contract_time_normal =  [
+    0,    # 0 - F-
+    40,   # 1 - D-
+    45,   # 2 - D+
+    50,   # 3 - C-
+    55,   # 4 - C+
+    60,   # 5 - B-
+    65,   # 6 - B+
+    70,   # 7 - A-
+    80,   # 8 - A+
+    100,  # 9 - S-
+    120   # 10 - S+
+]
+define dic_contract_time_hard =  [
+    0,   # 0 - F-
+    20,  # 1 - D-
+    22,  # 2 - D+
+    25,  # 3 - C-
+    27,  # 4 - C+
+    30,  # 5 - B-
+    32,  # 6 - B+
+    35,  # 7 - A-
+    40,  # 8 - A+
+    50,  # 9 - S-
+    60   # 10 - S+
+]
 define tips = {
     1: "You can navigate up and down in the clothing equipment menu using the 1 and 2 keys.",
     2: "The first and second Devotion points each grant extra +2 Obedience on maximum difficulty.",
@@ -1605,5 +1631,4 @@ define tips = {
     20: "Clothes can give you 2 type of mood, flat mood and moodlet. Both give or reduce mood, but flat mood can stack, moodlet if it's the same not. You can consult the moodlet interacting with your slave",
     21: "Your aura shine brigter agaisnt slaves that got ever beated or ever dominius dictated ",
     22: ""
-
 }
