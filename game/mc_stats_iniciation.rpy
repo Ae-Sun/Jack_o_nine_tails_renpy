@@ -267,7 +267,7 @@ define dic_master_items = {
         "name": "Raven Crown",
         "price": 0,
         "desc": "This artifact, called the Raven Crown by its creator, Master Valios, grants permanent auspex, greater insight when looking at others, and strengthens the aura.",
-        "image": "",
+        "image": "scene/item/clear_small",
         "size": 0,
         "style": 0,
         "item_property": False,
@@ -282,7 +282,7 @@ define dic_master_items = {
         "name": "Chimaera’s Gem",
         "price": 0,
         "desc": "This earring, taken from or given to me by the strange hissing creature Garsid, increases libido, strengthens the aura and heals wounds rapidly.",
-        "image": "",
+        "image": "scene/item/clear_small",
         "size": 0,
         "style": 0,
         "item_property": False,
@@ -295,7 +295,7 @@ define dic_master_items = {
         "name": "Snake Talisman",
         "price": 0,
         "desc": "This amulet, given to me by its maker, Vujin the Wise of House Serpis, increases concentration, personality, resistance to pain and fear, and strengthens the aura of the wearer, while also blocking scanning.",
-        "image": "",
+        "image": "scene/item/clear_small",
         "size": 0,
         "style": 0,
         "item_property": False,
@@ -308,7 +308,7 @@ define dic_master_items = {
         "name": "Bull Ring",
         "price": 0,
         "desc": "This normal-looking ring, given to me by Sir Aramus of House Taurus, increases stamina and hardiness in battle and strengthens the aura of the wearer.",
-        "image": "",
+        "image": "scene/item/clear_small",
         "size": 0,
         "style": 0,
         "item_property": False,
@@ -317,6 +317,43 @@ define dic_master_items = {
             "item_supermacy_bonus": 1
         }
     }
+}
+define master_inventory_type = {
+    "clothes": [
+        "man_rugs",
+        "comfy_robes",
+        "regal_suit",
+        "fancy_suit",
+        "formal_suit",
+        "aketon",
+        "livery",
+        "medic_robes",
+        "wizard_robes"
+    ],
+    "headgear":[
+        "raven_crown"
+    ],
+    "earrings":[
+        "chimera_earring",
+    ],
+    "neck":[
+        "snake_amulet"
+    ],
+    "accessories1":[
+        "bull_ring"
+    ],
+    "accessories2":[
+        "bull_ring"
+    ],
+    "accessories3":[
+        "bull_ring"
+    ],
+    "accessories4":[
+        "bull_ring"
+    ],
+    "accessories5":[
+        "bull_ring"
+    ]
 }
 define dic_master_screen_text = {
     "":"",

@@ -1,27 +1,37 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/home.rpy", line 777, in script
-    call screen master_objectives()
+  File "game/home.rpy", line 797, in script
+    call screen master_equipment_menu()
   File "renpy/common/000statements.rpy", line 671, in execute_call_screen
     store._return = renpy.call_screen(name, *args, **kwargs)
-  File "game/home.rpy", line 3956, in execute
-    screen master_objectives():
-  File "game/home.rpy", line 3956, in execute
-    screen master_objectives():
-  File "game/home.rpy", line 3959, in execute
+  File "game/home.rpy", line 4056, in execute
+    screen master_equipment_menu():
+  File "game/home.rpy", line 4056, in execute
+    screen master_equipment_menu():
+  File "game/home.rpy", line 4303, in execute
     vbox:
-  File "game/home.rpy", line 3962, in execute
-    if guild_quest["active"]:
-  File "game/home.rpy", line 3962, in <module>
-    if guild_quest["active"]:
-NameError: name 'guild_quest' is not defined
+  File "game/home.rpy", line 4307, in execute
+    if available_options == 0:
+  File "game/home.rpy", line 4311, in execute
+    for values in master_inventory_type[equipment_choice]:
+  File "game/home.rpy", line 4312, in execute
+    if equipment_choice not in ["accessories1","accessories2","accessories3","accessories4","accessories5"]:
+  File "game/home.rpy", line 4335, in execute
+    if master_equipment[equipment_choice] != dic_master_items[values]["name"]:
+  File "game/home.rpy", line 4336, in execute
+    if inventory[values] > 0:
+  File "game/home.rpy", line 4337, in execute
+    if dic_master_items[values]["name"] not in [Master_equipment["accessories1"],Master_equipment["accessories2"],Master_equipment["accessories3"],Master_equipment["accessories4"],Master_equipment["accessories5"]]:
+  File "game/home.rpy", line 4337, in <module>
+    if dic_master_items[values]["name"] not in [Master_equipment["accessories1"],Master_equipment["accessories2"],Master_equipment["accessories3"],Master_equipment["accessories4"],Master_equipment["accessories5"]]:
+NameError: name 'Master_equipment' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/home.rpy", line 777, in script
-    call screen master_objectives()
+  File "game/home.rpy", line 797, in script
+    call screen master_equipment_menu()
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 1987, in execute
     self.call("execute")
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 1966, in call
@@ -52,19 +62,29 @@ Full traceback:
     self.update()
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 700, in update
     self.screen.function(**self.scope)
-  File "game/home.rpy", line 3956, in execute
-    screen master_objectives():
-  File "game/home.rpy", line 3956, in execute
-    screen master_objectives():
-  File "game/home.rpy", line 3959, in execute
+  File "game/home.rpy", line 4056, in execute
+    screen master_equipment_menu():
+  File "game/home.rpy", line 4056, in execute
+    screen master_equipment_menu():
+  File "game/home.rpy", line 4303, in execute
     vbox:
-  File "game/home.rpy", line 3962, in execute
-    if guild_quest["active"]:
-  File "game/home.rpy", line 3962, in <module>
-    if guild_quest["active"]:
-NameError: name 'guild_quest' is not defined
+  File "game/home.rpy", line 4307, in execute
+    if available_options == 0:
+  File "game/home.rpy", line 4311, in execute
+    for values in master_inventory_type[equipment_choice]:
+  File "game/home.rpy", line 4312, in execute
+    if equipment_choice not in ["accessories1","accessories2","accessories3","accessories4","accessories5"]:
+  File "game/home.rpy", line 4335, in execute
+    if master_equipment[equipment_choice] != dic_master_items[values]["name"]:
+  File "game/home.rpy", line 4336, in execute
+    if inventory[values] > 0:
+  File "game/home.rpy", line 4337, in execute
+    if dic_master_items[values]["name"] not in [Master_equipment["accessories1"],Master_equipment["accessories2"],Master_equipment["accessories3"],Master_equipment["accessories4"],Master_equipment["accessories5"]]:
+  File "game/home.rpy", line 4337, in <module>
+    if dic_master_items[values]["name"] not in [Master_equipment["accessories1"],Master_equipment["accessories2"],Master_equipment["accessories3"],Master_equipment["accessories4"],Master_equipment["accessories5"]]:
+NameError: name 'Master_equipment' is not defined
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
 JONT Port by Rec3ks ver. 0.0.49
-Thu Jul 24 20:37:22 2025
+Fri Jul 25 13:42:48 2025

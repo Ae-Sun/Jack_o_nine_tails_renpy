@@ -57,6 +57,8 @@ default cryostore_ingredients_max = 0
 default laboratory_ingredients = 0
 default master_objectives_index = ""
 default house_items = 0
+default master_equipment_choice_image = "scene/item/clear_small"
+default master_equipment_choice_image_text = "You can navigate up and down in the clothing equipment menu pressing the 1 and 2 keys."
 default guild_contract = {
     "active": False,
     "rank" : "D-",
@@ -194,6 +196,19 @@ default inventory = {
     "nipple_chain": 0,
     "anal_plug": 0,
     "anal_tail": 0,
+    "man_rugs": 0,
+    "comfy_robes": 0,
+    "regal_suit": 0,
+    "fancy_suit": 0,
+    "formal_suit": 0,
+    "aketon": 0,
+    "livery": 0,
+    "medic_robes": 0,
+    "wizard_robes": 0,
+    "raven_crown": 0,
+    "chimera_earring": 0,
+    "snake_amulet": 0,
+    "bull_ring": 0,
     "":0 # this is necessary -rec3ks
 }
 default storage = {
@@ -2173,12 +2188,12 @@ screen slave_equipment_menu():
         if available_options == 0:
             text "{u}Active effects:{/u}" size 14 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
             for key, values in all_girls_list[girl_index]["learning_bonus"].items(): 
-                text "{color=009FEF}{u}Learning bonus{/u}{/color}: " + "{color=#0000D8}" + str(key) + "{/color}" + " " + str(values) xalign 1.0 size 10 color "#000000" font "fonts/Segoe Print.ttf"
+                text "{color=#009FEF}{u}Learning bonus{/u}{/color}: " + "{color=#0000D8}" + str(key) + "{/color}" + " " + str(values) xalign 1.0 size 10 color "#000000" font "fonts/Segoe Print.ttf"
             for key, values in all_girls_list[girl_index]["daily_bonus"].items():
-                text "{color=009900}{u}Daily bonus{/u}{/color}: " + "{color=#0000D8}" + str(key) + "{/color}" + " " + str(values) xalign 1.0 size 10 color "#000000" font "fonts/Segoe Print.ttf"
-            text "{color=6B0084}{u}Style bonus{/u}{/color}: " + str(all_girls_list[girl_index]["style_plus"]) xalign 1.0 size 10 color "#000000" font "fonts/Segoe Print.ttf"
-            text "{color=6B0084}{u}Exotic bonus{/u}{/color}: " + str(all_girls_list[girl_index]["exotic_plus"]) xalign 1.0 size 10 color "#000000" font "fonts/Segoe Print.ttf"
-            text "{color=6B0084}{u}Mood bonus for clothes{/u}{/color}: " + str(all_girls_list[girl_index]["worn_mood"]) xalign 1.0 size 10 color "#000000" font "fonts/Segoe Print.ttf"
+                text "{color=#009900}{u}Daily bonus{/u}{/color}: " + "{color=#0000D8}" + str(key) + "{/color}" + " " + str(values) xalign 1.0 size 10 color "#000000" font "fonts/Segoe Print.ttf"
+            text "{color=#6B0084}{u}Style bonus{/u}{/color}: " + str(all_girls_list[girl_index]["style_plus"]) xalign 1.0 size 10 color "#000000" font "fonts/Segoe Print.ttf"
+            text "{color=#6B0084}{u}Exotic bonus{/u}{/color}: " + str(all_girls_list[girl_index]["exotic_plus"]) xalign 1.0 size 10 color "#000000" font "fonts/Segoe Print.ttf"
+            text "{color=#6B0084}{u}Mood bonus for clothes{/u}{/color}: " + str(all_girls_list[girl_index]["worn_mood"]) xalign 1.0 size 10 color "#000000" font "fonts/Segoe Print.ttf"
 
         elif available_options == 1:
             for values in inventory_type[equipment_choice]:
@@ -2200,7 +2215,7 @@ screen slave_equipment_menu():
                                     action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, dic_girl_clothing_full[values]["name"]),SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
                                     hovered SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"])
                                 add "aurabound.webp" size(15,15) xalign 1.0 yalign 0.5
-                        elif inventory[values] > 0:
+                        elif inventory[values]:
                             textbutton dic_girl_clothing_full[values]["name"] xalign 1.0:
                                 style "slave_equipment_menu_button2"
                                 action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, dic_girl_clothing_full[values]["name"]), SetDict(inventory, values, inventory[values] - 1), SetDict(all_girls_list[girl_index]["equipment"]["aura_bound"], values, True),SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
@@ -2209,7 +2224,7 @@ screen slave_equipment_menu():
                         else:
                             textbutton dic_girl_clothing_full[values]["name"] xalign 1.0:
                                 style "slave_equipment_menu_button"
-                                action SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]), SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"])
+                                action NullAction()
                                 hovered SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"])
 
                     else:
@@ -3388,7 +3403,7 @@ screen master_attributes_screen():
     imagebutton:
         idle "buttons/close_button.webp" pos (1004,1)
         hover "buttons/close_button_hover.webp"
-        action SetVariable("current_menu", 0),Hide("master_attributes_screen"),SetVariable("text_slave_conditions_index", "default"),SetVariable("master_screen_text",""),Jump("Home")
+        action SetVariable("current_menu", 0),Hide("master_attributes_screen"),Hide("master_objectives"),Hide("master_objectives2"),SetVariable("master_screen_text",""),Jump("Home")
     hbox:
         pos(0.475,0.01)
         anchor (0.5,0.0)
@@ -4040,5 +4055,293 @@ screen master_objectives2():
             text "Most customers requesting a concubine slave want her to be thin (Model or Slender physique). They also want her Beauty to be at least B+ and equal in level to her rating." size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
 screen master_equipment_menu():
     add "bg/page_blank.webp" xsize 795 ysize 535 pos(0.5028,0.42) anchor (0.5,0.5)
-    add equipment_choice_image + ".webp" xsize 160 ysize 120 pos(0.24,0.815)
-    text equipment_choice_image_text size 15 color "#000000" font "fonts/Consolas.ttf" pos(0.40,0.82) xmaximum 500
+    add master_equipment_choice_image + ".webp" xsize 160 ysize 120 pos(0.24,0.815)
+    text master_equipment_choice_image_text size 15 color "#000000" font "fonts/Consolas.ttf" pos(0.40,0.82) xmaximum 500
+    vbox:
+        pos(0.24,0.068)
+        text "{u}[mc.upper()] EQUIPMENT{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf"
+        if equipment_choice == "armour":
+            textbutton "{u}Armour:{/u} [master_combat_equipment['armour']]":
+                style "slave_equipment_menu_button4" 
+                action SetVariable("available_options", 2),SetVariable("equipment_choice", "armour")
+        else:
+            textbutton "{u}Armour:{/u} [master_combat_equipment['armour']]":
+                style "slave_equipment_menu_button"
+                action SetVariable("available_options", 2),SetVariable("equipment_choice", "armour")
+        if equipment_choice == "weapon":
+            textbutton "{u}Left Hand:{/u} [master_combat_equipment['weapon']]":
+                style "slave_equipment_menu_button4"
+                action SetVariable("available_options", 2),SetVariable("equipment_choice", "weapon")
+        else:
+            textbutton "{u}Left Hand:{/u} [master_combat_equipment['weapon']]":
+                style "slave_equipment_menu_button"
+                action SetVariable("available_options", 2),SetVariable("equipment_choice", "weapon")
+        if equipment_choice == "weapon2":
+            textbutton "{u}Right Hand:{/u} [master_combat_equipment['weapon2']]":
+                style "slave_equipment_menu_button4"
+                action SetVariable("available_options", 2),SetVariable("equipment_choice", "weapon2")
+        else:
+            textbutton "{u}Right Hand:{/u} [master_combat_equipment['weapon2']]":
+                style "slave_equipment_menu_button"
+                action SetVariable("available_options", 2),SetVariable("equipment_choice", "weapon2")
+        if equipment_choice == "amulet":
+            textbutton "{u}Amulet:{/u} [master_combat_equipment['amulet']]":
+                style "slave_equipment_menu_button4"
+                action SetVariable("available_options", 2),SetVariable("equipment_choice", "amulet")
+        else:
+            textbutton "{u}Amulet:{/u} [master_combat_equipment['amulet']]":
+                style "slave_equipment_menu_button"
+                action SetVariable("available_options", 2),SetVariable("equipment_choice", "amulet")
+        if equipment_choice == "ring":
+            textbutton "{u}Ring:{/u} [master_combat_equipment['ring']]":
+                style "slave_equipment_menu_button4"
+                action SetVariable("available_options", 2),SetVariable("equipment_choice", "ring")
+        else:
+            textbutton "{u}Ring:{/u} [master_combat_equipment['ring']]":
+                style "slave_equipment_menu_button"
+                action SetVariable("available_options", 2),SetVariable("equipment_choice", "ring")
+        add "spacer" size(0,20)
+        if available_options != 1:
+            textbutton "{u}Clothes:{/u} [master_equipment['clothes']]":
+                style "slave_equipment_menu_button"
+                action SetVariable("available_options", 1),SetVariable("equipment_choice", "clothes"), Jump("Home")
+            textbutton "{u}Headgear:{/u} [master_equipment['headgear']]":
+                style "slave_equipment_menu_button"
+                action SetVariable("available_options", 1),SetVariable("equipment_choice", "headgear"), Jump("Home")
+            textbutton "{u}Earrings:{/u} [master_equipment['earrings']]":
+                style "slave_equipment_menu_button"
+                action SetVariable("available_options", 1),SetVariable("equipment_choice", "earrings"), Jump("Home")
+            textbutton "{u}Neck:{/u} [master_equipment['neck']]":
+                style "slave_equipment_menu_button"
+                action SetVariable("available_options", 1),SetVariable("equipment_choice", "neck"), Jump("Home")
+            textbutton "{u}Accessories 1:{/u} [master_equipment['accessories1']]":
+                style "slave_equipment_menu_button"
+                action SetVariable("available_options", 1),SetVariable("equipment_choice", "accessories1"), Jump("Home")
+            textbutton "{u}Accessories 2:{/u} [master_equipment['accessories2']]":
+                style "slave_equipment_menu_button"
+                action SetVariable("available_options", 1),SetVariable("equipment_choice", "accessories2"), Jump("Home")
+            textbutton "{u}Accessories 3:{/u} [master_equipment['accessories3']]":
+                style "slave_equipment_menu_button"
+                action SetVariable("available_options", 1),SetVariable("equipment_choice", "accessories3"), Jump("Home")
+            textbutton "{u}Accessories 4:{/u} [master_equipment['accessories4']]":
+                style "slave_equipment_menu_button"
+                action SetVariable("available_options", 1),SetVariable("equipment_choice", "accessories4"), Jump("Home")
+            textbutton "{u}Accessories 5:{/u} [master_equipment['accessories5']]":
+                style "slave_equipment_menu_button"
+                action SetVariable("available_options", 1),SetVariable("equipment_choice", "accessories5"), Jump("Home")
+        if available_options == 1:
+            if equipment_choice == "clothes":
+                textbutton "{u}Clothes:{/u} [master_equipment['clothes']]":
+                    style "slave_equipment_menu_button4"
+                    action SetVariable("available_options", 0),SetVariable("equipment_choice", "clothes"), Jump("Home")
+            else:
+                textbutton "{u}Clothes:{/u} [master_equipment['clothes']]":
+                    style "slave_equipment_menu_button"
+                    action SetVariable("equipment_choice", "clothes"), Jump("Home")
+            if equipment_choice == "headgear":
+                textbutton "{u}Headgear:{/u} [master_equipment['headgear']]":
+                    style "slave_equipment_menu_button4"
+                    action SetVariable("available_options", 0),SetVariable("equipment_choice", "headgear"), Jump("Home")
+            else:
+                textbutton "{u}Headgear:{/u} [master_equipment['headgear']]":
+                    style "slave_equipment_menu_button"
+                    action SetVariable("equipment_choice", "headgear"), Jump("Home")
+            if equipment_choice == "earrings":
+                textbutton "{u}Earrings:{/u} [master_equipment['earrings']]":
+                    style "slave_equipment_menu_button4"
+                    action SetVariable("available_options", 0),SetVariable("equipment_choice", "earrings"), Jump("Home")
+            else:
+                textbutton "{u}Earrings:{/u} [master_equipment['earrings']]":
+                    style "slave_equipment_menu_button"
+                    action SetVariable("equipment_choice", "earrings"), Jump("Home")
+            if equipment_choice == "neck":
+                textbutton "{u}Neck:{/u} [master_equipment['neck']]":
+                    style "slave_equipment_menu_button4"
+                    action SetVariable("available_options", 0),SetVariable("equipment_choice", "neck"), Jump("Home")
+            else:
+                textbutton "{u}Neck:{/u} [master_equipment['neck']]":
+                    style "slave_equipment_menu_button"
+                    action SetVariable("equipment_choice", "neck"), Jump("Home")
+            if equipment_choice == "accessories1":
+                textbutton "{u}Accessories 1:{/u} [master_equipment['accessories1']]":
+                    style "slave_equipment_menu_button4"
+                    action SetVariable("available_options", 0),SetVariable("equipment_choice", "accessories1"), Jump("Home")
+            else:
+                textbutton "{u}Accessories 1:{/u} [master_equipment['accessories1']]":
+                    style "slave_equipment_menu_button"
+                    action SetVariable("equipment_choice", "accessories1"), Jump("Home")
+            if equipment_choice == "accessories2":
+                textbutton "{u}Accessories 2:{/u} [master_equipment['accessories2']]":
+                    style "slave_equipment_menu_button4"
+                    action SetVariable("available_options", 0),SetVariable("equipment_choice", "accessories2"), Jump("Home")
+            else:
+                textbutton "{u}Accessories 2:{/u} [master_equipment['accessories2']]":
+                    style "slave_equipment_menu_button"
+                    action SetVariable("equipment_choice", "accessories2"), Jump("Home")
+            if equipment_choice == "accessories3":
+                textbutton "{u}Accessories 3:{/u} [master_equipment['accessories3']]":
+                    style "slave_equipment_menu_button4"
+                    action SetVariable("available_options", 0),SetVariable("equipment_choice", "accessories3"), Jump("Home")
+            else:
+                textbutton "{u}Accessories 3:{/u} [master_equipment['accessories3']]":
+                    style "slave_equipment_menu_button"
+                    action SetVariable("equipment_choice", "accessories3"), Jump("Home")
+            if equipment_choice == "accessories4":
+                textbutton "{u}Accessories 4:{/u} [master_equipment['accessories4']]":
+                    style "slave_equipment_menu_button4"
+                    action SetVariable("available_options", 0),SetVariable("equipment_choice", "accessories4"), Jump("Home")
+            else:
+                textbutton "{u}Accessories 4:{/u} [master_equipment['accessories4']]":
+                    style "slave_equipment_menu_button"
+                    action SetVariable("equipment_choice", "accessories4"), Jump("Home")
+            if equipment_choice == "accessories5":
+                textbutton "{u}Accessories 5:{/u} [master_equipment['accessories5']]":
+                    style "slave_equipment_menu_button4"
+                    action SetVariable("available_options", 0),SetVariable("equipment_choice", "accessories5"), Jump("Home")
+            else:
+                textbutton "{u}Accessories 5:{/u} [master_equipment['accessories5']]":
+                    style "slave_equipment_menu_button"
+                    action SetVariable("equipment_choice", "accessories5"), Jump("Home")
+    if available_options == 0:
+        button:
+            xpos(0.62)
+            ypos(0.1)
+            xsize 200
+            ysize 515
+            action SetVariable("available_options", 1),Jump("Home")
+    if available_options == 2:
+        vbox:
+            pos(0.76,0.068)
+            anchor(1.0,0.0)
+            spacing -2
+            text "" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
+            for values in range(0,len(inventory_type[equipment_choice])):
+                if master_combat_equipment[equipment_choice] != dic_combat_full[inventory_type[equipment_choice][values]]:
+                    if equipment_choice == "armour":
+                        if values == 0:
+                            textbutton "- Remove -" xalign 1.0: 
+                                style "slave_equipment_menu_button2"
+                                action SetDict(master_combat_equipment, equipment_choice,"Without armour"),SetDict(inventory, inventory_track, inventory[inventory_track]+1),SetVariable("inventory_track", ""), Jump("Home")
+                        elif inventory[inventory_type[equipment_choice][values]] > 0:
+                            textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                                style "slave_equipment_menu_button2"
+                                action SetDict(master_combat_equipment, equipment_choice, dic_combat_full[inventory_type[equipment_choice][values]]),SetDict(inventory, inventory_type[equipment_choice][values], inventory[inventory_type[equipment_choice][values]]-1),SetVariable("inventory_track", inventory_type[equipment_choice][values]),SetDict(inventory, inventory_track, inventory[inventory_track]+1), Jump("Home")
+                        else:
+                            textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                                style "slave_equipment_menu_button"
+                                action NullAction()
+                    elif equipment_choice in ["amulet","ring"]:
+                        if values == 0:
+                            if master_combat_equipment[equipment_choice] != "":
+                                textbutton "- Remove -" xalign 1.0: 
+                                    style "slave_equipment_menu_button2"
+                                    action SetDict(master_combat_equipment, equipment_choice,""),SetDict(inventory, inventory_track, inventory[inventory_track]+1),SetVariable("inventory_track", ""),Jump("Home")
+                        elif inventory[inventory_type[equipment_choice][values]] > 0:
+                            textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                                style "slave_equipment_menu_button2"
+                                action SetDict(master_combat_equipment, equipment_choice, dic_combat_full[inventory_type[equipment_choice][values]]),SetDict(inventory, inventory_type[equipment_choice][values], inventory[inventory_type[equipment_choice][values]]-1),SetVariable("inventory_track", inventory_type[equipment_choice][values]),SetDict(inventory, inventory_track, inventory[inventory_track]+1), Jump("Home")
+                        else:
+                            textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                                style "slave_equipment_menu_button"
+                                action NullAction()
+                    elif equipment_choice == "weapon":
+                        python:
+                            if master_combat_equipment["weapon"] != "Fist":
+                                inventory_track_weapon = dic_combat_full_inv[master_combat_equipment["weapon"]]
+                            else:
+                                inventory_track_weapon = ""
+                        if master_combat_equipment["weapon2"] != dic_combat_full[inventory_type[equipment_choice][values]] or master_combat_equipment["weapon2"] == "Fist":
+                                if values == 0:
+                                    textbutton "- Remove -" xalign 1.0: 
+                                        style "slave_equipment_menu_button2"
+                                        action SetDict(master_combat_equipment, equipment_choice,"Fist"),SetDict(inventory, inventory_track_weapon, inventory[inventory_track_weapon]+1),SetVariable("inventory_track_weapon", ""),Jump("Home")
+                                elif inventory[inventory_type[equipment_choice][values]] > 0:
+                                    textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                                        style "slave_equipment_menu_button2"
+                                        action SetDict(master_combat_equipment, equipment_choice, dic_combat_full[inventory_type[equipment_choice][values]]),SetDict(inventory, inventory_type[equipment_choice][values], inventory[inventory_type[equipment_choice][values]]-1),SetVariable("inventory_track_weapon", inventory_type[equipment_choice][values]),SetDict(inventory, inventory_track_weapon, inventory[inventory_track_weapon]+1), Jump("Home")
+                                else:
+                                    textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                                        style "slave_equipment_menu_button"
+                                        action NullAction()
+                    elif equipment_choice == "weapon2":
+                        python:
+                            if master_combat_equipment["weapon2"] != "Fist":
+                                inventory_track_weapon2 = dic_combat_full_inv[master_combat_equipment["weapon2"]]
+                            else:
+                                inventory_track_weapon2 = ""
+                        if master_combat_equipment["weapon"] != dic_combat_full[inventory_type[equipment_choice][values]] or master_combat_equipment["weapon"] == "Fist":
+                            if values == 0:
+                                textbutton "- Remove -" xalign 1.0: 
+                                    style "slave_equipment_menu_button2"
+                                    action SetDict(master_combat_equipment, equipment_choice,"Fist"),SetDict(inventory, inventory_track_weapon2, inventory[inventory_track_weapon2]+1),SetVariable("inventory_track_weapon2", ""),Jump("Home")
+                            elif inventory[inventory_type[equipment_choice][values]] > 0:
+                                textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                                    style "slave_equipment_menu_button2"
+                                    action SetDict(master_combat_equipment, equipment_choice, dic_combat_full[inventory_type[equipment_choice][values]]),SetDict(inventory, inventory_type[equipment_choice][values], inventory[inventory_type[equipment_choice][values]]-1),SetVariable("inventory_track_weapon2", inventory_type[equipment_choice][values]),SetDict(inventory, inventory_track_weapon2, inventory[inventory_track_weapon2]+1), Jump("Home")
+                            else:
+                                textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                                        style "slave_equipment_menu_button"
+                                        action NullAction()
+        vbox:   
+            pos(0.62,0.068)
+            spacing -2
+            text "" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
+            if available_options == 2:
+                for values in range(0,len(inventory_type[equipment_choice])):
+                    if master_combat_equipment[equipment_choice] != dic_combat_full[inventory_type[equipment_choice][values]]:
+                        if (master_combat_equipment["weapon2"] != dic_combat_full[inventory_type[equipment_choice][values]] or master_combat_equipment["weapon2"] == "Fist") and (master_combat_equipment["weapon"] != dic_combat_full[inventory_type[equipment_choice][values]] or master_combat_equipment["weapon"] == "Fist"):
+                            if inventory[inventory_type[equipment_choice][values]] == "-":
+                                if master_combat_equipment[equipment_choice] != "":
+                                    text str(inventory[inventory_type[equipment_choice][values]]) xalign 0.5:
+                                        style "slave_equipment_menu_button2_text"
+                            elif inventory[inventory_type[equipment_choice][values]] > 0:
+                                text str(inventory[inventory_type[equipment_choice][values]]) xalign 0.5:
+                                    style "slave_equipment_menu_button2_text"
+                            else:
+                                text str(inventory[inventory_type[equipment_choice][values]]) xalign 0.5:
+                                    style "slave_equipment_menu_button_text"
+    vbox:
+        pos(0.62,0.068)
+        spacing -2  
+        text "{u}AVAILABLE OPTIONS{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
+        if available_options == 0:
+            text "{u}Active effects:{/u}" size 14 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
+            #TODO ADD CLOTHES EFFECT DESCRIPTION
+        elif available_options == 1:
+            for values in master_inventory_type[equipment_choice]:
+                if equipment_choice not in ["accessories1","accessories2","accessories3","accessories4","accessories5"]:
+                    if equipment_choice != "clothes":
+                        if master_equipment[equipment_choice] != "":
+                            textbutton "- Remove -" xalign 1.0:
+                                style "slave_equipment_menu_button2"
+                                action SetDict(master_equipment, equipment_choice,""),SetVariable("available_options", 0), Jump("equipment_check")
+                    if master_equipment[equipment_choice] != dic_master_items[values]["name"]:
+                        if inventory[values] > 0:
+                            textbutton dic_master_items[values]["name"] xalign 1.0:
+                                style "slave_equipment_menu_button2"
+                                action SetDict(master_equipment, equipment_choice, dic_master_items[values]["name"]), SetVariable("master_equipment_choice_image", dic_master_items[values]["image"]),SetVariable("master_equipment_choice_image_text", dic_master_items[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
+                                hovered SetVariable("master_equipment_choice_image", dic_master_items[values]["image"]),SetVariable("master_equipment_choice_image_text", dic_master_items[values]["desc"])
+
+                        else:
+                            textbutton dic_master_items[values]["name"] xalign 1.0:
+                                style "slave_equipment_menu_button"
+                                action NullAction()
+                                hovered SetVariable("master_equipment_choice_image", dic_master_items[values]["image"]),SetVariable("master_equipment_choice_image_text", dic_master_items[values]["desc"])
+                else:    
+                    if master_equipment[equipment_choice] != "":
+                        textbutton "- Remove -" xalign 1.0:
+                            style "slave_equipment_menu_button2"
+                            action SetDict(master_equipment, equipment_choice,""),SetVariable("available_options", 0), Jump("equipment_check")
+                    if master_equipment[equipment_choice] != dic_master_items[values]["name"]:
+                        if inventory[values] > 0:
+                            if dic_master_items[values]["name"] not in [master_equipment["accessories1"],master_equipment["accessories2"],master_equipment["accessories3"],master_equipment["accessories4"],master_equipment["accessories5"]]: 
+                                textbutton dic_master_items[values]["name"] xalign 1.0:
+                                    style "slave_equipment_menu_button2"
+                                    action SetDict(master_equipment, equipment_choice, dic_master_items[values]["name"]), SetVariable("master_equipment_choice_image", dic_master_items[values]["image"]),SetVariable("master_equipment_choice_image_text", dic_master_items[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
+                                    hovered SetVariable("master_equipment_choice_image", dic_master_items[values]["image"]),SetVariable("master_equipment_choice_image_text", dic_master_items[values]["desc"])
+
+                        else:
+                            textbutton dic_master_items[values]["name"] xalign 1.0:
+                                style "slave_equipment_menu_button"
+                                action NullAction()
+                                hovered SetVariable("master_equipment_choice_image", dic_master_items[values]["image"]),SetVariable("master_equipment_choice_image_text", dic_master_items[values]["desc"])

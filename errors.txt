@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 3982: vbox expects a non-empty block.
-    if master_objectives_index == "guild_contract":
-                                                   ^
+File "game/home.rpy", line 4314: reached end of line when expecting ':'.
+    if master_equipment[equipment_choice] != ""
+                                               ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Thu Jul 24 20:22:59 2025
+Fri Jul 25 13:20:17 2025
