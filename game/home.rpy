@@ -49,6 +49,8 @@ default slave_difficulty = 0
 default debt_tracker = 0
 default debt = 0
 default girl_index_save = 0
+default estate_quality = 0
+default estate_quality_modifier = 0
 default gameover = False
 default pony_count = 0
 default slave_escape_type = 0
@@ -57,6 +59,7 @@ default cryostore_ingredients_max = 0
 default laboratory_ingredients = 0
 default master_objectives_index = ""
 default house_items = 0
+default house_mess = 0
 default master_equipment_choice_image = "scene/item/clear_small"
 default master_equipment_choice_image_text = "You can navigate up and down in the clothing equipment menu pressing the 1 and 2 keys."
 default guild_contract = {
@@ -91,7 +94,6 @@ default home_estate = {
         "luxurios_room": 0
     }
 }
-
 default inventory = {
     "remove": "-",
     "Without armour": "-",
@@ -296,6 +298,7 @@ label iniciation_label:
                 storage["house"]["artistic_material"][key] = 5
             for key, value in storage["house"]["sex_items"].items():
                 storage["house"]["sex_items"][key] = 5
+            master_house_reputation["home_estate"] = "rich_down_house"
             
         jump equipment_check
     else:
@@ -314,10 +317,23 @@ label iniciation_label:
                 $ master_house_reputation["taurus_house"] = 1
             if faction_36 == "Corvus Great House":
                 $ master_house_reputation["corvus_house"] = 1
+            $ master_house_reputation["home_estate"] = "poor_house"
             #TODO need to add sepia ver not hoved ver
         else:
             $ mc_image = dic_custom_character_selection[dic_charactersOnlyName[characterOnlyNameIndex]][0]
             $ mc_image2 = dic_custom_character_selection[dic_charactersOnlyName[characterOnlyNameIndex]][1]
+            if reputation_value_1 == 0:
+                $ master_house_reputation["home_estate"] = "poor_house"
+            elif reputation_value_1 == 1:
+                $ master_house_reputation["home_estate"] = "middle_class_down_house"
+            elif reputation_value_1 == 2:
+                $ master_house_reputation["home_estate"] = "middle_class_up_house"
+            elif reputation_value_1 == 3:
+                $ master_house_reputation["home_estate"] = "rich_down_house"
+            elif reputation_value_1 == 4:
+                $ master_house_reputation["home_estate"] = "rich_up_house"
+            elif reputation_value_1 == 5:
+                $ master_house_reputation["home_estate"] = "white_house"
     jump Home
 label next_day_label:
     python:
@@ -478,7 +494,8 @@ label Home:
     hide screen screen_attributes_skills_sexual_slave
     python:
         infobox_jump = "Home"
-        # supermacy calculation
+    
+        # cryostore ingredients calculation
         cryostore_ingredients = 0
         for values in storage["ingredients"]:
             cryostore_ingredients += storage["ingredients"][values]
@@ -497,6 +514,80 @@ label Home:
             house_items += storage["house"]["artistic_material"][values]
         for values in storage["house"]["sex_items"]:
             house_items += storage["house"]["sex_items"][values]
+        # cryostore ingredients end calculation
+        # master moodlet calculation
+        wealth_quality_modifier = standard_of_living_value_8 - brand_reputation_value_6 - 1
+        if wealth_quality_modifier > 0: 
+            master_mood_state["good_mood"]['pos_wealth']["active"] = True
+            master_mood_state["bad_mood"]['neg_wealth']["active"] = False
+        if wealth_quality_modifier == 0: 
+            master_mood_state["good_mood"]['pos_wealth']["active"] = False
+            master_mood_state["bad_mood"]['neg_wealth']["active"] = False
+        if wealth_quality_modifier < 0: 
+            master_mood_state["good_mood"]['pos_wealth']["active"] = False
+            master_mood_state["bad_mood"]['neg_wealth']["active"] = True
+        estate_quality = 0
+        estate_quality += home_estate["kitchen"]["Deplorable kitchen"]*1
+        estate_quality += home_estate["kitchen"]["Basic kitchen"]*2
+        estate_quality += home_estate["kitchen"]["Well-equipped kitchen"]*3
+        estate_quality += home_estate["kitchen"]["Gourmet kitchen"]*4
+        estate_quality += home_estate["barn"]["Collapsing barn"]*1
+        estate_quality += home_estate["barn"]["Worn barn"]*2
+        estate_quality += home_estate["barn"]["Sturdy barn"]*3
+        estate_quality += home_estate["barn"]["Masterwork barn"]*4
+        estate_quality += home_estate["laboratory"]["Makeshift lab"]*1
+        estate_quality += home_estate["laboratory"]["Crude lab"]*2
+        estate_quality += home_estate["laboratory"]["Proper lab"]*3
+        estate_quality += home_estate["laboratory"]["Advanced laboratory"]*4
+        estate_quality += home_estate["slaves_rooms"]["squalid_room"]*1
+        estate_quality += home_estate["slaves_rooms"]["cramped_room"]*2
+        estate_quality += home_estate["slaves_rooms"]["comfortable_room"]*3
+        estate_quality += home_estate["slaves_rooms"]["luxurios_room"]*4
+        estate_quality += dic_home_state2["poor_house"]["prestige"]*20
+        estate_quality_modifier = (estate_quality //20) - brand_reputation_value_6
+        if estate_quality_modifier > personality_value_2 + house_mess: 
+            master_mood_state["good_mood"]["pos_housing"]["active"] = True
+            master_mood_state["bad_mood"]["neg_housing"]["active"] = False
+        else: 
+            master_mood_state["good_mood"]["pos_housing"]["active"] = False
+            master_mood_state["bad_mood"]["neg_housing"]["active"] = False
+        if personality_value_2 > standard_of_living_value_8 - 1 :
+            master_mood_state["good_mood"]["pos_housing"]["active"] = False
+            master_mood_state["bad_mood"]["neg_housing"]["active"] = True
+        if personality_value_2 > estate_quality_modifier :
+            master_mood_state["good_mood"]["pos_wealth"]["active"] = False
+            master_mood_state["bad_mood"]["neg_wealth"]["active"] = True
+        if house_mess == 0:
+            master_mood_state["good_mood"]["pos_house_clean"]["active"] = True
+            master_mood_state["bad_mood"]["neg_house_clean"]["active"] = False
+        elif house_mess <= 3:
+            master_mood_state["good_mood"]["pos_house_clean"]["active"] = False
+            master_mood_state["bad_mood"]["neg_house_clean"]["active"] = False
+        else:
+            master_mood_state["good_mood"]["pos_house_clean"]["active"] = False
+            master_mood_state["bad_mood"]["neg_house_clean"]["active"] = True
+        if hygiene_value_9 >= 4:
+            master_mood_state["good_mood"]["pos_self_clean"]["active"] = True
+            master_mood_state["bad_mood"]["neg_self_clean"]["active"] = False
+        elif hygiene_value_9 < 2:
+            master_mood_state["good_mood"]["pos_self_clean"]["active"] = False
+            master_mood_state["bad_mood"]["neg_self_clean"]["active"] = True
+        else:
+            master_mood_state["good_mood"]["pos_self_clean"]["active"] = False
+            master_mood_state["bad_mood"]["neg_self_clean"]["active"] = False
+
+        
+
+        
+
+
+
+
+        
+        
+      
+
+        # master mood calculation
         mood_value_10 = 0
         mood_value_10 += master_worn_bonus
         mood_value_10 += master_temporal_mood
@@ -534,13 +625,8 @@ label Home:
             mood_textvalue_10 = dic_slave_moodlevel[10]
         if mood_value_10 >= 5 and reputation_value_1 >= 5:
             mood_textvalue_10 = dic_slave_moodlevel[11]
-
-
-
-        
-        
-
-
+        # master mood end
+        #slave calculation part 
         if is_main_slave:
             # obedience difficulty ajustment
             if dic_custom_start_difficulty_selection_index_index == 0:
@@ -795,6 +881,11 @@ label Home:
         hide screen home_attributes_menu
         show screen master_attributes_screen()
         call screen master_equipment_menu()
+    elif current_menu == 203:
+        hide screen sparks_menu
+        hide screen home_attributes_menu
+        show screen master_attributes_screen()
+        call screen master_diary_menu()
 label slave_rebellion_fight_label:
     if slave_rebellion_attack:
         $ slave_rebellion_attack = False
@@ -3265,7 +3356,7 @@ screen home_attributes_menu():
             action SetVariable("current_menu", 200),Jump("Home")
             at avatar_scale
         add "spacer" size(0,33)
-        text "Calm" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
+        text mood_textvalue_10 anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
         text "Contented" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
         text "Pristine" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
         add "spacer" size(0,60)

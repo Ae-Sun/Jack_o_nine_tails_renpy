@@ -134,7 +134,8 @@ define dic_spellbook_info = {
     "domini": "Causes the target to follow all instructions of the caster. Does not increase the quality of performance. The caster's magic skill must exceed the target's willpower. May induce feelings of despair.",
     "adverto": "Imposes magic indelibly as a seal on the victim's body. This seal will banish any foreign lifeforms from the body and restore her energy at the time of casting, and will help find the target if she runs away."
 }
-define dic_home_state = {
+# dic_home_state cause errors, idk why cause error -rec3ks
+define dic_home_state2 = {
     "poor_house": {
         "prestige": 0,
         "slaves_rooms":{

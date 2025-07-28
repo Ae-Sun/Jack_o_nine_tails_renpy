@@ -679,6 +679,7 @@ default master_mood_state = {
     }
 }
 default master_house_reputation = {
+    "home_estate": "",
     "camira_house": 0,
     "serpis_house": 0,
     "taurus_house": 0,

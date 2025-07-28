@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 4314: reached end of line when expecting ':'.
-    if master_equipment[equipment_choice] != ""
-                                               ^
+File "game/dictionary.rpy", line 137: expected expression
+    define dic_home_state2 =
+                            ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Fri Jul 25 13:20:17 2025
+Mon Jul 28 21:59:07 2025
