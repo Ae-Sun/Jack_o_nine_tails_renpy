@@ -372,7 +372,7 @@ label Tutorial:
     hide screen choose_inicial_girl_screen
     hide screen bg_home
     hide screen goguild
-    hide screen home_menu
+    hide screen home_attributes_menu
 
     if angelika_speech_text_count == 0:
         $ tutorial_backbutton = "buttons/demo_noback_button.webp"
@@ -591,6 +591,7 @@ label choose_inicial_girl:
         all_girls_list[girl_index].setdefault("days_without_sleep",0)
         all_girls_list[girl_index].setdefault("daily_count",{})
         all_girls_list[girl_index].setdefault("arousal",0)
+        all_girls_list[girl_index].setdefault("status_met",False)
         all_girls_list[girl_index]["day_bought"] = day_tracker
         all_girls_list[girl_index]["daily_count"].setdefault("reward",0)
         all_girls_list[girl_index]["daily_count"].setdefault("punishments",0)

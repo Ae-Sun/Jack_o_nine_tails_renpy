@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/dictionary.rpy", line 137: expected expression
-    define dic_home_state2 =
-                            ^
+File "game/home.rpy", line 891: expected statement.
+    renpy.restart()
+                   ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Mon Jul 28 21:59:07 2025
+Tue Jul 29 12:15:21 2025

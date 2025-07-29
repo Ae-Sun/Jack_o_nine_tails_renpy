@@ -564,6 +564,7 @@ default oral_sex_value_22 = 0
 default penetration_value_23 = 0
 default fetishism_value_24 = 0
 default reputation_value_1 = 0
+default excitement_value = 0
 
 ############################################# number value -rec3ks
 default strength_experience_value_1 = 0
@@ -590,7 +591,7 @@ default petting_experience_value_21 = 0
 default oral_sex_experience_value_22 = 0
 default penetration_experience_value_23 = 0
 default fetishism_experience_value_24 = 0
-default master_supermacy = 0
+default excitement_experience_value = 0
 ############################################ textvalue track - herculean
 ############################################ value track - 5
 ############################################ number value track 999/999
@@ -610,12 +611,15 @@ default faction_36 =""
 default sparks_37 =""
 ###################################################
 default mc ="Jack"
+default master_supermacy = 0
 default characterOnlyNameIndex = 0
 default master_style = 0
 default master_worn_bonus = 0
 default master_temporal_mood = 0
 default master_past_mood = 0
 default master_screen_text = ""
+default blazing_counter = 0
+default pos_show_counter = 0
 default description_master_attributes_track_value = ""
 default master_mood_state = {
     "good_mood": {

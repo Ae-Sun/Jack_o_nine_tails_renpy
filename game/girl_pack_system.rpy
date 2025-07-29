@@ -700,7 +700,6 @@ init python:
                     all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["revealed"] = True
                     # show exhibition text -rec3ks
         all_girls_list[girl_index]["worn_mood"] = all_girls_list[girl_index]["worn_mood"]/10           
-
-
+    
 
         

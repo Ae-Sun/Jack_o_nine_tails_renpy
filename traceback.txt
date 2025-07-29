@@ -1,26 +1,26 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/home.rpy", line 495, in script
+  File "game/home.rpy", line 342, in script
     python:
-  File "game/home.rpy", line 562, in <module>
-    master_mood_state["bad_mood"]["neg_house_clean"]["active"] = False
-KeyError: 'neg_house_clean'
+  File "game/home.rpy", line 411, in <module>
+    elif dic_girl_equipment_neck_mod[all_girls_list[girl_index]["equipment"]["neck"]]["escape"]:
+KeyError: ''
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/home.rpy", line 495, in script
+  File "game/home.rpy", line 342, in script
     python:
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/home.rpy", line 562, in <module>
-    master_mood_state["bad_mood"]["neg_house_clean"]["active"] = False
-KeyError: 'neg_house_clean'
+  File "game/home.rpy", line 411, in <module>
+    elif dic_girl_equipment_neck_mod[all_girls_list[girl_index]["equipment"]["neck"]]["escape"]:
+KeyError: ''
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
 JONT Port by Rec3ks ver. 0.0.49
-Tue Jul 29 00:29:46 2025
+Tue Jul 29 13:12:49 2025

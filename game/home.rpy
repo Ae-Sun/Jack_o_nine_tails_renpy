@@ -60,6 +60,9 @@ default laboratory_ingredients = 0
 default master_objectives_index = ""
 default house_items = 0
 default house_mess = 0
+default alone_count = 0
+default girls_count = 0
+default after_sex_effects = 0
 default master_equipment_choice_image = "scene/item/clear_small"
 default master_equipment_choice_image_text = "You can navigate up and down in the clothing equipment menu pressing the 1 and 2 keys."
 default guild_contract = {
@@ -342,8 +345,17 @@ label next_day_label:
         energy_value += strength_value_1 *2 + 2
         energy_value = min(10, energy_value)
         day_tracker += 1
+        after_sex_effects -= 1
+        pos_show_counter -= 1
+        if excitement_value >= 5 and master_equipment["earrings"] != "chimera_earring":
+            blazing_counter += 1
+        else:
+            blazing_counter = 0
+        # TODO NEED CHECK CRYOSTORE INGREDIENTS
+        girls_count = 0
         save_girl_index = girl_index
         for girl_index in all_girls_list:
+            girls_count += 1
             if all_girls_list[girl_index]["conscience"]:
                 all_girls_list[girl_index]["epilation"] = max(all_girls_list[girl_index]["epilation"]-1,0)
                 all_girls_list[girl_index]["manicure"] = max(all_girls_list[girl_index]["manicure"]-1,0)
@@ -436,7 +448,7 @@ label next_day_label:
                 ### energy and sleep condition 
                 if all_girls_list[girl_index]["sleep"] != 4:
                     if all_girls_list[girl_index]["aura"]["devotion"] >= 3:
-                        all_girls_list[girl_index]["energy"] = min(12, all_girls_list[girl_index]["energy"]//2 + all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2)
+                        all_girls_list[girl_index]["energy"] = all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2
                     else:
                         all_girls_list[girl_index]["energy"] = min(10, all_girls_list[girl_index]["energy"]//2 + all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2)
                     all_girls_list[girl_index]["days_without_sleep"] = 0
@@ -481,17 +493,24 @@ label next_day_label:
             master_past_mood = mood_value_10
             # reset temporal mood master
             master_temporal_mood = 0
+        if girls_count == 0:
+            alone_count += 1
+        else:
+            alone_count = 0
         slave_nearly_fainted = False
         girl_index = save_girl_index
-    show screen home_menu
+    show screen home_menu()
     $ msg("New day [day_tracker]")
     jump Home
+#label previos_day_info():
+
 label Home: 
     show screen bg_home()
-    show screen home_attributes_menu()
     show screen sparks_menu()
     hide screen description_slave_attributes
     hide screen screen_attributes_skills_sexual_slave
+
+
     python:
         infobox_jump = "Home"
     
@@ -559,34 +578,77 @@ label Home:
             master_mood_state["bad_mood"]["neg_wealth"]["active"] = True
         if house_mess == 0:
             master_mood_state["good_mood"]["pos_house_clean"]["active"] = True
-            master_mood_state["bad_mood"]["neg_house_clean"]["active"] = False
+            master_mood_state["bad_mood"]["neg_house_mess"]["active"] = False
         elif house_mess <= 3:
             master_mood_state["good_mood"]["pos_house_clean"]["active"] = False
-            master_mood_state["bad_mood"]["neg_house_clean"]["active"] = False
+            master_mood_state["bad_mood"]["neg_house_mess"]["active"] = False
         else:
             master_mood_state["good_mood"]["pos_house_clean"]["active"] = False
-            master_mood_state["bad_mood"]["neg_house_clean"]["active"] = True
+            master_mood_state["bad_mood"]["neg_house_mess"]["active"] = True
         if hygiene_value_9 >= 4:
             master_mood_state["good_mood"]["pos_self_clean"]["active"] = True
-            master_mood_state["bad_mood"]["neg_self_clean"]["active"] = False
+            master_mood_state["bad_mood"]["neg_dirty"]["active"] = False
         elif hygiene_value_9 < 2:
             master_mood_state["good_mood"]["pos_self_clean"]["active"] = False
-            master_mood_state["bad_mood"]["neg_self_clean"]["active"] = True
+            master_mood_state["bad_mood"]["neg_dirty"]["active"] = True
         else:
             master_mood_state["good_mood"]["pos_self_clean"]["active"] = False
-            master_mood_state["bad_mood"]["neg_self_clean"]["active"] = False
-
-        
-
-        
-
-
-
-
-        
-        
-      
-
+            master_mood_state["bad_mood"]["neg_dirty"]["active"] = False
+        if after_sex_effects < 0:
+            after_sex_effects = 0
+            master_mood_state["good_mood"]["pos_satisfied"]["active"] = False
+        if excitement_value > after_sex_effects:
+            master_mood_state["bad_mood"]["neg_boner"]["active"] = True
+        if after_sex_effects > 2:
+            master_mood_state["bad_mood"]["neg_boner"]["active"] = False
+        if excitement_value < after_sex_effects:
+            master_mood_state["bad_mood"]["neg_boner"]["active"] = False
+        if excitement_value < -2 and libido_value_4 > 0:
+            master_mood_state["bad_mood"]["neg_softcore"]["active"] = True
+        if excitement_value > 3 or libido_value_4 == 0:
+            master_mood_state["bad_mood"]["neg_softcore"]["active"] = False
+        if excitement_value >= 5 and blazing_counter >= 3:
+            master_mood_state["bad_mood"]["neg_blazing"]["active"] = True
+        else:
+            master_mood_state["bad_mood"]["neg_blazing"]["active"] = False
+        if injuries_value_11 >= 5:
+            master_mood_state["bad_mood"]["neg_wounded"]["active"] = False
+        else:
+            master_mood_state["bad_mood"]["neg_wounded"]["active"] = True
+        if energy_value < 0:
+            master_mood_state["good_mood"]["pos_energy"]["active"] = False
+            master_mood_state["bad_mood"]["neg_tired"]["active"] = True
+        elif energy_value >= strength_value_1:
+            for values in ["neg_drunk","neg_wounded","neg_no_koffe","neg_no_meth","neg_no_opium","neg_master_ill"]:
+                n = 0
+                if master_mood_state["bad_mood"][values]["active"]:
+                    n += 1
+            if n == 0:
+                master_mood_state["good_mood"]["pos_energy"]["active"] = True
+                master_mood_state["bad_mood"]["neg_tired"]["active"] = False
+        else: 
+            master_mood_state["good_mood"]["pos_energy"]["active"] = False
+            master_mood_state["bad_mood"]["neg_tired"]["active"] = False
+        if pos_show_counter > 0:
+            master_mood_state["bad_mood"]["neg_boring"]["active"] = False
+        if alone_count > 2: 
+            master_mood_state["bad_mood"]["neg_alone"]["active"] = True
+        else:
+            master_mood_state["bad_mood"]["neg_alone"]["active"] = False
+        save_girl_index = girl_index
+        master_mood_state["good_mood"]["pos_optimism"]["weight"] = 0.5
+        for girl_index in all_girls_list:
+            if all_girls_list[girl_index]["psy_status"] in ["horny","servile","obedient"]:
+                all_girls_list[girl_index]["status_met"] = True
+            else:
+                all_girls_list[girl_index]["status_met"] = False
+            if all_girls_list[girl_index]["attributes"]["beauty"] > 2 and all_girls_list[girl_index]["skills"]["elocution"] > 3 and all_girls_list[girl_index]["status_met"]:
+                master_mood_state["good_mood"]["pos_optimism"]["active"] = True
+                master_mood_state["good_mood"]["pos_optimism"]["weight"] += 0.5
+            if all_girls_list[girl_index]["psy_status"] == "broken":
+                master_mood_state["good_mood"]["pos_optimism"]["active"] = False
+                master_mood_state["bad_mood"]["neg_grumpy"]["active"] = True
+        girl_index = save_girl_index
         # master mood calculation
         mood_value_10 = 0
         mood_value_10 += master_worn_bonus
@@ -807,6 +869,7 @@ label Home:
                 if all_girls_list[girl_index]["psy_status"] == "broken":
                     all_girls_list[girl_index]["obedience"] = 100
             girl_index = girl_index_save
+    show screen home_attributes_menu() #cause some problems with home_menu WIP TODO need tofix
     if slave_rebellion_fight:
         jump slave_rebellion_fight_label
     if is_tutorial == True and current_menu == 0:
@@ -828,13 +891,15 @@ label Home:
             show screen tutorial_description()
             hide screen tutorial_descriptionphysical
         hide screen tutorial_attribute
-    ### this may look stupid, but it's not. Think how back feature works in renpy. -rec3ks
     if current_menu == 0:
         $ show_main_slave = False
         hide screen main_slave_image
         hide screen screen_attributes_skills_sexual_slave
+        show screen home_attributes_menu()
         call screen home_menu()
-    elif current_menu == 1:
+    else:
+        hide screen home_menu
+    if current_menu == 1:
         call screen slave_activities_menu()
     elif current_menu == 2:
         call screen slave_assignments_menu()
@@ -1532,7 +1597,7 @@ screen goguild():
     zorder 10
     textbutton "Go to Guild" xalign 0.10 yalign 0.76:
         style "home_button"
-        action SetVariable("angelika_speech_text_count", 4),Hide("home_attributes_menu"),Jump("Tutorial")
+        action SetVariable("angelika_speech_text_count", 4),Hide("home_attributes_menu"),Hide("home_menu"),Jump("Tutorial")
     add "ui overhaul/guild.webp" xalign 0.05 yalign 0.755 size(50,50)
 screen spellbook_info():
     key "K_SPACE" action SetVariable("current_menu", 4),Jump("Home")
@@ -1776,7 +1841,6 @@ screen home_menu():
         add home_menu_image5 size(50,50)
         add home_menu_image6 size(50,50)
     vbox:
-
         if is_tutorial:
             yalign 0.08
             xalign 0.74

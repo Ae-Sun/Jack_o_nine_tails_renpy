@@ -1,0 +1,3 @@
+"1 - From the main menu, if you click Preferences, Credits, or go to the Save screen and then click the Load button, a right-click will take you back to the Save screen. Then, another right-click is needed to return, and may required adicional one. Instead of requiring just one right-click, it requires two or three.
+"2 - Going back may cause some minor bugs"
+"3 - Some screens sometimes may be one screen interaction off time, e.g your current mood shows calm after going another screen shows pessimist" 
