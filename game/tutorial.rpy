@@ -529,6 +529,7 @@ label choose_inicial_girl:
             a = "depresive"
         all_girls_list[girl_index].setdefault("psy_status",a)
         all_girls_list[girl_index].setdefault("name", "WIP")
+        all_girls_list[girl_index].setdefault("hygiene",5)
         all_girls_list[girl_index].setdefault("style_plus",0)
         all_girls_list[girl_index].setdefault("exotic_plus",0)
         all_girls_list[girl_index].setdefault("mood",0)

@@ -53,15 +53,20 @@ default estate_quality = 0
 default estate_quality_modifier = 0
 default gameover = False
 default pony_count = 0
+default is_domini_dictum_active = False
 default slave_escape_type = 0
 default cryostore_ingredients = 0
 default cryostore_ingredients_max = 0
 default laboratory_ingredients = 0
 default master_objectives_index = ""
+default already_ate = False
+default already_prepared = False
 default house_items = 0
 default house_mess = 0
 default alone_count = 0
+default is_main_assistant = False
 default girls_count = 0
+default slave_auto_cook = False
 default after_sex_effects = 0
 default master_equipment_choice_image = "scene/item/clear_small"
 default master_equipment_choice_image_text = "You can navigate up and down in the clothing equipment menu pressing the 1 and 2 keys."
@@ -70,6 +75,10 @@ default guild_contract = {
     "rank" : "D-",
     "specialization": "Nah",
     "time" : 0
+}
+default food_meat_info = {
+    "name" :"",
+    "quality": ""
 }
 default home_estate = {
     "kitchen": {
@@ -292,7 +301,7 @@ label iniciation_label:
                 if value != "-":
                     inventory[key] = 1
             for key, value in storage["ingredients"].items():
-                storage["ingredients"][key] = 5
+                storage["ingredients"][key] = 32
             for key, value in storage["laboratory"]["ingredients"].items():
                 storage["laboratory"]["ingredients"][key] = 5
             for key, value in storage["laboratory"]["potion"].items():
@@ -302,7 +311,7 @@ label iniciation_label:
             for key, value in storage["house"]["sex_items"].items():
                 storage["house"]["sex_items"][key] = 5
             master_house_reputation["home_estate"] = "rich_down_house"
-            
+            home_estate["kitchen"]["Well-equipped kitchen"] = 3
         jump equipment_check
     else:
         python:
@@ -321,7 +330,6 @@ label iniciation_label:
             if faction_36 == "Corvus Great House":
                 $ master_house_reputation["corvus_house"] = 1
             $ master_house_reputation["home_estate"] = "poor_house"
-            #TODO need to add sepia ver not hoved ver
         else:
             $ mc_image = dic_custom_character_selection[dic_charactersOnlyName[characterOnlyNameIndex]][0]
             $ mc_image2 = dic_custom_character_selection[dic_charactersOnlyName[characterOnlyNameIndex]][1]
@@ -339,9 +347,12 @@ label iniciation_label:
                 $ master_house_reputation["home_estate"] = "white_house"
     jump Home
 label next_day_label:
+    if cryostore_ingredients > cryostore_ingredients_max:
+        call cryo_ingredients_calculation
     python:
         is_auspex_active = False
         is_slave_nearly_fainted = False
+        domini_dictum_active = False
         energy_value += strength_value_1 *2 + 2
         energy_value = min(10, energy_value)
         day_tracker += 1
@@ -351,7 +362,7 @@ label next_day_label:
             blazing_counter += 1
         else:
             blazing_counter = 0
-        # TODO NEED CHECK CRYOSTORE INGREDIENTS
+
         girls_count = 0
         save_girl_index = girl_index
         for girl_index in all_girls_list:
@@ -433,7 +444,41 @@ label next_day_label:
                                 all_girls_list[girl_index]["suicide_rate"] += 15
                         else:
                             all_girls_list[girl_index]["suicide_rate"] = min(all_girls_list[girl_index]["suicide_rate"] - 3, 0)
-                #if not all_girls_list[girl_index]["assistant"]:
+                #TODO if not all_girls_list[girl_index]["assistant"]:
+                # Cooking rule
+                slave_auto_cook = False
+                if cryostore_ingredients_max > 0:
+                    if not already_prepared and not already_ate and all_girls_list[girl_index]["rules"]["act_as_cook"] and all_girls_list[girl_index]["energy"] > 0 and all_girls_list[girl_index]["obedience"] >= -6 + 2 - all_girls_list[girl_index]["attributes"]["pride"] // 2 + all_girls_list[girl_index]["attributes"]["nature"] // 3 + all_girls_list[girl_index]["attributes"]["intelligence"] // 3:
+                        slave_auto_cook = True
+                        slave_skill = min(all_girls_list[girl_index]["skills"]["cooking"], max(1, all_girls_list[girl_index]["mood"]),5)
+                        keys_list = ["D- quality","C- quality","B+ quality","A+ quality","S+ quality"]
+                        n = slave_skill -1
+                        food_not_found = True
+                        # error need to fix TODO WIP PRPBABLY KEY THE LINE 459 
+                        while n >= 0 and food_not_found:
+                            for i, entry in enumerate(dic_foods_list[keys_list[n]]):
+                                x = 0
+                                for values22314 in range(4):
+                                    if dic_foods_list[keys_list[n]][i][1][values22314] != "none":
+                                        if storage["ingredients"][dic_foods_list[keys_list[n]][i][1][values22314]] == 0:
+                                            x += 1
+                                if x == 0:
+                                    food_not_found = False
+                                    for values33214 in range(4):
+                                        if dic_foods_list[keys_list[n]][i][1][values33214] != "none":
+                                            storage["ingredients"][dic_foods_list[keys_list[n]][i][1][values33214]] -= 1
+                                    already_prepared = True
+                                    already_ate = True
+                                    food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
+                                    food_meat_info["quality"] = n + 1
+                            if n == 0:
+                                food_meat_info["quality"] = 0
+                                food_meat_info["name"] = "Canned food"
+                            else:
+                                n -= 1
+                # WIP assistent cooking code skipped
+                                        # WIP TODO
+                            #already_ate = True
                     # TODO Cooking rule
                     #if home_estate["kitchen"] != 0: 
                 if all_girls_list[girl_index]["assistant"]:
@@ -499,18 +544,33 @@ label next_day_label:
             alone_count = 0
         slave_nearly_fainted = False
         girl_index = save_girl_index
-    show screen home_menu()
+        already_prepared = False
+        already_ate = False
+    show screen home_menu
     $ msg("New day [day_tracker]")
     jump Home
+label cryo_ingredients_calculation:
+    python:
+        keys_list = list(storage["ingredients"].keys())
+        keys_list_index = 0
+        while cryostore_ingredients > cryostore_ingredients_max:
+            if storage["ingredients"][keys_list[keys_list_index]] == 0:
+                keys_list_index += 1
+            else:
+                storage["ingredients"][keys_list[keys_list_index]] -= 1
+            cryostore_ingredients = 0
+            for values in storage["ingredients"]:
+                cryostore_ingredients += storage["ingredients"][values]
+
 #label previos_day_info():
 
-label Home: 
+label Home:
+    $ renpy.restart_interaction() 
     show screen bg_home()
     show screen sparks_menu()
+    show screen homehome_attributes_menu
     hide screen description_slave_attributes
     hide screen screen_attributes_skills_sexual_slave
-
-
     python:
         infobox_jump = "Home"
     
@@ -689,7 +749,7 @@ label Home:
             mood_textvalue_10 = dic_slave_moodlevel[11]
         # master mood end
         #slave calculation part 
-        if is_main_slave:
+        if is_main_slave or is_main_assistant:
             # obedience difficulty ajustment
             if dic_custom_start_difficulty_selection_index_index == 0:
                 slave_obedience_bonus = 4
@@ -775,7 +835,8 @@ label Home:
                             all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["mood_state"]["good_mood"][key]["weight"]
                     for key in dic_slave_mood["bad_mood"]:
                         if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
-                            all_girls_list[girl_index]["mood"] -= all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["weight"]
+                            all_girls_list[girl_index]["mood"] -= all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["weight"]           
+                    all_girls_list[girl_index]["mood"] +=  (all_girls_list[girl_index]["aura"]["devotion"] + all_girls_list[girl_index]["attributes"]["endurance"] - 3 - all_girls_list[girl_index]["aura"]["fear"] - all_girls_list[girl_index]["aura"]["spoil"] - all_girls_list[girl_index]["aura"]["despair"]*2 + all_girls_list[girl_index]["hygiene"] - 5 - (house_mess - 1))/5
                     if all_girls_list[girl_index]["mood"] <= -5:
                         all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[0]
                     elif all_girls_list[girl_index]["mood"] <= -4:
@@ -839,13 +900,6 @@ label Home:
                                 all_girls_list[girl_index]["psy_status"] = "docile"
                             if maxmotivation == all_girls_list[girl_index]["arousal"] and all_girls_list[girl_index]["aura"]["devotion"] > 0:
                                 all_girls_list[girl_index]["psy_status"] = "horny"
-                    # TODO            
-                    # if dynslave_state = CONST_INT['slave_exist']:
-                    # 	! state check is conscious only - ImperatorAugustus
-                    # 	! carry over +0.2 mood for each level of previous day mood that was above -5 (+0.2 at Dysphoric, +0.4 at Sullen, +0.6 at Melancholic, +0.8 at Pessimistic, +1 at Calm, +2 at Ecstatic)
-                    # 	dynslave_rate['mood'] += 10 + dynslave['mood']*2 + dynslave['moral'] + (dynslave['stamina'] - 3) + _
-                    # 		- dynslave['arousal'] - dynslave['fear'] - dynslave['spoil'] - dynslave['angst']*2 _
-                    # 		- dynslave['hygiene'] - (house_mess - 1) &! removed energy from this formula (handled elsewhere), doubled angst impact, adjusted carry over to reduce mood swings by applying a bonus representing half of the previous day mood (counting anything above depressed as positive) - ImperatorAugustus
                 # Obedience re-calculation last
                 slave_nature = 5 - all_girls_list[girl_index]["attributes"]["pride"] + all_girls_list[girl_index]["attributes"]["temperament"] + all_girls_list[girl_index]["attributes"]["nature"] + all_girls_list[girl_index]["attributes"]["intelligence"]
                 if all_girls_list[girl_index]["aura"]["fear"] > 0:    
@@ -864,12 +918,12 @@ label Home:
                 else:
                     all_girls_list[girl_index]["bonus_fear"] = 0
                 all_girls_list[girl_index]["obedience"] = slave_obedience_bonus + all_girls_list[girl_index]["mood"] + all_girls_list[girl_index]["bonus_fear"] + all_girls_list[girl_index]["aura"]["devotion"]*4 + all_girls_list[girl_index]["aura"]["taming"] * 2 \
-                + int((1+all_girls_list[girl_index]["aura"]["despair"]) // 2) + all_girls_list[girl_index]["aura"]["awareness"] + all_girls_list[girl_index]["aura"]["habit"] - all_girls_list[girl_index]["aura"]["spoil"]*2 - int(slave_difficulty/2) - slave_nature
+                + int((1+all_girls_list[girl_index]["aura"]["despair"]) // 2) + all_girls_list[girl_index]["aura"]["awareness"] + all_girls_list[girl_index]["aura"]["habit"] - all_girls_list[girl_index]["aura"]["spoil"]*2 - int(slave_difficulty/2) - slave_nature +100
                 # set obedience to 100 if broken
                 if all_girls_list[girl_index]["psy_status"] == "broken":
                     all_girls_list[girl_index]["obedience"] = 100
             girl_index = girl_index_save
-    show screen home_attributes_menu() #cause some problems with home_menu WIP TODO need tofix
+    show screen homehome_attributes_menu() #cause some problems with home_menu WIP TODO need tofix
     if slave_rebellion_fight:
         jump slave_rebellion_fight_label
     if is_tutorial == True and current_menu == 0:
@@ -895,7 +949,7 @@ label Home:
         $ show_main_slave = False
         hide screen main_slave_image
         hide screen screen_attributes_skills_sexual_slave
-        show screen home_attributes_menu()
+        show screen homehome_attributes_menu()
         call screen home_menu()
     else:
         hide screen home_menu
@@ -913,42 +967,42 @@ label Home:
         call screen home_menu_auspex()
     elif current_menu == 100:
         hide screen sparks_menu
-        hide screen home_attributes_menu
+        hide screen homehome_attributes_menu
         show screen screen_attributes_skills_sexual_slave()
         call screen slave_rules_menu()
     elif current_menu == 101:
         hide screen sparks_menu
-        hide screen home_attributes_menu
+        hide screen homehome_attributes_menu
         show screen screen_attributes_skills_sexual_slave
         call screen slave_anatomy_menu()
     elif current_menu == 102:
         hide screen sparks_menu
-        hide screen home_attributes_menu
+        hide screen homehome_attributes_menu
         show screen screen_attributes_skills_sexual_slave
         call screen slave_equipment_menu()
     elif current_menu == 103:
         hide screen sparks_menu
-        hide screen home_attributes_menu
+        hide screen homehome_attributes_menu
         show screen screen_attributes_skills_sexual_slave()
         call screen slave_aura_menu()
     elif current_menu == 200:
         hide screen sparks_menu
-        hide screen home_attributes_menu    
+        hide screen homehome_attributes_menu    
         show screen master_attributes_screen()
         call screen master_storage()
     elif current_menu == 201:
         hide screen sparks_menu
-        hide screen home_attributes_menu
+        hide screen homehome_attributes_menu
         show screen master_attributes_screen()
         call screen master_objectives()
     elif current_menu == 202:
         hide screen sparks_menu
-        hide screen home_attributes_menu
+        hide screen homehome_attributes_menu
         show screen master_attributes_screen()
         call screen master_equipment_menu()
     elif current_menu == 203:
         hide screen sparks_menu
-        hide screen home_attributes_menu
+        hide screen homehome_attributes_menu
         show screen master_attributes_screen()
         call screen master_diary_menu()
 label slave_rebellion_fight_label:
@@ -1597,7 +1651,7 @@ screen goguild():
     zorder 10
     textbutton "Go to Guild" xalign 0.10 yalign 0.76:
         style "home_button"
-        action SetVariable("angelika_speech_text_count", 4),Hide("home_attributes_menu"),Hide("home_menu"),Jump("Tutorial")
+        action SetVariable("angelika_speech_text_count", 4),Hide("homehome_attributes_menu"),Hide("home_menu"),Jump("Tutorial")
     add "ui overhaul/guild.webp" xalign 0.05 yalign 0.755 size(50,50)
 screen spellbook_info():
     key "K_SPACE" action SetVariable("current_menu", 4),Jump("Home")
@@ -3411,7 +3465,7 @@ screen description_slave_attributes():
             pos(curx,cury +50)
             style "description_slave_attributes_frame"
             text "Obedience ; " + str(all_girls_list[girl_index]["obedience"]) style "description_slave_attributes_frame_text"
-screen home_attributes_menu():
+screen homehome_attributes_menu():
     vbox:
         pos(0.90,0.05)
         imagebutton anchor (0.5,0.0):
@@ -3521,7 +3575,6 @@ screen mood_attributes():
             textbutton dic_slave_mood_show["mood"][values] anchor (0.5,0.5):
                 style "attribute_mood"
                 action NullAction()
-                #TODO add hoved effect, someday maybe -rec3ks
     text " Press space to close this window.":
         pos (0.33, 0.65)
         color "#191970"

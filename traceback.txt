@@ -1,26 +1,30 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/home.rpy", line 342, in script
+  File "game/home.rpy", line 351, in script call
+    call cryo_ingredients_calculation
+  File "game/home.rpy", line 352, in script
     python:
-  File "game/home.rpy", line 411, in <module>
-    elif dic_girl_equipment_neck_mod[all_girls_list[girl_index]["equipment"]["neck"]]["escape"]:
-KeyError: ''
+  File "game/home.rpy", line 472, in <module>
+    foot_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
+NameError: name 'foot_meat_info' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/home.rpy", line 342, in script
+  File "game/home.rpy", line 351, in script call
+    call cryo_ingredients_calculation
+  File "game/home.rpy", line 352, in script
     python:
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/home.rpy", line 411, in <module>
-    elif dic_girl_equipment_neck_mod[all_girls_list[girl_index]["equipment"]["neck"]]["escape"]:
-KeyError: ''
+  File "game/home.rpy", line 472, in <module>
+    foot_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
+NameError: name 'foot_meat_info' is not defined
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
-JONT Port by Rec3ks ver. 0.0.49
-Tue Jul 29 13:12:49 2025
+JONT Port by Rec3ks ver. 0.0.55
+Thu Jul 31 21:48:35 2025

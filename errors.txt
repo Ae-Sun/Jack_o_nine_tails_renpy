@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 891: expected statement.
-    renpy.restart()
-                   ^
+File "game/home.rpy", line 3478: 'D' is not a keyword argument or valid child of the text statement.
+    text "[dic_foods_list["D- quality"][0][1][0]]" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
+                            ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Tue Jul 29 12:15:21 2025
+Thu Jul 31 21:29:37 2025
