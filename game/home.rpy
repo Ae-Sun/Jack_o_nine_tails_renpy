@@ -454,9 +454,10 @@ label next_day_label:
                         keys_list = ["D- quality","C- quality","B+ quality","A+ quality","S+ quality"]
                         n = slave_skill -1
                         food_not_found = True
-                        # error need to fix TODO WIP PRPBABLY KEY THE LINE 459 
                         while n >= 0 and food_not_found:
-                            for i, entry in enumerate(dic_foods_list[keys_list[n]]):
+                            shuffled_list = dic_foods_list[keys_list[n]].copy()
+                            random.shuffle(shuffled_list)
+                            for i, entry in enumerate(shuffled_list): 
                                 x = 0
                                 for values22314 in range(4):
                                     if dic_foods_list[keys_list[n]][i][1][values22314] != "none":
@@ -476,6 +477,9 @@ label next_day_label:
                                 food_meat_info["name"] = "Canned food"
                             else:
                                 n -= 1
+                #TODO NEXT THING TO DO 
+
+
                 # WIP assistent cooking code skipped
                                         # WIP TODO
                             #already_ate = True
@@ -2542,7 +2546,7 @@ screen slave_aura_menu():
                         hovered SetVariable("aura_is_hover", True), SetVariable("aura_check_hover", "obedience"), Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "obedience")
                         unhovered SetVariable("aura_is_hover", False), Hide("description_slave_attributes")
                 elif all_girls_list[girl_index]["obedience"] > 9:
-                    textbutton aura_descriptions_no_color["obedience"][10] xmaximum 750:
+                    textbutton aura_descriptions["obedience"][10] xmaximum 750:
                         style "aura_description_button"
                         action NullAction()
                         hovered SetVariable("aura_is_hover", True), SetVariable("aura_check_hover", "obedience"), Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "obedience")
@@ -2809,7 +2813,12 @@ screen slave_rules_menu():
         pos(0.802,0.095)
         anchor (1.0,0.0)
         spacing 6
-        if all_girls_list[girl_index]["rules"]["act_as_cook"]:
+        if cryostore_ingredients_max == 0:
+            imagebutton:
+                idle "buttons/unactive_button.webp"
+                hover "buttons/unactive_button_hover.webp"
+                action NullAction()
+        elif all_girls_list[girl_index]["rules"]["act_as_cook"]:
             imagebutton:
                 idle "buttons/sel_button.webp"
                 hover "buttons/sel_button_hover.webp"
