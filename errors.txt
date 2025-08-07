@@ -2,9 +2,8 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 460: unexpected indent
-                            for i, entry in enumerate(shuffled_list): 
-                            ^
+File "game/home.rpy", line 386: invalid syntax
+                if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Sat Aug  2 00:14:42 2025
+Fri Aug  8 00:19:16 2025

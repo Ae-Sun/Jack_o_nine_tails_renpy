@@ -50,6 +50,11 @@
         },
         "traits_hidden": {
             "traits_skills(1/8)": {
+                
+                "cookingtrait": {
+                    "value": 2,
+                    "revealed": false
+                },
                 "maidtrait": {
                     "value": 2,
                     "revealed": true

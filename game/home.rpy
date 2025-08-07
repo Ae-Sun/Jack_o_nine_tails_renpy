@@ -66,6 +66,8 @@ default house_mess = 0
 default alone_count = 0
 default is_main_assistant = False
 default girls_count = 0
+default target_skill = ""
+default tutor_modifier = 0
 default slave_auto_cook = False
 default after_sex_effects = 0
 default master_equipment_choice_image = "scene/item/clear_small"
@@ -78,7 +80,7 @@ default guild_contract = {
 }
 default food_meat_info = {
     "name" :"",
-    "quality": ""
+    "quality": 0
 }
 default home_estate = {
     "kitchen": {
@@ -377,18 +379,25 @@ label next_day_label:
                 if all_girls_list[girl_index]["energised"] > 5:
                     all_girls_list[girl_index]["energised"] = max(all_girls_list[girl_index]["energised"]- random.randint(0, 7),0)
                 #MOOD accustomed section
+                # if not permanent moodlet are lose after a day
+                # its fine past mood go after moodlet check since mood is not gonna update until home screen -rec3ks
+                # TODO need to check permanent state of some moodlet
                 for key in dic_slave_mood["good_mood"]:
-                    if not all_girls_list[girl_index]["mood_state"]["good_mood"][key]["permanent"]:
-                        if not all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed"]:
-                            all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed_value"] -= 1
-                            if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed_value"] == 0:
-                                all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed"] = True
+                    if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]
+                        if not all_girls_list[girl_index]["mood_state"]["good_mood"][key]["permanent"]:
+                            all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"] = False
+                            if not all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed"]:
+                                all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed_value"] -= 1
+                                if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed_value"] == 0:
+                                    all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed"] = True
                 for key in dic_slave_mood["bad_mood"]:
-                    if not all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["permanent"]:
-                        if not all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed"]:
-                            all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed_value"] -= 1
-                            if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed_value"] == 0:
-                                all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed"] = True
+                    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]
+                        if not all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["permanent"]:
+                            all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"] = False
+                            if not all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed"]:
+                                all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed_value"] -= 1
+                                if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed_value"] == 0:
+                                    all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed"] = True
                 if debt_tracker > 0:
                     debt_tracker -= 1
                     if debt_tracker == 0 and debt > 0:
@@ -448,43 +457,57 @@ label next_day_label:
                 # Cooking rule
                 slave_auto_cook = False
                 if cryostore_ingredients_max > 0:
-                    if not already_prepared and not already_ate and all_girls_list[girl_index]["rules"]["act_as_cook"] and all_girls_list[girl_index]["energy"] > 0 and all_girls_list[girl_index]["obedience"] >= -6 + 2 - all_girls_list[girl_index]["attributes"]["pride"] // 2 + all_girls_list[girl_index]["attributes"]["nature"] // 3 + all_girls_list[girl_index]["attributes"]["intelligence"] // 3:
-                        slave_auto_cook = True
-                        slave_skill = min(all_girls_list[girl_index]["skills"]["cooking"], max(1, all_girls_list[girl_index]["mood"]),5)
-                        keys_list = ["D- quality","C- quality","B+ quality","A+ quality","S+ quality"]
-                        n = slave_skill -1
-                        food_not_found = True
-                        while n >= 0 and food_not_found:
-                            shuffled_list = dic_foods_list[keys_list[n]].copy()
-                            random.shuffle(shuffled_list)
-                            for i, entry in enumerate(shuffled_list): 
-                                x = 0
-                                for values22314 in range(4):
-                                    if dic_foods_list[keys_list[n]][i][1][values22314] != "none":
-                                        if storage["ingredients"][dic_foods_list[keys_list[n]][i][1][values22314]] == 0:
-                                            x += 1
-                                if x == 0:
-                                    food_not_found = False
-                                    for values33214 in range(4):
-                                        if dic_foods_list[keys_list[n]][i][1][values33214] != "none":
-                                            storage["ingredients"][dic_foods_list[keys_list[n]][i][1][values33214]] -= 1
-                                    already_prepared = True
+                    if not already_prepared and all_girls_list[girl_index]["rules"]["act_as_cook"] and all_girls_list[girl_index]["energy"] > 0 and all_girls_list[girl_index]["obedience"] >= -6 + 2 - all_girls_list[girl_index]["attributes"]["pride"] // 2 + all_girls_list[girl_index]["attributes"]["nature"] // 3 + all_girls_list[girl_index]["attributes"]["intelligence"] // 3:
+                        if not already_ate or eat_best_food:
+                            slave_auto_cook = True
+                            slave_skill = min(all_girls_list[girl_index]["skills"]["cooking"], max(1, all_girls_list[girl_index]["mood"]),5)
+                            keys_list = ["D- quality","C- quality","B+ quality","A+ quality","S+ quality"]
+                            n = slave_skill -1
+                            food_not_found = True
+                            while n >= 0 and food_not_found:
+                                shuffled_list = dic_foods_list[keys_list[n]].copy()
+                                random.shuffle(shuffled_list)
+                                for i, entry in enumerate(shuffled_list): 
+                                    x = 0
+                                    for values22314 in range(4):
+                                        if dic_foods_list[keys_list[n]][i][1][values22314] != "none":
+                                            if storage["ingredients"][dic_foods_list[keys_list[n]][i][1][values22314]] == 0:
+                                                x += 1 
+                                    if x == 0:
+                                        if food_meat_info["quality"] < n + 1: # this is always true for not already eat, and can be false for ate best food
+                                            food_not_found = False
+                                            for values33214 in range(4):
+                                                if dic_foods_list[keys_list[n]][i][1][values33214] != "none":
+                                                    storage["ingredients"][dic_foods_list[keys_list[n]][i][1][values33214]] -= 1
+                                            already_prepared = True
+                                            already_ate = True
+                                            food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
+                                            food_meat_info["quality"] = n + 1
+                                            target_skill = "cooking"
+                                            if food_meat_info["quality"] < all_girls_list[girl_index]["last_cooked_meat_level"]:
+                                                tutor_modifier = -5
+                                            else:
+                                                tutor_modifier = 0
+                                            all_girls_list[girl_index]["last_cooked_meat_level"] = food_meat_info["quality"]
+                                            girl_skills_rise_check()
+                                if n == 0 and food_not_found:
+                                    already_prepared = True # slave will prepare canned food if doesn't have enough ingredients
                                     already_ate = True
-                                    food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
-                                    food_meat_info["quality"] = n + 1
-                            if n == 0:
-                                food_meat_info["quality"] = 0
-                                food_meat_info["name"] = "Canned food"
-                            else:
-                                n -= 1
-                #TODO NEXT THING TO DO 
+                                    food_meat_info["quality"] = 0
+                                    food_meat_info["name"] = "Canned food"
+                                else:
+                                    n -= 1
+                            # WIP assistent cooking code skipped
 
 
-                # WIP assistent cooking code skipped
-                                        # WIP TODO
-                            #already_ate = True
-                    # TODO Cooking rule
-                    #if home_estate["kitchen"] != 0: 
+
+
+                    #TODO NEXT THING TO DO 
+                    # master food code 
+
+
+
+
                 if all_girls_list[girl_index]["assistant"]:
                     if all_girls_list[girl_index]["attributes"]["nature"] < 3:
                         all_girls_list[girl_index]["experience"]["attributes"]["nature"] +=1

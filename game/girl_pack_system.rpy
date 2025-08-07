@@ -700,6 +700,21 @@ init python:
                     all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["revealed"] = True
                     # show exhibition text -rec3ks
         all_girls_list[girl_index]["worn_mood"] = all_girls_list[girl_index]["worn_mood"]/10           
-    
-
-        
+    def girl_skills_rise_check():
+        # target_affinity - check if the girl have the trait and reveal if true -rec3ks
+        target_skill2 = target_skill + "trait"
+        if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] != 0:
+            if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"]:
+                store.attribute_track_index = target_skill2
+                store.dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 
+                store.dictionary_name = dic_traits_skills_descriptions
+                all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] = True
+                renpy.show_screen("tutorial_attribute")
+            if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] > 0:
+                all_girls_list[girl_index]["mood_state"]["good_mood"]["pos_job"]["active"] = True
+            else:
+                all_girls_list[girl_index]["mood_state"]["neg_job"]["pos_job"]["active"] = True
+            #MAY HAVE SOME PROBLEMS IF MORE THAN ONE TRAIT IS REVEALED AT THE SAME TIME, but for now is good enough -rec3ks
+            #TODO tutor modifier
+            #if all_girls_list[girl_index]["attributes"]["intelligence"] >= 5:
+            #   tutor_modifier += 1

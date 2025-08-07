@@ -593,6 +593,7 @@ label choose_inicial_girl:
         all_girls_list[girl_index].setdefault("daily_count",{})
         all_girls_list[girl_index].setdefault("arousal",0)
         all_girls_list[girl_index].setdefault("status_met",False)
+        all_girls_list[girl_index].setdefault("last_cooked_meat_level",0)
         all_girls_list[girl_index]["day_bought"] = day_tracker
         all_girls_list[girl_index]["daily_count"].setdefault("reward",0)
         all_girls_list[girl_index]["daily_count"].setdefault("punishments",0)
