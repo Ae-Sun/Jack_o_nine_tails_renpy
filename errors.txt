@@ -2,8 +2,8 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 386: invalid syntax
-                if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]
+File "game/home.rpy", line 515: invalid syntax
+                        else
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Fri Aug  8 00:19:16 2025
+Sun Aug 10 00:05:57 2025

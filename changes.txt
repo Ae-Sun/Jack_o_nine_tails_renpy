@@ -31,11 +31,10 @@
 - Now clicking 1 or 2 will move between equipments in slave equipment screen
 - When you buy items that can be equipment in multiples part of slave body like like barbells, you will buy a whole set for one slave instead of x quantitative. (Code problems, the original system require a lot more code.) 
 - Expand girl dominium - instead of one slave at the time, now support multiples slaves at the same time. [No freeze]
-- Added change girl for testing reasons
+- Added change girl buttom for testing reasons
 - meat evaluation now give more meat if age == milf
 - reworked girl background effects, now girl background will have a significantly affect in the gameplay (instead of changing some attribute and skills value, now change the increase of those skills and values) - WIP
-- generate_stock world bonus check if attribute is bigger that 0 instead of 1 (I believe the original code is wrong)
-- reworked daily mood drop and rise ( the original is a joke lowering magnitude of positive and negative moodlet by 1% per day. Now moodlet is now more complex, extra info (permanent: true or false, accustomated: true or false, active: true or false))
+- reworked daily mood drop and rise. Now moodlets are now more complex, 
 - day end suicide now take in consideration previous intents, making more likely to happen if don't success
 - broken girl now will not reset entire aura stats, temp and pride, just don't gain any exp.
 - Now dominium dictated ever also add + 1 to master supermacy
@@ -44,3 +43,6 @@
 - clothes delivery. Why not again (cost extra 2 sparks per item, can be accesible on slave equipment screen ) - WIP
 - the game doesn't difference between doble handed weapon and single handed ( Code problem, the equipment code it's already very complex, I dont want to make it even more complex. I will take other approch(If left or rigth hand has a doble handed weapon and left or rigth hand have a weapon will recieve a penalty in combat ))
 - the slaves mood formula has been reformulated, should work very similar to the original one
+- slave cooking now check every single possibility randomly instead of making 30 tries
+- tutors boost now give +5 diligence instead of +3 (to expensive just for +1 diligence in comparison of school)
+- diligence calculation no longer max cap to 5 ( I believe this make the game a lot more grid)

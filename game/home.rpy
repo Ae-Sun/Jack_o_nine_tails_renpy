@@ -67,9 +67,17 @@ default alone_count = 0
 default is_main_assistant = False
 default girls_count = 0
 default target_skill = ""
+default slave_diligence = 0
+default motivation_repulse = 0
+default interaction_willingness = 0
+default interaction_repulse = 0
+default interaction_sex_acceptance = 0
 default tutor_modifier = 0
+default skill_adv_mul = 1
 default slave_auto_cook = False
 default after_sex_effects = 0
+default interaction_teach = False
+default interaction_teach_type = ""
 default master_equipment_choice_image = "scene/item/clear_small"
 default master_equipment_choice_image_text = "You can navigate up and down in the clothing equipment menu pressing the 1 and 2 keys."
 default guild_contract = {
@@ -364,12 +372,19 @@ label next_day_label:
             blazing_counter += 1
         else:
             blazing_counter = 0
+        if debt_tracker > 0:
+            debt_tracker -= 1
+            if debt_tracker == 0 and debt > 0:
+                msg("As in any other city, in the Eternal Rome it is reckless to forget to repay money you have borrowed. You died a disgraceful death at the hand of the moneylender’s henchmen…")
+                gameover = True
+
 
         girls_count = 0
         save_girl_index = girl_index
         for girl_index in all_girls_list:
             girls_count += 1
             if all_girls_list[girl_index]["conscience"]:
+                all_girls_list[girl_index]["exertion"] = 0
                 all_girls_list[girl_index]["epilation"] = max(all_girls_list[girl_index]["epilation"]-1,0)
                 all_girls_list[girl_index]["manicure"] = max(all_girls_list[girl_index]["manicure"]-1,0)
                 all_girls_list[girl_index]["hairstyle"] = max(all_girls_list[girl_index]["hairstyle"]-1,0)
@@ -383,7 +398,7 @@ label next_day_label:
                 # its fine past mood go after moodlet check since mood is not gonna update until home screen -rec3ks
                 # TODO need to check permanent state of some moodlet
                 for key in dic_slave_mood["good_mood"]:
-                    if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]
+                    if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]:
                         if not all_girls_list[girl_index]["mood_state"]["good_mood"][key]["permanent"]:
                             all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"] = False
                             if not all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed"]:
@@ -391,18 +406,13 @@ label next_day_label:
                                 if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed_value"] == 0:
                                     all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed"] = True
                 for key in dic_slave_mood["bad_mood"]:
-                    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]
+                    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
                         if not all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["permanent"]:
                             all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"] = False
                             if not all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed"]:
                                 all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed_value"] -= 1
                                 if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed_value"] == 0:
                                     all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed"] = True
-                if debt_tracker > 0:
-                    debt_tracker -= 1
-                    if debt_tracker == 0 and debt > 0:
-                        msg("As in any other city, in the Eternal Rome it is reckless to forget to repay money you have borrowed. You died a disgraceful death at the hand of the moneylender’s henchmen…")
-                        gameover = True
                 if all_girls_list[girl_index]["attributes"]["endurance"] == 0 and all_girls_list[girl_index]["experience"]["attributes"]["endurance"] <= -10:
                     roll = random.randint(1, 2)
                     if roll == 1:
@@ -460,7 +470,7 @@ label next_day_label:
                     if not already_prepared and all_girls_list[girl_index]["rules"]["act_as_cook"] and all_girls_list[girl_index]["energy"] > 0 and all_girls_list[girl_index]["obedience"] >= -6 + 2 - all_girls_list[girl_index]["attributes"]["pride"] // 2 + all_girls_list[girl_index]["attributes"]["nature"] // 3 + all_girls_list[girl_index]["attributes"]["intelligence"] // 3:
                         if not already_ate or eat_best_food:
                             slave_auto_cook = True
-                            slave_skill = min(all_girls_list[girl_index]["skills"]["cooking"], max(1, all_girls_list[girl_index]["mood"]),5)
+                            slave_skill = min(all_girls_list[girl_index]["skills"]["cooking"], max(1, all_girls_list[girl_index]["mood"] // 1),5)
                             keys_list = ["D- quality","C- quality","B+ quality","A+ quality","S+ quality"]
                             n = slave_skill -1
                             food_not_found = True
@@ -497,6 +507,13 @@ label next_day_label:
                                     food_meat_info["name"] = "Canned food"
                                 else:
                                     n -= 1
+                            interaction_willingness_check()
+                            diligence_check()
+                            girl_skills_rise_check()
+                            if all_girls_list[girl_index]["energy"] > 0:
+                                all_girls_list[girl_index]["energy"] -= 2
+                            else:
+                                all_girls_list[girl_index]["yesterday_exhaustion"] += 2
                             # WIP assistent cooking code skipped
 
 
@@ -520,12 +537,13 @@ label next_day_label:
                 ### energy and sleep condition 
                 if all_girls_list[girl_index]["sleep"] != 4:
                     if all_girls_list[girl_index]["aura"]["devotion"] >= 3:
-                        all_girls_list[girl_index]["energy"] = all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2
+                        all_girls_list[girl_index]["energy"] = all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2 
                     else:
-                        all_girls_list[girl_index]["energy"] = min(10, all_girls_list[girl_index]["energy"]//2 + all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2)
+                        all_girls_list[girl_index]["energy"] = min(10, all_girls_list[girl_index]["energy"]//2 + all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2) - all_girls_list[girl_index]["yesterday_exhaustion"]
+
                     all_girls_list[girl_index]["days_without_sleep"] = 0
                 else:
-                    all_girls_list[girl_index]["energy"] = min(12,all_girls_list[girl_index]["energy"]//2 + (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2)/2)
+                    all_girls_list[girl_index]["energy"] = min(10,all_girls_list[girl_index]["energy"]//2 + (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2)/2) - all_girls_list[girl_index]["yesterday_exhaustion"]
                     all_girls_list[girl_index]["days_without_sleep"] += 1
                     all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *3
                     all_girls_list[girl_index]["experience"]["aura"]["taming"] += all_girls_list[girl_index]["days_without_sleep"]
@@ -565,6 +583,11 @@ label next_day_label:
             master_past_mood = mood_value_10
             # reset temporal mood master
             master_temporal_mood = 0
+            
+            
+            
+            all_girls_list[girl_index]["yesterday_exhaustion"] = 0
+
         if girls_count == 0:
             alone_count += 1
         else:
@@ -781,12 +804,15 @@ label Home:
             if dic_custom_start_difficulty_selection_index_index == 0:
                 slave_obedience_bonus = 4
                 slave_difficulty = 2
+                dic_overnight_rules_count_index = 0
             elif dic_custom_start_difficulty_selection_index_index == 1:
                 slave_obedience_bonus = 0
                 slave_difficulty = 4
+                dic_overnight_rules_count_index = 1
             elif dic_custom_start_difficulty_selection_index_index == 2:
                 slave_obedience_bonus = 0
                 slave_difficulty = 14 - min(8, 4*all_girls_list[girl_index]["aura"]["devotion"])
+                dic_overnight_rules_count_index =2
             girl_index_save = girl_index
             for girl_index in all_girls_list:
                 # equipment_doble_check

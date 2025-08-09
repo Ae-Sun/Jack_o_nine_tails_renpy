@@ -1,382 +1,177 @@
-2025-08-07 19:54:19 UTC
+2025-08-09 22:04:39 UTC
 Windows-10-10.0.26100
 Ren'Py 8.3.7.25031702
 
-Early init took 1.36s
-Loading error handling took 0.19s
-Loading script took 2.33s
-Loading save slot metadata took 0.13s
+Early init took 1.05s
+Loading error handling took 0.17s
+Loading script took 4.84s
+Loading save slot metadata took 0.15s
 Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.39126 s.
-Running init code took 0.57s
-Loading analysis data took 0.19s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.04s
+
+File "game/home.rpy", line 510: invalid syntax
+                        interaction_willingness_check():
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.92s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 566.41'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 59.16s
+Loading error handling took 0.07s
+Loading script took 2.01s
+Loading save slot metadata took 0.05s
+Loading persistent took 0.00s
+
+File "game/home.rpy", line 515: invalid syntax
+                        else
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.63s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 566.41'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 77.51s
+Loading error handling took 0.07s
+Loading script took 1.00s
+Loading save slot metadata took 0.05s
+Loading persistent took 0.00s
+
+File "game/home.rpy", line 515: invalid syntax
+                        else
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.83s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 566.41'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 156.93s
+Loading error handling took 0.10s
+Loading script took 2.57s
+Loading save slot metadata took 0.06s
+Loading persistent took 0.00s
+ - Init at renpy/common/00images.rpy:55 took 0.35816 s.
+Running init code took 0.65s
+Loading analysis data took 0.25s
+Analyze and compile ATL took 0.01s
+Reloading save slot metadata took 0.38s
 Index archives took 0.00s
-Dump and make backups took 0.15s
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 0.19s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
-Initial gc took 0.20s
+Initial gc took 0.29s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.73s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.02s
+Analyze screens took 0.15s
+Save screen analysis took 0.10s
+Prepare screens took 0.96s
+Save pyanalysis. took 0.15s
+Save bytecode. took 0.05s
+Running _start took 0.01s
+Interface start took 2.17s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 566.41'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/home.rpy", line 361, in script call
+    call cryo_ingredients_calculation
+  File "game/home.rpy", line 362, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 502, in <module>
+    girl_skills_rise_check()
+  File "game/girl_pack_system.rpy", line 790, in girl_skills_rise_check
+    all_girls_list[girl_index]["mood_state"]["good_mood"]["pos_job"]["active"] = True
+KeyError: 'pos_job'
+
+While running game code:
+  File "game/home.rpy", line 361, in script call
+    call cryo_ingredients_calculation
+  File "game/home.rpy", line 362, in script
+    python:
+  File "game/home.rpy", line 502, in <module>
+    girl_skills_rise_check()
+  File "game/girl_pack_system.rpy", line 790, in girl_skills_rise_check
+    all_girls_list[girl_index]["mood_state"]["good_mood"]["pos_job"]["active"] = True
+KeyError: 'pos_job'
+Resetting cache.
+Early init took 515.02s
+Loading error handling took 0.07s
+Loading script took 0.63s
+Loading save slot metadata took 0.07s
+Loading persistent took 0.00s
+ - Init at renpy/common/00images.rpy:55 took 0.35860 s.
+Running init code took 0.48s
+Loading analysis data took 0.19s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.08s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 0.17s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.45s
 DPI scale factor: 2.500000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
 Creating interface object took 0.74s
 Cleaning stores took 0.00s
-Init translation took 0.02s
-Build styles took 0.00s
-Load screen analysis took 0.24s
-Analyze screens took 0.01s
-Save screen analysis took 0.00s
-Prepare screens took 0.79s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.19s
-Running _start took 0.00s
-Interface start took 3.75s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 283.65s
-Loading error handling took 0.21s
-Loading script took 3.05s
-Loading save slot metadata took 0.10s
-Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.42888 s.
-Running init code took 0.61s
-Loading analysis data took 0.23s
-Analyze and compile ATL took 0.01s
-Reloading save slot metadata took 0.11s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.18s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.31s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.60s
-Cleaning stores took 0.00s
 Init translation took 0.01s
 Build styles took 0.00s
 Load screen analysis took 0.00s
 Analyze screens took 0.08s
-Save screen analysis took 0.12s
-Prepare screens took 0.61s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.07s
-Running _start took 0.01s
-Interface start took 2.31s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-
-Full traceback:
-  File "game/home.rpy", line 353, in script call
-    call cryo_ingredients_calculation
-  File "game/home.rpy", line 354, in script
-    python:
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/home.rpy", line 485, in <module>
-    girl_skills_rise_check()
-  File "game/girl_pack_system.rpy", line 705, in girl_skills_rise_check
-    target_affinity2 = target_affinity + "trait"
-NameError: name 'target_affinity' is not defined
-
-While running game code:
-  File "game/home.rpy", line 353, in script call
-    call cryo_ingredients_calculation
-  File "game/home.rpy", line 354, in script
-    python:
-  File "game/home.rpy", line 485, in <module>
-    girl_skills_rise_check()
-  File "game/girl_pack_system.rpy", line 705, in girl_skills_rise_check
-    target_affinity2 = target_affinity + "trait"
-NameError: name 'target_affinity' is not defined
-Resetting cache.
-Early init took 507.64s
-Loading error handling took 0.13s
-Loading script took 0.96s
-Loading save slot metadata took 0.07s
-Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.52500 s.
-Running init code took 0.71s
-Loading analysis data took 0.12s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.08s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.16s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.40s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.95s
-Cleaning stores took 0.00s
-Init translation took 0.03s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.14s
-Save screen analysis took 0.20s
-Prepare screens took 1.07s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.08s
-Running _start took 0.00s
-Interface start took 3.32s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-
-Full traceback:
-  File "game/home.rpy", line 353, in script call
-    call cryo_ingredients_calculation
-  File "game/home.rpy", line 354, in script
-    python:
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/home.rpy", line 485, in <module>
-    girl_skills_rise_check()
-  File "game/girl_pack_system.rpy", line 706, in girl_skills_rise_check
-    if all_girls_list[girl_index]["traits"]["traits_hidden"][target_skill2]["value"] != 0:
-KeyError: 'cookingtrait'
-
-While running game code:
-  File "game/home.rpy", line 353, in script call
-    call cryo_ingredients_calculation
-  File "game/home.rpy", line 354, in script
-    python:
-  File "game/home.rpy", line 485, in <module>
-    girl_skills_rise_check()
-  File "game/girl_pack_system.rpy", line 706, in girl_skills_rise_check
-    if all_girls_list[girl_index]["traits"]["traits_hidden"][target_skill2]["value"] != 0:
-KeyError: 'cookingtrait'
-Resetting cache.
-Early init took 1215.20s
-Loading error handling took 0.11s
-Loading script took 0.84s
-Loading save slot metadata took 0.06s
-Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.42017 s.
-Running init code took 0.61s
-Loading analysis data took 0.16s
-Analyze and compile ATL took 0.01s
-Reloading save slot metadata took 0.11s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.20s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.25s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.65s
-Cleaning stores took 0.00s
-Init translation took 0.02s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.08s
-Save screen analysis took 0.10s
-Prepare screens took 0.61s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.04s
-Running _start took 0.00s
-Interface start took 2.58s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 1732.82s
-Loading error handling took 0.05s
-Loading script took 0.26s
-Loading save slot metadata took 0.04s
-Loading persistent took 0.00s
-Running init code took 0.33s
-Loading analysis data took 0.07s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.04s
-Index archives took 0.00s
-Dump and make backups took 0.07s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.18s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.48s
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.17s
-Analyze screens took 0.01s
-Save screen analysis took 0.00s
-Prepare screens took 0.50s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.00s
-Running _start took 0.00s
-Interface start took 3.15s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.01s
-Load screen analysis took 0.15s
-Analyze screens took 0.00s
-Prepare screens took 0.00s
-Running _start took 0.00s
-Resetting cache.
-Early init took 1871.54s
-Loading error handling took 0.14s
-Loading script took 0.74s
-Loading save slot metadata took 0.11s
-Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.87406 s.
-Running init code took 1.17s
-Loading analysis data took 0.34s
-Analyze and compile ATL took 0.03s
-Reloading save slot metadata took 0.34s
-Index archives took 0.00s
-Dump and make backups took 0.37s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.76s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 1.69s
-Cleaning stores took 0.00s
-Init translation took 0.05s
-Build styles took 0.01s
-Load screen analysis took 0.67s
-Analyze screens took 0.01s
-Save screen analysis took 0.00s
-Prepare screens took 2.45s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.00s
-Running _start took 0.00s
-Interface start took 4.24s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.01s
-Load screen analysis took 0.13s
-Analyze screens took 0.00s
-Prepare screens took 0.00s
-Running _start took 0.00s
-
-Full traceback:
-  File "game/home.rpy", line 353, in script call
-    call cryo_ingredients_calculation
-  File "game/home.rpy", line 354, in script
-    python:
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/home.rpy", line 485, in <module>
-    girl_skills_rise_check()
-  File "game/girl_pack_system.rpy", line 710, in girl_skills_rise_check
-    dictionary_name = dic_traits_skills_description
-NameError: name 'dic_traits_skills_description' is not defined
-
-While running game code:
-  File "game/home.rpy", line 353, in script call
-    call cryo_ingredients_calculation
-  File "game/home.rpy", line 354, in script
-    python:
-  File "game/home.rpy", line 485, in <module>
-    girl_skills_rise_check()
-  File "game/girl_pack_system.rpy", line 710, in girl_skills_rise_check
-    dictionary_name = dic_traits_skills_description
-NameError: name 'dic_traits_skills_description' is not defined
-Resetting cache.
-Early init took 2182.63s
-Loading error handling took 0.09s
-Loading script took 0.81s
-Loading save slot metadata took 0.06s
-Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.31988 s.
-Running init code took 0.45s
-Loading analysis data took 0.11s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.06s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.10s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.43s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.75s
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.07s
 Save screen analysis took 0.13s
-Prepare screens took 0.74s
+Prepare screens took 0.60s
 Save pyanalysis. took 0.00s
-Save bytecode. took 0.07s
+Save bytecode. took 0.06s
 Running _start took 0.00s
 Interface start took 3.22s
 
@@ -390,95 +185,64 @@ Version: b'4.6.0 NVIDIA 566.41'
 Display Info: None
 Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
 Maximum texture size: 4096x4096
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.01s
-Load screen analysis took 0.17s
-Analyze screens took 0.00s
-Prepare screens took 0.00s
-Running _start took 0.00s
-Resetting cache.
-Early init took 2906.66s
-Loading error handling took 0.11s
-Loading script took 0.71s
-Loading save slot metadata took 0.07s
-Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.34903 s.
-Running init code took 0.47s
-Loading analysis data took 0.09s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.06s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.10s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.52s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.64s
-Cleaning stores took 0.00s
-Init translation took 0.02s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.10s
-Save screen analysis took 0.15s
-Prepare screens took 0.61s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.07s
-Running _start took 0.00s
-Interface start took 3.59s
 
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.01s
-Load screen analysis took 0.32s
-Analyze screens took 0.00s
-Prepare screens took 0.00s
-Running _start took 0.01s
+Full traceback:
+  File "game/home.rpy", line 361, in script call
+    call cryo_ingredients_calculation
+  File "game/home.rpy", line 362, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 502, in <module>
+    girl_skills_rise_check()
+  File "game/girl_pack_system.rpy", line 796, in girl_skills_rise_check
+    tutor_modifier += 2
+UnboundLocalError: local variable 'tutor_modifier' referenced before assignment
+
+While running game code:
+  File "game/home.rpy", line 361, in script call
+    call cryo_ingredients_calculation
+  File "game/home.rpy", line 362, in script
+    python:
+  File "game/home.rpy", line 502, in <module>
+    girl_skills_rise_check()
+  File "game/girl_pack_system.rpy", line 796, in girl_skills_rise_check
+    tutor_modifier += 2
+UnboundLocalError: local variable 'tutor_modifier' referenced before assignment
 Resetting cache.
-Early init took 4148.58s
-Loading error handling took 0.09s
-Loading script took 0.68s
-Loading save slot metadata took 0.07s
+Early init took 792.55s
+Loading error handling took 0.05s
+Loading script took 0.44s
+Loading save slot metadata took 0.04s
 Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.39190 s.
-Running init code took 0.57s
-Loading analysis data took 0.16s
-Analyze and compile ATL took 0.01s
-Reloading save slot metadata took 0.09s
+ - Init at renpy/common/00images.rpy:55 took 0.25641 s.
+Running init code took 0.36s
+Loading analysis data took 0.08s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.05s
 Index archives took 0.00s
 Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.17s
+Dump and make backups took 0.09s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
-Initial gc took 0.39s
+Initial gc took 0.21s
 DPI scale factor: 2.500000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 0.71s
+Creating interface object took 0.48s
 Cleaning stores took 0.00s
 Init translation took 0.01s
 Build styles took 0.00s
 Load screen analysis took 0.00s
-Analyze screens took 0.07s
-Save screen analysis took 0.14s
-Prepare screens took 0.78s
+Analyze screens took 0.06s
+Save screen analysis took 0.09s
+Prepare screens took 0.46s
 Save pyanalysis. took 0.00s
-Save bytecode. took 0.07s
+Save bytecode. took 0.05s
 Running _start took 0.00s
-Interface start took 4.09s
+Interface start took 2.39s
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 3840, 2400)
@@ -492,600 +256,84 @@ Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
 Maximum texture size: 4096x4096
 
 Full traceback:
-  File "game/home.rpy", line 353, in script call
+  File "game/home.rpy", line 361, in script call
     call cryo_ingredients_calculation
-  File "game/home.rpy", line 570, in script
-    $ msg("New day [day_tracker]")
+  File "game/home.rpy", line 362, in script
+    python:
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/home.rpy", line 570, in <module>
-    $ msg("New day [day_tracker]")
-  File "game/girl_pack_system.rpy", line 55, in msg
-    renpy.call_screen("msg", msg_text=x)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\exports\statementexports.py", line 345, in call_screen
-    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ui.py", line 301, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2218, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in interact_core
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 480, in visit_all
-    callback(self)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in <lambda>
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 491, in per_interact
-    self.update()
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 700, in update
-    self.screen.function(**self.scope)
-  File "game/tutorial.rpy", line 275, in execute
-    screen tutorial_attribute():
-  File "game/tutorial.rpy", line 275, in execute
-    screen tutorial_attribute():
-  File "game/tutorial.rpy", line 278, in execute
-    text dictionary_name[attribute_track_index][dictionary_track_index] xmaximum  445:
-  File "game/tutorial.rpy", line 278, in <module>
-    text dictionary_name[attribute_track_index][dictionary_track_index] xmaximum  445:
-KeyError: ''
+  File "game/home.rpy", line 478, in <module>
+    shuffled_list = dic_foods_list[keys_list[n]].copy()
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+TypeError: list indices must be integers or slices, not float
 
 While running game code:
-  File "game/home.rpy", line 353, in script call
+  File "game/home.rpy", line 361, in script call
     call cryo_ingredients_calculation
-  File "game/home.rpy", line 570, in script
-    $ msg("New day [day_tracker]")
-  File "game/home.rpy", line 570, in <module>
-    $ msg("New day [day_tracker]")
-  File "game/girl_pack_system.rpy", line 55, in msg
-    renpy.call_screen("msg", msg_text=x)
-  File "game/tutorial.rpy", line 275, in execute
-    screen tutorial_attribute():
-  File "game/tutorial.rpy", line 275, in execute
-    screen tutorial_attribute():
-  File "game/tutorial.rpy", line 278, in execute
-    text dictionary_name[attribute_track_index][dictionary_track_index] xmaximum  445:
-  File "game/tutorial.rpy", line 278, in <module>
-    text dictionary_name[attribute_track_index][dictionary_track_index] xmaximum  445:
-KeyError: ''
-Cleaning stores took 0.00s
-Init translation took 0.02s
-Build styles took 0.01s
-Load screen analysis took 0.25s
-Analyze screens took 0.00s
-Prepare screens took 0.00s
-Running _start took 0.00s
+  File "game/home.rpy", line 362, in script
+    python:
+  File "game/home.rpy", line 478, in <module>
+    shuffled_list = dic_foods_list[keys_list[n]].copy()
+TypeError: list indices must be integers or slices, not float
 
 Full traceback:
-  File "game/home.rpy", line 353, in script call
+  File "game/home.rpy", line 361, in script call
     call cryo_ingredients_calculation
-  File "game/home.rpy", line 570, in script
-    $ msg("New day [day_tracker]")
+  File "game/home.rpy", line 362, in script
+    python:
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/home.rpy", line 570, in <module>
-    $ msg("New day [day_tracker]")
-  File "game/girl_pack_system.rpy", line 55, in msg
-    renpy.call_screen("msg", msg_text=x)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\exports\statementexports.py", line 345, in call_screen
-    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ui.py", line 301, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2218, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in interact_core
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 480, in visit_all
-    callback(self)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in <lambda>
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 491, in per_interact
-    self.update()
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 700, in update
-    self.screen.function(**self.scope)
-  File "game/tutorial.rpy", line 275, in execute
-    screen tutorial_attribute():
-  File "game/tutorial.rpy", line 275, in execute
-    screen tutorial_attribute():
-  File "game/tutorial.rpy", line 278, in execute
-    text dictionary_name[attribute_track_index][dictionary_track_index] xmaximum  445:
-  File "game/tutorial.rpy", line 278, in <module>
-    text dictionary_name[attribute_track_index][dictionary_track_index] xmaximum  445:
-KeyError: ''
+  File "game/home.rpy", line 478, in <module>
+    shuffled_list = dic_foods_list[keys_list[n]].copy()
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+TypeError: list indices must be integers or slices, not float
 
 While running game code:
-  File "game/home.rpy", line 353, in script call
+  File "game/home.rpy", line 361, in script call
     call cryo_ingredients_calculation
-  File "game/home.rpy", line 570, in script
-    $ msg("New day [day_tracker]")
-  File "game/home.rpy", line 570, in <module>
-    $ msg("New day [day_tracker]")
-  File "game/girl_pack_system.rpy", line 55, in msg
-    renpy.call_screen("msg", msg_text=x)
-  File "game/tutorial.rpy", line 275, in execute
-    screen tutorial_attribute():
-  File "game/tutorial.rpy", line 275, in execute
-    screen tutorial_attribute():
-  File "game/tutorial.rpy", line 278, in execute
-    text dictionary_name[attribute_track_index][dictionary_track_index] xmaximum  445:
-  File "game/tutorial.rpy", line 278, in <module>
-    text dictionary_name[attribute_track_index][dictionary_track_index] xmaximum  445:
-KeyError: ''
-Cleaning stores took 0.00s
-Init translation took 0.02s
-Build styles took 0.02s
-Load screen analysis took 0.24s
-Analyze screens took 0.00s
-Prepare screens took 0.00s
-Running _start took 0.01s
-
-Full traceback:
-  File "game/home.rpy", line 353, in script call
-    call cryo_ingredients_calculation
-  File "game/home.rpy", line 570, in script
-    $ msg("New day [day_tracker]")
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/home.rpy", line 570, in <module>
-    $ msg("New day [day_tracker]")
-  File "game/girl_pack_system.rpy", line 55, in msg
-    renpy.call_screen("msg", msg_text=x)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\exports\statementexports.py", line 345, in call_screen
-    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ui.py", line 301, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2218, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in interact_core
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 480, in visit_all
-    callback(self)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in <lambda>
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 491, in per_interact
-    self.update()
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 700, in update
-    self.screen.function(**self.scope)
-  File "game/tutorial.rpy", line 275, in execute
-    screen tutorial_attribute():
-  File "game/tutorial.rpy", line 275, in execute
-    screen tutorial_attribute():
-  File "game/tutorial.rpy", line 278, in execute
-    text dictionary_name[attribute_track_index][dictionary_track_index] xmaximum  445:
-  File "game/tutorial.rpy", line 278, in <module>
-    text dictionary_name[attribute_track_index][dictionary_track_index] xmaximum  445:
-KeyError: ''
-
-While running game code:
-  File "game/home.rpy", line 353, in script call
-    call cryo_ingredients_calculation
-  File "game/home.rpy", line 570, in script
-    $ msg("New day [day_tracker]")
-  File "game/home.rpy", line 570, in <module>
-    $ msg("New day [day_tracker]")
-  File "game/girl_pack_system.rpy", line 55, in msg
-    renpy.call_screen("msg", msg_text=x)
-  File "game/tutorial.rpy", line 275, in execute
-    screen tutorial_attribute():
-  File "game/tutorial.rpy", line 275, in execute
-    screen tutorial_attribute():
-  File "game/tutorial.rpy", line 278, in execute
-    text dictionary_name[attribute_track_index][dictionary_track_index] xmaximum  445:
-  File "game/tutorial.rpy", line 278, in <module>
-    text dictionary_name[attribute_track_index][dictionary_track_index] xmaximum  445:
-KeyError: ''
+  File "game/home.rpy", line 362, in script
+    python:
+  File "game/home.rpy", line 478, in <module>
+    shuffled_list = dic_foods_list[keys_list[n]].copy()
+TypeError: list indices must be integers or slices, not float
 Resetting cache.
-Early init took 4682.21s
-Loading error handling took 0.08s
-Loading script took 0.73s
-Loading save slot metadata took 0.09s
-Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.47264 s.
-Running init code took 0.63s
-Loading analysis data took 0.11s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.06s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.12s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.46s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.79s
-Cleaning stores took 0.00s
-Init translation took 0.02s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.09s
-Save screen analysis took 0.11s
-Prepare screens took 0.79s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.07s
-Running _start took 0.00s
-Interface start took 3.43s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 4700.86s
-Loading error handling took 0.09s
-Loading script took 0.54s
-Loading save slot metadata took 0.08s
-Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.43582 s.
-Running init code took 0.61s
-Loading analysis data took 0.16s
-Analyze and compile ATL took 0.01s
-Reloading save slot metadata took 0.09s
-Index archives took 0.00s
-Dump and make backups took 0.14s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.39s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.87s
-Cleaning stores took 0.00s
-Init translation took 0.02s
-Build styles took 0.00s
-Load screen analysis took 0.28s
-Analyze screens took 0.01s
-Save screen analysis took 0.00s
-Prepare screens took 1.04s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.00s
-Running _start took 0.00s
-Interface start took 4.25s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.01s
-Load screen analysis took 0.14s
-Analyze screens took 0.00s
-Prepare screens took 0.00s
-Running _start took 0.01s
-Resetting cache.
-Early init took 4956.57s
-Loading error handling took 0.09s
-Loading script took 0.91s
-Loading save slot metadata took 0.08s
-Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.43260 s.
-Running init code took 0.62s
-Loading analysis data took 0.16s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.07s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.15s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.45s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.64s
-Cleaning stores took 0.00s
-Init translation took 0.02s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.10s
-Save screen analysis took 0.14s
-Prepare screens took 0.75s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.06s
-Running _start took 0.00s
-Interface start took 3.51s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 5988.18s
+Early init took 1006.45s
 Loading error handling took 0.07s
-Loading script took 0.82s
-Loading save slot metadata took 0.08s
-Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.45243 s.
-Running init code took 0.66s
-Loading analysis data took 0.14s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.08s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.14s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.32s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.68s
-Cleaning stores took 0.00s
-Init translation took 0.02s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.08s
-Save screen analysis took 0.15s
-Prepare screens took 0.84s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.08s
-Running _start took 0.01s
-Interface start took 4.19s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 6086.76s
-Loading error handling took 0.15s
-Loading script took 1.16s
-Loading save slot metadata took 0.10s
-Loading persistent took 0.00s
-
-File "game/girl_pack_system.rpy", line 713: expected an indented block
-            if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] > 0:
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Interface start took 1.25s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 6223.67s
-Loading error handling took 0.07s
-Loading script took 0.56s
+Loading script took 1.54s
 Loading save slot metadata took 0.05s
 Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.31007 s.
-Running init code took 0.48s
-Loading analysis data took 0.14s
-Analyze and compile ATL took 0.01s
-Reloading save slot metadata took 0.08s
+ - Init at renpy/common/00images.rpy:55 took 0.33417 s.
+Running init code took 0.45s
+Loading analysis data took 0.18s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.05s
 Index archives took 0.00s
 Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.17s
+Dump and make backups took 0.11s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
-Initial gc took 0.28s
+Initial gc took 0.34s
 DPI scale factor: 2.500000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 0.99s
+Creating interface object took 0.50s
 Cleaning stores took 0.00s
 Init translation took 0.01s
 Build styles took 0.00s
 Load screen analysis took 0.00s
-Analyze screens took 0.10s
-Save screen analysis took 0.16s
-Prepare screens took 0.89s
+Analyze screens took 0.06s
+Save screen analysis took 0.09s
+Prepare screens took 0.45s
 Save pyanalysis. took 0.00s
-Save bytecode. took 0.10s
+Save bytecode. took 0.05s
 Running _start took 0.00s
-Interface start took 4.68s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 6234.66s
-Loading error handling took 0.15s
-Loading script took 0.64s
-Loading save slot metadata took 0.08s
-Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.76695 s.
-Running init code took 0.97s
-Loading analysis data took 0.17s
-Analyze and compile ATL took 0.01s
-Reloading save slot metadata took 0.06s
-Index archives took 0.00s
-Dump and make backups took 0.14s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.37s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.81s
-Cleaning stores took 0.00s
-Init translation took 0.02s
-Build styles took 0.00s
-Load screen analysis took 0.27s
-Analyze screens took 0.01s
-Save screen analysis took 0.00s
-Prepare screens took 0.82s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.00s
-Running _start took 0.00s
-Interface start took 4.63s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 6538.06s
-Loading error handling took 0.12s
-Loading script took 0.70s
-Loading save slot metadata took 0.14s
-Loading persistent took 0.00s
- - Init at renpy/common/00images.rpy:55 took 0.72278 s.
-Running init code took 0.97s
-Loading analysis data took 0.16s
-Analyze and compile ATL took 0.01s
-Reloading save slot metadata took 0.09s
-Index archives took 0.00s
-Dump and make backups took 0.18s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.39s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.88s
-Cleaning stores took 0.00s
-Init translation took 0.02s
-Build styles took 0.00s
-Load screen analysis took 0.28s
-Analyze screens took 0.01s
-Save screen analysis took 0.00s
-Prepare screens took 0.97s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.00s
-Running _start took 0.00s
-Interface start took 5.30s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 7920.19s
-Loading error handling took 0.21s
-Loading script took 5.59s
-Loading save slot metadata took 0.21s
-Loading persistent took 0.00s
-
-File "game/home.rpy", line 383: invalid syntax
-                if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Interface start took 1.84s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 8688.12s
-Loading error handling took 0.13s
-Loading script took 5.21s
-Loading save slot metadata took 0.13s
-Loading persistent took 0.00s
-
-File "game/home.rpy", line 386: invalid syntax
-                if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Interface start took 1.30s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 566.41'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 8696.89s
-Loading error handling took 0.10s
-Loading script took 1.38s
-Loading save slot metadata took 0.05s
-Loading persistent took 0.00s
-
-File "game/home.rpy", line 386: invalid syntax
-                if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Interface start took 1.01s
+Interface start took 1.82s
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 3840, 2400)

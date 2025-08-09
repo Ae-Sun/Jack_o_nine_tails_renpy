@@ -553,6 +553,8 @@ label choose_inicial_girl:
         all_girls_list[girl_index].setdefault("energised",0)
         all_girls_list[girl_index].setdefault("suicide_rate",0)
         all_girls_list[girl_index].setdefault("mood_label","")
+        all_girls_list[girl_index].setdefault("exertion","")
+        all_girls_list[girl_index].setdefault("yesterday_exhaustion",0)
         all_girls_list[girl_index]["mood_state"].setdefault("good_mood",{})
         all_girls_list[girl_index]["mood_state"].setdefault("bad_mood",{})
         for key in dic_slave_mood["good_mood"]:
@@ -594,6 +596,8 @@ label choose_inicial_girl:
         all_girls_list[girl_index].setdefault("arousal",0)
         all_girls_list[girl_index].setdefault("status_met",False)
         all_girls_list[girl_index].setdefault("last_cooked_meat_level",0)
+        all_girls_list[girl_index].setdefault("reward_level",0)
+        all_girls_list[girl_index].setdefault("punishment_level",0)
         all_girls_list[girl_index]["day_bought"] = day_tracker
         all_girls_list[girl_index]["daily_count"].setdefault("reward",0)
         all_girls_list[girl_index]["daily_count"].setdefault("punishments",0)
