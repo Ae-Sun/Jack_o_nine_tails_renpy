@@ -3,30 +3,32 @@
 While running game code:
   File "game/home.rpy", line 361, in script call
     call cryo_ingredients_calculation
-  File "game/home.rpy", line 362, in script
+  File "game/home.rpy", line 623, in script
     python:
-  File "game/home.rpy", line 478, in <module>
-    shuffled_list = dic_foods_list[keys_list[n]].copy()
-TypeError: list indices must be integers or slices, not float
+  File "game/home.rpy", line 818, in <module>
+    equipment_check2()
+  File "game/girl_pack_system.rpy", line 275, in equipment_check2
+    all_girls_list[girl_index]["learning_bonus"]["nurse"] += 1
+KeyError: 'nurse'
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
   File "game/home.rpy", line 361, in script call
     call cryo_ingredients_calculation
-  File "game/home.rpy", line 362, in script
+  File "game/home.rpy", line 623, in script
     python:
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/home.rpy", line 478, in <module>
-    shuffled_list = dic_foods_list[keys_list[n]].copy()
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
-    rv = list.__getitem__(self, index)
-TypeError: list indices must be integers or slices, not float
+  File "game/home.rpy", line 818, in <module>
+    equipment_check2()
+  File "game/girl_pack_system.rpy", line 275, in equipment_check2
+    all_girls_list[girl_index]["learning_bonus"]["nurse"] += 1
+KeyError: 'nurse'
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
 JONT Port by Rec3ks ver. 0.0.55
-Sun Aug 10 00:19:16 2025
+Sun Aug 10 17:44:53 2025

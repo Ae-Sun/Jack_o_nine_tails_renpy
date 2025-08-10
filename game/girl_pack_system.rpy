@@ -272,7 +272,7 @@ init python:
                 all_girls_list[girl_index]["worn_mood"] += -20 + all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] 
                 all_girls_list[girl_index]["daily_bonus"]["temperament"] -= 1
         if all_girls_list[girl_index]["equipment"]["hands"] == "Rubber Gloves":
-            all_girls_list[girl_index]["learning_bonus"]["nurse"] += 1
+            all_girls_list[girl_index]["learning_bonus"]["nursing"] += 1
             all_girls_list[girl_index]["learning_bonus"]["maid"] += 1
             all_girls_list[girl_index]["style_plus"] -= 2
         if all_girls_list[girl_index]["equipment"]["hands"] == "Lace Gloves":
@@ -704,8 +704,8 @@ init python:
         
     def interaction_willingness_check():
         store.interaction_willingness = all_girls_list[girl_index]["obedience"] + interaction_sex_acceptance + interaction_repulse
-        if target_skill != "sex":
-            target_skill2 = target_skill + "trait"
+        if store.target_skill != "sex":
+            target_skill2 = store.target_skill + "trait"
             if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"]:
                 store.attribute_track_index = target_skill2
                 store.dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 
@@ -714,7 +714,7 @@ init python:
                 renpy.show_screen("tutorial_attribute")
             store.interaction_willingness += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] * 3
         else:
-            if interaction_willingness > 0:
+            if store.interaction_willingness > 0:
                 all_girls_list[girl_index]["daring"] = max(all_girls_list[girl_index]["daring"], interaction_repulse)
                 
 
@@ -747,8 +747,8 @@ init python:
             store.slave_diligence += dic_girl_psy_status[all_girls_list[girl_index]["psy_status"]]
         else:
             store.slave_diligence -= dic_girl_psy_status[all_girls_list[girl_index]["psy_status"]]
-        if interaction_willingness < 0:
-            store.slave_diligence += interaction_willingness // 2
+        if store.interaction_willingness < 0:
+            store.slave_diligence += store.interaction_willingness // 2
         # BONUSES FOR TEACHING ABILITY
         if interaction_teach:
             if interaction_teach_type == "master_teaches_slave":
@@ -770,14 +770,13 @@ init python:
         if domini_dictum_active and interaction_willingness < 0 or all_girls_list[girl_index]["psy_status"] == "broken":
             store.slave_diligence = 1
         # I will just lower capping diligence, because high capping is just more grid and less fun - rec3ks
-        store.slave_diligence = max(store.slave_diligence, 0)
+        store.slave_diligence = max(store.slave_diligence, 1) # i think 0 is too heavy for the game -rec3ks
 
 
 
 
 
     def girl_skills_rise_check():
-        # target_affinity - check if the girl have the trait and reveal if true -rec3ks
         target_skill2 = target_skill + "trait"
         if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] != 0:
             if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"]:
@@ -802,7 +801,7 @@ init python:
                 store.tutor_modifier -= 1
             else:
                 store.tutor_modifier -= 2
-            skill_rise = ((max(1,store.tutor_modifier)) * store.slave_diligence) // 4  # need diligence_check TODO NEED TO CHECK WHY IS RASING ONLY 2 TO 2 
+            skill_rise = ((max(1,store.tutor_modifier)) * store.slave_diligence)    # need diligence_check TODO NEED TO CHECK WHY IS RASING ONLY 2 TO 2 
             if target_skill == "athletics":
                 skill_rise = skill_rise // 2
                 if skill_rise > 3:
@@ -816,7 +815,7 @@ init python:
                     all_girls_list[girl_index]["experience"]["skills"]["cow"] -= 3
                 elif all_girls_list[girl_index]["skills"]["cow"] == 5:
                     skill_rise = max(1, skill_rise - all_girls_list[girl_index]["skills"]["cow"]) #! S+ cow skill greatly impedes training other skills - ImperatorAugustus
-                if skill_rise < 1 or slave_diligence == 0: 
+                if skill_rise < 1: 
                     skill_rise = 1
                 all_girls_list[girl_index]["experience"]["skills"][target_skill] += skill_rise * skill_adv_mul
         

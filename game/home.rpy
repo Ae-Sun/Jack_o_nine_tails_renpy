@@ -469,6 +469,7 @@ label next_day_label:
                 if cryostore_ingredients_max > 0:
                     if not already_prepared and all_girls_list[girl_index]["rules"]["act_as_cook"] and all_girls_list[girl_index]["energy"] > 0 and all_girls_list[girl_index]["obedience"] >= -6 + 2 - all_girls_list[girl_index]["attributes"]["pride"] // 2 + all_girls_list[girl_index]["attributes"]["nature"] // 3 + all_girls_list[girl_index]["attributes"]["intelligence"] // 3:
                         if not already_ate or eat_best_food:
+                            target_skill = "cooking"
                             slave_auto_cook = True
                             slave_skill = min(all_girls_list[girl_index]["skills"]["cooking"], max(1, all_girls_list[girl_index]["mood"] // 1),5)
                             keys_list = ["D- quality","C- quality","B+ quality","A+ quality","S+ quality"]
@@ -492,14 +493,12 @@ label next_day_label:
                                             already_prepared = True
                                             already_ate = True
                                             food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
-                                            food_meat_info["quality"] = n + 1
-                                            target_skill = "cooking"
+                                            food_meat_info["quality"] = n + 1 #TODO SOMETHING IS WRONG WITH THE QUALITY
                                             if food_meat_info["quality"] < all_girls_list[girl_index]["last_cooked_meat_level"]:
                                                 tutor_modifier = -5
                                             else:
                                                 tutor_modifier = 0
                                             all_girls_list[girl_index]["last_cooked_meat_level"] = food_meat_info["quality"]
-                                            girl_skills_rise_check()
                                 if n == 0 and food_not_found:
                                     already_prepared = True # slave will prepare canned food if doesn't have enough ingredients
                                     already_ate = True
@@ -1267,7 +1266,7 @@ label equipment_check:
                     all_girls_list[girl_index]["worn_mood"] += -20 + all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] 
                     all_girls_list[girl_index]["daily_bonus"]["temperament"] -= 1
             if all_girls_list[girl_index]["equipment"]["hands"] == "Rubber Gloves":
-                all_girls_list[girl_index]["learning_bonus"]["nurse"] += 1
+                all_girls_list[girl_index]["learning_bonus"]["nursing"] += 1
                 all_girls_list[girl_index]["learning_bonus"]["maid"] += 1
                 all_girls_list[girl_index]["style_plus"] -= 2
             if all_girls_list[girl_index]["equipment"]["hands"] == "Lace Gloves":
