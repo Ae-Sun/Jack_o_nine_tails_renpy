@@ -2573,5 +2573,12 @@ define dic_slave_moodlevel2 = {
     "Ecstatic+": "{color=#009900}Ecstatic+{/color}",
     "{color=#009900}Ecstatic+{/color}": "{color=#009900}Ecstatic+{/color}"
 }
+define dic_idle = [
+    "sits at the window, leaning her elbows on the sill and looking at the street. Either she counts crows, or stares at passers-by. Perhaps she is bored, but it’s still better than many of the lessons that you could burden her with.",
+    "aimlessly wanders around the house, examining different parts of the interior. Perhaps she is bored, but it’s still better than many of the lessons that you could burden her with.",
+    "lays down to rest and spends her leisure time in blissful slumber. Perhaps she is bored, but it’s still better than many of the lessons that you could burden her with.",
+    "spends her free time immersed in her own feelings, whispering something under her breath. Perhaps she is bored, but it’s still better than many of the lessons that you could burden her with.",
+    "spends her free time quietly humming a song of her distant homeland. Perhaps she is bored, but it’s still better than many of the lessons that you could burden her with."
+]
 
 

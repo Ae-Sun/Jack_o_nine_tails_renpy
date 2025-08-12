@@ -1730,5 +1730,6 @@ define tips = {
     19: "A broken girl will not increase aura stats and temperament and pride until nature is increased",
     20: "Clothes can give you 2 type of mood, flat mood and moodlet. Both give or reduce mood, but flat mood can stack, moodlet if it's the same not. You can consult the moodlet interacting with your slave",
     21: "Your aura shine brigter agaisnt slaves that got ever beated or ever dominius dictated ",
-    22: "Yours slaves are more diligence in free mode and less on maximum mode "
+    22: "Yours slaves are more diligence in free mode and less on maximum mode ",
+    23: "Not depressed girl gain mood and well rested when left idle"
 }

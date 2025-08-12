@@ -82,7 +82,7 @@ screen slaver_guild():
             action SetVariable("angelika_speech_text_count",0),SetVariable("lecture_name","tutorial_lecture5"),Jump("Lecture")
         
         if is_main_slave:
-            textbutton "Return to home":
+            textbutton "Back to work":
                 style "lecture_button"
                 action Jump("Home")
         else:
@@ -258,9 +258,9 @@ screen choose_inicial_girl_screen():
         xalign 0.655
         yalign 0.96
         imagebutton:
-            idle tutorial_backbutton anchor (0.5, 0.5)
-            hover tutorial_backbutton_hover
-            action SetVariable("angelika_speech_text_count",4),SetVariable("Lecture_name",""),Jump("Tutorial")
+            idle "buttons/demo_noback_button_hover.webp" anchor (0.5, 0.5)
+            hover "buttons/demo_noback_button_hover.webp"
+            action NullAction()
         imagebutton:
             idle "buttons/auk_fwrd.webp" anchor (0.5, 0.5)
             hover "buttons/auk_fwrd_hover.webp"
@@ -579,6 +579,7 @@ label choose_inicial_girl:
         all_girls_list[girl_index]["experience"].setdefault("traits_aura", {})
         all_girls_list[girl_index]["experience"].setdefault("traits_attributes", {})
         all_girls_list[girl_index].setdefault("energy", all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2)
+        all_girls_list[girl_index].setdefault("stored_yesterday_energy", 0)
         all_girls_list[girl_index].setdefault("attributes", {})
         all_girls_list[girl_index].setdefault("skills", {})
         all_girls_list[girl_index].setdefault("traits", {})

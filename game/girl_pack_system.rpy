@@ -52,7 +52,7 @@ init python:
             all_girls_list[girl_index]["experience"][x][a] -= attributes_max_threshold[all_girls_list[girl_index][x][a]]
             all_girls_list[girl_index][x][a] = all_girls_list[girl_index][x][a] + 1
     def msg(x):
-        renpy.call_screen("msg", msg_text=x)
+        renpy.show_screen("msg", msg_text=x)
     def meat_evaluation():
         base_meat_gain = all_girls_list[girl_index]["attributes"]["physical"] + 2
         if all_girls_list[girl_index]["age"] == 0:
@@ -818,6 +818,17 @@ init python:
                 if skill_rise < 1: 
                     skill_rise = 1
                 all_girls_list[girl_index]["experience"]["skills"][target_skill] += skill_rise * skill_adv_mul
+    def cryo_ingredients_calculation():        
+        keys_list = list(storage["ingredients"].keys())
+        keys_list_index = 0
         
+        while store.cryostore_ingredients > store.cryostore_ingredients_max:
+            if storage["ingredients"][keys_list[keys_list_index]] == 0:
+                keys_list_index += 1
+            else:
+                storage["ingredients"][keys_list[keys_list_index]] -= 1
+            
+            # Recalculate cryostore_ingredients
+            store.cryostore_ingredients = sum(storage["ingredients"].values())    
 
                 

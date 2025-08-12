@@ -2,8 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 515: invalid syntax
-                        else
+File "game/home.rpy", line 364: expected statement.
+    cryo_ingredients_calculation()
+                                  ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Sun Aug 10 00:05:57 2025
+Tue Aug 12 14:41:32 2025

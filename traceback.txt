@@ -1,34 +1,32 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/home.rpy", line 361, in script call
+  File "game/home.rpy", line 364, in script call
     call cryo_ingredients_calculation
-  File "game/home.rpy", line 623, in script
-    python:
-  File "game/home.rpy", line 818, in <module>
-    equipment_check2()
-  File "game/girl_pack_system.rpy", line 275, in equipment_check2
-    all_girls_list[girl_index]["learning_bonus"]["nurse"] += 1
-KeyError: 'nurse'
+  File "game/home.rpy", line 614, in script
+    $ msg("New day [day_tracker]")
+ScriptError: could not find label 'next_day_labellabel'.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/home.rpy", line 361, in script call
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\bootstrap.py", line 359, in bootstrap
+    renpy.main.main()
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\main.py", line 652, in main
+    run(restart)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\main.py", line 148, in run
+    renpy.execution.run_context(True)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\execution.py", line 958, in run_context
+    context.run()
+  File "game/home.rpy", line 364, in script call
     call cryo_ingredients_calculation
-  File "game/home.rpy", line 623, in script
-    python:
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/home.rpy", line 818, in <module>
-    equipment_check2()
-  File "game/girl_pack_system.rpy", line 275, in equipment_check2
-    all_girls_list[girl_index]["learning_bonus"]["nurse"] += 1
-KeyError: 'nurse'
+  File "game/home.rpy", line 614, in script
+    $ msg("New day [day_tracker]")
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\script.py", line 1103, in lookup
+    raise ScriptError("could not find label '%s'." % str(original))
+ScriptError: could not find label 'next_day_labellabel'.
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
 JONT Port by Rec3ks ver. 0.0.55
-Sun Aug 10 17:44:53 2025
+Mon Aug 11 13:00:39 2025

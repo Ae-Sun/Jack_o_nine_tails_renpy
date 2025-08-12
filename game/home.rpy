@@ -52,6 +52,8 @@ default girl_index_save = 0
 default estate_quality = 0
 default estate_quality_modifier = 0
 default gameover = False
+default next_day_event_screen_text = ""
+default next_day_event_screen_image = ""
 default pony_count = 0
 default is_domini_dictum_active = False
 default slave_escape_type = 0
@@ -75,6 +77,7 @@ default interaction_sex_acceptance = 0
 default tutor_modifier = 0
 default skill_adv_mul = 1
 default slave_auto_cook = False
+default slave_auto_rest = False
 default after_sex_effects = 0
 default interaction_teach = False
 default interaction_teach_type = ""
@@ -311,7 +314,7 @@ label iniciation_label:
                 if value != "-":
                     inventory[key] = 1
             for key, value in storage["ingredients"].items():
-                storage["ingredients"][key] = 32
+                storage["ingredients"][key] = 20
             for key, value in storage["laboratory"]["ingredients"].items():
                 storage["laboratory"]["ingredients"][key] = 5
             for key, value in storage["laboratory"]["potion"].items():
@@ -356,9 +359,9 @@ label iniciation_label:
             elif reputation_value_1 == 5:
                 $ master_house_reputation["home_estate"] = "white_house"
     jump Home
-label next_day_label:
+label next_day_labellabel:
     if cryostore_ingredients > cryostore_ingredients_max:
-        call cryo_ingredients_calculation
+        $ cryo_ingredients_calculation()
     python:
         is_auspex_active = False
         is_slave_nearly_fainted = False
@@ -523,7 +526,17 @@ label next_day_label:
 
 
 
+                # if all_girls_list[girl_index]["energy"] > 0:
+                #     if all_girls_list[girl_index]["mood"] > -2:
+                #         slave_auto_rest = True
+                #         all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["energy"] / 10
+                #         all_girls_list[girl_index]["mood_state"]["good_mood"]["well_rested"]["active"] = True
+                slave_auto_rest = True
 
+
+                        
+
+                    
                 if all_girls_list[girl_index]["assistant"]:
                     if all_girls_list[girl_index]["attributes"]["nature"] < 3:
                         all_girls_list[girl_index]["experience"]["attributes"]["nature"] +=1
@@ -535,19 +548,21 @@ label next_day_label:
                 increase_check("aura","habit")
                 ### energy and sleep condition 
                 if all_girls_list[girl_index]["sleep"] != 4:
+                    # energy is capped to 10 if devotion is less than 3
                     if all_girls_list[girl_index]["aura"]["devotion"] >= 3:
-                        all_girls_list[girl_index]["energy"] = all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2 
+                        all_girls_list[girl_index]["energy"] = all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 4 - all_girls_list[girl_index]["yesterday_exhaustion"] + all_girls_list[girl_index]["stored_yesterday_energy"]
                     else:
-                        all_girls_list[girl_index]["energy"] = min(10, all_girls_list[girl_index]["energy"]//2 + all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2) - all_girls_list[girl_index]["yesterday_exhaustion"]
-
+                        all_girls_list[girl_index]["energy"] = min(10, all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2 - all_girls_list[girl_index]["yesterday_exhaustion"] + all_girls_list[girl_index]["stored_yesterday_energy"])
+                    all_girls_list[girl_index]["stored_yesterday_energy"] = 0
                     all_girls_list[girl_index]["days_without_sleep"] = 0
                 else:
-                    all_girls_list[girl_index]["energy"] = min(10,all_girls_list[girl_index]["energy"]//2 + (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2)/2) - all_girls_list[girl_index]["yesterday_exhaustion"]
+                    all_girls_list[girl_index]["energy"] = min(10, (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2) // 2 ) - all_girls_list[girl_index]["yesterday_exhaustion"]
                     all_girls_list[girl_index]["days_without_sleep"] += 1
                     all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *3
                     all_girls_list[girl_index]["experience"]["aura"]["taming"] += all_girls_list[girl_index]["days_without_sleep"]
                     reduce_check("attributes","endurance")
                     increase_check("aura","taming")
+                    all_girls_list[girl_index]["stored_yesterday_energy"] = 0
 
                 #### SPOILING SECTION - Done
                 ### spoiling - increase
@@ -595,23 +610,36 @@ label next_day_label:
         girl_index = save_girl_index
         already_prepared = False
         already_ate = False
+    hide screen homehome_attributes_menu
+    jump Next_day_event
+
+label Next_day_event:
+    scene bg_old
+    if slave_auto_rest:
+        $ n = random.randint(0,4)
+        $ next_day_event_screen_text = all_girls_list[girl_index]["name"] +" " + dic_idle[n]
+        $ slave_auto_rest = False
+        call screen next_day_event_screen()
+    if slave_auto_cook:
+        $ slave_auto_cook = False
+        call screen next_day_event_screen()
     show screen home_menu
     $ msg("New day [day_tracker]")
     jump Home
-label cryo_ingredients_calculation:
-    python:
-        keys_list = list(storage["ingredients"].keys())
-        keys_list_index = 0
-        while cryostore_ingredients > cryostore_ingredients_max:
-            if storage["ingredients"][keys_list[keys_list_index]] == 0:
-                keys_list_index += 1
-            else:
-                storage["ingredients"][keys_list[keys_list_index]] -= 1
-            cryostore_ingredients = 0
-            for values in storage["ingredients"]:
-                cryostore_ingredients += storage["ingredients"][values]
+screen next_day_event_screen():
+    add "bg/city_small.webp" xsize 1280 ysize 720
+    vbox:
+        xalign 0.655
+        yalign 0.96
+        imagebutton:
+            idle "buttons/auk_fwrd.webp" anchor (0.5, 0.5)
+            hover "buttons/auk_fwrd_hover.webp"
+            action Jump("Next_day_event")
 
-#label previos_day_info():
+    text next_day_event_screen_text pos (0.02, 0.78) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
+
+
+#label previos_day_info:
 
 label Home:
     $ renpy.restart_interaction() 
@@ -1936,7 +1964,7 @@ screen home_menu():
                 action NullAction()
         textbutton "End of the day":
             style "home_button"
-            action SetVariable("current_menu", 0), Jump("next_day_label")
+            action Jump("next_day_labellabel")
     vbox:
         yalign 0.49
         xalign 0.05
