@@ -17,6 +17,8 @@
     "world": "",
     "name": "Helen",
     "virginity": 3,
+    "haircolor": "purple",
+    "hairlength": "long",
     "attributes":{
         "beauty": 3,
         "endurance": 3,

@@ -135,6 +135,13 @@ define dic_spellbook_info = {
     "adverto": "Imposes magic indelibly as a seal on the victim's body. This seal will banish any foreign lifeforms from the body and restore her energy at the time of casting, and will help find the target if she runs away."
 }
 # dic_home_state cause errors, idk why cause error -rec3ks
+define dic_slave_room_to_text = {
+    "squalid_room": "Ragged Bed",
+    "cramped_room": "Bedroom",
+    "comfortable_room": "Bedroom",
+    "luxurios_boudoir": "Bedroom"
+}
+
 define dic_home_state2 = {
     "poor_house": {
         "prestige": 0,
@@ -239,13 +246,13 @@ define dic_improvement_rooms ={
             "cost": 150,
             "size": 50,
             "risk": 10,
-            "modifier": -3
+            "modifier": -1
         },
         "Basic kitchen": {
             "cost": 500,
             "size": 100,
             "risk": 50,
-            "modifier": -1
+            "modifier": 0
         },
         "Well-equipped kitchen": {
             "cost": 1200,
@@ -257,7 +264,7 @@ define dic_improvement_rooms ={
             "cost": 2500,
             "size": 200,
             "risk": 300,
-            "modifier": +3
+            "modifier": +2
         }
     },
     "slaves_rooms":{
@@ -265,13 +272,13 @@ define dic_improvement_rooms ={
             "cost": 50,
             "size": 20,
             "risk": 5,
-            "modifier": -3
+            "modifier": -1
         },
         "cramped_room":{
             "cost": 150,
             "size": 30,
             "risk": 20,
-            "modifier": -1
+            "modifier": 0
         },
         "comfortable_room":{
             "cost": 500,
@@ -283,7 +290,7 @@ define dic_improvement_rooms ={
             "cost": 1500,
             "size": 100,
             "risk": 150,
-            "modifier": +3
+            "modifier": +2
         }
     },
     "barn": {
@@ -291,13 +298,13 @@ define dic_improvement_rooms ={
             "cost": 100,
             "size": 80,
             "risk": 15,
-            "modifier": -3
+            "modifier": -1
         },
         "Worn barn": {  
             "cost": 400,
             "size": 120,
             "risk": 60,
-            "modifier": -1
+            "modifier": 0
         },
         "Sturdy barn": { 
             "cost": 1000,
@@ -309,7 +316,7 @@ define dic_improvement_rooms ={
             "cost": 2200,
             "size": 220,
             "risk": 250,
-            "modifier": +3
+            "modifier": +2
         }
     },
     "laboratory": {
@@ -317,13 +324,13 @@ define dic_improvement_rooms ={
             "cost": 200,
             "size": 40,
             "risk": 15,
-            "modifier": -3
+            "modifier": -1
         },
         "Crude lab": {  # Bad
             "cost": 600,
             "size": 80,
             "risk": 60,
-            "modifier": -1
+            "modifier": 0
         },
         "Proper lab": {  # Good
             "cost": 1400,
@@ -335,7 +342,7 @@ define dic_improvement_rooms ={
             "cost": 3000,
             "size": 180,
             "risk": 250,
-            "modifier": +3
+            "modifier": +2
         }
     }
 }
@@ -1568,13 +1575,13 @@ define spells_books_description = {
         "cast": "You awaken Sparks and cast a spell of pleasure. This magic gives unearthly pleasure without any physical impact. Enough to experience several strong orgasms in a row.",
     },
     "Tremendio": {
-        "cast": "You cast a justice spell on <<$dynslave_name>>, which should make her feel guilt or merit much sharper.",
+        "cast": "You cast a justice spell on [all_girls_list[girl_index]['name']], which should make her feel guilt or merit much sharper.",
     },
     "Cruciato": {
         "cast": "You collect Sparks in your soul and create from them a spell that surrounds you in an invisible but clearly perceptible aura of majesty and power. People around you will experience an unaccountable desire to obey you.",
     },
     "Delikacia": {
-        "cast": "You cast a fear spell on <<$dynslave_name>>. Fear, sticky and unaccountable, penetrates into her soul and stays there, granting you power and control over the trembling <<$dynslave_noun2[dynslave[\"age\"]]>>.",
+        "cast": "You cast a fear spell on [all_girls_list[girl_index]['name']]. Fear, sticky and unaccountable, penetrates into her soul and stays there, granting you power and control over the trembling <<$dynslave_noun2[dynslave[\"age\"]]>>.",
     },
     "Domini Dictum": {
         "cast": "Using Sparks dissolved in your soul, you endow your voice with unstoppable force in the mind of your target, compelling her to obey any of your orders. Only those whose will is stronger than your spell will be able to disobey.",

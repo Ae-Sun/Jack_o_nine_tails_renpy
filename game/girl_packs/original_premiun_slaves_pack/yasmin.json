@@ -16,6 +16,8 @@
     "occupation_description": "  [Yasmin]<br>- I've always been strong and quick, so I went into the boarding psingingy as soon as I could pick up an assault blaster. We had glorious fights. For my services the Mothers Council made me the commander of the wing. And then I got into the damn fogs, when I went to hunt on the planet where we restock.",
     "name": "Yasmin",
     "virginity": 0,
+    "haircolor": "red",
+    "hairlength": "long",
     "attributes":{
         "beauty": 4,
         "endurance": 5,

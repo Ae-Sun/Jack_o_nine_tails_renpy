@@ -30,6 +30,7 @@ default boobs3 =" empty breast-sacks"
 default boobs4 =" round tits"
 default boobs5 =" firm melons"
 default boobs6 =" shapely balloons"
+default bedroom_quality = ""
 default dic_overnight_rules_count_index = 1
 default slave_rebellion_fight = False
 default slave_rebellion_attack = False
@@ -74,10 +75,10 @@ default motivation_repulse = 0
 default interaction_willingness = 0
 default interaction_repulse = 0
 default interaction_sex_acceptance = 0
+default home_localization = "Slums"
 default tutor_modifier = 0
 default skill_adv_mul = 1
 default slave_auto_cook = False
-default slave_auto_rest = False
 default after_sex_effects = 0
 default interaction_teach = False
 default interaction_teach_type = ""
@@ -316,7 +317,7 @@ label iniciation_label:
             for key, value in storage["ingredients"].items():
                 storage["ingredients"][key] = 20
             for key, value in storage["laboratory"]["ingredients"].items():
-                storage["laboratory"]["ingredients"][key] = 5
+                storage["laboratory"]["ingredients"][key] = 20
             for key, value in storage["laboratory"]["potion"].items():
                 storage["laboratory"]["potion"][key] = 5
             for key, value in storage["house"]["artistic_material"].items():
@@ -324,7 +325,11 @@ label iniciation_label:
             for key, value in storage["house"]["sex_items"].items():
                 storage["house"]["sex_items"][key] = 5
             master_house_reputation["home_estate"] = "rich_down_house"
-            home_estate["kitchen"]["Well-equipped kitchen"] = 3
+            home_localization = "White House"
+            home_estate["kitchen"]["Well-equipped kitchen"] = 10
+            home_estate["slaves_rooms"]["comfortable_room"] = 3
+            for girl_index in all_girls_list:
+                all_girls_list[girl_index].setdefault("sleep_room","comfortable_room")
         jump equipment_check
     else:
         python:
@@ -526,12 +531,11 @@ label next_day_labellabel:
 
 
 
-                # if all_girls_list[girl_index]["energy"] > 0:
-                #     if all_girls_list[girl_index]["mood"] > -2:
-                #         slave_auto_rest = True
-                #         all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["energy"] / 10
-                #         all_girls_list[girl_index]["mood_state"]["good_mood"]["well_rested"]["active"] = True
-                slave_auto_rest = True
+                if all_girls_list[girl_index]["energy"] > 0:
+                    if all_girls_list[girl_index]["mood"] > -2:
+                        all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["energy"] / 10
+                        all_girls_list[girl_index]["mood_state"]["good_mood"]["well_rested"]["active"] = True
+                        all_girls_list[girl_index]["slave_auto_sleep"] = True
 
 
                         
@@ -550,13 +554,13 @@ label next_day_labellabel:
                 if all_girls_list[girl_index]["sleep"] != 4:
                     # energy is capped to 10 if devotion is less than 3
                     if all_girls_list[girl_index]["aura"]["devotion"] >= 3:
-                        all_girls_list[girl_index]["energy"] = all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 4 - all_girls_list[girl_index]["yesterday_exhaustion"] + all_girls_list[girl_index]["stored_yesterday_energy"]
+                        all_girls_list[girl_index]["energy"] = all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 4 - all_girls_list[girl_index]["yesterday_exhaustion"] + all_girls_list[girl_index]["stored_yesterday_energy"] + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"]
                     else:
-                        all_girls_list[girl_index]["energy"] = min(10, all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2 - all_girls_list[girl_index]["yesterday_exhaustion"] + all_girls_list[girl_index]["stored_yesterday_energy"])
+                        all_girls_list[girl_index]["energy"] = min(10, all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2 - all_girls_list[girl_index]["yesterday_exhaustion"] + all_girls_list[girl_index]["stored_yesterday_energy"]) + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"]
                     all_girls_list[girl_index]["stored_yesterday_energy"] = 0
                     all_girls_list[girl_index]["days_without_sleep"] = 0
                 else:
-                    all_girls_list[girl_index]["energy"] = min(10, (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2) // 2 ) - all_girls_list[girl_index]["yesterday_exhaustion"]
+                    all_girls_list[girl_index]["energy"] = min(10, (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2) // 2 ) - all_girls_list[girl_index]["yesterday_exhaustion"] + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"]
                     all_girls_list[girl_index]["days_without_sleep"] += 1
                     all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *3
                     all_girls_list[girl_index]["experience"]["aura"]["taming"] += all_girls_list[girl_index]["days_without_sleep"]
@@ -614,12 +618,19 @@ label next_day_labellabel:
     jump Next_day_event
 
 label Next_day_event:
+
+    hide screen goguild 
+    hide screen sparks_menu
+
     scene bg_old
-    if slave_auto_rest:
-        $ n = random.randint(0,4)
-        $ next_day_event_screen_text = all_girls_list[girl_index]["name"] +" " + dic_idle[n]
-        $ slave_auto_rest = False
-        call screen next_day_event_screen()
+    python:
+        for girl_index in all_girls_list:
+            if all_girls_list[girl_index]["slave_auto_sleep"]:
+                all_girls_list[girl_index]["slave_auto_sleep"] = False
+                n = random.randint(0,4)
+                next_day_event_screen_text = all_girls_list[girl_index]["name"] +" " + dic_idle[n]
+                bedroom_quality = dic_slave_room_to_text[all_girls_list[girl_index]["sleep_room"]]
+                renpy.call_screen("next_day_event_screen")
     if slave_auto_cook:
         $ slave_auto_cook = False
         call screen next_day_event_screen()
@@ -627,7 +638,9 @@ label Next_day_event:
     $ msg("New day [day_tracker]")
     jump Home
 screen next_day_event_screen():
-    add "bg/city_small.webp" xsize 1280 ysize 720
+    key "K_SPACE" action SetVariable("current_menu", 0),Jump("Next_day_event")
+
+    add bgstyle2 xsize 1280 ysize 720
     vbox:
         xalign 0.655
         yalign 0.96
@@ -635,6 +648,13 @@ screen next_day_event_screen():
             idle "buttons/auk_fwrd.webp" anchor (0.5, 0.5)
             hover "buttons/auk_fwrd_hover.webp"
             action Jump("Next_day_event")
+    vbox:
+        pos(0.82,0.05)
+        text bedroom_quality size 45 color "#000000" font "fonts/victoriana.ttf" anchor (0.5, 0.5)
+        add "spacer" size (0,-10)
+        text home_localization size 30 color "#000000" font "fonts/victoriana.ttf" anchor (0.5, 0.5)
+
+    
 
     text next_day_event_screen_text pos (0.02, 0.78) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
 
@@ -699,7 +719,7 @@ label Home:
         estate_quality += home_estate["slaves_rooms"]["cramped_room"]*2
         estate_quality += home_estate["slaves_rooms"]["comfortable_room"]*3
         estate_quality += home_estate["slaves_rooms"]["luxurios_room"]*4
-        estate_quality += dic_home_state2["poor_house"]["prestige"]*20
+        estate_quality += dic_home_state2[master_house_reputation["home_estate"]]["prestige"]*20
         estate_quality_modifier = (estate_quality //20) - brand_reputation_value_6
         if estate_quality_modifier > personality_value_2 + house_mess: 
             master_mood_state["good_mood"]["pos_housing"]["active"] = True

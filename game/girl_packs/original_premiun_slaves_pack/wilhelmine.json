@@ -15,6 +15,8 @@
     "family_description": "My dad is the king of Arthuria. Arthuria is a very proud kingdom with a long military history, although we own only a little land. Our paladins are known worldwide for their nobility and they strike fear in the enemy's miserable henchmen with only their looks. And I had a pet unicorn. Oh, if only he was here...",
     "name": "Wilhelmine",
     "virginity": 0,
+    "haircolor": "pink",
+    "hairlength": "long",
     "aura":{
         "fear": 0,
         "despair": 0,

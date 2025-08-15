@@ -17,6 +17,8 @@
     "occupation_description": "  [Isabella]<br>- I love sex as much as anyone. But earning money that way is a filthy business. I managed to get on a pirate ship. Sailors believe that women on a ship bring bad luck, but pirates have always valued strength and savvy no matter who you are - black, crippled or woman.",
     "name": "Isabella",
     "virginity": 2,
+    "haircolor": "black",
+    "hairlength": "long",
     "aura":{
         "taming": 5,
         "habit": 3,

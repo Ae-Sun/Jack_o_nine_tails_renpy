@@ -16,6 +16,8 @@
     "occupation_description": "",
     "name": "Julia",
     "virginity": 0,
+    "haircolor": "red",
+    "hairlength": "long",
     "aura":{
         "fear": 0,
         "despair": 0,

@@ -720,16 +720,9 @@ init python:
 
         #TODO need to code sex part - sex_acceptace_check
     def diligence_check():
-        # called from interaction_result after $dyn_repulse_check
-        # sets slave_diligence in range [0,5], zero reflects inadequate/lackluster effort, positive reflects praise-worthy effort
-        # interaction_repulse can be set by caller in [0,5] range as a malus to overcome (motivation_repulse affects only diligence, not obedience)
-        # this function adjusts diligence to account for $target_affinity, if set by caller (affinities have strong influence)
-        # this function also imposes a range of [0, diligence] on the sex_quality global (which represents the slave applying skills to improve sex for partner)
-        # expects to be called with dynamic $replace($dyn_diligence, 'dyn'+'slave', 'a slave instance variable')
         store.slave_diligence = all_girls_list[girl_index]["mood"] + all_girls_list[girl_index]["aura"]["devotion"] + all_girls_list[girl_index]["aura"]["fear"]*2 - all_girls_list[girl_index]["aura"]["despair"] // 2 - all_girls_list[girl_index]["aura"]["spoil"]
         # Aura -Based MOTIVATION
         # I don't think is needed to enforce the range, make master_style way more useless -rec3ks
-        #interaction_dynslave['motivation_repulse'] = max(0, min(5, interaction_dynslave['motivation_repulse'])) &! enforce [0,5] range (default 0)
         store.slave_diligence -= (1 + motivation_repulse // 2) # ! reduce initial diligence by [0,3] - ImperatorAugustus
         if all_girls_list[girl_index]["aura"]["devotion"] > motivation_repulse:
             store.slave_diligence += 1
@@ -777,7 +770,7 @@ init python:
 
 
     def girl_skills_rise_check():
-        target_skill2 = target_skill + "trait"
+        target_skill2 = store.target_skill + "trait"
         if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] != 0:
             if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"]:
                 store.attribute_track_index = target_skill2
@@ -830,5 +823,35 @@ init python:
             
             # Recalculate cryostore_ingredients
             store.cryostore_ingredients = sum(storage["ingredients"].values())    
+    def display_pic():
+        if all_girls_list[girl_index]["hairlength"] == "":
+            if "white" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["hairColor"] = "white"
+            elif "red" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["hairColor"] = "red"
+            elif "purple" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["hairColor"] = "purple"
+            elif "pink" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["hairColor"] = "pink"
+            elif "green" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["hairColor"] = "green"
+            elif "brown" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["hairColor"] = "brown"
+            elif "blue" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["hairColor"] = "blue"
+            elif "blond" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["hairColor"] = "blond"
+            elif "black" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["hairColor"] = "black"
+            if "short" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["hairLen"] = "short"
+            else:
+                all_girls_list[girl_index]["hairLen"] = "long"
+
+        x = all_girls_list[girl_index]["hairlength"]
+        y = all_girls_list[girl_index]["haircolor"]
+        z = all_girls_list[girl_index]["age"]
+        
+
 
                 
