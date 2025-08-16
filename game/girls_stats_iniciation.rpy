@@ -16,6 +16,12 @@ define dic_slave_attributes_keys = {
     "style":        "STYLE",
     "fame":         "FAME",
 }
+define dic_girl_age_text2 = [
+    "young","loli","milf"    
+]
+define dic_girl_choosing_image_condition_short = {
+    "slave_auto_sleep":"rest"
+}
 define dic_slave_attributes_description_keys = {
     "beauty": "Beauty",
     "endurance": "Endurance",

@@ -600,6 +600,8 @@ label choose_inicial_girl:
         all_girls_list[girl_index].setdefault("status_met",False)
         all_girls_list[girl_index].setdefault("last_cooked_meat_level",0)
         all_girls_list[girl_index].setdefault("slave_auto_sleep",False)
+        # custom images
+        all_girls_list[girl_index].setdefault("slave_auto_sleep_folder",False)
 
         #all_girls_list[girl_index].setdefault("max_daily_reward_level",0)
         #all_girls_list[girl_index].setdefault("max_daily_punishment_level",0)
@@ -927,6 +929,7 @@ label choose_inicial_girl:
         $ all_girls_list[girl_index]["anal_tightness"] = 2
     elif all_girls_list[girl_index]["sex_experience"]["penetration"]["anal_fisting"] >= 4:
         $ all_girls_list[girl_index]["anal_tightness"] = 3
+    
     $ is_main_slave = True
     call screen choose_inicial_girl_screen
     return

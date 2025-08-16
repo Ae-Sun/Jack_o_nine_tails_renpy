@@ -826,32 +826,51 @@ init python:
     def display_pic():
         if all_girls_list[girl_index]["hairlength"] == "":
             if "white" in all_girls_list[girl_index]["fullimage"]:
-                all_girls_list[girl_index]["hairColor"] = "white"
+                all_girls_list[girl_index]["haircolor"] = "white"
             elif "red" in all_girls_list[girl_index]["fullimage"]:
-                all_girls_list[girl_index]["hairColor"] = "red"
+                all_girls_list[girl_index]["haircolor"] = "red"
             elif "purple" in all_girls_list[girl_index]["fullimage"]:
-                all_girls_list[girl_index]["hairColor"] = "purple"
+                all_girls_list[girl_index]["haircolor"] = "purple"
             elif "pink" in all_girls_list[girl_index]["fullimage"]:
-                all_girls_list[girl_index]["hairColor"] = "pink"
+                all_girls_list[girl_index]["haircolor"] = "pink"
             elif "green" in all_girls_list[girl_index]["fullimage"]:
-                all_girls_list[girl_index]["hairColor"] = "green"
+                all_girls_list[girl_index]["haircolor"] = "green"
             elif "brown" in all_girls_list[girl_index]["fullimage"]:
-                all_girls_list[girl_index]["hairColor"] = "brown"
+                all_girls_list[girl_index]["haircolor"] = "brown"
             elif "blue" in all_girls_list[girl_index]["fullimage"]:
-                all_girls_list[girl_index]["hairColor"] = "blue"
+                all_girls_list[girl_index]["haircolor"] = "blue"
             elif "blond" in all_girls_list[girl_index]["fullimage"]:
-                all_girls_list[girl_index]["hairColor"] = "blond"
+                all_girls_list[girl_index]["haircolor"] = "blond"
             elif "black" in all_girls_list[girl_index]["fullimage"]:
-                all_girls_list[girl_index]["hairColor"] = "black"
+                all_girls_list[girl_index]["haircolor"] = "black"
             if "short" in all_girls_list[girl_index]["fullimage"]:
-                all_girls_list[girl_index]["hairLen"] = "short"
+                all_girls_list[girl_index]["hairlength"] = "short"
             else:
-                all_girls_list[girl_index]["hairLen"] = "long"
+                all_girls_list[girl_index]["hairlength"] = "long"
 
-        x = all_girls_list[girl_index]["hairlength"]
-        y = all_girls_list[girl_index]["haircolor"]
-        z = all_girls_list[girl_index]["age"]
-        
+        x = all_girls_list[girl_index]["haircolor"]
+        y = all_girls_list[girl_index]["hairlength"]
+        z = dic_girl_age_text2[all_girls_list[girl_index]["age"]]
+        def choose_image():
+            choosing_image_condition2 = store.choosing_image_condition + "_folder"
+            if all_girls_list[girl_index][store.choosing_image_condition]:
+                if all_girls_list[girl_index][choosing_image_condition2]:
+                    choosing_image_condition3 = store.choosing_image_condition + "_folder_localization"
+                    path = os.path.join(config.gamedir, all_girls_list[girl_index][choosing_image_condition3]) # i'm not sure if this part works untested -rec3ks
+                    rest_girl = [
+                        f for f in os.listdir(path)
+                    ]
+                    return all_girls_list[girl_index][choosing_image_condition3] + random.choice(rest_girl) 
+                else:
+                    path = os.path.join(config.gamedir, "images", "girls", "normal_scenes")
+                    rest_girl = [
+                        f for f in os.listdir(path)
+                        if dic_girl_choosing_image_condition_short[store.choosing_image_condition] + "_" + x + "_" + y + "_" + z in f
+                    ]
+                    return "girls/normal_scenes/" + random.choice(rest_girl)
+            else:
+                return "WIP "
+        return choose_image()
 
 
                 

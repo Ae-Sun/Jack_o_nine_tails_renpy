@@ -2,9 +2,8 @@
 errors listed below, and try again.
 
 
-File "game/dictionary.rpy", line 1578: invalid syntax
-            "cast": "You cast a justice spell on [all_girls_list[girl_index]["name"]], which should make her feel guilt or merit much sharper.",\
-                                                                               ^
+File "game/home.rpy", line 404: invalid syntax
+            if all_girls_list[girl_index]["name"] == list[index]
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Sat Aug 16 00:12:32 2025
+Sat Aug 16 19:57:03 2025

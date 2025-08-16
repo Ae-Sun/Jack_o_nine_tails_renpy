@@ -24,6 +24,9 @@ default mood_value = 0
 default day_tracker = 1
 default is_auspex_active = False
 default slave_suicide = False
+default pic_displayed = ""
+default choosing_image_condition = ""
+
 default boobs1 =" marshmallowy tits"
 default boobs2 =" motherly breasts"
 default boobs3 =" empty breast-sacks"
@@ -389,9 +392,10 @@ label next_day_labellabel:
 
         girls_count = 0
         save_girl_index = girl_index
+        
         for girl_index in all_girls_list:
-            girls_count += 1
-            if all_girls_list[girl_index]["conscience"]:
+            if all_girls_list[girl_index]["conscience"]:# TODO need to fix order alwalys helen ,yasmin, will
+                girls_count += 1
                 all_girls_list[girl_index]["exertion"] = 0
                 all_girls_list[girl_index]["epilation"] = max(all_girls_list[girl_index]["epilation"]-1,0)
                 all_girls_list[girl_index]["manicure"] = max(all_girls_list[girl_index]["manicure"]-1,0)
@@ -436,6 +440,7 @@ label next_day_labellabel:
                         if all_girls_list[girl_index]["mood"] < -1 and all_girls_list[girl_index]["attributes"]["temperament"] > all_girls_list[girl_index]["obedience"]:
                             n = 7 + personality_value_2 - all_girls_list[girl_index]["aura"]["despair"]
                             for girl_index in all_girls_list:
+                                # this doble for is not a error -rec3ks 
                                 if all_girls_list[girl_index]["conscience"]:
                                     if all_girls_list[girl_index]["assistant"]:
                                         n += all_girls_list[girl_index]["attributes"]["intelligence"] + all_girls_list[girl_index]["aura"]["devotion"]
@@ -605,7 +610,10 @@ label next_day_labellabel:
             
             
             all_girls_list[girl_index]["yesterday_exhaustion"] = 0
-
+            
+            
+            
+            
         if girls_count == 0:
             alone_count += 1
         else:
@@ -626,10 +634,12 @@ label Next_day_event:
     python:
         for girl_index in all_girls_list:
             if all_girls_list[girl_index]["slave_auto_sleep"]:
-                all_girls_list[girl_index]["slave_auto_sleep"] = False
+                choosing_image_condition = "slave_auto_sleep"
+                pic_displayed = display_pic()
                 n = random.randint(0,4)
                 next_day_event_screen_text = all_girls_list[girl_index]["name"] +" " + dic_idle[n]
                 bedroom_quality = dic_slave_room_to_text[all_girls_list[girl_index]["sleep_room"]]
+                all_girls_list[girl_index]["slave_auto_sleep"] = False
                 renpy.call_screen("next_day_event_screen")
     if slave_auto_cook:
         $ slave_auto_cook = False
@@ -639,8 +649,9 @@ label Next_day_event:
     jump Home
 screen next_day_event_screen():
     key "K_SPACE" action SetVariable("current_menu", 0),Jump("Next_day_event")
-
     add bgstyle2 xsize 1280 ysize 720
+    add pic_displayed xsize 795 ysize 535
+    #text pic_displayed size 20
     vbox:
         xalign 0.655
         yalign 0.96
