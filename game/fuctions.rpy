@@ -748,6 +748,7 @@ init python:
                 store.slave_diligence += max(0, master_tutor - 2)
             # elif interaction_teach_type = "assistant_teaches_slave" and assistant['intellect'] > 3:
             #     store.slave_diligence += (assistant['intellect'] - 3) 
+            #TODO SKIPPED ASSISTANT CODE
             elif interaction_teach_type == "school_class":
                 store.slave_diligence += 2
             elif interaction_teach_type == 'coach_teaches_slave':
@@ -771,7 +772,7 @@ init python:
 
     def girl_skills_rise_check():
         target_skill2 = store.target_skill + "trait"
-        if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] != 0:
+        if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] == 0: #TODO NEED FIX I DONT KNOW WHY IS NOT WORKING
             if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"]:
                 store.attribute_track_index = target_skill2
                 store.dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 

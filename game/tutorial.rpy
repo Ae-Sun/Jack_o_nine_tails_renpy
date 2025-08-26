@@ -503,6 +503,7 @@ label choose_inicial_girl:
     $ all_girls_list[girl_index] = load_json(premiun_girl_tutorial_selected_localization)
     
     python:
+
         # I know, this is literally a class but without using a class, The idea is making instances of all_girls_list, I realized it too late, now it's a pain to change it, so I won't -Rec3ks
         # It's less elegant but it work so don't touch it. -rec3ks
         all_girls_list[girl_index].setdefault("obedience",0)
@@ -600,8 +601,10 @@ label choose_inicial_girl:
         all_girls_list[girl_index].setdefault("status_met",False)
         all_girls_list[girl_index].setdefault("last_cooked_meat_level",0)
         all_girls_list[girl_index].setdefault("slave_auto_sleep",False)
+        all_girls_list[girl_index].setdefault("slave_auto_cook",False)
         # custom images
         all_girls_list[girl_index].setdefault("slave_auto_sleep_folder",False)
+        all_girls_list[girl_index].setdefault("slave_auto_cook_folder",False)
 
         #all_girls_list[girl_index].setdefault("max_daily_reward_level",0)
         #all_girls_list[girl_index].setdefault("max_daily_punishment_level",0)
@@ -933,7 +936,7 @@ label choose_inicial_girl:
     $ is_main_slave = True
     call screen choose_inicial_girl_screen
     return
-
+#TODO imprement a way to unselect a girl 
 #keys_to_delete = [k for k in all_girls_list.keys() if k != girl_index]
 #for k in keys_to_delete:
 #del all_girls_list[k]

@@ -18,6 +18,8 @@
     "haircolor": "",
     "slave_auto_sleep_folder": false,
     "slave_auto_sleep_folder_localization": "Mod/YourGirlPackName/scene/foldername",
+    "slave_auto_cook_folder": false,
+    "slave_auto_cook_folder_localization": "Mod/YourGirlPackName/scene/foldername", 
     "aura":{
         "fear": 0,
         "despair": 0,

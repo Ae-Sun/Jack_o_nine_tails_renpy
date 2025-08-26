@@ -15,18 +15,18 @@ default dic_spellbook_info_index = "default"
 default mc_image = ""
 default mc_image2 = ""
 default text_slave_conditions_index = "default"
-default is_main_slave = False
-default show_main_slave = False
-default is_assistant_assigned = False
-default energy_value = 0
-default current_menu = 0
-default mood_value = 0
-default day_tracker = 1
-default is_auspex_active = False
-default slave_suicide = False
-default pic_displayed = ""
-default choosing_image_condition = ""
-
+default is_main_slave = False # this variable is used to check if the main slave is assigned, because if you try to check something that doesn't exist renpy will explote
+default show_main_slave = False # if main slave really exist this value show it 
+default is_assistant_assigned = False # this variable is used to check if the assistant is assigned
+default energy_value = 0 # this variable is used to show the energy value
+default current_menu = 0 # this variable is used to show the current menu
+default mood_value = 0 # this variable is used to show the mood value master
+default day_tracker = 1 # this variable is used to track the day
+default is_auspex_active = False # this variable is used to check if the auspex is active
+default slave_suicide = False # this variable is used to check if the slave is suicide
+default pic_displayed = "" # this variable is used to show the pic displayed
+default choosing_image_condition = "" # this variable is used to check the choosing image condition
+default save_girl_index = 0 # this variable is used to save the girl index in the next day event screen
 default boobs1 =" marshmallowy tits"
 default boobs2 =" motherly breasts"
 default boobs3 =" empty breast-sacks"
@@ -81,7 +81,6 @@ default interaction_sex_acceptance = 0
 default home_localization = "Slums"
 default tutor_modifier = 0
 default skill_adv_mul = 1
-default slave_auto_cook = False
 default after_sex_effects = 0
 default interaction_teach = False
 default interaction_teach_type = ""
@@ -388,13 +387,13 @@ label next_day_labellabel:
             if debt_tracker == 0 and debt > 0:
                 msg("As in any other city, in the Eternal Rome it is reckless to forget to repay money you have borrowed. You died a disgraceful death at the hand of the moneylender’s henchmen…")
                 gameover = True
-
-
         girls_count = 0
         save_girl_index = girl_index
-        
-        for girl_index in all_girls_list:
-            if all_girls_list[girl_index]["conscience"]:# TODO need to fix order alwalys helen ,yasmin, will
+        girls_keys = list(all_girls_list.keys())
+        for i in range(len(girls_keys)):
+            idx = (save_girl_index + i) % len(girls_keys)
+            girl_index = girls_keys[idx]
+            if all_girls_list[girl_index]["conscience"]:
                 girls_count += 1
                 all_girls_list[girl_index]["exertion"] = 0
                 all_girls_list[girl_index]["epilation"] = max(all_girls_list[girl_index]["epilation"]-1,0)
@@ -478,12 +477,12 @@ label next_day_labellabel:
                             all_girls_list[girl_index]["suicide_rate"] = min(all_girls_list[girl_index]["suicide_rate"] - 3, 0)
                 #TODO if not all_girls_list[girl_index]["assistant"]:
                 # Cooking rule
-                slave_auto_cook = False
+                all_girls_list[girl_index]["slave_auto_cook"] = False
                 if cryostore_ingredients_max > 0:
                     if not already_prepared and all_girls_list[girl_index]["rules"]["act_as_cook"] and all_girls_list[girl_index]["energy"] > 0 and all_girls_list[girl_index]["obedience"] >= -6 + 2 - all_girls_list[girl_index]["attributes"]["pride"] // 2 + all_girls_list[girl_index]["attributes"]["nature"] // 3 + all_girls_list[girl_index]["attributes"]["intelligence"] // 3:
                         if not already_ate or eat_best_food:
                             target_skill = "cooking"
-                            slave_auto_cook = True
+                            all_girls_list[girl_index]["slave_auto_cook"] = True
                             slave_skill = min(all_girls_list[girl_index]["skills"]["cooking"], max(1, all_girls_list[girl_index]["mood"] // 1),5)
                             keys_list = ["D- quality","C- quality","B+ quality","A+ quality","S+ quality"]
                             n = slave_skill -1
@@ -632,7 +631,11 @@ label Next_day_event:
 
     scene bg_old
     python:
-        for girl_index in all_girls_list:
+        # This is a recursive fuction, and take 3 times more resources that a loop for, but it works and that is fine for me. 
+        girls_keys = list(all_girls_list.keys())
+        for i in range(len(girls_keys)):
+            idx = (save_girl_index + i) % (len(girls_keys))
+            girl_index = girls_keys[idx]
             if all_girls_list[girl_index]["slave_auto_sleep"]:
                 choosing_image_condition = "slave_auto_sleep"
                 pic_displayed = display_pic()
@@ -641,9 +644,17 @@ label Next_day_event:
                 bedroom_quality = dic_slave_room_to_text[all_girls_list[girl_index]["sleep_room"]]
                 all_girls_list[girl_index]["slave_auto_sleep"] = False
                 renpy.call_screen("next_day_event_screen")
-    if slave_auto_cook:
-        $ slave_auto_cook = False
-        call screen next_day_event_screen()
+            if all_girls_list[girl_index]["slave_auto_cook"]:
+                choosing_image_condition = "slave_auto_cook"
+                pic_displayed = display_pic()
+                n = random.randint(0,4)
+                next_day_event_screen_text = all_girls_list[girl_index]["name"] +" " + dic_idle[n] #TODO NEED TO CHANGE TO DIC_COOK
+                bedroom_quality = dic_slave_room_to_text[all_girls_list[girl_index]["sleep_room"]]
+                all_girls_list[girl_index]["slave_auto_cook"] = False
+                renpy.call_screen("next_day_event_screen")
+
+
+        girl_index = save_girl_index
     show screen home_menu
     $ msg("New day [day_tracker]")
     jump Home
@@ -670,7 +681,6 @@ screen next_day_event_screen():
     text next_day_event_screen_text pos (0.02, 0.78) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
 
 
-#label previos_day_info:
 
 label Home:
     $ renpy.restart_interaction() 
@@ -1034,7 +1044,7 @@ label Home:
                 if all_girls_list[girl_index]["psy_status"] == "broken":
                     all_girls_list[girl_index]["obedience"] = 100
             girl_index = girl_index_save
-    show screen homehome_attributes_menu() #cause some problems with home_menu WIP TODO need tofix
+    show screen homehome_attributes_menu() #May cause some problems with home_menu WIP TODO need to fix
     if slave_rebellion_fight:
         jump slave_rebellion_fight_label
     if is_tutorial == True and current_menu == 0:
@@ -3701,7 +3711,7 @@ screen mood_attributes():
         hover "buttons/ok-icon_hover.webp"
         action Hide("mood_attributes"),Show("mood_attributes2")
     key "K_SPACE" action Hide("mood_attributes"),Show("mood_attributes2")
-    #TODO need mood_attrbutes 2 
+    #TODO need mood_attrbutes 2 witch is a descrition of mood, since every other attribute has a description of it
 screen mood_attributes2():
     zorder 5
     add "gui/confirm_frame.png" at truecenter
@@ -4630,7 +4640,7 @@ screen master_equipment_menu():
         text "{u}AVAILABLE OPTIONS{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
         if available_options == 0:
             text "{u}Active effects:{/u}" size 14 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
-            #TODO ADD CLOTHES EFFECT DESCRIPTION
+            #TODO ADD CLOTHES EFFECT DESCRIPTION how much bonus it give you for wearing that stuff
         elif available_options == 1:
             for values in master_inventory_type[equipment_choice]:
                 if equipment_choice not in ["accessories1","accessories2","accessories3","accessories4","accessories5"]:
