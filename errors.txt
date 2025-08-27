@@ -2,8 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 404: invalid syntax
-            if all_girls_list[girl_index]["name"] == list[index]
+File "game/fuctions.rpy", line 722: expected an indented block
+    def diligence_check():
+     ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Sat Aug 16 19:57:03 2025
+Tue Aug 26 23:21:25 2025

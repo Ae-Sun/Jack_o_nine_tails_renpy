@@ -663,17 +663,17 @@ init python:
                 all_girls_list[girl_index]["worn_mood"] += -25 + all_girls_list[girl_index]["attributes"]["pride"] * 5
             if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] != 0:
                 if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["revealed"]:
-                    attribute_track_index = "ponytrait"
-                    dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] 
-                    dictionary_name = dic_traits_skills_descriptions
-                    customboxcheck = True
+                    store.attribute_track_index = "ponytrait"
+                    store.dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] 
+                    store.dictionary_name = dic_traits_skills_descriptions
+                    store.customboxcheck = True
                     all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["revealed"] = True
             if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] != 0:
                 if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["revealed"]:
-                    attribute_track_index = "pettrait"
-                    dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] 
-                    dictionary_name = dic_traits_skills_descriptions
-                    customboxcheck = True
+                    store.attribute_track_index = "pettrait"
+                    store.dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] 
+                    store.dictionary_name = dic_traits_skills_descriptions
+                    store.customboxcheck = True
                     all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["revealed"] = True
             if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] > 0 or all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] > 0:
                 if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] > all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"]:
@@ -702,25 +702,26 @@ init python:
         all_girls_list[girl_index]["worn_mood"] = all_girls_list[girl_index]["worn_mood"]/10           
     #def sex_acceptance_check():
         
-    def interaction_willingness_check():
+    def interaction_willingness1_check():
         store.interaction_willingness = all_girls_list[girl_index]["obedience"] + interaction_sex_acceptance + interaction_repulse
         if store.target_skill != "sex":
             target_skill2 = store.target_skill + "trait"
-            if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"]:
+            if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] and not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] == 0:
                 store.attribute_track_index = target_skill2
                 store.dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 
                 store.dictionary_name = dic_traits_skills_descriptions
                 all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] = True
                 renpy.show_screen("tutorial_attribute")
-            store.interaction_willingness += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] * 3
+            store.interaction_willingness += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] * 4
         else:
             if store.interaction_willingness > 0:
                 all_girls_list[girl_index]["daring"] = max(all_girls_list[girl_index]["daring"], interaction_repulse)
-                
+    
 
         #TODO need to code sex part - sex_acceptace_check
-    def diligence_check():
+    def diligence333_check333():
         store.slave_diligence = all_girls_list[girl_index]["mood"] + all_girls_list[girl_index]["aura"]["devotion"] + all_girls_list[girl_index]["aura"]["fear"]*2 - all_girls_list[girl_index]["aura"]["despair"] // 2 - all_girls_list[girl_index]["aura"]["spoil"]
+        store.diligent1 = store.slave_diligence # test1
         # Aura -Based MOTIVATION
         # I don't think is needed to enforce the range, make master_style way more useless -rec3ks
         store.slave_diligence -= (1 + motivation_repulse // 2) # ! reduce initial diligence by [0,3] - ImperatorAugustus
@@ -730,7 +731,9 @@ init python:
             store.slave_diligence += 1
         if all_girls_list[girl_index]["aura"]["awareness"] > motivation_repulse:
             store.slave_diligence += 1
+        store.diligent2 = store.slave_diligence # test2
         store.slave_diligence += all_girls_list[girl_index]["learning_bonus"][target_skill]
+        store.diligent3 = store.slave_diligence # test3
         #TODO I Will ignore phobias for now WIP #rec3ks    
         store.slave_diligence += all_girls_list[girl_index]["daily_count"]["punishments"]
         if all_girls_list[girl_index]["energy"] < 0:
@@ -742,6 +745,7 @@ init python:
             store.slave_diligence -= dic_girl_psy_status[all_girls_list[girl_index]["psy_status"]]
         if store.interaction_willingness < 0:
             store.slave_diligence += store.interaction_willingness // 2
+        store.diligent4 = store.slave_diligence # test4
         # BONUSES FOR TEACHING ABILITY
         if interaction_teach:
             if interaction_teach_type == "master_teaches_slave":
@@ -770,48 +774,47 @@ init python:
 
 
 
-    def girl_skills_rise_check():
+    def girl_skills_rise_checkcheck():
         target_skill2 = store.target_skill + "trait"
-        if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] == 0: #TODO NEED FIX I DONT KNOW WHY IS NOT WORKING
-            if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"]:
-                store.attribute_track_index = target_skill2
-                store.dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 
-                store.dictionary_name = dic_traits_skills_descriptions
-                all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] = True
-                renpy.show_screen("tutorial_attribute")
-            if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] > 0:
-                all_girls_list[girl_index]["mood_state"]["good_mood"]["job"]["active"] = True
-            else:
-                all_girls_list[girl_index]["mood_state"]["bad_mood"]["job"]["active"] = True
-            #MAY HAVE SOME PROBLEMS IF MORE THAN ONE TRAIT IS REVEALED AT THE SAME TIME, but for now is good enough -rec3ks
-            #tutor modifier
-            if all_girls_list[girl_index]["attributes"]["intelligence"] >= 5:
-                store.tutor_modifier += 2
-            elif all_girls_list[girl_index]["attributes"]["intelligence"] >= 4:
-                store.tutor_modifier += 1
-            elif all_girls_list[girl_index]["attributes"]["intelligence"] >= 3:
-                store.tutor_modifier += 0
-            elif all_girls_list[girl_index]["attributes"]["intelligence"] >= 2:
-                store.tutor_modifier -= 1
-            else:
-                store.tutor_modifier -= 2
-            skill_rise = ((max(1,store.tutor_modifier)) * store.slave_diligence)    # need diligence_check TODO NEED TO CHECK WHY IS RASING ONLY 2 TO 2 
-            if target_skill == "athletics":
-                skill_rise = skill_rise // 2
-                if skill_rise > 3:
-                    skill_rise = 3
-                if all_girls_list[girl_index]["exertion"] >= all_girls_list[girl_index]["attributes"]["endurance"]:
-                    skill_rise *= -1 
-                all_girls_list[girl_index]["exertion"] += 1
-                all_girls_list[girl_index]["experience"]["attributes"]["endurance"] += skill_rise * skill_adv_mul
-            else:
-                if target_skill != "cow":
-                    all_girls_list[girl_index]["experience"]["skills"]["cow"] -= 3
-                elif all_girls_list[girl_index]["skills"]["cow"] == 5:
-                    skill_rise = max(1, skill_rise - all_girls_list[girl_index]["skills"]["cow"]) #! S+ cow skill greatly impedes training other skills - ImperatorAugustus
-                if skill_rise < 1: 
-                    skill_rise = 1
-                all_girls_list[girl_index]["experience"]["skills"][target_skill] += skill_rise * skill_adv_mul
+        if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] and not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] == 0: #TODO NEED FIX I DONT KNOW WHY IS NOT WORKING:
+            store.attribute_track_index = target_skill2
+            store.dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 
+            store.dictionary_name = dic_traits_skills_descriptions
+            all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] = True
+            renpy.show_screen("tutorial_attribute")
+        if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] > 0:
+            all_girls_list[girl_index]["mood_state"]["good_mood"]["job"]["active"] = True
+        else:
+            all_girls_list[girl_index]["mood_state"]["bad_mood"]["job"]["active"] = True
+        #MAY HAVE SOME PROBLEMS IF MORE THAN ONE TRAIT IS REVEALED AT THE SAME TIME, but for now is good enough -rec3ks
+        #tutor modifier
+        if all_girls_list[girl_index]["attributes"]["intelligence"] >= 5:
+            store.tutor_modifier += 2
+        elif all_girls_list[girl_index]["attributes"]["intelligence"] >= 4:
+            store.tutor_modifier += 1
+        elif all_girls_list[girl_index]["attributes"]["intelligence"] >= 3:
+            store.tutor_modifier += 0
+        elif all_girls_list[girl_index]["attributes"]["intelligence"] >= 2:
+            store.tutor_modifier -= 1
+        else:
+            store.tutor_modifier -= 2
+        skill_rise = ((max(1,store.tutor_modifier)) * store.slave_diligence)    # need diligence_check TODO NEED TO CHECK WHY IS RASING ONLY 2 TO 2 
+        if target_skill == "athletics":
+            skill_rise = skill_rise // 2
+            if skill_rise > 3:
+                skill_rise = 3
+            if all_girls_list[girl_index]["exertion"] >= all_girls_list[girl_index]["attributes"]["endurance"]:
+                skill_rise *= -1 
+            all_girls_list[girl_index]["exertion"] += 1
+            all_girls_list[girl_index]["experience"]["attributes"]["endurance"] += skill_rise * skill_adv_mul
+        else:
+            if target_skill != "cow":
+                all_girls_list[girl_index]["experience"]["skills"]["cow"] -= 3
+            elif all_girls_list[girl_index]["skills"]["cow"] == 5:
+                skill_rise = max(1, skill_rise - all_girls_list[girl_index]["skills"]["cow"]) #! S+ cow skill greatly impedes training other skills - ImperatorAugustus
+            if skill_rise < 1: 
+                skill_rise = 1
+            all_girls_list[girl_index]["experience"]["skills"][target_skill] += skill_rise * skill_adv_mul
     def cryo_ingredients_calculation():        
         keys_list = list(storage["ingredients"].keys())
         keys_list_index = 0
