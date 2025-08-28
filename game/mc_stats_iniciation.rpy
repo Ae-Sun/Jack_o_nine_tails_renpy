@@ -390,7 +390,6 @@ define dic_master_cap = {
     "PENETRATION":       [1  , 45 , 90 , 180, 360, 9999],
     "FETISHISM":         [1  , 45 , 90 , 180, 360, 9999],
 }
-#"house_mess": [10, 20, 40, 60, 80, 9999],
 define dic_master_mood = {
     "good_mood": {
         "pos_energy"         : "I am fresh and full of energy. Gotta put it to good use!",
@@ -436,7 +435,7 @@ define dic_master_mood = {
         "neg_cook"           : "To eat properly, I have to tinker in the kitchen with pans and dishes. What the hell?",
         "neg_food"           : "This is some kind of shit, not food. Why do I eat worse than some slaves?",
         "neg_housing"        : "I live in a decrepit hovel. No conditions for work and rest.",
-        "neg_house_mess"     : "The house is a dirty mess. Just disgusting to be in here.",
+        "neg_home_hygiene_value"     : "The house is a dirty mess. Just disgusting to be in here.",
         "neg_wealth"         : "I live just like some kind of beggar. Every penny has to be considered. I'm fed up with this!",
         "neg_accounts"       : "I have to engage in all the paper work. Need a secretary!",
         "neg_worn_clothes"   : "My clothes will not do! Just how long can I wash and mend them? I need to update my wardrobe.",
@@ -666,7 +665,7 @@ default master_mood_state = {
         "neg_cook"           : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
         "neg_food"           : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
         "neg_housing"        : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
-        "neg_house_mess"     : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
+        "neg_home_hygiene_value"     : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
         "neg_wealth"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
         "neg_accounts"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},
         "neg_worn_clothes"   : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1},

@@ -76,6 +76,14 @@ define dic_slave_tier_classification_physical = {
     5: "F-",
     6: "S++",
 }
+define dic_slave_tier_classification_colored = {
+    0: "{color=#CD0000}F-{/color}",
+    1: "{color=#EA0090}D-{/color}",
+    2: "{color=#6B0084}C-{/color}",
+    3: "{color=#0000D8}B+{/color}",
+    4: "{color=#009FEF}A+{/color}",
+    5: "{color=#009900}S+{/color}"
+}
 
 define dic_slave_attributes = {
     "beauty":        ["Ugly"            ,"Plain"          ,"Cute"          ,"Pretty   "    ,"Beautiful"    ,"Exquisite"      ,"Goddess"     ,"{b}BEAUTY:{/b}\n  Natural beauty very strongly influences her market price. Your slave's rank will never rise higher than her beauty or fame (whichever is higher). At auctions, beautiful slaves are sold for higher prices.","   ll your efforts to improve the appearance of the slave will influence style, not beauty. Stylishness is important too, but the value of natural beauty is huge. You can increase beauty only by neoplasty surgery in the Technosphere medical center and only once for each slave. Try to buy beautiful slaves if you intend to train them to high ranks. Beauty is decreased while a slave has scars or bruises until they are removed or healed."],
@@ -321,8 +329,8 @@ define dic_slave_mood_show = {
 define dic_traits_skills_descriptions = {
     "cookingtrait": [
         "Null",
-        "{b}Good Cook{/b} \nYour slave enjoys cooking and often prepares tasty meals. This will allow her to become an excellent cook!",
-        "{b}Excellent Cook{/b} \nYour slave enjoys cooking and often prepares tasty meals. This will allow her to become an excellent cook! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Good Cook{/b} \nYour slave enjoys cooking. This will allow her to become an excellent cook!",
+        "{b}Excellent Cook{/b} \nYour slave enjoys cooking. This will allow her to become an excellent cook! She has a natural talent for this skill, which will allow her to reach new heights.",
         "{b}Disastrous Cook{/b} \nYour slave shows little interest in cooking. Becoming a good cook may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
         "{b}Bad Cook{/b} \nYour slave shows little interest in cooking. Becoming a good cook may prove difficult for her."
     ],
@@ -2049,6 +2057,14 @@ define dic_girl_psy_status = {
     "servile": 0,
     "soft": 0,
 }
+default dic_cook = [
+    "You send [all_girls_list[girl_index]['name']] to the kitchen to prepare dinner. She is obviously not confident in her abilities, but never mind - let her work! When you come check her work an hour later it turns out that she just opened the canned food and placed it on plates.",
+    "[all_girls_list[girl_index]['name']] was busy with pots and pans for about an hour, but her cooked dishes are not any tastier as a result. Some food was undercooked, some food was overcooked, and the rest is over-salted. You can eat it, but her cooking is severely lacking.",
+    "[all_girls_list[girl_index]['name']] is in the kitchen for several hours. Despite such an impressive amount of time, the dishes are pretty simple - nothing fancy. Well, at least she prepared everything correctly, and it is certainly better than canned food.",
+    "[all_girls_list[girl_index]['name']] prepares dinner without much delay. She knows when to stop adding in the seasonings and did not overcook anything, although she doesn’t know how to add any refinement or finesse to the meal. Nevertheless, she made a great home-cooked meal, nourishing and delicious.",
+    "[all_girls_list[girl_index]['name']] starts cooking as a living food processor. She so expertly wielded knives, pans, ingredients, and seasonings that the food is cooked very well. Pleasant aromas from the kitchen are so enticing that you hardly wait for an invitation to dinner. Yummy!",
+    "In the kitchen [all_girls_list[girl_index]['name']] literally transformed the meal into something spectacular. The process of cooking looks like a real show. Even with the most simple meals she is able to create something so magnificent that it is a delight to the senses. Having her is the dream of every gourmet!"
+]
 define inventory_type = {
     "armour": [
         "Without armour", "Aramid Suit", "Leather Armor", "Adaptive Suit",

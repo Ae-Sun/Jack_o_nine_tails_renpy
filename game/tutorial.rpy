@@ -288,8 +288,8 @@ screen tutorial_attribute():
     imagebutton:
         idle "buttons/ok-icon.webp" pos (0.5, 0.7)
         hover "buttons/ok-icon_hover.webp"
-        action Hide("tutorial_attribute"),SetVariable("customboxcheck", False),Jump(infobox_jump)
-    key "K_SPACE" action Hide("tutorial_attribute"),SetVariable("customboxcheck", False),Jump(infobox_jump)
+        action Hide("tutorial_attribute"),SetVariable("customboxcheck", False)
+    key "K_SPACE" action Hide("tutorial_attribute"),SetVariable("customboxcheck", False)
 screen tutorial_description():
     zorder 5
     add "gui/confirm_frame.png" at truecenter
@@ -531,6 +531,7 @@ label choose_inicial_girl:
         all_girls_list[girl_index].setdefault("psy_status",a)
         all_girls_list[girl_index].setdefault("name", "WIP")
         all_girls_list[girl_index].setdefault("hygiene",5)
+        all_girls_list[girl_index].setdefault("hygiene_rate",0)
         all_girls_list[girl_index].setdefault("style_plus",0)
         all_girls_list[girl_index].setdefault("exotic_plus",0)
         all_girls_list[girl_index].setdefault("mood",0)

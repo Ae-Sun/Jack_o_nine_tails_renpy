@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/fuctions.rpy", line 722: expected an indented block
-    def diligence_check():
-     ^
+File "game/home.rpy", line 3850: text expects a non-empty block.
+    text "{b}HYGIENE:{/b}\n  HYGIENE affect the slave's mood and style " xmaximum  445:
+                                                                                       ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Tue Aug 26 23:21:25 2025
+Thu Aug 28 20:23:47 2025

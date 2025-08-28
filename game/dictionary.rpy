@@ -1469,6 +1469,26 @@ define dic_combat_move_down = {
     3:"amulet",
     4:"ring",
 }
+define dic_home_condition = {
+    0: "Squalid",
+    1: "Grimy",
+    2: "Messy",
+    3: "Tidy",
+    4: "Neat",
+    5: "Immaculate"
+}
+define dic_hygiene_condition = {
+    0: "Filthy",
+    1: "Dirty",
+    2: "Unclean",
+    3: "Unsullied",
+    4: "Clean",
+    5: "Pristine"
+}
+define dic_hygiene_value_rate = {
+    "idle": 5,
+    "cook": 5
+}
 define dic_combat_full = {
     "Without armour": "Without armour",
     "Aramid Suit": "Aramid Suit",
@@ -1616,6 +1636,7 @@ define dic_contract_time_hard =  [
     50,  # 9 - S-
     60   # 10 - S+
 ]
+
 define cooked_food_label = [
     "Canned food",
     "Poor meal",
@@ -1738,5 +1759,8 @@ define tips = {
     20: "Clothes can give you 2 type of mood, flat mood and moodlet. Both give or reduce mood, but flat mood can stack, moodlet if it's the same not. You can consult the moodlet interacting with your slave",
     21: "Your aura shine brigter agaisnt slaves that got ever beated or ever dominius dictated ",
     22: "Yours slaves are more diligence in free mode and less on maximum mode ",
-    23: "Not depressed girl gain mood and well rested when left idle"
+    23: "Not depressed girl gain mood and well rested when left idle",
+    24: "Slaves won't cook better food than her mood"
+    
+
 }

@@ -732,7 +732,43 @@ style attribute_mood_text:
 style leftalign:
     xalign 0.0
     yalign 0.0
- 
+style home_condition_style0 is default
+style home_condition_style0_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#CD0000"
+    hover_color "#ffff00"
+style home_condition_style1 is default
+style home_condition_style1_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#EA0090"
+    hover_color "#ffff00"
+style home_condition_style2 is default
+style home_condition_style2_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#6B0084"
+    hover_color "#ffff00"
+style home_condition_style3 is default
+style home_condition_style3_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#0000D8"
+    hover_color "#ffff00"
+style home_condition_style4 is default
+style home_condition_style4_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#009FEF"
+    hover_color "#ffff00"
+style home_condition_style5 is default
+style home_condition_style5_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#009900"
+    hover_color "#ffff00"
+
 style default:
     properties gui.text_properties()
     language gui.language

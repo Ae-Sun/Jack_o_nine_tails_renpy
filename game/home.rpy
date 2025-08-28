@@ -1,17 +1,22 @@
 # VERY IMPORTANT, For when I gone, If something look like it's should work and doesn't, first try to restart the game, Second try to renamed that function, label or screen, IDK why but it works, And if everthing is fucked try to add comment lines and repeat the first and second step.
 ### testing variables
-default diligent1 = 0
-default diligent2 = 0
-default diligent3 = 0
-default diligent4 = 0
-default diligent5 = 0
+default testvariable1 = 0
+default testvariable2 = 0
+default testvariable3 = 0
+default testvariable4 = 0
+default testvariable5 = 0
 
 
 
 ####
+default all_hygiene_multidic = {} #  not important variable need to make screen logic 
+default home_condition = dic_home_condition[5] #  not important variable need to make screen logic 
+default home_hygiene_value = 5 # this variable is used to track the hygiene value of the home
+default home_mess_value = 0 # this variable is used to track the hygiene value rate of the home
 default bgstyle = "bg_main_old.webp"
 default bgstyle2 = "bg_old.webp"
 default bgstyle3 = "bg_stat_old.webp"
+default kitchen_image = "bg/interiors/basic_kitchen.webp"
 default home_decoration = "bg/interiors/slum_study_large.webp"
 default home_decoration_mini = "bg/interiors/slum_study.webp"
 default home_menu_image1 = "ui overhaul/activity.webp"
@@ -38,6 +43,8 @@ default slave_suicide = False # this variable is used to check if the slave is s
 default pic_displayed = "" # this variable is used to show the pic displayed
 default choosing_image_condition = "" # this variable is used to check the choosing image condition
 default save_girl_index = 0 # this variable is used to save the girl index in the next day event screen
+default display_meat = False # not important variable need to make screen logic  
+default display_meat_alfa = False # not important varibale nee to make screen logic
 default boobs1 =" marshmallowy tits"
 default boobs2 =" motherly breasts"
 default boobs3 =" empty breast-sacks"
@@ -79,7 +86,6 @@ default master_objectives_index = ""
 default already_ate = False
 default already_prepared = False
 default house_items = 0
-default house_mess = 0
 default alone_count = 0
 default is_main_assistant = False
 default girls_count = 0
@@ -493,48 +499,52 @@ label next_day_labellabel:
                     if not already_prepared and all_girls_list[girl_index]["rules"]["act_as_cook"] and all_girls_list[girl_index]["energy"] > 0 and all_girls_list[girl_index]["obedience"] >= -6 + 2 - all_girls_list[girl_index]["attributes"]["pride"] // 2 + all_girls_list[girl_index]["attributes"]["nature"] // 3 + all_girls_list[girl_index]["attributes"]["intelligence"] // 3:
                         if not already_ate or eat_best_food:
                             target_skill = "cooking"
-                            all_girls_list[girl_index]["slave_auto_cook"] = True
                             slave_skill = min(all_girls_list[girl_index]["skills"]["cooking"], max(1, all_girls_list[girl_index]["mood"] // 1),5)
                             keys_list = ["D- quality","C- quality","B+ quality","A+ quality","S+ quality"]
                             n = slave_skill -1
                             food_not_found = True
+                            roll = random.randint(0, 1000000)
                             while n >= 0 and food_not_found:
-                                shuffled_list = dic_foods_list[keys_list[n]].copy()
-                                random.shuffle(shuffled_list)
-                                for i, entry in enumerate(shuffled_list): 
+                                for i, entry in enumerate(dic_foods_list[keys_list[n]]): 
                                     x = 0
+                                    i += roll 
+                                    i = i % len(dic_foods_list[keys_list[n]]) #this make i start in a random position, basically suffle the options, 
                                     for values22314 in range(4):
                                         if dic_foods_list[keys_list[n]][i][1][values22314] != "none":
                                             if storage["ingredients"][dic_foods_list[keys_list[n]][i][1][values22314]] == 0:
                                                 x += 1 
                                     if x == 0:
                                         if food_meat_info["quality"] < n + 1: # this is always true for not already eat, and can be false for ate best food
+                                            all_girls_list[girl_index]["slave_auto_cook"] = True
+                                            already_prepared = True 
+
                                             food_not_found = False
                                             for values33214 in range(4):
                                                 if dic_foods_list[keys_list[n]][i][1][values33214] != "none":
                                                     storage["ingredients"][dic_foods_list[keys_list[n]][i][1][values33214]] -= 1
-                                            already_prepared = True
                                             already_ate = True
                                             food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
+                                            testvariable5 = n
                                             food_meat_info["quality"] = n + 1 #TODO SOMETHING IS WRONG WITH THE QUALITY
                                             if food_meat_info["quality"] < all_girls_list[girl_index]["last_cooked_meat_level"]:
                                                 tutor_modifier = -5
                                             else:
                                                 tutor_modifier = 0
                                             all_girls_list[girl_index]["last_cooked_meat_level"] = food_meat_info["quality"]
-                                if n == 0 and food_not_found:
-                                    already_prepared = True # slave will prepare canned food if doesn't have enough ingredients
+                                
+                                if n == 0 and food_not_found and food_meat_info["quality"] == 0:
                                     already_ate = True
                                     food_meat_info["quality"] = 0
                                     food_meat_info["name"] = "Canned food"
                                 else:
                                     n -= 1
 
-
-                            if all_girls_list[girl_index]["energy"] > 0:
-                                all_girls_list[girl_index]["energy"] -= 2
-                            else:
-                                all_girls_list[girl_index]["yesterday_exhaustion"] += 2
+                                home_mess_value += dic_hygiene_value_rate["cook"]
+                                all_girls_list[girl_index]["hygiene_rate"] += dic_hygiene_value_rate["cook"]
+                                if all_girls_list[girl_index]["energy"] > 0:
+                                    all_girls_list[girl_index]["energy"] -= 2
+                                else:
+                                    all_girls_list[girl_index]["yesterday_exhaustion"] += 2
                             # WIP assistent cooking code skipped
 
 
@@ -547,7 +557,7 @@ label next_day_labellabel:
 
                 if all_girls_list[girl_index]["energy"] > 0:
                     if all_girls_list[girl_index]["mood"] > -2:
-                        all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["energy"] / 10
+                        all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["energy"] / 20
                         all_girls_list[girl_index]["mood_state"]["good_mood"]["well_rested"]["active"] = True # Thanks to the new system using true and false and weight this is too op
                         all_girls_list[girl_index]["mood_state"]["good_mood"]["well_rested"]["weight"] = 0 # now give up to 0.1 * energy left.
                         all_girls_list[girl_index]["slave_auto_sleep"] = True
@@ -612,27 +622,29 @@ label next_day_labellabel:
             all_girls_list[girl_index]["past_mood"] = all_girls_list[girl_index]["mood"]
             # reset temporal mood slave
             all_girls_list[girl_index]["mood_temporal"] = 0
-            # save master pass mood
-            master_past_mood = mood_value_10
-            # reset temporal mood master
-            master_temporal_mood = 0
-            
-            
-            
+            all_girls_list[girl_index]["hygiene_rate"] += dic_hygiene_value_rate["idle"]
             all_girls_list[girl_index]["yesterday_exhaustion"] = 0
-            
-            
-            
-            
+
+
+        # save master pass mood
+        master_past_mood = mood_value_10
+        # reset temporal mood master
+        master_temporal_mood = 0
         if girls_count == 0:
             alone_count += 1
         else:
             alone_count = 0
         slave_nearly_fainted = False
-        food_meat_info["quality"] = 0
         girl_index = save_girl_index
         already_prepared = False
         already_ate = False
+        alreadydone = False
+
+        # Dirt and Hygiene from sleep, time, and normal house use - master and slave - crushboss/rec3ks
+        
+        home_mess_value += dic_hygiene_value_rate["idle"]
+
+
     hide screen homehome_attributes_menu
     jump Next_day_event
 
@@ -659,20 +671,31 @@ label Next_day_event:
             if all_girls_list[girl_index]["slave_auto_cook"]:
                 choosing_image_condition = "slave_auto_cook"
                 pic_displayed = display_pic()
-                n = random.randint(0,4)
-                next_day_event_screen_text = all_girls_list[girl_index]["name"] +" " + dic_idle[n] #TODO NEED TO CHANGE TO DIC_COOK
+                next_day_event_screen_text = dic_cook[food_meat_info["quality"]] 
                 bedroom_quality = dic_slave_room_to_text[all_girls_list[girl_index]["sleep_room"]]
-                all_girls_list[girl_index]["slave_auto_cook"] = False
                 interaction_willingness1_check()
                 diligence333_check333()
                 girl_skills_rise_checkcheck()
+                all_girls_list[girl_index]["slave_auto_cook"] = False
+                alreadydone = True
+                display_meat = True
                 renpy.call_screen("next_day_event_screen")
+        if display_meat:
+            pic_displayed = kitchen_image
+            display_meat_alfa = True
+            display_meat = False
+            renpy.call_screen("next_day_event_screen")
+
+
 
 
 
         girl_index = save_girl_index
     show screen home_menu
     $ msg("New day [day_tracker]")
+    $ food_meat_info["quality"] = 0
+    $ display_meat_alfa = False
+
     jump Home
 screen next_day_event_screen():
     key "K_SPACE" action SetVariable("current_menu", 0),Jump("Next_day_event")
@@ -693,14 +716,23 @@ screen next_day_event_screen():
         text home_localization size 30 color "#000000" font "fonts/victoriana.ttf" anchor (0.5, 0.5)
         text str(slave_diligence)
         text str(tutor_modifier)
-        text str(diligent1)
-        text str(diligent2)
-        text str(diligent3)
-        text str(diligent4)
+        text "current mood: " + str(all_girls_list[girl_index]["mood"])
+        text str(testvariable1)
+        text str(testvariable2)
+        text str(testvariable3)
+        text str(testvariable4)
         text all_girls_list[girl_index]["psy_status"]
-    
+        text food_meat_info["name"]
+        text str(food_meat_info["quality"])
+        text str(testvariable5)
+        text str(home_mess_value)
+    if not display_meat_alfa: 
+        text next_day_event_screen_text pos (0.02, 0.78) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
+    else:
+        #TODO need imprement cooking snd 
+        text "Tonight's dinner:" pos (0.03, 0.77) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
+        text food_meat_info["name"] + " " +  "[[" + dic_slave_tier_classification_colored[food_meat_info["quality"]] + "]" pos (0.30, 0.80) anchor (0.5, 0) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
 
-    text next_day_event_screen_text pos (0.02, 0.78) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
 
 
 
@@ -712,7 +744,11 @@ label Home:
     hide screen description_slave_attributes
     hide screen screen_attributes_skills_sexual_slave
     python:
+        # mess calculation 
+        all_hygiene_calculation()
+
         infobox_jump = "Home"
+        home_condition = dic_home_condition[home_hygiene_value]
     
         # cryostore ingredients calculation
         cryostore_ingredients = 0
@@ -764,7 +800,7 @@ label Home:
         estate_quality += home_estate["slaves_rooms"]["luxurios_room"]*4
         estate_quality += dic_home_state2[master_house_reputation["home_estate"]]["prestige"]*20
         estate_quality_modifier = (estate_quality //20) - brand_reputation_value_6
-        if estate_quality_modifier > personality_value_2 + house_mess: 
+        if estate_quality_modifier > personality_value_2 + home_hygiene_value: 
             master_mood_state["good_mood"]["pos_housing"]["active"] = True
             master_mood_state["bad_mood"]["neg_housing"]["active"] = False
         else: 
@@ -776,15 +812,15 @@ label Home:
         if personality_value_2 > estate_quality_modifier :
             master_mood_state["good_mood"]["pos_wealth"]["active"] = False
             master_mood_state["bad_mood"]["neg_wealth"]["active"] = True
-        if house_mess == 0:
+        if home_hygiene_value == 0:
             master_mood_state["good_mood"]["pos_house_clean"]["active"] = True
-            master_mood_state["bad_mood"]["neg_house_mess"]["active"] = False
-        elif house_mess <= 3:
+            master_mood_state["bad_mood"]["neg_home_hygiene_value"]["active"] = False
+        elif home_hygiene_value <= 3:
             master_mood_state["good_mood"]["pos_house_clean"]["active"] = False
-            master_mood_state["bad_mood"]["neg_house_mess"]["active"] = False
+            master_mood_state["bad_mood"]["neg_home_hygiene_value"]["active"] = False
         else:
             master_mood_state["good_mood"]["pos_house_clean"]["active"] = False
-            master_mood_state["bad_mood"]["neg_house_mess"]["active"] = True
+            master_mood_state["bad_mood"]["neg_home_hygiene_value"]["active"] = True
         if hygiene_value_9 >= 4:
             master_mood_state["good_mood"]["pos_self_clean"]["active"] = True
             master_mood_state["bad_mood"]["neg_dirty"]["active"] = False
@@ -980,7 +1016,7 @@ label Home:
                     for key in dic_slave_mood["bad_mood"]:
                         if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
                             all_girls_list[girl_index]["mood"] -= all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["weight"]           
-                    all_girls_list[girl_index]["mood"] +=  (all_girls_list[girl_index]["aura"]["devotion"] + all_girls_list[girl_index]["attributes"]["endurance"] - 3 - all_girls_list[girl_index]["aura"]["fear"] - all_girls_list[girl_index]["aura"]["spoil"] - all_girls_list[girl_index]["aura"]["despair"]*2 + all_girls_list[girl_index]["hygiene"] - 5 - (house_mess - 1))/5 #TODO GOOD MOODLED HYGIENE WILL ALSO BE TOO OP YET NOT IMPREMENTED
+                    all_girls_list[girl_index]["mood"] +=  (all_girls_list[girl_index]["aura"]["devotion"] + all_girls_list[girl_index]["attributes"]["endurance"] - 3 - all_girls_list[girl_index]["aura"]["fear"] - all_girls_list[girl_index]["aura"]["spoil"] - all_girls_list[girl_index]["aura"]["despair"]*2 + all_girls_list[girl_index]["hygiene"] - 5 - (home_hygiene_value - 1))/5 #TODO GOOD MOODLED HYGIENE WILL ALSO BE TOO OP YET NOT IMPREMENTED
                     
                     
                     # MOOD AJUSTMENT SLAVE
@@ -998,7 +1034,11 @@ label Home:
                             all_girls_list[girl_index]["mood"] = 2
                     elif all_girls_list[girl_index]["aura"]["fear"] >= all_girls_list[girl_index]["aura"]["devotion"]:
                         if all_girls_list[girl_index]["mood"] > 3:
-                            all_girls_list[girl_index]["mood"] = 3                    
+                            all_girls_list[girl_index]["mood"] = 3
+                    all_girls_list[girl_index]["mood"] = round(all_girls_list[girl_index]["mood"], 4) # I dont like too much decimals
+
+
+
                     if all_girls_list[girl_index]["mood"] <= -5:
                         all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[0]
                     elif all_girls_list[girl_index]["mood"] <= -4:
@@ -1053,18 +1093,18 @@ label Home:
                     # if mood is positive - better psy status for slaves
                     if all_girls_list[girl_index]["mood"] < 0:
                         if all_girls_list[girl_index]["aura"]["devotion"] < 2:
-                            if all_girls_list[girl_index]["attributes"]["temperament"] >= min(4, maxmotivation):
+                            if all_girls_list[girl_index]["attributes"]["temperament"] >= max(4, maxmotivation):
                                 all_girls_list[girl_index]["psy_status"] = "hateful"
-                            if all_girls_list[girl_index]["attributes"]["nature"] >= min(4, maxmotivation):
+                            if all_girls_list[girl_index]["attributes"]["nature"] >= max(4, maxmotivation):
                                 all_girls_list[girl_index]["psy_status"] = "resistant"
-                            if all_girls_list[girl_index]["attributes"]["pride"] >= min(4, maxmotivation):
+                            if all_girls_list[girl_index]["attributes"]["pride"] >= max(4, maxmotivation):
                                 all_girls_list[girl_index]["psy_status"] = "arrogant"
                         else:
-                            if all_girls_list[girl_index]["attributes"]["temperament"] >= min(4, maxmotivation):
+                            if all_girls_list[girl_index]["attributes"]["temperament"] >= max(4, maxmotivation):
                                 all_girls_list[girl_index]["psy_status"] = "hysteric"
-                            if all_girls_list[girl_index]["attributes"]["nature"] >= min(4, maxmotivation):
+                            if all_girls_list[girl_index]["attributes"]["nature"] >= max(4, maxmotivation):
                                 all_girls_list[girl_index]["psy_status"] = "docile"
-                            if all_girls_list[girl_index]["attributes"]["pride"] >= min(4, maxmotivation):
+                            if all_girls_list[girl_index]["attributes"]["pride"] >= max(4, maxmotivation):
                                 all_girls_list[girl_index]["psy_status"] = "soft"
                     if all_girls_list[girl_index]["aura"]["fear"] == maxmotivation and all_girls_list[girl_index]["aura"]["fear"] > all_girls_list[girl_index]["attributes"]["nature"]:
                         all_girls_list[girl_index]["psy_status"] = "frightened"
@@ -1427,7 +1467,7 @@ label equipment_check:
                         all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["revealed"] = True
                 elif all_girls_list[girl_index]["races_won"] < 4 or all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] <= 0:
                     all_girls_list[girl_index]["mood_state"]["bad_mood"]["clothes"]["active"] = True
-                    all_girls_list[girl_index]["worn_mood"] += -2
+                    all_girls_list[girl_index]["worn_mood"] += -20
                 if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] != 0:
                     all_girls_list[girl_index]["worn_mood"] += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"]
                     if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["revealed"]:
@@ -1697,7 +1737,7 @@ label equipment_check:
                         all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["revealed"] = True
                 elif all_girls_list[girl_index]["races_won"] < 4 or all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] <= 0:
                     all_girls_list[girl_index]["mood_state"]["bad_mood"]["clothes"]["active"] = True
-                    all_girls_list[girl_index]["worn_mood"] += -2
+                    all_girls_list[girl_index]["worn_mood"] += -20
             if all_girls_list[girl_index]["equipment"]["neck"] == "Chain with Pendant":
                 all_girls_list[girl_index]["style_plus"] += 1
             if all_girls_list[girl_index]["equipment"]["neck"] == "Gemstone Necklace":
@@ -2068,6 +2108,8 @@ screen home_menu():
                 textbutton "change girl":   
                     style "home_button"
                     action SetVariable("girl_index", 1),Jump("Home")
+                text "current mood: " + str(all_girls_list[girl_index]["mood"])
+                text "current home hygiene: " + str(home_mess_value)
             if girl_index == 1:
                 textbutton "change girl":
                     style "home_button"
@@ -3671,7 +3713,9 @@ screen homehome_attributes_menu():
                 hovered SetDict(all_girls_list[girl_index],"mood_label",dic_slave_moodlevel_no_color[all_girls_list[girl_index]["mood_label"]])
                 unhovered SetDict(all_girls_list[girl_index],"mood_label",dic_slave_moodlevel2[all_girls_list[girl_index]["mood_label"]])
             text "No achievements" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
-            text "Pristine" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
+            textbutton dic_hygiene_condition[all_girls_list[girl_index]["hygiene"]] anchor (0.5,0.5):
+                style "home_condition_style" + str(all_girls_list[girl_index]["hygiene"])
+                action SetVariable("all_hygiene_multidic",dic_hygiene_condition), Show("all_hygiene_attributes")
         else:
             text "" color "#000000" font "fonts/Segoe Print.ttf" size 12
             text "" color "#000000" font "fonts/Segoe Print.ttf" size 12
@@ -3680,7 +3724,9 @@ screen homehome_attributes_menu():
         add "blank_ava.webp" size(140,140) anchor (0.5,0.5)
         add "spacer" size(0,-55)
         text "No assistant" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
-        text "immaculate" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
+        textbutton dic_home_condition[home_hygiene_value] anchor (0.5,0.5):
+            style "home_condition_style" + str(home_hygiene_value)
+            action SetVariable("all_hygiene_multidic",dic_home_condition), Show("all_hygiene_attributes")
         text "Cannned food" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
     hbox:
         pos(0.91,0.260)
@@ -3775,6 +3821,48 @@ screen mood_attributes2():
         hover "buttons/ok-icon_hover.webp"
         action Hide("mood_attributes2"),Jump(infobox_jump)
     key "K_SPACE" action Hide("mood_attributes2"),Jump(infobox_jump)
+screen all_hygiene_attributes():
+    zorder 5
+    add "gui/confirm_frame.png" at truecenter
+    vbox:
+        pos (0.5, 0.28)
+        text "HYGIENE":
+            color "#191970" 
+            anchor (0.5,0.5)
+            size 20
+            font "fonts/Segoe Print.ttf"
+        for values in range(6):  # 0 to 5 inclusive
+            textbutton all_hygiene_multidic[values] anchor (0.5,0.5):
+                style "attribute_check_slave" + str(values)
+                action NullAction()
+    text " Press space to close this window.":
+        pos (0.33, 0.65)
+        color "#191970"
+        size 14
+        font "fonts/Segoe Print.ttf"
+    imagebutton:
+        idle "buttons/ok-icon.webp" pos (0.5, 0.7)
+        hover "buttons/ok-icon_hover.webp"
+        action Hide("all_hygiene_attributes"),Show("all_hygiene_attributes2")
+    key "K_SPACE" action Hide("all_hygiene_attributes"),Show("all_hygiene_attributes2")
+    #TODO need mood_attrbutes 2 witch is a descrition of mood, since every other attribute has a description of it
+screen all_hygiene_attributes2():
+    zorder 5
+    add "gui/confirm_frame.png" at truecenter
+    if all_hygiene_multidic == dic_hygiene_condition:
+        text "{b}HYGIENE:{/b}\n  HYGIENE affect the slave's mood and style " xmaximum  445 pos (0.33, 0.28) color "#191970" size 14 font "fonts/Segoe Print.ttf"
+    else:
+        text "{b}HOUSE MESS:{/b}\n  HOUSE MESS affect the slave's and master mood " xmaximum  445 pos (0.33, 0.28) color "#191970" size 14 font "fonts/Segoe Print.ttf"
+    text " Press space to close this window.":
+        pos (0.33, 0.65)
+        color "#191970"
+        size 14
+        font "fonts/Segoe Print.ttf"
+    imagebutton:
+        idle "buttons/ok-icon.webp" pos (0.5, 0.7)
+        hover "buttons/ok-icon_hover.webp"
+        action Hide("all_hygiene_attributes2"),Jump(infobox_jump)
+    key "K_SPACE" action Hide("all_hygiene_attributes2"),Jump(infobox_jump)
 screen master_attributes_screen():
     key "K_SPACE" action SetVariable("current_menu", 0),Hide("master_attributes_screen"),Hide("master_objectives"),Hide("master_objectives2"),SetVariable("master_screen_text",""),Jump("Home")
     add bgstyle3 xsize 1280 ysize 720
