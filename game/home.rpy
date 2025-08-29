@@ -56,7 +56,7 @@ default boobs3 =" empty breast-sacks"
 default boobs4 =" round tits"
 default boobs5 =" firm melons"
 default boobs6 =" shapely balloons"
-default bedroom_quality = ""
+default room_name = ""
 default dic_overnight_rules_count_index = 1
 default slave_rebellion_fight = False
 default slave_rebellion_attack = False
@@ -100,6 +100,10 @@ default motivation_repulse = 0
 default interaction_willingness = 0
 default interaction_repulse = 0
 default interaction_sex_acceptance = 0
+default master_auto = {
+    "cook": False
+}
+default yesterday_exhaustion = 0
 default home_localization = "Slums"
 default tutor_modifier = 0
 default skill_adv_mul = 1
@@ -395,8 +399,9 @@ label next_day_labellabel:
         is_auspex_active = False
         is_slave_nearly_fainted = False
         domini_dictum_active = False
-        energy_value += strength_value_1 *2 + 2
+        energy_value += strength_value_1 *2 + 2 - yesterday_exhaustion
         energy_value = min(10, energy_value)
+        yesterday_exhaustion = 0
         day_tracker += 1
         after_sex_effects -= 1
         pos_show_counter -= 1
@@ -433,7 +438,9 @@ label next_day_labellabel:
                 for key in dic_slave_mood["good_mood"]:
                     if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]:
                         if not all_girls_list[girl_index]["mood_state"]["good_mood"][key]["permanent"]:
-                            all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"] = False
+                            all_girls_list[girl_index]["mood_state"]["good_mood"][key]["duration"] -= 1
+                            if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["duration"] == 0:
+                                all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"] = False
                             if not all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed"]:
                                 all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed_value"] -= 1
                                 if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed_value"] == 0:
@@ -441,7 +448,9 @@ label next_day_labellabel:
                 for key in dic_slave_mood["bad_mood"]:
                     if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
                         if not all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["permanent"]:
-                            all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"] = False
+                            all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["duration"] -= 1
+                            if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["duration"] == 0:
+                                all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"] = False
                             if not all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed"]:
                                 all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed_value"] -= 1
                                 if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed_value"] == 0:
@@ -500,55 +509,7 @@ label next_day_labellabel:
                 #TODO if not all_girls_list[girl_index]["assistant"]:
                 # Cooking rule
                 all_girls_list[girl_index]["slave_auto_cook"] = False
-                if cryostore_ingredients_max > 0:
-                    if not already_prepared and all_girls_list[girl_index]["rules"]["act_as_cook"] and all_girls_list[girl_index]["energy"] > 0 and all_girls_list[girl_index]["obedience"] >= -6 + 2 - all_girls_list[girl_index]["attributes"]["pride"] // 2 + all_girls_list[girl_index]["attributes"]["nature"] // 3 + all_girls_list[girl_index]["attributes"]["intelligence"] // 3:
-                        if not already_ate or eat_best_food:
-                            all_girls_list[girl_index]["slave_auto_cook"] = True
-                            target_skill = "cooking"
-                            slave_skill = min(all_girls_list[girl_index]["skills"]["cooking"], max(1, all_girls_list[girl_index]["mood"] // 1),5)
-                            keys_list = ["D- quality","C- quality","B+ quality","A+ quality","S+ quality"]
-                            n = slave_skill -1
-                            food_not_found = True
-                            roll = random.randint(0, 1000000)
-                            
-                            while n >= 0 and food_not_found:
-                                for i, entry in enumerate(dic_foods_list[keys_list[n]]): 
-                                    x = 0
-                                    i += roll 
-                                    i = i % len(dic_foods_list[keys_list[n]]) #this make i start in a random position, basically suffle the options, 
-                                    for values22314 in range(4):
-                                        if dic_foods_list[keys_list[n]][i][1][values22314] != "none":
-                                            if storage["ingredients"][dic_foods_list[keys_list[n]][i][1][values22314]] == 0:
-                                                x += 1 
-                                    if x == 0:
-                                        if food_meat_info["quality"] < n + 1: # this is always true for not already eat, and can be false for ate best food
-                                            already_prepared = True 
-                                            food_not_found = False
-                                            for values33214 in range(4):
-                                                if dic_foods_list[keys_list[n]][i][1][values33214] != "none":
-                                                    storage["ingredients"][dic_foods_list[keys_list[n]][i][1][values33214]] -= 1
-                                            already_ate = True
-                                            food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
-                                            food_meat_info["quality"] = n + 1 
-                                            if food_meat_info["quality"] < all_girls_list[girl_index]["last_cooked_meat_level"]:
-                                                tutor_modifier = -5
-                                            else:
-                                                tutor_modifier = 0
-                                            all_girls_list[girl_index]["last_cooked_meat_level"] = food_meat_info["quality"]
-
-                                n -= 1
-                            if food_not_found and food_meat_info["quality"] == 0:
-                                already_ate = True
-                                already_prepared = True
-                                food_meat_info["quality"] = 0
-                                food_meat_info["name"] = "Canned food"
-
-                            home_mess_value += dic_hygiene_value_rate["cook"]
-                            all_girls_list[girl_index]["hygiene_rate"] += dic_hygiene_value_rate["cook"]
-                            if all_girls_list[girl_index]["energy"] > 0:
-                                all_girls_list[girl_index]["energy"] -= 2
-                            else:
-                                all_girls_list[girl_index]["yesterday_exhaustion"] += 2
+                auto_cook_meal()
                 # WIP assistent cooking code skipped
                 #TODO NEXT THING TO DO 
                 # master food code 
@@ -636,9 +597,10 @@ label next_day_labellabel:
             alone_count = 0
         slave_nearly_fainted = False
         girl_index = save_girl_index
+        if not already_prepared or already_ate:
+            master_cook_meal()
         already_prepared = False
         already_ate = False
-        alreadydone = False
 
         # Dirt and Hygiene from sleep, time, and normal house use - master and slave - crushboss/rec3ks
         
@@ -656,7 +618,6 @@ label Next_day_event:
 
     scene bg_old
     python:
-        # This is a recursive fuction, and take 3 times more resources that a loop for, but it works and that is fine for me. 
         girls_keys = list(all_girls_list.keys())
         for i in range(len(girls_keys)):
             idx = (save_girl_index + i) % (len(girls_keys))
@@ -666,26 +627,40 @@ label Next_day_event:
                 pic_displayed = display_pic()
                 n = random.randint(0,4)
                 next_day_event_screen_text = all_girls_list[girl_index]["name"] +" " + dic_idle[n]
-                bedroom_quality = dic_slave_room_to_text[all_girls_list[girl_index]["sleep_room"]]
+                room_name = dic_slave_room_to_text[all_girls_list[girl_index]["sleep_room"]]
                 all_girls_list[girl_index]["slave_auto_sleep"] = False
                 renpy.call_screen("next_day_event_screen")
             if all_girls_list[girl_index]["slave_auto_cook"]:
                 choosing_image_condition = "slave_auto_cook"
                 pic_displayed = display_pic()
                 next_day_event_screen_text = dic_cook[food_meat_info["quality"]] 
-                bedroom_quality = dic_slave_room_to_text[all_girls_list[girl_index]["sleep_room"]]
+                room_name = "Kitchen"
                 interaction_willingness1_check()
                 diligence333_check333()
                 girl_skills_rise_checkcheck()
                 all_girls_list[girl_index]["slave_auto_cook"] = False
-                alreadydone = True
                 display_meat = True
                 renpy.call_screen("next_day_event_screen")
+        if master_auto["cook"]:
+            pic_displayed = "scene/master_cooking.webp"
+            next_day_event_screen_text = master_cook_description[food_meat_info["quality"]] 
+            room_name = "Kitchen"
+            master_auto["cook"] = False
+            display_meat = True
+            renpy.call_screen("next_day_event_screen")
+
+
+
+            renpy.call_screen("next_day_event_screen")
         if display_meat:
             pic_displayed = kitchen_image
             display_meat_alfa = True
             display_meat = False
             renpy.call_screen("next_day_event_screen")
+
+
+
+
 
 
 
@@ -697,7 +672,7 @@ label Next_day_event:
     $ food_meat_info["quality"] = 0
     $ display_meat_alfa = False
 
-    jump Home
+    jump equipment_check
 screen next_day_event_screen():
     key "K_SPACE" action SetVariable("current_menu", 0),Jump("Next_day_event")
     add bgstyle2 xsize 1280 ysize 720
@@ -712,16 +687,14 @@ screen next_day_event_screen():
             action Jump("Next_day_event")
     vbox:
         pos(0.82,0.05)
-        text bedroom_quality size 45 color "#000000" font "fonts/victoriana.ttf" anchor (0.5, 0.5)
+        text room_name size 45 color "#000000" font "fonts/victoriana.ttf" anchor (0.5, 0.5)
         add "spacer" size (0,-10)
         text home_localization size 30 color "#000000" font "fonts/victoriana.ttf" anchor (0.5, 0.5)
-        text str(slave_diligence)
-        text str(tutor_modifier)
-        text "current mood: " + str(all_girls_list[girl_index]["mood"])
-        text all_girls_list[girl_index]["psy_status"]
-        text food_meat_info["name"]
-        text str(food_meat_info["quality"])
-        text str(home_mess_value)
+        add "spacer" size (0, 20)
+        text "Information for consideration:" size 30 color "#000000" font "fonts/victoriana.ttf" anchor (0.5, 0.5)
+    
+
+
     if not display_meat_alfa: 
         text next_day_event_screen_text pos (0.02, 0.78) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
     else:
@@ -917,6 +890,7 @@ label Home:
                 dic_overnight_rules_count_index =2
             girl_index_save = girl_index
             for girl_index in all_girls_list:
+                all_girls_list[girl_index]["skills"]["athletics"] = all_girls_list[girl_index]["attributes"]["endurance"]
                 # supermacy calculation
                 master_supermacy = personality_value_2 + allure_value_3 + dominance_value_5 + strength_value_1 + magna_magnifika
                 all_girls_list[girl_index]["supermacy"] = all_girls_list[girl_index]["attributes"]["temperament"] + all_girls_list[girl_index]["attributes"]["nature"] + 5 - all_girls_list[girl_index]["attributes"]["pride"] + all_girls_list[girl_index]["attributes"]["endurance"] + all_girls_list[girl_index]["attributes"]["intelligence"] - 3
@@ -924,18 +898,29 @@ label Home:
                     all_girls_list[girl_index]["supermacy"] -= 1
                 if all_girls_list[girl_index]["domini_dictum_ever"]:
                     all_girls_list[girl_index]["supermacy"] -= 1
+                # Check skill increase
+                for skill in all_girls_list[girl_index]["skills"]:
+                    increase_check("skills",skill)
+                
                 # Cap aura values
                 for aura in ["fear","despair","awareness","taming","habit","spoil","devotion"]:
                     if all_girls_list[girl_index]["aura"][aura] == 0 and all_girls_list[girl_index]["experience"]["aura"][aura] < -10:
                         all_girls_list[girl_index]["experience"]["aura"][aura] = -10
                     if all_girls_list[girl_index]["aura"][aura] == 5 and all_girls_list[girl_index]["experience"]["aura"][aura] > 10:
                         all_girls_list[girl_index]["experience"]["aura"][aura] = 10
+                # Cap attributes values
                 for attributes in ["endurance"]:
                     if all_girls_list[girl_index]["attributes"][attributes] == 0 and all_girls_list[girl_index]["experience"]["attributes"][attributes] < -10:
                         all_girls_list[girl_index]["experience"]["attributes"][attributes] = -10
                     if all_girls_list[girl_index]["attributes"][attributes] == 5 and all_girls_list[girl_index]["experience"]["attributes"][attributes] > 10:
                         all_girls_list[girl_index]["experience"]["attributes"][attributes] = 10
-                ### fainted code
+                # Cap skills
+                for skill in all_girls_list[girl_index]["skills"]:
+                    if all_girls_list[girl_index]["skills"][skill] == 0 and all_girls_list[girl_index]["experience"]["skills"][skill] < -10:
+                        all_girls_list[girl_index]["experience"]["skills"][skill] = -10
+                    if all_girls_list[girl_index]["skills"][skill] == 5 and all_girls_list[girl_index]["experience"]["skills"][skill] > 10:
+                        all_girls_list[girl_index]["experience"]["skills"][skill] = 10
+                # Fainted code
                 if all_girls_list[girl_index]["energy"] <= -5 and all_girls_list[girl_index]["conscience"]:
                     all_girls_list[girl_index]["conscience"] = False
                     msg("Your slave fainted due to extreme exhaustion.")
@@ -3601,7 +3586,7 @@ screen description_slave_attributes():
         frame:
             pos(curx - 150,cury)
             style "description_slave_attributes_frame"
-            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification_physical[all_girls_list[girl_index]["skills"][description_slave_attributes_track_value]] +"; " + str(all_girls_list[girl_index]["experience"]["skills"][description_slave_attributes_track_value]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["skills"][description_slave_attributes_track_value]]) + ")" style "description_slave_attributes_frame_text"
+            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification[all_girls_list[girl_index]["skills"][description_slave_attributes_track_value]] +"; " + str(all_girls_list[girl_index]["experience"]["skills"][description_slave_attributes_track_value]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["skills"][description_slave_attributes_track_value]]) + ")" style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value == "fetishism":
         frame:
             pos(curx - 150,cury)

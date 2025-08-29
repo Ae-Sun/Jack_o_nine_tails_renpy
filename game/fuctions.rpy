@@ -297,6 +297,166 @@ init python:
             all_girls_list[girl_index]["hygiene"] = calculate_hygiene(all_girls_list[girl_index]["hygiene_rate"])
         # Update master hygiene
         store.hygiene_value_9 = calculate_hygiene(store.hygiene_experience_value_9)
+    import random
 
+    def auto_cook_meal():
+        global already_prepared, already_ate, food_meat_info, home_mess_value
+        global cryostore_ingredients_max, eat_best_food
+        global all_girls_list, dic_foods_list, storage, dic_hygiene_value_rate
+        global girl_index, target_skill
 
+        if cryostore_ingredients_max <= 0:
+            return
+        
+        girl = all_girls_list[girl_index]
+        target_skill = "cooking"
+        # Required obedience
+        required_obedience = -6 + 2 \
+            - girl["attributes"]["pride"] // 2 \
+            + girl["attributes"]["nature"] // 3 \
+            + girl["attributes"]["intelligence"] // 3
+
+        if (not already_prepared
+            and girl["rules"]["act_as_cook"]
+            and girl["energy"] > 0
+            and girl["obedience"] >= required_obedience):
+
+            if not already_ate or eat_best_food:
+                girl["slave_auto_cook"] = True
+
+                # Cooking skill level
+                slave_skill = min(
+                    girl["skills"]["cooking"],
+                    max(1, girl["mood"] // 1),
+                    5
+                )
+
+                keys_list = ["D- quality", "C- quality", "B+ quality", "A+ quality", "S+ quality"]
+                n = slave_skill - 1
+                food_not_found = True
+                roll = random.randint(0, 1000000)
+
+                # Try recipes from highest to lowest skill tier
+                while n >= 0 and food_not_found:
+                    for i, entry in enumerate(dic_foods_list[keys_list[n]]):
+                        i = (i + roll) % len(dic_foods_list[keys_list[n]])
+                        missing = 0
+
+                        # Check if ingredients are available
+                        for slot in range(4):
+                            ingredient = dic_foods_list[keys_list[n]][i][1][slot]
+                            if ingredient != "none" and storage["ingredients"][ingredient] == 0:
+                                missing += 1
+
+                        if missing == 0:
+                            if food_meat_info["quality"] < n + 1:
+                                already_prepared = True
+                                food_not_found = False
+
+                                # Deduct ingredients
+                                for slot in range(4):
+                                    ingredient = dic_foods_list[keys_list[n]][i][1][slot]
+                                    if ingredient != "none":
+                                        storage["ingredients"][ingredient] -= 1
+
+                                already_ate = True
+                                food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
+                                food_meat_info["quality"] = n + 1
+
+                                # Update last cooked level
+                                girl["last_cooked_meat_level"] = food_meat_info["quality"]
+                    n -= 1
+
+                # Default to canned food
+                if food_not_found and food_meat_info["quality"] == 0:
+                    already_ate = True
+                    already_prepared = True
+                    food_meat_info["quality"] = 0
+                    food_meat_info["name"] = "Canned food"
+
+                # Hygiene and energy changes
+                home_mess_value += dic_hygiene_value_rate["cook"]
+                girl["hygiene_rate"] += dic_hygiene_value_rate["cook"]
+
+                if girl["energy"] > 0:
+                    girl["energy"] -= 2
+                else:
+                    girl["yesterday_exhaustion"] += 2
+    def master_cook_meal():
+        global already_prepared, already_ate, food_meat_info, home_mess_value
+        global cryostore_ingredients_max, eat_best_food
+        global dic_foods_list, storage, dic_hygiene_value_rate
+        global target_skill, hygiene_experience_value_9, energy_value
+        global personality_value_2, stewardship_value_13
+
+        if cryostore_ingredients_max <= 0:
+            return
+        
+        target_skill = "stewardship"
+
+        if not already_ate or eat_best_food:
+            master_auto["cook"] = True
+
+            # Cooking skill level
+            master_skill = min(
+                stewardship_value_13,
+                max(1, (mood_value_10 + 2)// 1),
+                5
+            )
+
+            keys_list = ["D- quality", "C- quality", "B+ quality", "A+ quality", "S+ quality"]
+            n = master_skill - 1
+            food_not_found = True
+            roll = random.randint(0, 1000000)
+
+            # Try recipes from highest to lowest skill tier
+            while n >= 0 and food_not_found:
+                for i, entry in enumerate(dic_foods_list[keys_list[n]]):
+                    i = (i + roll) % len(dic_foods_list[keys_list[n]])
+                    missing = 0
+
+                    # Check if ingredients are available
+                    for slot in range(4):
+                        ingredient = dic_foods_list[keys_list[n]][i][1][slot]
+                        if ingredient != "none" and storage["ingredients"][ingredient] == 0:
+                            missing += 1
+
+                    if missing == 0:
+                        if food_meat_info["quality"] < n + 1:
+                            already_prepared = True
+                            food_not_found = False
+
+                            # Deduct ingredients
+                            for slot in range(4):
+                                ingredient = dic_foods_list[keys_list[n]][i][1][slot]
+                                if ingredient != "none":
+                                    storage["ingredients"][ingredient] -= 1
+
+                            already_ate = True
+                            food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
+                            food_meat_info["quality"] = n + 1
+                n -= 1
+
+            # Default to canned food
+            if food_not_found and food_meat_info["quality"] == 0:
+                already_ate = True
+                already_prepared = True
+                food_meat_info["quality"] = 0
+                food_meat_info["name"] = "Canned food"
+            # gain bad moodlet if bad at cooking
+            #TODO
+            master_mood_state["bad_mood"]["neg_cook"]["duration"] = max(0, 3 + personality_value_2 - stewardship_value_13)
+            if master_mood_state["bad_mood"]["neg_cook"]["duration"] > 0:
+                master_mood_state["bad_mood"]["neg_cook"]["active"] = True
+            else:
+                master_mood_state["bad_mood"]["neg_cook"]["active"] = False
+
+            # Hygiene and energy changes
+            home_mess_value += dic_hygiene_value_rate["cook"]
+            hygiene_experience_value_9 += dic_hygiene_value_rate["cook"]
+
+            if energy_value > 0:
+                energy_value -= 2
+            else:
+                yesterday_exhaustion += 2
 
