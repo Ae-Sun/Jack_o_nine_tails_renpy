@@ -21,7 +21,8 @@ define dic_girl_age_text2 = [
 ]
 define dic_girl_choosing_image_condition_short = {
     "slave_auto_sleep":"rest",
-    "slave_auto_cook":"cook"
+    "slave_auto_cook":"cook",
+    "slave_auto_maid":"clean"
 }
 define dic_slave_attributes_description_keys = {
     "beauty": "Beauty",
@@ -2061,7 +2062,7 @@ default dic_cook = [
     "You send [all_girls_list[girl_index]['name']] to the kitchen to prepare dinner. She is obviously not confident in her abilities, but never mind - let her work! When you come check her work an hour later it turns out that she just opened the canned food and placed it on plates.",
     "[all_girls_list[girl_index]['name']] was busy with pots and pans for about an hour, but her cooked dishes are not any tastier as a result. Some food was undercooked, some food was overcooked, and the rest is over-salted. You can eat it, but her cooking is severely lacking.",
     "[all_girls_list[girl_index]['name']] is in the kitchen for several hours. Despite such an impressive amount of time, the dishes are pretty simple - nothing fancy. Well, at least she prepared everything correctly, and it is certainly better than canned food.",
-    "[all_girls_list[girl_index]['name']] prepares dinner without much delay. She knows when to stop adding in the seasonings and did not overcook anything, although she doesn’t know how to add any refinement or finesse to the meal. Nevertheless, she made a great home-cooked meal, nourishing and delicious.",
+    "[all_girls_list[girl_index]['name']] prepares dinner without much delay. She knows when to stop adding in the seasonings and did not overcook anything, although she doesn't know how to add any refinement or finesse to the meal. Nevertheless, she made a great home-cooked meal, nourishing and delicious.",
     "[all_girls_list[girl_index]['name']] starts cooking as a living food processor. She so expertly wielded knives, pans, ingredients, and seasonings that the food is cooked very well. Pleasant aromas from the kitchen are so enticing that you hardly wait for an invitation to dinner. Yummy!",
     "In the kitchen [all_girls_list[girl_index]['name']] literally transformed the meal into something spectacular. The process of cooking looks like a real show. Even with the most simple meals she is able to create something so magnificent that it is a delight to the senses. Having her is the dream of every gourmet!"
 ]
@@ -2190,7 +2191,7 @@ define worlds = {
         "name": "prehistoric",
         "families": shared_families["prehistoric"],
         "descriptions": [
-            "In my world, as far as the eye can see, wild forests stretch everywhere. Sweet air. Good hunting. You can go many days, but only trees will be around. There’s a lot of prey, but the forests are inhabited by terrible beasts: saber-toothed tigers, cave bears and swamp lizards.",
+            "In my world, as far as the eye can see, wild forests stretch everywhere. Sweet air. Good hunting. You can go many days, but only trees will be around. There's a lot of prey, but the forests are inhabited by terrible beasts: saber-toothed tigers, cave bears and swamp lizards.",
             "In my country everything is covered with snow and ice, from horizon to horizon. People wrap themselves in the skins of large animals and make a fire in caves to keep warm. Often many days there is no food, but when the hunters manage to get the mammoth, the whole tribe rejoices and we all eat our fill.",
             "Where I was born there are a lot of trees with broad leaves and swamps over which gnats swarm. In the trees colorful birds flutter and at the bottom of the muddy river lurk huge crocodiles. We gather fruit and hunt in the jungle, using poisoned arrows."
         ]
@@ -2235,7 +2236,7 @@ define worlds = {
         "name": "highfantasy",
         "families": shared_families["highfantasy"],
         "descriptions": [
-            "My world is ruled by powerful archmages, who form the Great Conclave and decide the fate of mortals on it. But they do not interfere in ordinary life. Cities thrive, although, of course, wealth breeds corruption and theft. And sorcerers’ experiments sometimes end with serious troubles.",
+            "My world is ruled by powerful archmages, who form the Great Conclave and decide the fate of mortals on it. But they do not interfere in ordinary life. Cities thrive, although, of course, wealth breeds corruption and theft. And sorcerers' experiments sometimes end with serious troubles.",
             "My world is arena of war between good and evil. Union of elves, humans, and dwarves from immemorial time opposes the machinations of King Necromancer who wants to enslave all the free land and populate them with his ugly slaves: goblins, trolls and dragons.",
             "Our world is very large. I know nothing about the lands beyond the seas, but in my homeland there were seven kingdoms. Now they are united into one great empire. It is said that in the north, behind the Great Wall, Ancient Evil is waiting in the wings. And when the Long Winter comes, the Evil will wake up and brings innumerable troubles to people of the Empire."
         ]
@@ -2300,7 +2301,7 @@ define worlds = {
         "descriptions": [
             "The universe contains many inhabited worlds, and we can move freely between them thanks to the hyperdrive. Thousands of planets are united in the Galactic Republic, controlled by the Senate. Of course, each of the worlds has their own view of life, and conflicts are frequent. The threat of separatism is greater than ever.",
             "The universe is much bigger than any one world. Our planet has united into a global state and colonized many worlds. But the universe is infinite. We were exploring it, getting acquainted with alien civilizations, learning and developing.",
-            "Under the shadow of the Golden Throne of the Eternal Emperor, the people’s empire thrives in thousands of worlds. But the dangers are innumerable: xenos, heretics, nightmarish creatures of the Warp. Only thanks to the dedication of the Imperial Guard, Space Marines, Inquisition, and Ecclesiarchy we are still alive."
+            "Under the shadow of the Golden Throne of the Eternal Emperor, the people's empire thrives in thousands of worlds. But the dangers are innumerable: xenos, heretics, nightmarish creatures of the Warp. Only thanks to the dedication of the Imperial Guard, Space Marines, Inquisition, and Ecclesiarchy we are still alive."
         ]
     }
 }
@@ -2364,7 +2365,7 @@ default occupation = {
 default family_description = {
     "tribe": "Our tribe roamed the lands of ancestors in search of a good hunting. If we find a good place, we built a hut or occupy a comfortable cave. Then, when the prey went, we walked behind it. Like the all little kids, I played in the woods, far away from the camps, gathering roots and berries.",
     "amazon": "In my tribe was not men. Our women take husbands for one month, and then killed them. If a boy is born he is thrown off a cliff, and if a girl - then from her we raised a hunter and warrior. Men were afraid of us like the plague; we were the strongest of all.",
-    "nomad": "Our horde wandered across the steppe. During the day we went into the tent, driving behind a herd of horses and flocks of sheep, and on the night we camped in marquees. We danced around the fires, drank kumis and ate meat. Our warriors were the strongest, and the inhabitants of the cities were shaking from only our Khan’s name. Everyone paid tribute to us.",
+    "nomad": "Our horde wandered across the steppe. During the day we went into the tent, driving behind a herd of horses and flocks of sheep, and on the night we camped in marquees. We danced around the fires, drank kumis and ate meat. Our warriors were the strongest, and the inhabitants of the cities were shaking from only our Khan's name. Everyone paid tribute to us.",
     "pesant": "My parents were an ordinary peasants. Father plowed field using a large plow, which he harness an ox, and mother spun yarn and prepared food. I helped babysit the younger children and carried lunch to the father and brothers in the cornfield. In the winter I was gathering firewood in the forest and playing with friends in a snowball fight.",
     "hunter": "My father was a hunter, and I do not remember my mother - she died when I was very young. Dad often brought to home rabbits and partridges, but sometimes it was a deer, wild boar, or even a bear. He traded skins and meat in the village to the necessary things, so we lived well.",
     "fisher": "My father and brother were fishing in the sea. My father had a durable boat and a large fishnet. If there were a lot of fish, then we traded it on the market for all sorts of necessary things. I helped my dad to repair the net, although it caused severe pain to fingers. I also had a little sister, but she drowned in the sea.",
@@ -2376,7 +2377,7 @@ default family_description = {
     "church": "Since infancy, I became an orphan, but I was lucky to get into a church shelter. The monks taught us how to behave, help with the housework and to worship God. The most talented of us studied reading and writing. Of course, sometimes we were naughty, and because of that I was often flogged or locked in a cell.",
     "craftsman": "Since I can remember, I have lived in the city. My father had a pottery and a shop with it. My brothers kneaded clay, father molded pots, and I with my mother painted them in bright colors. Sometimes I was able to walk, although they rarely let me go beyond the city wall.",
     "merchant": "My father was a merchant and led caravans from distant countries. Me and my sisters often received different wonderful goodies, especially if he was leaving for a long time. We lived better than many of the townspeople, and of course better than the peasants in the villages.",
-    "valetry": "My mother was a servant in the knight’s castle, and I never knew my father. It is possible that even the old lord don’t know him, though I do not remember him much too. From early childhood I was taught to help and serve, but I also had a lot of time for games.",
+    "valetry": "My mother was a servant in the knight's castle, and I never knew my father. It is possible that even the old lord don't know him, though I do not remember him much too. From early childhood I was taught to help and serve, but I also had a lot of time for games.",
     "knight": "I grew up in the castle of my father, together with my sisters and brothers. However, my brothers left the castle as soon as they turned seven, to learn manners in the courts of other lords. My mother taught me with my sisters herself. Father was absent for a long time when he went on military campaigns.",
     "mprincess": "From childhood I was accustomed to luxury befitting a princess. Although I was the youngest daughter, I was the most beloved. Mom and dad doted on me and everyone in the castle executed my whims. Together with my sisters and the servants, we often played in the garden.",
     "farmers": "My family had a farm in about twenty acres. We cultivated corn, beans, and had a decent herd of cows. Since childhood I helped my parents on the farm, and in my spare time played with neighborhood children in the nearby forest.",
@@ -2392,7 +2393,7 @@ default family_description = {
     "mayor": "My father - is a very powerful man. He held the post as mayor of a big city and there is nothing that happens without his permission. Our house always had many guests, very serious people: rulers of urban services, bankers and industrialists. Honestly, they were all veeeery boring.",
     "mafiosi": "My dad was one of the dons in a very influential family. Politicians, trade unions, banks - all of them he held in his hand. We had a large and rich house, which was always guarded by armed men. Mom often went to theaters and shops, and because of that I was brought up by a wet nurse and tutors.",
     "orpnange": "I grew up in an orphanage without parents. I do not know who they were. We were brought up quite strictly, and children do not stand on ceremony with each other. Toys were not enough, but we found ways to entertain ourselves on our own.",
-    "worker": "My father worked as an engineer at an engineering plant. He always came home tired and angry, drank beer and watched TV. I think he doesn’t care about me, but my mother always has a kind word for me. I attended a school and played with other children.",
+    "worker": "My father worked as an engineer at an engineering plant. He always came home tired and angry, drank beer and watched TV. I think he doesn't care about me, but my mother always has a kind word for me. I attended a school and played with other children.",
     "policeman": "My dad is a district police officer, and mom a school teacher. We lived not too rich but not worse than others. But there always were girls in the school who had more chic outfits and expensive toys. I also wanted that, but my parents bought for me only stupid dolls.",
     "manager": "Mom and dad both worked very hard in the office, so they had little time for me. I was raised by my grandmother. She was very kind, and she knew a lot of fairy tales and interesting stories and always helped to do my homework. I walked a lot and played with the other girls in the neighborhood.",
     "biologist": "I grew up in an intellectual family. Father taught microbiology at the university, and mother was a research fellow at the institute. We rarely spent time together, but my parents worked hard so that I could get into a good school, and I was determined in all sorts of creative development circles.",
@@ -2400,22 +2401,22 @@ default family_description = {
     "surgeon": "My dad owned a small private clinic and specialized in plastic surgery. There he met my mother. Since I can remember, she has always been obsessed with beauty. And from childhood I was forced to wear dental braces and use a whole bunch of medical cosmetics.",
     "businessman": "I grew up in a fairly wealthy family. Father owned an office in wholesale trade of spare parts, and my mother was a homemaker. And we also had a housekeeper. They taught me at home, because my dad did not trust the quality of general education: he said that is for rednecks and beggars.",
     "finance": "My father was a tough stockbroker, and mother an artist in the theater. However, when I grew up, she no longer worked. Dad spent little time at home. Mom suspected him of infidelity and drank a lot. She was addicted to painkillers. Sometimes she got angry at me, so I also did not like to sit at home.",
-    "general": "My father was a general, and he kept strict order in the family. I think he wanted me to be a boy, then he could force me to march and do other stupid things. Although we were financially independent, I was jealous of other children who don’t have such harsh rules at home.",
+    "general": "My father was a general, and he kept strict order in the family. I think he wanted me to be a boy, then he could force me to march and do other stupid things. Although we were financially independent, I was jealous of other children who don't have such harsh rules at home.",
     "poet": "My parents had a unique sense of language. My mother was a structural linguist, and my father was a poet, and besides very famous. We had a rule in the house that it was permitted to talk only in verse and they taught me to do so as soon as I began to speak.",
     "artist": "My mother was a great artist. Her talent is recognized all over the world. She, of course, gladly shared her secrets with young artists and declaimed a course of color expression at the open university. I inherited a love of drawing from her.",
     "architect": "My parents were architects and always worked only as a pair. In our world, architecture is very important, because it is necessary not only to make the houses functional, but also to perfectly fit them into the urban landscape, at the same time giving the building an unique aesthetic value.",
     "operator": "My mother worked as a production operator in the polar replication center. I did not have a father, and the far north is not the best place for a child. Therefore, I was brought up in a public childcare center, and I came to visit mother only on weekends.",
     "jailer": "I was born and grew up in a giant prison complex. My father worked there as a security guard, and according to the law housing was provided to citizens in the workplace. Our free state has a lot of domestic enemies, and because of that it needs big prisons.",
-    "bioreactor": "I grew up in an underground complex where my parents worked. They maintained the bioreactor that turns enemies and other dregs of society into a valuable fertilizer. Is this not a clear demonstration of the wisdom of our great Leader and his concern for the people’s welfare?",
+    "bioreactor": "I grew up in an underground complex where my parents worked. They maintained the bioreactor that turns enemies and other dregs of society into a valuable fertilizer. Is this not a clear demonstration of the wisdom of our great Leader and his concern for the people's welfare?",
     "minitruth": "My parents held important positions in the Ministry of Truth, so we had much better rations than the simple proles. Kind but strict teachers instilled in me an understanding of the Grand Design, so that I also could instruct the proles when I grow up.",
     "anter": "My childhood was the most common. In the school-anthill, we were trained from our youngest years in labor practices and doing our civic duty, working for the good of our great country. In my sub-group there were twenty girls, and I was one of the best.",
     "freetrader": "In my childhood I have seen many planets but only from space. Like all children of free traders, my sisters and I were brought up directly on the ships, where we had all the conditions needed for a comfortable life. Space for games was always limited, so we had fun in virtual reality.",
     "astrofarm": "My parents owned a large astrofarm orbiting an industrial colony. We had decent incomes, and I could play among the greenery and not in the polluted atmosphere of the planet. I studied with hypnofilms. And, of course, I helped my parents on the farm.",
     "asteroid": "I grew up on a space drilling station in the belly of an asteroid that was rich with ilmenite ore. My parents had no money to send me to study on the planet. There were few other children on the asteroid and even less places for games. In general, it was boring.",
     "astrogator": "I grew up with my mother and saw my father very rarely. He worked as astronavigator on a hyperspace transporter. However, he contacted us at every opportunity to communicate and even told me bedtime stories by videophone. He was very clever and kind.",
-    "admiral": "I grew up in an officer’s family. My father was a starfleet captain, and my grandfather was an admiral. The fleet of all sectors was subordinated to my grandfather. I was brought up in his house on the planet, because my dad was always in deep space. I received my education in the best private school.",
+    "admiral": "I grew up in an officer's family. My father was a starfleet captain, and my grandfather was an admiral. The fleet of all sectors was subordinated to my grandfather. I was brought up in his house on the planet, because my dad was always in deep space. I received my education in the best private school.",
     "nanofarmacist": "I grew up on a giant orbital station, where my parents worked. They were nanopharmacologists and developed new symbidrugs for the military. They did not trust hypnocourses and taught me themselves. I always dreamed of living on a planet with more children.",
-    "gendesigner": "My mom raised me by herself alone. I do not even know who my father was. Given who was my mother, maybe there was no father at all. My mother is a famous genetic designer. She creates unique bio-forms for rich people’s entertainment.",
+    "gendesigner": "My mom raised me by herself alone. I do not even know who my father was. Given who was my mother, maybe there was no father at all. My mother is a famous genetic designer. She creates unique bio-forms for rich people's entertainment.",
 }
 default occupation_description = {
     "tribal_girl": "When I grew up, I began along with other women taking care of the maintenance of fire: big trouble for the entire tribe, if the fire goes out. Many young hunters wanted to take me for a wife, but my brother was very jealous and would not let me any. He loved to kiss me himself.",
@@ -2425,51 +2426,51 @@ default occupation_description = {
     "bride": "Parents really wanted to pick up a good husband for me. I had a not very big dowry, so it was difficult to marry a rich husband. And I did not like all of them. There was a guy with whom we were kissing in the moonlight, but the parents did not want to give me for him. And then I got into the Fogs.",
     "viking_wife": "When I was fourteen years old, I got married to a brave sea dog. He was gentle with me and brought different rarities from overseas. But we rarely saw each other, because my husband devote more time to the seas and distant shores than me.",
     "witch": "My parents died early, and I went to live with my grandmother in the forest lodge. My grandmother was a sorceress. From all the surrounding villages people went to her to bewitch a loved one or to cure illness. My grandmother taught me the herbs and spells, how to talk to spirits and brew potions.",
-    "herbalist": "Since my childhood I was able to recognize, collect and dry all sorts of herbs. Sometimes people even came from the big cities, in order to get desired collection or decoction from me. I’ve wandered through the forests, meadows and hills, and loved solitude. People are poorly understand me and tried to avoid me.",
+    "herbalist": "Since my childhood I was able to recognize, collect and dry all sorts of herbs. Sometimes people even came from the big cities, in order to get desired collection or decoction from me. I've wandered through the forests, meadows and hills, and loved solitude. People are poorly understand me and tried to avoid me.",
     "barbarian_princess": "Dad always wanted me to marry, but I did not like any of my bridegrooms. And although he was very angry, I always knew how to calm him down. Daddy loved me. Maybe he is not so wanted to give me in marriage to another kingdom, despite the fact that such an alliance would promise a great benefit.",
-    "thief": "I survived on my own. My nimble fingers helped me lift wallets from gawkers. That’s how I lived — until the cursed Fogs got me.",
-    "beggar": "There was no honest work and I refused to steal or sell myself, so I begged. It was barely enough to survive, and everyone took their cut. I don’t know how long I could have lasted.",
+    "thief": "I survived on my own. My nimble fingers helped me lift wallets from gawkers. That's how I lived — until the cursed Fogs got me.",
+    "beggar": "There was no honest work and I refused to steal or sell myself, so I begged. It was barely enough to survive, and everyone took their cut. I don't know how long I could have lasted.",
     "gypsy": "I learned to sing, dance, juggle, and read fortunes. People paid for my talents, and though life in the camp was rough, it was also free. We just roamed and sang songs.",
     "whore": "I had no choice but to sell my body to survive. The clients were poor, the pimp was cruel — but I endured. I even dreamed of saving up to start over.",
-    "markitane": "I followed the army, sharing beds with soldiers in exchange for bread or wine. After battles, I scavenged and helped the wounded. It wasn’t a noble life, but it was mine.",
-    "brothel": "I ended up working at the city’s biggest brothel. Warm, safe, with food and a roof — better than the streets. The madam took care of us, so I didn’t complain.",
-    "nun": "The world’s pain was too heavy. I withdrew to a convent, devoting myself to God. Strict rules, yes, but peace for both the body and the soul.",
+    "markitane": "I followed the army, sharing beds with soldiers in exchange for bread or wine. After battles, I scavenged and helped the wounded. It wasn't a noble life, but it was mine.",
+    "brothel": "I ended up working at the city's biggest brothel. Warm, safe, with food and a roof — better than the streets. The madam took care of us, so I didn't complain.",
+    "nun": "The world's pain was too heavy. I withdrew to a convent, devoting myself to God. Strict rules, yes, but peace for both the body and the soul.",
     "valertry": "I worked as a servant at a castle, washing and cleaning. One day, while rinsing clothes by the river, I wandered into the thickening Fog… and was lost.",
     "sorceress": "I served a famous sorceress in exchange for magical training. I cleaned, obeyed, and endured, for I longed to wield the power she promised.",
-    "thug": "I beat up boys as a kid, and I didn’t stop as an adult. I joined a street gang and helped control entire quarters. The guards couldn’t touch us.",
-    "poor_bride": "Father picked out suitors for me. One I liked. If the Fog hadn’t taken me while foraging for mushrooms, I’d have married him and had children by now.",
-    "poor_wife": "Father found me a husband. He wasn’t a treasure, but I was faithful. I kept the house, endured my mother-in-law, and was loved. That was life.",
+    "thug": "I beat up boys as a kid, and I didn't stop as an adult. I joined a street gang and helped control entire quarters. The guards couldn't touch us.",
+    "poor_bride": "Father picked out suitors for me. One I liked. If the Fog hadn't taken me while foraging for mushrooms, I'd have married him and had children by now.",
+    "poor_wife": "Father found me a husband. He wasn't a treasure, but I was faithful. I kept the house, endured my mother-in-law, and was loved. That was life.",
     "brigand": "I was stronger than most men, and times were hard. I joined a forest band, robbing travelers — but never killing. Locals helped us, and we helped them.",
-    "noble_bride": "I was betrothed to a lord’s son since I was twelve. The wedding was near when the Fog took me. I’d be his wife now, if not for that.",
+    "noble_bride": "I was betrothed to a lord's son since I was twelve. The wedding was near when the Fog took me. I'd be his wife now, if not for that.",
     "noble_wife": "With wealth and status came endless suitors. I married at eighteen. My husband was older and often away at war, so I ran the estate myself.",
     "mprincess": "Father wanted to marry me off to some nasty foreign noble. I demanded he solve three riddles first. No one succeeded — so I stayed free.",
-    "farmer": "I worked on a cotton plantation. It was hot, hard work, but decent pay. Machines can’t pick cotton like women can.",
+    "farmer": "I worked on a cotton plantation. It was hot, hard work, but decent pay. Machines can't pick cotton like women can.",
     "milker": "I loved cows since I was a girl, so I became a milkmaid. The job was easy, life was simple… until the Fog took me.",
-    "swiner": "I worked as a swineherd on a big farm. Pigs are smart and valuable. I liked the stability. I’d still be there if not for the Fog.",
+    "swiner": "I worked as a swineherd on a big farm. Pigs are smart and valuable. I liked the stability. I'd still be there if not for the Fog.",
     "weaver": "I got a job in a weaving factory. Grueling shifts, poor pay, no breaks — but it was honest work. No time for daydreaming.",
     "freaser": "The Army needed tanks, so even kids like me worked. I mastered a milling machine and became one of the best. No resort, just duty.",
     "maid": "I served in a wealthy household — with gardeners, chefs, and chauffeurs. The butler mentored me kindly. I learned a lot there.",
     "sufragist": "We worked in factories, but had no rights. I joined the struggle for equality and helped organize mass rallies. We made a difference.",
-    "nurse": "I finished medical school and became a nurse. It wasn’t easy, but it mattered. I could help people when they needed it most.",
+    "nurse": "I finished medical school and became a nurse. It wasn't easy, but it mattered. I could help people when they needed it most.",
     "teacher": "I taught young children at school. They were a handful, but I loved teaching. It felt like a calling, not just a job.",
-    "oficiant": "I waited tables while studying. Tips were good, though shared unfairly. Still, it paid rent. That’s how things were.",
-    "avanturiste": "I mingled with the rich and powerful. Seduction, forgery, blackmail — all part of the game. A girl’s got to make a living somehow.",
-    "rich_bride": "Many men wanted to marry me for my family’s wealth. I loved the butler. We planned to elope… but the Fog took me first.",
-    "rich_wife": "My family chose a husband for me. He was fat, ugly, and unfaithful. But I didn’t hold back either. Let him choke on his riches!",
+    "oficiant": "I waited tables while studying. Tips were good, though shared unfairly. Still, it paid rent. That's how things were.",
+    "avanturiste": "I mingled with the rich and powerful. Seduction, forgery, blackmail — all part of the game. A girl's got to make a living somehow.",
+    "rich_bride": "Many men wanted to marry me for my family's wealth. I loved the butler. We planned to elope… but the Fog took me first.",
+    "rich_wife": "My family chose a husband for me. He was fat, ugly, and unfaithful. But I didn't hold back either. Let him choke on his riches!",
     "punk": "Society? One big cesspool. I hated conformity. I dyed my hair wild colors, blasted metal, and partied in graveyards with friends. It was chaotic. It was freedom.",
     "student": "I worked hard to get into a prestigious university — it took two tries, but I made it. I studied with distinction, despite the stress nearly breaking me.",
-    "secretary": "I became a secretary at a small office — just enough to afford a tiny apartment. I had dreams of rising higher, but life didn’t wait.",
+    "secretary": "I became a secretary at a small office — just enough to afford a tiny apartment. I had dreams of rising higher, but life didn't wait.",
     "voleyball": "I was always athletic, and volleyball became my passion. I won junior tournaments and set my sights on going pro. The court was my world.",
-    "karateka": "People said girls shouldn’t fight — I proved them wrong. Kickboxing, medals, underground fights. Not sport, but blood and grit. I earned respect.",
+    "karateka": "People said girls shouldn't fight — I proved them wrong. Kickboxing, medals, underground fights. Not sport, but blood and grit. I earned respect.",
     "hymnast": "I was a graceful gymnast from a young age, but never won big titles. When I aged out of competition, I decided to become a coach instead.",
     "policewoman": "Crime was rampant, and I couldn't sit idle. I joined the police academy to protect the innocent and serve justice — no matter the danger.",
     "model": "I had the perfect body for the catwalk. Modeling was exhausting, but glamorous too — fast cars, designer clothes, wild parties… and no regrets.",
     "hacker": "In a world ruled by machines, I learned to rule them. I hacked terminals before I was even legal — dodging trouble because I was still a minor.",
     "writer": "Writing was my gift. Poems, stories, and praise followed. I even got published. But the masterpiece I started — I never got to finish it.",
     "major": "Teen drama gave way to wild nights and street races. I was a party queen, wrecking luxury cars for thrills. It was a hell of a ride.",
-    "artist": "Art consumed me from childhood. I painted passionately, showed my work, but always felt my style wasn’t complete. I dreamed of starting an artistic revolution.",
-    "mind_contol": "Ordinary crimes are easy to spot — but thoughts? They’re the real danger. I joined the thought-police to protect our society from traitors within.",
-    "time_plice": "Time travel exists, but it’s forbidden. Crsiminals exploit it to change history. I joined the time-police to hunt them down before they succeeded.",
+    "artist": "Art consumed me from childhood. I painted passionately, showed my work, but always felt my style wasn't complete. I dreamed of starting an artistic revolution.",
+    "mind_contol": "Ordinary crimes are easy to spot — but thoughts? They're the real danger. I joined the thought-police to protect our society from traitors within.",
+    "time_plice": "Time travel exists, but it's forbidden. Crsiminals exploit it to change history. I joined the time-police to hunt them down before they succeeded.",
     "jailer": "Prisons aren't efficient, but our enemies are many. I worked in a high-security facility, watching over the condemned, awaiting their final sentence.",
     "anter": "At legal age, I proudly joined a weapons factory. Fourteen-hour days, personal beds, and Leaders who care. A life of purpose and production.",
     "academy": "I dreamed of the stars and joined Starfleet Academy. I studied everything — from hyperspace physics to zero-G tactics. I was ready for the cosmos.",
@@ -2597,11 +2598,19 @@ define dic_slave_moodlevel2 = {
     "{color=#009900}Ecstatic+{/color}": "{color=#009900}Ecstatic+{/color}"
 }
 define dic_idle = [
-    "sits at the window, leaning her elbows on the sill and looking at the street. Either she counts crows, or stares at passers-by. Perhaps she is bored, but it’s still better than many of the lessons that you could burden her with.",
-    "aimlessly wanders around the house, examining different parts of the interior. Perhaps she is bored, but it’s still better than many of the lessons that you could burden her with.",
-    "lays down to rest and spends her leisure time in blissful slumber. Perhaps she is bored, but it’s still better than many of the lessons that you could burden her with.",
-    "spends her free time immersed in her own feelings, whispering something under her breath. Perhaps she is bored, but it’s still better than many of the lessons that you could burden her with.",
-    "spends her free time quietly humming a song of her distant homeland. Perhaps she is bored, but it’s still better than many of the lessons that you could burden her with."
+    "sits at the window, leaning her elbows on the sill and looking at the street. Either she counts crows, or stares at passers-by. Perhaps she is bored, but it's still better than many of the lessons that you could burden her with.",
+    "aimlessly wanders around the house, examining different parts of the interior. Perhaps she is bored, but it's still better than many of the lessons that you could burden her with.",
+    "lays down to rest and spends her leisure time in blissful slumber. Perhaps she is bored, but it's still better than many of the lessons that you could burden her with.",
+    "spends her free time immersed in her own feelings, whispering something under her breath. Perhaps she is bored, but it's still better than many of the lessons that you could burden her with.",
+    "spends her free time quietly humming a song of her distant homeland. Perhaps she is bored, but it's still better than many of the lessons that you could burden her with."
+]
+define dic_maid = [
+    "[all_girls_list[girl_index]['name']] has spent an hour doing the housework but did not achieve any success. She only aggravated the existing mess: raised dust, put things in piles, and could not even wash the clothes or make the bed.",
+    "[all_girls_list[girl_index]['name']] spent too much time on cleaning, especially when you consider her modest results. The room became a little tidier, but the order is not perfect, and some things remained unmade and unfinished.",
+    "[all_girls_list[girl_index]['name']] conscientiously collected the dirty clothes and washed them, washed the dishes, swept the floor, and made the bed. Your premises have become noticeably cleaner, although the order is still not ideal.",
+    "[all_girls_list[girl_index]['name']] washed all the dishes, washed clothes and hung them out to dry, washed the floor, made the bed and wiped all dusty surfaces. You must admit that the work is done quite efficiently and quickly.",
+    "[all_girls_list[girl_index]['name']] restored order quickly and competently. She washed up all the dishes, washed and hung clothes out to dry, washed the floor, made the bed and wiped down all dusty surfaces.",
+    "Like a typhoon with a broom, [all_girls_list[girl_index]['name']] sweeps through the house, leaving a trail of order and cleanliness. Only half an hour's work - and all the rooms of the house shine with pristine purity. She leaves nothing left undone! Spotless!"
 ]
 
 

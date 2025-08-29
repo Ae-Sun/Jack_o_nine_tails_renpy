@@ -2,9 +2,8 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 1205: expected statement.
-    equipment_check2()
-                      ^
+File "game/fuctions.rpy", line 482: expected an indented block
+                and girl["obedience"] >= required_obedience):
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Fri Aug 29 11:21:57 2025
+Fri Aug 29 23:11:47 2025

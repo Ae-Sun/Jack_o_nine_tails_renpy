@@ -1487,7 +1487,8 @@ define dic_hygiene_condition = {
 }
 define dic_hygiene_value_rate = {
     "idle": 5,
-    "cook": 5
+    "cook": 5,
+    "maid": 2
 }
 define dic_combat_full = {
     "Without armour": "Without armour",
@@ -1607,7 +1608,7 @@ define spells_books_description = {
         "cast": "Using Sparks dissolved in your soul, you endow your voice with unstoppable force in the mind of your target, compelling her to obey any of your orders. Only those whose will is stronger than your spell will be able to disobey.",
     },
     "Adverto Servili": {
-        "cast": "You direct the force of Sparks in your hand, and on the palm of your hand begins to brightly shine the symbol of your personal brand. One touch to the slave’s thigh and the symbol appears on her delicate skin, staying there forever.",
+        "cast": "You direct the force of Sparks in your hand, and on the palm of your hand begins to brightly shine the symbol of your personal brand. One touch to the slave's thigh and the symbol appears on her delicate skin, staying there forever.",
     }
 }
 define dic_contract_time_normal =  [

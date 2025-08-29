@@ -83,18 +83,20 @@ init python:
     #def sex_acceptance_check():
         
     def interaction_willingness1_check():
-        store.interaction_willingness = all_girls_list[girl_index]["obedience"] + interaction_sex_acceptance + interaction_repulse
-        if store.target_skill != "sex":
-            target_skill2 = store.target_skill + "trait"
+        global attribute_track_index, dictionary_track_index, dictionary_name
+        global dic_traits_skills_descriptions, target_skill, interaction_willingness
+        interaction_willingness = all_girls_list[girl_index]["obedience"] + interaction_sex_acceptance + interaction_repulse
+        if target_skill != "sex":
+            target_skill2 = target_skill + "trait"
             if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] and not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] == 0:
-                store.attribute_track_index = target_skill2
-                store.dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 
-                store.dictionary_name = dic_traits_skills_descriptions
+                attribute_track_index = target_skill2
+                dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 
+                dictionary_name = dic_traits_skills_descriptions
                 all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] = True
                 renpy.show_screen("tutorial_attribute")
-            store.interaction_willingness += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] * 4
+            interaction_willingness += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] * 4
         else:
-            if store.interaction_willingness > 0:
+            if interaction_willingness > 0:
                 all_girls_list[girl_index]["daring"] = max(all_girls_list[girl_index]["daring"], interaction_repulse)
     
 
@@ -229,6 +231,7 @@ init python:
             store.house_items += storage["house"]["sex_items"][values]
 
     def display_pic():
+        # i just realice there's something call x_general.webp TODO need update the function to incluin it
         if all_girls_list[girl_index]["hairlength"] == "":
             if "white" in all_girls_list[girl_index]["fullimage"]:
                 all_girls_list[girl_index]["haircolor"] = "white"
@@ -301,9 +304,9 @@ init python:
 
     def auto_cook_meal():
         global already_prepared, already_ate, food_meat_info, home_mess_value
-        global cryostore_ingredients_max, eat_best_food
+        global cryostore_ingredients_max
         global all_girls_list, dic_foods_list, storage, dic_hygiene_value_rate
-        global girl_index, target_skill
+        global girl_index, target_skill, tutor_modifier
 
         if cryostore_ingredients_max <= 0:
             return
@@ -311,19 +314,21 @@ init python:
         girl = all_girls_list[girl_index]
         target_skill = "cooking"
         # Required obedience
-        required_obedience = -6 + 2 \
-            - girl["attributes"]["pride"] // 2 \
-            + girl["attributes"]["nature"] // 3 \
+        required_obedience = (
+            -6 
+            - girl["attributes"]["pride"] // 2 + 2
+            + girl["attributes"]["nature"] // 3 
             + girl["attributes"]["intelligence"] // 3
+        )
 
         if (not already_prepared
             and girl["rules"]["act_as_cook"]
             and girl["energy"] > 0
             and girl["obedience"] >= required_obedience):
 
-            if not already_ate or eat_best_food:
+            if not already_ate or food_actions["eat_best_food"]:
                 girl["slave_auto_cook"] = True
-
+                tutor_modifier = 0
                 # Cooking skill level
                 slave_skill = min(
                     girl["skills"]["cooking"],
@@ -384,17 +389,17 @@ init python:
                     girl["yesterday_exhaustion"] += 2
     def master_cook_meal():
         global already_prepared, already_ate, food_meat_info, home_mess_value
-        global cryostore_ingredients_max, eat_best_food
+        global cryostore_ingredients_max
         global dic_foods_list, storage, dic_hygiene_value_rate
         global target_skill, hygiene_experience_value_9, energy_value
-        global personality_value_2, stewardship_value_13
-
+        global personality_value_2, stewardship_value_13, stewardship_experience_value_13
+        global skill_adv_mul
         if cryostore_ingredients_max <= 0:
             return
         
         target_skill = "stewardship"
 
-        if not already_ate or eat_best_food:
+        if not already_ate or food_actions["eat_best_food"]:
             master_auto["cook"] = True
 
             # Cooking skill level
@@ -435,6 +440,7 @@ init python:
                             already_ate = True
                             food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
                             food_meat_info["quality"] = n + 1
+                            stewardship_experience_value_13 += 1* skill_adv_mul
                 n -= 1
 
             # Default to canned food
@@ -454,9 +460,47 @@ init python:
             # Hygiene and energy changes
             home_mess_value += dic_hygiene_value_rate["cook"]
             hygiene_experience_value_9 += dic_hygiene_value_rate["cook"]
-
             if energy_value > 0:
                 energy_value -= 2
             else:
                 yesterday_exhaustion += 2
+    def auto_maid():
+        global home_hygiene_value, home_mess_value
+        if home_hygiene_value >= 4:
+            return
+        girl = all_girls_list[girl_index]
+        target_skill = "maid"
+        # Required obedience
+        required_obedience = (
+            -5 
+            + girl["attributes"]["endurance"] // 2 - 1
+            + girl["attributes"]["intelligence"] // 2 - 1
+            + girl["attributes"]["pride"] // 2 - 2
+            - girl["attributes"]["nature"] // 3
+            + girl["attributes"]["intelligence"] // 2 - 1
+        )
 
+        if (girl["rules"]["act_as_maid"]
+            and girl["energy"] > 0
+            and girl["obedience"] >= required_obedience):
+            girl["slave_auto_maid"] = True
+            tutor_modifier = 0
+
+            slave_skill = min(
+                girl["skills"]["maid"],
+                girl["mood"] + 2 // 1
+            )
+            slave_skill = max(slave_skill, 0)
+            girl["maid_slave_skill_performance"] = int(slave_skill)
+
+            home_mess_value -= max(8, slave_skill*16)
+            home_mess_value = max(0, home_mess_value)
+            if slave_skill < 3 and home_mess_value == 0: 
+                home_mess_value = 10
+
+            if girl["energy"] > 0:
+                girl["energy"] -= 2
+            else:
+                girl["yesterday_exhaustion"] += 2
+            girl["hygiene_rate"] += dic_hygiene_value_rate["maid"]
+        

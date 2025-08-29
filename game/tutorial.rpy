@@ -603,9 +603,17 @@ label choose_inicial_girl:
         all_girls_list[girl_index].setdefault("last_cooked_meat_level",0)
         all_girls_list[girl_index].setdefault("slave_auto_sleep",False)
         all_girls_list[girl_index].setdefault("slave_auto_cook",False)
+        all_girls_list[girl_index].setdefault("slave_auto_maid",False)
+
+        # variables need for screen logic
+        all_girls_list[girl_index].setdefault("maid_slave_skill_performance",0)
+
         # custom images
         all_girls_list[girl_index].setdefault("slave_auto_sleep_folder",False)
         all_girls_list[girl_index].setdefault("slave_auto_cook_folder",False)
+        all_girls_list[girl_index].setdefault("slave_auto_maid_folder",False)
+
+
 
         #all_girls_list[girl_index].setdefault("max_daily_reward_level",0)
         #all_girls_list[girl_index].setdefault("max_daily_punishment_level",0)

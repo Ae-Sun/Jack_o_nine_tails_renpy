@@ -1,21 +1,21 @@
-2025-08-29 16:47:55 UTC
+2025-08-29 22:27:07 UTC
 Windows-10-10.0.26100
 Ren'Py 8.3.7.25031702
 
-Early init took 0.63s
-Loading error handling took 0.07s
-Loading script took 1.10s
+Early init took 0.62s
+Loading error handling took 0.08s
+Loading script took 1.18s
 Loading save slot metadata took 0.05s
 Loading persistent took 0.00s
-Running init code took 0.36s
-Loading analysis data took 0.09s
+Running init code took 0.35s
+Loading analysis data took 0.10s
 Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.04s
+Reloading save slot metadata took 0.05s
 Index archives took 0.00s
 Dump and make backups took 0.07s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
-Initial gc took 0.09s
+Initial gc took 0.08s
 DPI scale factor: 2.500000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
@@ -28,51 +28,9 @@ Analyze screens took 0.00s
 Save screen analysis took 0.00s
 Prepare screens took 0.33s
 Save pyanalysis. took 0.00s
-Save bytecode. took 0.09s
+Save bytecode. took 0.08s
 Running _start took 0.00s
-Interface start took 1.47s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.83'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 177.28s
-Loading error handling took 0.09s
-Loading script took 1.16s
-Loading save slot metadata took 0.04s
-Loading persistent took 0.00s
-Running init code took 0.31s
-Loading analysis data took 0.11s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.04s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.07s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.16s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.38s
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.04s
-Save screen analysis took 0.07s
-Prepare screens took 0.32s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.04s
-Running _start took 0.00s
-Interface start took 1.31s
+Interface start took 1.24s
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 3840, 2400)
@@ -86,315 +44,40 @@ Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
 Maximum texture size: 4096x4096
 
 Full traceback:
-  File "game/home.rpy", line 398, in script
+  File "game/home.rpy", line 621, in script
     python:
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/home.rpy", line 597, in <module>
-    master_cook_meal()
-  File "game/fuctions.rpy", line 448, in master_cook_meal
-    hygiene_experience_value_9 += dic_hygiene_value_rate["cook"]
-UnboundLocalError: local variable 'hygiene_experience_value_9' referenced before assignment
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+TypeError: list indices must be integers or slices, not float
 
 While running game code:
-  File "game/home.rpy", line 398, in script
+  File "game/home.rpy", line 621, in script
     python:
-  File "game/home.rpy", line 597, in <module>
-    master_cook_meal()
-  File "game/fuctions.rpy", line 448, in master_cook_meal
-    hygiene_experience_value_9 += dic_hygiene_value_rate["cook"]
-UnboundLocalError: local variable 'hygiene_experience_value_9' referenced before assignment
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+TypeError: list indices must be integers or slices, not float
 Resetting cache.
-Early init took 238.69s
-Loading error handling took 0.05s
+Early init took 161.79s
+Loading error handling took 0.09s
 Loading script took 0.30s
 Loading save slot metadata took 0.04s
 Loading persistent took 0.00s
 Running init code took 0.31s
-Loading analysis data took 0.07s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.04s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.07s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.14s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.42s
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.05s
-Save screen analysis took 0.08s
-Prepare screens took 0.36s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.04s
-Running _start took 0.00s
-Interface start took 1.29s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.83'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 242.73s
-Loading error handling took 0.06s
-Loading script took 0.25s
-Loading save slot metadata took 0.04s
-Loading persistent took 0.00s
-Running init code took 0.32s
-Loading analysis data took 0.07s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.04s
-Index archives took 0.00s
-Dump and make backups took 0.07s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.13s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.37s
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.10s
-Analyze screens took 0.00s
-Save screen analysis took 0.00s
-Prepare screens took 0.36s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.00s
-Running _start took 0.00s
-Interface start took 1.32s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.83'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
-Maximum texture size: 4096x4096
-
-Full traceback:
-  File "game/home.rpy", line 398, in script
-    python:
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/home.rpy", line 597, in <module>
-    master_cook_meal()
-  File "game/fuctions.rpy", line 450, in master_cook_meal
-    if energy_value > 0:
-UnboundLocalError: local variable 'energy_value' referenced before assignment
-
-While running game code:
-  File "game/home.rpy", line 398, in script
-    python:
-  File "game/home.rpy", line 597, in <module>
-    master_cook_meal()
-  File "game/fuctions.rpy", line 450, in master_cook_meal
-    if energy_value > 0:
-UnboundLocalError: local variable 'energy_value' referenced before assignment
-Resetting cache.
-Early init took 266.21s
-Loading error handling took 0.05s
-Loading script took 0.29s
-Loading save slot metadata took 0.04s
-Loading persistent took 0.00s
-Running init code took 0.31s
-Loading analysis data took 0.07s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.04s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.07s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.13s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.37s
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.04s
-Save screen analysis took 0.07s
-Prepare screens took 0.34s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.04s
-Running _start took 0.00s
-Interface start took 1.26s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.83'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 787.56s
-Loading error handling took 0.05s
-Loading script took 1.34s
-Loading save slot metadata took 0.04s
-Loading persistent took 0.00s
-Running init code took 0.33s
 Loading analysis data took 0.12s
 Analyze and compile ATL took 0.00s
 Reloading save slot metadata took 0.04s
 Index archives took 0.00s
 Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.08s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.16s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.38s
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.04s
-Save screen analysis took 0.07s
-Prepare screens took 0.34s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.04s
-Running _start took 0.00s
-Interface start took 1.46s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.83'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 792.86s
-Loading error handling took 0.05s
-Loading script took 0.31s
-Loading save slot metadata took 0.04s
-Loading persistent took 0.00s
-Running init code took 0.35s
-Loading analysis data took 0.08s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.04s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.08s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.15s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.38s
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.04s
-Save screen analysis took 0.07s
-Prepare screens took 0.34s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.04s
-Running _start took 0.00s
-Interface start took 1.48s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.83'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 1233.80s
-Loading error handling took 0.05s
-Loading script took 0.38s
-Loading save slot metadata took 0.04s
-Loading persistent took 0.00s
-Running init code took 0.33s
-Loading analysis data took 0.07s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.04s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
 Dump and make backups took 0.07s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
-Initial gc took 0.19s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.38s
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.04s
-Save screen analysis took 0.07s
-Prepare screens took 0.37s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.04s
-Running _start took 0.00s
-Interface start took 1.55s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.83'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 1503.18s
-Loading error handling took 0.05s
-Loading script took 1.53s
-Loading save slot metadata took 0.04s
-Loading persistent took 0.00s
-Running init code took 0.32s
-Loading analysis data took 0.12s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.04s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.08s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.14s
+Initial gc took 0.20s
 DPI scale factor: 2.500000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
@@ -403,139 +86,13 @@ Cleaning stores took 0.00s
 Init translation took 0.01s
 Build styles took 0.00s
 Load screen analysis took 0.00s
-Analyze screens took 0.09s
-Save screen analysis took 0.07s
-Prepare screens took 0.65s
-Save pyanalysis. took 0.10s
-Save bytecode. took 0.05s
-Running _start took 0.00s
-Interface start took 1.30s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.83'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 1508.97s
-Loading error handling took 0.06s
-Loading script took 0.44s
-Loading save slot metadata took 0.04s
-Loading persistent took 0.00s
-Running init code took 0.32s
-Loading analysis data took 0.07s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.04s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.07s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.14s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.36s
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.04s
-Save screen analysis took 0.07s
-Prepare screens took 0.35s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.04s
-Running _start took 0.00s
-Interface start took 1.31s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.83'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 1861.85s
-Loading error handling took 0.05s
-Loading script took 0.31s
-Loading save slot metadata took 0.04s
-Loading persistent took 0.00s
-Running init code took 0.32s
-Loading analysis data took 0.07s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.04s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.08s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.18s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.38s
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.00s
 Analyze screens took 0.04s
 Save screen analysis took 0.07s
 Prepare screens took 0.34s
 Save pyanalysis. took 0.00s
 Save bytecode. took 0.04s
 Running _start took 0.00s
-Interface start took 1.50s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.83'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 1939.32s
-Loading error handling took 0.05s
-Loading script took 0.31s
-Loading save slot metadata took 0.04s
-Loading persistent took 0.00s
-Running init code took 0.33s
-Loading analysis data took 0.07s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.04s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.07s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.16s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.36s
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.05s
-Save screen analysis took 0.07s
-Prepare screens took 0.34s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.04s
-Running _start took 0.00s
-Interface start took 1.50s
+Interface start took 1.35s
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 3840, 2400)
@@ -549,19 +106,643 @@ Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
 Maximum texture size: 4096x4096
 
 Full traceback:
-  File "game/home.rpy", line 398, in script
+  File "game/home.rpy", line 621, in script
     python:
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/home.rpy", line 441, in <module>
-    all_girls_list[girl_index]["mood_state"]["good_mood"][key]["duration"] -= 1
-KeyError: 'duration'
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+TypeError: list indices must be integers or slices, not float
 
 While running game code:
-  File "game/home.rpy", line 398, in script
+  File "game/home.rpy", line 621, in script
     python:
-  File "game/home.rpy", line 441, in <module>
-    all_girls_list[girl_index]["mood_state"]["good_mood"][key]["duration"] -= 1
-KeyError: 'duration'
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+TypeError: list indices must be integers or slices, not float
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+TypeError: list indices must be integers or slices, not float
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+TypeError: list indices must be integers or slices, not float
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+
+Full traceback:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
+    rv = list.__getitem__(self, index)
+IndexError: list index out of range
+
+While running game code:
+  File "game/home.rpy", line 621, in script
+    python:
+  File "game/home.rpy", line 649, in <module>
+    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
+IndexError: list index out of range
+Resetting cache.
+Early init took 295.77s
+Loading error handling took 0.05s
+Loading script took 0.30s
+Loading save slot metadata took 0.04s
+Loading persistent took 0.00s
+Running init code took 0.32s
+Loading analysis data took 0.07s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.04s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.18s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.37s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.04s
+Save screen analysis took 0.07s
+Prepare screens took 0.33s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.04s
+Running _start took 0.00s
+Interface start took 1.42s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
