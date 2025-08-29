@@ -503,12 +503,14 @@ label next_day_labellabel:
                 if cryostore_ingredients_max > 0:
                     if not already_prepared and all_girls_list[girl_index]["rules"]["act_as_cook"] and all_girls_list[girl_index]["energy"] > 0 and all_girls_list[girl_index]["obedience"] >= -6 + 2 - all_girls_list[girl_index]["attributes"]["pride"] // 2 + all_girls_list[girl_index]["attributes"]["nature"] // 3 + all_girls_list[girl_index]["attributes"]["intelligence"] // 3:
                         if not already_ate or eat_best_food:
+                            all_girls_list[girl_index]["slave_auto_cook"] = True
                             target_skill = "cooking"
                             slave_skill = min(all_girls_list[girl_index]["skills"]["cooking"], max(1, all_girls_list[girl_index]["mood"] // 1),5)
                             keys_list = ["D- quality","C- quality","B+ quality","A+ quality","S+ quality"]
                             n = slave_skill -1
                             food_not_found = True
                             roll = random.randint(0, 1000000)
+                            
                             while n >= 0 and food_not_found:
                                 for i, entry in enumerate(dic_foods_list[keys_list[n]]): 
                                     x = 0
@@ -520,42 +522,36 @@ label next_day_labellabel:
                                                 x += 1 
                                     if x == 0:
                                         if food_meat_info["quality"] < n + 1: # this is always true for not already eat, and can be false for ate best food
-                                            all_girls_list[girl_index]["slave_auto_cook"] = True
                                             already_prepared = True 
-
                                             food_not_found = False
                                             for values33214 in range(4):
                                                 if dic_foods_list[keys_list[n]][i][1][values33214] != "none":
                                                     storage["ingredients"][dic_foods_list[keys_list[n]][i][1][values33214]] -= 1
                                             already_ate = True
                                             food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
-                                            food_meat_info["quality"] = n + 1 #TODO SOMETHING IS WRONG WITH THE QUALITY
+                                            food_meat_info["quality"] = n + 1 
                                             if food_meat_info["quality"] < all_girls_list[girl_index]["last_cooked_meat_level"]:
                                                 tutor_modifier = -5
                                             else:
                                                 tutor_modifier = 0
                                             all_girls_list[girl_index]["last_cooked_meat_level"] = food_meat_info["quality"]
-                                
-                                if n == 0 and food_not_found and food_meat_info["quality"] == 0:
-                                    already_ate = True
-                                    food_meat_info["quality"] = 0
-                                    food_meat_info["name"] = "Canned food"
-                                else:
-                                    n -= 1
 
-                                home_mess_value += dic_hygiene_value_rate["cook"]
-                                all_girls_list[girl_index]["hygiene_rate"] += dic_hygiene_value_rate["cook"]
-                                if all_girls_list[girl_index]["energy"] > 0:
-                                    all_girls_list[girl_index]["energy"] -= 2
-                                else:
-                                    all_girls_list[girl_index]["yesterday_exhaustion"] += 2
-                            # WIP assistent cooking code skipped
+                                n -= 1
+                            if food_not_found and food_meat_info["quality"] == 0:
+                                already_ate = True
+                                already_prepared = True
+                                food_meat_info["quality"] = 0
+                                food_meat_info["name"] = "Canned food"
 
-
-
-
-                    #TODO NEXT THING TO DO 
-                    # master food code 
+                            home_mess_value += dic_hygiene_value_rate["cook"]
+                            all_girls_list[girl_index]["hygiene_rate"] += dic_hygiene_value_rate["cook"]
+                            if all_girls_list[girl_index]["energy"] > 0:
+                                all_girls_list[girl_index]["energy"] -= 2
+                            else:
+                                all_girls_list[girl_index]["yesterday_exhaustion"] += 2
+                # WIP assistent cooking code skipped
+                #TODO NEXT THING TO DO 
+                # master food code 
 
 
 
@@ -647,6 +643,7 @@ label next_day_labellabel:
         # Dirt and Hygiene from sleep, time, and normal house use - master and slave - crushboss/rec3ks
         
         home_mess_value += dic_hygiene_value_rate["idle"]
+        hygiene_experience_value_9 += dic_hygiene_value_rate["idle"]
 
 
     hide screen homehome_attributes_menu

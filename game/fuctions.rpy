@@ -144,6 +144,9 @@ init python:
         if domini_dictum_active and interaction_willingness < 0 or all_girls_list[girl_index]["psy_status"] == "broken":
             store.slave_diligence = 1
         # I will just lower capping diligence, because high capping is just more grid and less fun - rec3ks
+        if store.target_skill != "sex":
+            target_skill2 = store.target_skill + "trait"
+            store.slave_diligence += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] * 5
         store.slave_diligence = max(store.slave_diligence, 1) # i think 0 is too heavy for the game -rec3ks
 
 
@@ -274,36 +277,26 @@ init python:
                 return "WIP "
         return choose_image()
     def all_hygiene_calculation():
-        store.home_hygiene_value = 5
-        if store.home_mess_value >= 10: 
-            store.home_hygiene_value = 4
-        if store.home_mess_value >= 20: 
-            store.home_hygiene_value = 3
-        if store.home_mess_value >= 40: 
-            store.home_hygiene_value = 2
-        if store.home_mess_value >= 60: 
-            store.home_hygiene_value = 1
-        if store.home_mess_value >= 80: 
-            store.home_hygiene_value = 0
-        for girl_index in all_girls_list:
-            all_girls_list[girl_index]["hygiene"] = 5
-            if all_girls_list[girl_index]["hygiene_rate"] >= 10: 
-                all_girls_list[girl_index]["hygiene"] = 4
-            if all_girls_list[girl_index]["hygiene_rate"] >= 20: 
-                all_girls_list[girl_index]["hygiene"] = 3
-            if all_girls_list[girl_index]["hygiene_rate"] >= 40: 
-                all_girls_list[girl_index]["hygiene"] = 2
-            if all_girls_list[girl_index]["hygiene_rate"] >= 60: 
-                all_girls_list[girl_index]["hygiene"] = 1
-            if all_girls_list[girl_index]["hygiene_rate"] >= 80: 
-                all_girls_list[girl_index]["hygiene"] = 0
+        # Define hygiene thresholds
+        hygiene_thresholds = [(80, 0), (60, 1), (40, 2), (20, 3), (10, 4), (0, 5)]
+
+        def calculate_hygiene(value):
+            """Return hygiene level based on thresholds."""
+            for threshold, hygiene_level in hygiene_thresholds:
+                if value >= threshold:
+                    return hygiene_level
+            return 5  # default if none matched
+
+        # Update home hygiene
+        store.home_hygiene_value = calculate_hygiene(store.home_mess_value)
+        # Update home condition
         store.home_condition = dic_home_condition[store.home_hygiene_value]
-
         
+        # Update each girl's hygiene
+        for girl_index in all_girls_list:
+            all_girls_list[girl_index]["hygiene"] = calculate_hygiene(all_girls_list[girl_index]["hygiene_rate"])
+        # Update master hygiene
+        store.hygiene_value_9 = calculate_hygiene(store.hygiene_experience_value_9)
 
-        
-        
-        
 
 
-                
