@@ -460,6 +460,16 @@ define dic_master_mood = {
         "neg_master_precious": "What a pity that I had to take my magic decoration off. It is my precious! I need to put it back and never take it off."
     }
 }
+define dic_master_clean = [
+    "This place is a pigsty; it’s depressing. <br>  As you tidy up you can’t help but think that there is something wrong with this picture. A slaver of your caliber should <i>not</i> have to dirty your hands with such work. <br>  Isn’t this what women are for?!",
+    "Definition of a loser: a slaver who cleans his own house. With a sad sigh, you start cleaning, solemnly promising yourself that next time your slaves will do this task.",
+    "Cleaning isn’t so bad; so long as someone else is doing it, but doing it with your own hands has never been your strong suit. Unfortunately, the place is a mess and it seems it is up to you. Cursing, you quickly clean up the house.",
+    "You have enough experience as a butler to handle even a serious mess, but still, there is something seriously wrong when you have to clean your own house.",
+    "For such an experienced butler as you, house cleaning, laundry, and dish washing are no trouble. It’s just that you are even better at guiding the work of others.",
+    "It does not take long to get the place spic and span. You wash the dishes, shake off the dust, and do other small tasks quickly and efficiently. Nothing complicated, and you can do it without a maid if necessary.",
+    "For the first-class butler that you are, your house is clean in no time. You wash the dishes, shake off the dust and do other small tasks quickly and efficiently. Nothing complicated, and you can do it without a maid if necessary."
+]
+
 define dic_master_reputation_objectives = {
     "camira_fame" : [
         "I am unknown by non-humans from the Camira House. But they will recognize me if I make at least one personal contract with a representative of this house. Some resident in the Quarter of the Outcasts must need a D+ slave!",

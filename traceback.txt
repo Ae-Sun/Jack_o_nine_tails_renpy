@@ -1,28 +1,66 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/home.rpy", line 621, in script
+  File "game/home.rpy", line 502, in script
     python:
-  File "game/home.rpy", line 649, in <module>
-    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
-IndexError: list index out of range
+  File "game/home.rpy", line 514, in <module>
+    renpy.call_screen("next_day_event_screen")
+  File "game/home.rpy", line 574, in execute
+    screen next_day_event_screen():
+  File "game/home.rpy", line 574, in execute
+    screen next_day_event_screen():
+  File "game/home.rpy", line 586, in execute
+    vbox:
+  File "game/home.rpy", line 596, in execute
+    text testvariable4
+Exception: Cannot display 0 as text.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/home.rpy", line 621, in script
+  File "game/home.rpy", line 502, in script
     python:
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/home.rpy", line 649, in <module>
-    next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\revertable.py", line 214, in __getitem__
-    rv = list.__getitem__(self, index)
-IndexError: list index out of range
+  File "game/home.rpy", line 514, in <module>
+    renpy.call_screen("next_day_event_screen")
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\exports\statementexports.py", line 345, in call_screen
+    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ui.py", line 301, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2218, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 480, in visit_all
+    callback(self)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 491, in per_interact
+    self.update()
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 700, in update
+    self.screen.function(**self.scope)
+  File "game/home.rpy", line 574, in execute
+    screen next_day_event_screen():
+  File "game/home.rpy", line 574, in execute
+    screen next_day_event_screen():
+  File "game/home.rpy", line 586, in execute
+    vbox:
+  File "game/home.rpy", line 596, in execute
+    text testvariable4
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\text\text.py", line 2058, in __init__
+    raise Exception("Cannot display {0!r} as text.".format(i))
+Exception: Cannot display 0 as text.
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
 JONT Port by Rec3ks ver. 0.0.55
-Sat Aug 30 00:31:23 2025
+Sat Aug 30 18:50:55 2025

@@ -541,6 +541,7 @@ label choose_inicial_girl:
         all_girls_list[girl_index].setdefault("mood_state",{})
         all_girls_list[girl_index].setdefault("beaten_ever",False)
         all_girls_list[girl_index].setdefault("domini_dictum_ever",False)
+        all_girls_list[girl_index].setdefault("calories",0)
         all_girls_list[girl_index].setdefault("wig",False)
         all_girls_list[girl_index].setdefault("assistant",False)
         all_girls_list[girl_index].setdefault("races_won",0)

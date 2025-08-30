@@ -1,7 +1,6 @@
 init python:
     import os, json, random 
 
-    selected_json_data = None  # This will hold the content of the selected JSON
 
     def load_random_json():
         mods_path = os.path.join(config.gamedir, "girl_packs")
@@ -37,8 +36,6 @@ init python:
         except Exception as e:
             renpy.log(f"Failed to load {filename}: {e}")
             return None
-    next_id = 0 # Initialize counter
-
     def add_slave(slave):
         global next_id       # Tell Python we want to use the external variable
         all_girls_list[next_id] = slave
@@ -78,10 +75,7 @@ init python:
             virgin_meat_gain = 0
         meat_price = mince_gain + meat_gain*2 + virgin_meat_gain*4
         return(meat_price)
-    
-    
-    #def sex_acceptance_check():
-        
+    #def sex_acceptance_check():     
     def interaction_willingness1_check():
         global attribute_track_index, dictionary_track_index, dictionary_name
         global dic_traits_skills_descriptions, target_skill, interaction_willingness
@@ -117,7 +111,7 @@ init python:
         store.slave_diligence += all_girls_list[girl_index]["daily_count"]["punishments"]
         if all_girls_list[girl_index]["energy"] < 0:
             store.slave_diligence += all_girls_list[girl_index]["energy"]*4
-        store.slave_diligence -= all_girls_list[girl_index]["attributes"]["pride"] - max(0,all_girls_list[girl_index]["arousal"] -3 )
+        store.slave_diligence -= 5 - all_girls_list[girl_index]["attributes"]["pride"] - max(0,all_girls_list[girl_index]["arousal"] -3 )
         if dic_girl_psy_status[all_girls_list[girl_index]["psy_status"]] < 0:
             store.slave_diligence += dic_girl_psy_status[all_girls_list[girl_index]["psy_status"]]
         else:
@@ -150,13 +144,9 @@ init python:
             target_skill2 = store.target_skill + "trait"
             store.slave_diligence += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] * 5
         store.slave_diligence = max(store.slave_diligence, 1) # i think 0 is too heavy for the game -rec3ks
-
-
-
-
-
     def girl_skills_rise_checkcheck():
-        target_skill2 = store.target_skill + "trait"
+        global skill_adv_mul, target_skill
+        target_skill2 = target_skill + "trait"
         if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] and not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] == 0: 
             store.attribute_track_index = target_skill2
             store.dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 
@@ -179,7 +169,7 @@ init python:
             store.tutor_modifier -= 1
         else:
             store.tutor_modifier -= 2
-        skill_rise = ((max(1,store.tutor_modifier)) * store.slave_diligence) / 4    # need diligence_check TODO NEED TO CHECK WHY IS RASING ONLY 2 TO 2 
+        skill_rise = ((max(1,store.tutor_modifier)) * store.slave_diligence) / 4   
         if target_skill == "athletics":
             skill_rise = skill_rise / 2
             if skill_rise > 3:
@@ -211,6 +201,7 @@ init python:
             # Recalculate cryostore_ingredients
             store.cryostore_ingredients = sum(storage["ingredients"].values())
     def cryo_amount_calculation():
+        global house_items
         store.cryostore_ingredients = 0
         for values in storage["ingredients"]:
             store.cryostore_ingredients += storage["ingredients"][values]
@@ -226,12 +217,10 @@ init python:
             store.laboratory_ingredients += storage["laboratory"]["potion"][values]
         house_items = 0
         for values in storage["house"]["artistic_material"]:
-            store.house_items += storage["house"]["artistic_material"][values]
+            house_items += storage["house"]["artistic_material"][values]
         for values in storage["house"]["sex_items"]:
-            store.house_items += storage["house"]["sex_items"][values]
-
+            house_items += storage["house"]["sex_items"][values]
     def display_pic():
-        # i just realice there's something call x_general.webp TODO need update the function to incluin it
         if all_girls_list[girl_index]["hairlength"] == "":
             if "white" in all_girls_list[girl_index]["fullimage"]:
                 all_girls_list[girl_index]["haircolor"] = "white"
@@ -273,7 +262,9 @@ init python:
                     path = os.path.join(config.gamedir, "images", "girls", "normal_scenes")
                     rest_girl = [
                         f for f in os.listdir(path)
-                        if dic_girl_choosing_image_condition_short[store.choosing_image_condition] + "_" + x + "_" + y + "_" + z in f
+                        if (dic_girl_choosing_image_condition_short[store.choosing_image_condition] + "_" + x + "_" + y + "_" + z in f
+                        or dic_girl_choosing_image_condition_short[store.choosing_image_condition] + "_" + "general" + "_" + z in f
+                        )
                     ]
                     return "girls/normal_scenes/" + random.choice(rest_girl)
             else:
@@ -300,14 +291,12 @@ init python:
             all_girls_list[girl_index]["hygiene"] = calculate_hygiene(all_girls_list[girl_index]["hygiene_rate"])
         # Update master hygiene
         store.hygiene_value_9 = calculate_hygiene(store.hygiene_experience_value_9)
-    import random
-
     def auto_cook_meal():
         global already_prepared, already_ate, food_meat_info, home_mess_value
         global cryostore_ingredients_max
         global all_girls_list, dic_foods_list, storage, dic_hygiene_value_rate
         global girl_index, target_skill, tutor_modifier
-
+        all_girls_list[girl_index]["slave_auto_cook"] = False
         if cryostore_ingredients_max <= 0:
             return
         
@@ -316,7 +305,7 @@ init python:
         # Required obedience
         required_obedience = (
             -6 
-            - girl["attributes"]["pride"] // 2 + 2
+            + girl["attributes"]["pride"] // 2 - 2
             + girl["attributes"]["nature"] // 3 
             + girl["attributes"]["intelligence"] // 3
         )
@@ -354,22 +343,25 @@ init python:
                                 missing += 1
 
                         if missing == 0:
+                            #dont cook if cooking doesn't improve the quality
                             if food_meat_info["quality"] < n + 1:
-                                already_prepared = True
-                                food_not_found = False
+                                #don't cook if kitchen isn't good enough. this actually CAP the cooking quality
+                                if dic_improvement_rooms["kitchen"][best_kitchen]["modifier"] >= n + 1:
+                                    already_prepared = True
+                                    food_not_found = False
 
-                                # Deduct ingredients
-                                for slot in range(4):
-                                    ingredient = dic_foods_list[keys_list[n]][i][1][slot]
-                                    if ingredient != "none":
-                                        storage["ingredients"][ingredient] -= 1
+                                    # Deduct ingredients
+                                    for slot in range(4):
+                                        ingredient = dic_foods_list[keys_list[n]][i][1][slot]
+                                        if ingredient != "none":
+                                            storage["ingredients"][ingredient] -= 1
 
-                                already_ate = True
-                                food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
-                                food_meat_info["quality"] = n + 1
+                                    already_ate = True
+                                    food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
+                                    food_meat_info["quality"] = n + 1
 
-                                # Update last cooked level
-                                girl["last_cooked_meat_level"] = food_meat_info["quality"]
+                                    # Update last cooked level
+                                    girl["last_cooked_meat_level"] = food_meat_info["quality"]
                     n -= 1
 
                 # Default to canned food
@@ -383,17 +375,16 @@ init python:
                 home_mess_value += dic_hygiene_value_rate["cook"]
                 girl["hygiene_rate"] += dic_hygiene_value_rate["cook"]
 
-                if girl["energy"] > 0:
-                    girl["energy"] -= 2
-                else:
-                    girl["yesterday_exhaustion"] += 2
+                slave_energy_drop_calculation()
+
     def master_cook_meal():
         global already_prepared, already_ate, food_meat_info, home_mess_value
         global cryostore_ingredients_max
         global dic_foods_list, storage, dic_hygiene_value_rate
         global target_skill, hygiene_experience_value_9, energy_value
         global personality_value_2, stewardship_value_13, stewardship_experience_value_13
-        global skill_adv_mul
+        global skill_adv_mul, best_kitchen
+        global testvariable1, testvariable2, testvariable3, best_kitchen
         if cryostore_ingredients_max <= 0:
             return
         
@@ -408,7 +399,7 @@ init python:
                 max(1, (mood_value_10 + 2)// 1),
                 5
             )
-
+            testvariable1 = master_skill
             keys_list = ["D- quality", "C- quality", "B+ quality", "A+ quality", "S+ quality"]
             n = master_skill - 1
             food_not_found = True
@@ -427,20 +418,24 @@ init python:
                             missing += 1
 
                     if missing == 0:
+                        #dont cook if cooking doesn't improve the quality
                         if food_meat_info["quality"] < n + 1:
-                            already_prepared = True
-                            food_not_found = False
+                            #don't cook if kitchen isn't good enough. this actually CAP the cooking quality
+                            if dic_improvement_rooms["kitchen"][best_kitchen]["modifier"] >= n + 1:
+                                already_prepared = True
+                                food_not_found = False
 
-                            # Deduct ingredients
-                            for slot in range(4):
-                                ingredient = dic_foods_list[keys_list[n]][i][1][slot]
-                                if ingredient != "none":
-                                    storage["ingredients"][ingredient] -= 1
-
-                            already_ate = True
-                            food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
-                            food_meat_info["quality"] = n + 1
-                            stewardship_experience_value_13 += 1* skill_adv_mul
+                                # Deduct ingredients
+                                for slot in range(4):
+                                    ingredient = dic_foods_list[keys_list[n]][i][1][slot]
+                                    if ingredient != "none":
+                                        storage["ingredients"][ingredient] -= 1
+                                testvariable2 = dic_improvement_rooms["kitchen"][best_kitchen]["modifier"]
+                                testvariable3 = n + 1
+                                already_ate = True
+                                food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
+                                food_meat_info["quality"] = n + 1
+                                stewardship_experience_value_13 += 1* skill_adv_mul
                 n -= 1
 
             # Default to canned food
@@ -449,21 +444,17 @@ init python:
                 already_prepared = True
                 food_meat_info["quality"] = 0
                 food_meat_info["name"] = "Canned food"
-            # gain bad moodlet if bad at cooking
-            #TODO
             master_mood_state["bad_mood"]["neg_cook"]["duration"] = max(0, 3 + personality_value_2 - stewardship_value_13)
             if master_mood_state["bad_mood"]["neg_cook"]["duration"] > 0:
                 master_mood_state["bad_mood"]["neg_cook"]["active"] = True
             else:
                 master_mood_state["bad_mood"]["neg_cook"]["active"] = False
 
+
             # Hygiene and energy changes
             home_mess_value += dic_hygiene_value_rate["cook"]
             hygiene_experience_value_9 += dic_hygiene_value_rate["cook"]
-            if energy_value > 0:
-                energy_value -= 2
-            else:
-                yesterday_exhaustion += 2
+            master_energy_drop_calculation()
     def auto_maid():
         global home_hygiene_value, home_mess_value
         if home_hygiene_value >= 4:
@@ -498,9 +489,179 @@ init python:
             if slave_skill < 3 and home_mess_value == 0: 
                 home_mess_value = 10
 
-            if girl["energy"] > 0:
-                girl["energy"] -= 2
+            slave_energy_drop_calculation()
+            girl["hygiene_rate"] += dic_hygiene_value_rate["maid"] + home_hygiene_value - 5
+    def master_clean():
+        global home_hygiene_value, home_mess_value, energy_value , stewardship_experience_value_13
+        global skill_adv_mul, personality_value_2, hygiene_experience_value_9
+        if energy_value < 0 or home_hygiene_value >= 2 : 
+            return
+        master_auto["clean"] = True
+        stewardship_experience_value_13 += 1 * skill_adv_mul
+
+        master_mood_state["bad_mood"]["neg_cleaning"]["duration"] = 1 + personality_value_2 
+        master_mood_state["bad_mood"]["neg_cleaning"]["active"] = True
+        master_energy_drop_calculation()
+        hygiene_experience_value_9 += dic_hygiene_value_rate["maid"] + home_hygiene_value - 5
+        home_mess_value -= max(8,stewardship_value_13*16)
+        home_mess_value = max(0, home_mess_value)
+
+
+
+
+    def update_moodlet_new_day_slave():
+        # TODO need to check permanent state of some moodlet 1/2 DONE
+        for key in dic_slave_mood["good_mood"]:
+            if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]:
+                if not all_girls_list[girl_index]["mood_state"]["good_mood"][key]["permanent"]:
+                    all_girls_list[girl_index]["mood_state"]["good_mood"][key]["duration"] -= 1
+                    if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["duration"] == 0:
+                        all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"] = False
+                if not all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed"]:
+                    all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed_value"] -= 1
+                    if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed_value"] == 0:
+                        all_girls_list[girl_index]["mood_state"]["good_mood"][key]["accustomed"] = True
+        for key in dic_slave_mood["bad_mood"]:
+            if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
+                if not all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["permanent"]:
+                    all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["duration"] -= 1
+                    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["duration"] == 0:
+                        all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"] = False
+                if not all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed"]:
+                    all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed_value"] -= 1
+                    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed_value"] == 0:
+                        all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["accustomed"] = True
+    def slave_dead_for_low_endurance_code():
+        global girl_index, all_girls_list, sparks_37
+        if all_girls_list[girl_index]["attributes"]["endurance"] == 0 and all_girls_list[girl_index]["experience"]["attributes"]["endurance"] <= -10:
+            roll = random.randint(1, 2)
+            if roll == 1:
+                temporal_value = meat_evaluation()
+                key_to_delete = list(all_girls_list.keys())[girl_index]
+                del all_girls_list[key_to_delete]                       
+                sparks_37 += temporal_value
+                msg("Your slave is dead, and you sale the meat to the butcher for [temporal_value]")
+            if roll == 2:
+                all_girls_list[girl_index]["experience"]["attributes"]["endurance"] = -10
+    def slave_attack_escape_calculation():
+        global slave_escape_type, slave_rebellion_fight, slave_rebellion_attack, slave_suicide, girl_index
+        if all_girls_list[girl_index]["sleep"] != 0 and all_girls_list[girl_index]["psy_status"] != "broken":
+            if all_girls_list[girl_index]["attributes"]["endurance"] > 0:
+                if all_girls_list[girl_index]["mood"] < -1 and all_girls_list[girl_index]["attributes"]["temperament"] > all_girls_list[girl_index]["obedience"]:
+                    n = 7 + personality_value_2 - all_girls_list[girl_index]["aura"]["despair"]
+                    for girl_index in all_girls_list:
+                        # this doble for is not a error -rec3ks 
+                        if all_girls_list[girl_index]["conscience"]:
+                            if all_girls_list[girl_index]["assistant"]:
+                                n += all_girls_list[girl_index]["attributes"]["intelligence"] + all_girls_list[girl_index]["aura"]["devotion"]
+                    ### need assistant supervision code  - TODO
+                    roll = random.randint(1, n)
+                    if roll == 1:
+                        if all_girls_list[girl_index]["aura"]["despair"] > 0:
+                            if all_girls_list[girl_index]["attributes"]["gladiatrix"] > 0 and all_girls_list[girl_index]["aura"]["despair"] > max(0, (master_supermacy - all_girls_list[girl_index]["supermacy"]) - 5 + allure_value_3): 
+                                slave_rebellion_fight = True
+                                slave_rebellion_attack = True
+                        elif dic_girl_equipment_neck_mod[all_girls_list[girl_index]["equipment"]["neck"]]["escape"]:
+                            if all_girls_list[girl_index]["brand"] == 5:
+                                slave_escape_type = 2
+                            else: 
+                                slave_escape_type = 1
+                        elif all_girls_list[girl_index]["brand"] in [1,4]:
+                            slave_escape_type = 3
+                        elif all_girls_list[girl_index]["brand"] == 3:
+                            slave_escape_type = 4
+                if all_girls_list[girl_index]["aura"]["despair"] > 2 and all_girls_list[girl_index]["attributes"]["endurance"] > 3 and all_girls_list[girl_index]["skills"]["gladiatrix"] > 0 and all_girls_list[girl_index]["aura"]["devotion"] == 0 and all_girls_list[girl_index]["mood"] < 0: #and (master_supermacy - master_style) < 2 and exam_in_progress = 0:
+                    slave_rebellion_fight = True
+                    slave_rebellion_attack = True
+                    slave_escape_type = 0
+                if all_girls_list[girl_index]["obedience"] > 7 or all_girls_list[girl_index]["aura"]["devotion"] > 1:
+                    slave_rebellion_fight = False
+                    slave_escape_type = 0
+                if all_girls_list[girl_index]["mood"] <= -5 and all_girls_list[girl_index]["aura"]["despair"] > max(all_girls_list[girl_index]["attributes"]["nature"], all_girls_list[girl_index]["attributes"]["temperament"]):
+                    roll = random.randint(1, 100)
+                    roll += all_girls_list[girl_index]["suicide_rate"]
+                    if roll >= 90:
+                        slave_suicide = True
+                    else:
+                        all_girls_list[girl_index]["suicide_rate"] += 15
+                else:
+                    all_girls_list[girl_index]["suicide_rate"] = min(all_girls_list[girl_index]["suicide_rate"] - 3, 0)
+    def well_rest_bonus_calculation():
+        if all_girls_list[girl_index]["energy"] > 0:
+            if all_girls_list[girl_index]["mood"] > -2:
+                all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["energy"] / 20
+                all_girls_list[girl_index]["mood_state"]["good_mood"]["well_rested"]["active"] = True # Thanks to the new system using true and false and weight this is too op
+                all_girls_list[girl_index]["mood_state"]["good_mood"]["well_rested"]["weight"] = 0 
+                all_girls_list[girl_index]["slave_auto_sleep"] = True
+    def brand_effect_activation():
+        if all_girls_list[girl_index]["brand"] != 0:
+            all_girls_list[girl_index]["experience"]["aura"]["habit"] += 1
+        if all_girls_list[girl_index]["brand"] == 5:
+            all_girls_list[girl_index]["experience"]["aura"]["habit"] += 1
+        increase_check("aura","habit")
+    def spoiling_calculation():
+        ### spoiling - increase
+        if all_girls_list[girl_index]["daily_count"]["reward"] > 2:
+            all_girls_list[girl_index]["experience"]["aura"]["spoil"] += all_girls_list[girl_index]["daily_count"]["reward"]*5
+        if all_girls_list[girl_index]["aura"]["devotion"] <= 2 and all_girls_list[girl_index]["aura"]["fear"] == 0 and all_girls_list[girl_index]["days_without_food"] == 0 and all_girls_list[girl_index]["days_without_sleep"] == 0 and all_girls_list[girl_index]["rules"]["rules_count"] < dic_overnight_rules_count[dic_overnight_rules_count_index]:
+            all_girls_list[girl_index]["experience"]["aura"]["spoil"] += 5 - all_girls_list[girl_index]["attributes"]["pride"] + all_girls_list[girl_index]["attributes"]["nature"] + all_girls_list[girl_index]["attributes"]["temperament"]
+        increase_check("aura","spoil")
+        if all_girls_list[girl_index]["aura"]["spoil"] > 0:
+            all_girls_list[girl_index]["experience"]["aura"]["devotion"] -= all_girls_list[girl_index]["aura"]["spoil"]
+            all_girls_list[girl_index]["experience"]["aura"]["awareness"] -= all_girls_list[girl_index]["aura"]["spoil"]
+            all_girls_list[girl_index]["experience"]["aura"]["taming"] -= all_girls_list[girl_index]["aura"]["spoil"]
+            all_girls_list[girl_index]["experience"]["aura"]["habit"] -= all_girls_list[girl_index]["aura"]["spoil"]
+        reduce_check( "aura","devotion")
+        reduce_check( "aura","awareness")
+        reduce_check( "aura","taming")
+        reduce_check( "aura","habit")
+        if all_girls_list[girl_index]["aura"]["spoil"] > max(0, all_girls_list[girl_index]["mood"], all_girls_list[girl_index]["aura"]["fear"]) and all_girls_list[girl_index]["sleep"] in [2,3]:
+            all_girls_list[girl_index]["neg_spoil"] = True
+        all_girls_list[girl_index]["daily_count"]["reward"] == 0
+        ### spoiling - reduce
+        if all_girls_list[girl_index]["aura"]["spoil"] > 0 or all_girls_list[girl_index]["experience"]["aura"]["spoil"] > 0 and dic_overnight_rules_count[dic_overnight_rules_count_index] <= all_girls_list[girl_index]["rules"]["rules_count"] or all_girls_list[girl_index]["days_without_food"] != 0 or all_girls_list[girl_index]["days_without_sleep"] != 0 or all_girls_list[girl_index]["aura"]["fear"] > all_girls_list[girl_index]["aura"]["devotion"]:
+            all_girls_list[girl_index]["experience"]["aura"]["spoil"] -= 1 + all_girls_list[girl_index]["aura"]["devotion"] + all_girls_list[girl_index]["aura"]["fear"] + all_girls_list[girl_index]["aura"]["despair"]*2 + max(0, all_girls_list[girl_index]["days_without_food"])*3 + max(0, all_girls_list[girl_index]["days_without_sleep"])*3
+        if all_girls_list[girl_index]["mood"] < 0:
+            all_girls_list[girl_index]["experience"]["aura"]["spoil"] -= all_girls_list[girl_index]["attributes"]["empathy"]
+        reduce_check( "aura","spoil")
+    def energy_and_sleep_calculation():
+        global girl_index
+        if all_girls_list[girl_index]["sleep"] != 4:
+            # energy is capped to 10 if devotion is less than 3
+            if all_girls_list[girl_index]["aura"]["devotion"] >= 3:
+                all_girls_list[girl_index]["energy"] = all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 4 - all_girls_list[girl_index]["yesterday_exhaustion"] + all_girls_list[girl_index]["stored_yesterday_energy"] + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"]
             else:
-                girl["yesterday_exhaustion"] += 2
-            girl["hygiene_rate"] += dic_hygiene_value_rate["maid"]
-        
+                all_girls_list[girl_index]["energy"] = min(10, all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2 - all_girls_list[girl_index]["yesterday_exhaustion"] + all_girls_list[girl_index]["stored_yesterday_energy"]) + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"]
+            all_girls_list[girl_index]["stored_yesterday_energy"] = 0
+            all_girls_list[girl_index]["days_without_sleep"] = 0
+        else:
+            all_girls_list[girl_index]["energy"] = min(10, (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2) // 2 ) - all_girls_list[girl_index]["yesterday_exhaustion"] + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"]
+            all_girls_list[girl_index]["days_without_sleep"] += 1
+            all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *3
+            all_girls_list[girl_index]["experience"]["aura"]["taming"] += all_girls_list[girl_index]["days_without_sleep"]
+            reduce_check("attributes","endurance")
+            increase_check("aura","taming")
+            all_girls_list[girl_index]["stored_yesterday_energy"] = 0
+    def slave_energy_drop_calculation():
+        global girl_index
+        girl = all_girls_list[girl_index]
+        if girl["energy"] > 0:
+            girl["energy"] -= 2
+        else:
+            girl["yesterday_exhaustion"] += 2
+        girl["calories"] -= 1
+    def master_energy_drop_calculation():
+        global energy_value, yesterday_exhaustion, strength_experience_value_1, strength_value_1
+        global skill_adv_mul
+        if energy_value > 0:
+            energy_value -= 2
+        else:
+            yesterday_exhaustion += 2
+        if strength_value_1 < 3:
+            strength_experience_value_1 += 1 * skill_adv_mul
+    def best_kitchen_calculation():
+        global best_kitchen
+        best_kitchen = "Deplorable kitchen"
+        for kitchen in home_estate["kitchen"]:
+            if home_estate["kitchen"][kitchen] > 0 and dic_improvement_rooms["kitchen"][kitchen]["modifier"] > dic_improvement_rooms["kitchen"][best_kitchen]["modifier"]:
+                best_kitchen = kitchen

@@ -246,25 +246,25 @@ define dic_improvement_rooms ={
             "cost": 150,
             "size": 50,
             "risk": 10,
-            "modifier": -1
+            "modifier": 3
         },
         "Basic kitchen": {
             "cost": 500,
             "size": 100,
             "risk": 50,
-            "modifier": 0
+            "modifier": 4
         },
         "Well-equipped kitchen": {
             "cost": 1200,
             "size": 150,
             "risk": 100,
-            "modifier": +1
+            "modifier": 5
         },
         "Gourmet kitchen": {
             "cost": 2500,
             "size": 200,
             "risk": 300,
-            "modifier": +2
+            "modifier": 6
         }
     },
     "slaves_rooms":{

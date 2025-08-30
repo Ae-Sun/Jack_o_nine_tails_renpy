@@ -2,8 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/fuctions.rpy", line 482: expected an indented block
-                and girl["obedience"] >= required_obedience):
+File "game/home.rpy", line 539: expected an indented block
+    if  master_auto["maid"]:
+    ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Fri Aug 29 23:11:47 2025
+Sat Aug 30 13:19:28 2025
