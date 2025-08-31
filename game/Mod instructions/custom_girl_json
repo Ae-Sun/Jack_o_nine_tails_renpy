@@ -172,6 +172,10 @@
                     "value": 0,
                     "revealed": false
                 },
+                "sexual_openness": {
+                    "value": 0,
+                    "revealed": false
+                },
                 "masochism":{
                     "value": 0,
                     "revealed": false

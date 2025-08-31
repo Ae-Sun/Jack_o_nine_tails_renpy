@@ -32,7 +32,7 @@ define config.version = "Port by Rec3ks ver. 0.0.55"
 define gui.about = _p("""
 """)
 ## change mouse look
-define config.mouse = {} # -you need this line or will explote. Stupid chatgpt saying bullshits about how changes mouse look -Rec3ks
+define config.mouse = {} 
 define config.mouse['default'] = [ ( "gui/cursor.webp", 0, 0) ]
 define config.mouse['button'] = [ ( "gui/hand.webp", 0, 0) ]
 define config.mouse['pressed_default'] = [ ( "gui/whip.webp", 0, 0)]

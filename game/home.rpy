@@ -1,4 +1,4 @@
-# VERY IMPORTANT, For when I gone, If something look like it's should work and doesn't, first try to restart the game, Second try to renamed that function, label or screen, IDK why but it works, And if everthing is fucked try to add comment lines and repeat the first and second step.
+# VERY INPORTANT when you change some define values, you need to also delete All rpyc files if not, the change wont be reflect. Also don't trust AI
 # 
 ### testing variables
 default testvariable1 = 0
@@ -20,6 +20,14 @@ default all_hygiene_multidic = {} #  not important variable need to make screen 
 default home_condition = dic_home_condition[5] #  not important variable need to make screen logic 
 default home_hygiene_value = 5 # this variable is used to track the hygiene value of the home
 default home_mess_value = 0 # this variable is used to track the hygiene value rate of the home
+default rape = False
+default stimulating = False
+default orgastic = False
+default shameful = False
+default painful = False
+default disgusting = False
+default homosexual = False
+
 default bgstyle = "bg_main_old.webp"
 default bgstyle2 = "bg_old.webp"
 default bgstyle3 = "bg_stat_old.webp"
@@ -92,6 +100,7 @@ default laboratory_ingredients = 0
 default master_objectives_index = ""
 default already_ate = False
 default already_prepared = False
+default already_bath = False
 default house_items = 0
 default alone_count = 0
 default is_main_assistant = False
@@ -101,13 +110,15 @@ default target_skill = ""
 default slave_diligence = 0
 default motivation_repulse = 0
 default interaction_willingness = 0
-default interaction_repulse = 0
+default interaction_repulse_difficulty = 0
 default interaction_sex_acceptance = 0
+default sum_of_sex_skill_slave_value = 0
 default master_auto = {
     "cook": False,
     "clean": False
 }
 default yesterday_exhaustion = 0
+default did_bath_yesterday = False
 default home_localization = "Slums"
 default tutor_modifier = 0
 default skill_adv_mul = 1
@@ -151,7 +162,7 @@ default home_estate = {
         "comfortable_room": 0,
         "luxurios_room": 0
     },
-    "bathroom": True
+    "bathroom": False
 }
 default inventory = {
     "remove": "-",
@@ -361,6 +372,7 @@ label iniciation_label:
             home_localization = "White House"
             home_estate["kitchen"]["Well-equipped kitchen"] = 10
             home_estate["slaves_rooms"]["comfortable_room"] = 3
+            home_estate["bathroom"] = True
             for girl_index in all_girls_list:
                 all_girls_list[girl_index].setdefault("sleep_room","comfortable_room")
         jump equipment_check
@@ -404,6 +416,11 @@ label next_day_labellabel:
         is_auspex_active = False
         is_slave_nearly_fainted = False
         domini_dictum_active = False
+        already_bath = False
+        slave_nearly_fainted = False
+        already_prepared = False
+        already_ate = False
+
         energy_value += strength_value_1 *2 + 2 - yesterday_exhaustion
         energy_value = min(10, energy_value)
         yesterday_exhaustion = 0
@@ -436,18 +453,20 @@ label next_day_labellabel:
                 all_girls_list[girl_index]["daring"] = max(all_girls_list[girl_index]["daring"]- random.randint(0, 3),0)
                 if all_girls_list[girl_index]["energised"] > 5:
                     all_girls_list[girl_index]["energised"] = max(all_girls_list[girl_index]["energised"]- random.randint(0, 7),0)
-                # its fine past mood go after moodlet check since mood is not gonna update until home screen -rec3ks
+                for i in all_girls_list[girl_index]["rules_broken"]:
+                    all_girls_list[girl_index]["rules_broken"][i] = False
                 # TODO need to check permanent state of some moodlet 1/2 DONE
                 update_moodlet_new_day_slave()
                 slave_dead_for_low_endurance_code()
                 slave_attack_escape_calculation()                
                 #TODO if not all_girls_list[girl_index]["assistant"]:
-                # Cooking rule
-                auto_cook_meal()
+                # Rules
                 # WIP assistent cooking code skipped
+                auto_cook_meal()
+                auto_maid()
+                auto_bath_slave_help_master()
+                slave_bath_selfwash()
                 #TODO NEXT THING TO DO 
-                # maid code
-                auto_maid() 
 
                 well_rest_bonus_calculation()
                         
@@ -462,9 +481,9 @@ label next_day_labellabel:
                 spoiling_calculation()
             # save pass mood slave
             all_girls_list[girl_index]["past_mood"] = all_girls_list[girl_index]["mood"]
+            all_girls_list[girl_index]["hygiene_rate"] += dic_hygiene_value_rate["idle"]
             # reset temporal mood slave
             all_girls_list[girl_index]["mood_temporal"] = 0
-            all_girls_list[girl_index]["hygiene_rate"] += dic_hygiene_value_rate["idle"]
             all_girls_list[girl_index]["yesterday_exhaustion"] = 0
 
 
@@ -476,17 +495,14 @@ label next_day_labellabel:
             alone_count += 1
         else:
             alone_count = 0
-        slave_nearly_fainted = False
         girl_index = save_girl_index
         if not already_prepared or already_ate:
             master_cook_meal()
         master_clean()
-        already_prepared = False
-        already_ate = False
 
         # Dirt and Hygiene from sleep, time, and normal house use - master and slave - crushboss/rec3ks
         
-        home_mess_value += dic_hygiene_value_rate["idle"]
+        home_mess_value += dic_hygiene_value_rate["idle"] * len(all_girls_list)
         hygiene_experience_value_9 += dic_hygiene_value_rate["idle"]
 
 
@@ -518,7 +534,7 @@ label Next_day_event:
                 next_day_event_screen_text = dic_cook[food_meat_info["quality"]] 
                 room_name = "Kitchen"
                 target_skill = "cooking" # this is necesary 
-                interaction_willingness1_check()
+                interaction_willingness_check()
                 diligence333_check333()
                 girl_skills_rise_checkcheck()
                 display_meat = True
@@ -530,19 +546,25 @@ label Next_day_event:
                 next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
                 room_name = "Hall"
                 target_skill = "maid"
-                interaction_willingness1_check()
+                interaction_willingness_check()
                 diligence333_check333()
                 girl_skills_rise_checkcheck()
                 all_girls_list[girl_index]["slave_auto_maid"] = False
                 renpy.call_screen("next_day_event_screen")
-        
+            if all_girls_list[girl_index]["slave_auto_bath"] and all_girls_list[girl_index]["rules"]["bath_slave"]:
+                choosing_image_condition = "slave_auto_bath"
+                pic_displayed = display_pic()
+                next_day_event_screen_text = dic_bath_all[2]
+                room_name = "Bath"
+                all_girls_list[girl_index]["slave_auto_bath"] = False
+                renpy.call_screen("next_day_event_screen")
+            
         if master_auto["clean"]:
             pic_displayed = "scene/master_clean.webp"
             next_day_event_screen_text = dic_master_clean[stewardship_value_13]
             room_name = "Hall"
             master_auto["clean"] = False
             renpy.call_screen("next_day_event_screen")
-
         if master_auto["cook"]:
             pic_displayed = "scene/master_cooking.webp"
             next_day_event_screen_text = master_cook_description[food_meat_info["quality"]] 
@@ -565,10 +587,21 @@ label Next_day_event:
 
 
         girl_index = save_girl_index
+    python:
+        food_meat_info["quality"] = 0
+        display_meat_alfa = False
+        if did_bath_yesterday: #this is necesary because we expect if bath overnight doesn't start next day with mess
+            did_bath_yesterday = False
+            hygiene_experience_value_9 = 0
+        save_girl_index = girl_index
+        for girl_index in all_girls_list: #this is necesary because we expect if bath overnight doesn't start next day with mess
+            if all_girls_list[girl_index]["did_bath_yesterday"]:
+                all_girls_list[girl_index]["hygiene_rate"] = 0
+        girl_index = save_girl_index
+        
+        msg("New day [day_tracker]")
     show screen home_menu
-    $ msg("New day [day_tracker]")
-    $ food_meat_info["quality"] = 0
-    $ display_meat_alfa = False
+    
 
     jump equipment_check
 screen next_day_event_screen():
@@ -591,11 +624,6 @@ screen next_day_event_screen():
         add "spacer" size (0, 20)
         text "Information for consideration:" size 30 color "#000000" font "fonts/victoriana.ttf" anchor (0.5, 0.5)
         text str(testvariable1)
-        text str(testvariable2)
-        text str(testvariable3)
-        text best_kitchen
-        text str(dic_improvement_rooms["kitchen"][best_kitchen]["modifier"])
-
 
 
     if not display_meat_alfa: 
@@ -617,11 +645,11 @@ label Home:
     hide screen screen_attributes_skills_sexual_slave
     python:
         infobox_jump = "Home"
+        #sex_experience_average_update()
         all_hygiene_calculation()
         cryo_amount_calculation() #this doesn't need to constant check - TODO
         best_kitchen_calculation() #this doesn't need to constant check - TODO
-        
-              
+        sex_experience_average_update()
         # master moodlet calculation
         wealth_quality_modifier = standard_of_living_value_8 - brand_reputation_value_6 - 1
         if wealth_quality_modifier > 0: 
@@ -743,9 +771,9 @@ label Home:
         mood_value_10 += master_worn_bonus
         mood_value_10 += master_temporal_mood
         if master_past_mood > 0:
-            mood_value_10 += master_past_mood/3
+            mood_value_10 += master_past_mood/3.85
         else:
-            mood_value_10 += master_past_mood/2
+            mood_value_10 += master_past_mood/1.65
         for key in dic_master_mood["good_mood"]:
             if master_mood_state["good_mood"][key]["active"]:
                 mood_value_10 += master_mood_state["good_mood"][key]["weight"]
@@ -867,11 +895,11 @@ label Home:
                     # + all temporal mood
                     all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["mood_temporal"]
                     # + past mood, a slave that yesterday is depressing, will start more sad that one that was happy yesterday
-                    # + 1/2 if negative + 1/3 if positive because sadness stick longer that hapiness, like IRL
+                    # more negative that positive because sadness stick longer that hapiness, like IRL
                     if all_girls_list[girl_index]["past_mood"] > 0:
-                        all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/3
+                        all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/3.85 # this number is arbitrary and can be balance change
                     else:
-                        all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/2
+                        all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/1.65 # this number is arbitrary and can be balance change
                     for key in dic_slave_mood["good_mood"]:
                         if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]:
                             all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["mood_state"]["good_mood"][key]["weight"]
@@ -1155,7 +1183,7 @@ label equipment_check:
             if all_girls_list[girl_index]["equipment"]["clothes"] == "Lace Underwear":
                 all_girls_list[girl_index]["learning_bonus"]["sex"] += 2
                 all_girls_list[girl_index]["style_plus"] += 1            
-                if all_girls_list[girl_index]["aura"]["devotion"] > 0 and master_style >= 3:
+                if all_girls_list[girl_index]["aura"]["devotion"] > 0 and allure_value_3 >= 3:
                     all_girls_list[girl_index]["daily_bonus"]["arousal"] += 1
             if all_girls_list[girl_index]["equipment"]["clothes"] == "School Uniform":
                 all_girls_list[girl_index]["learning_bonus"]["secretary"] += 2
@@ -1183,7 +1211,7 @@ label equipment_check:
             if all_girls_list[girl_index]["equipment"]["clothes"] == "Leather Corset":
                 all_girls_list[girl_index]["learning_bonus"]["sex"] += 4
                 all_girls_list[girl_index]["style_plus"] += 2
-                if all_girls_list[girl_index]["aura"]["devotion"] > 0 and master_style >= 3:
+                if all_girls_list[girl_index]["aura"]["devotion"] > 0 and allure_value_3 >= 3:
                     all_girls_list[girl_index]["daily_bonus"]["arousal"] += 2
             if all_girls_list[girl_index]["equipment"]["clothes"] == "Gorgeous Dress":
                 all_girls_list[girl_index]["mood_state"]["bad_mood"]["clothes"]["active"] = True
@@ -1193,7 +1221,7 @@ label equipment_check:
                 all_girls_list[girl_index]["style_plus"] += 3
                 if all_girls_list[girl_index]["attributes"]["pride"] >=3 and dic_girl_psy_status[all_girls_list[girl_index]["psy_status"]] <= 0:
                     all_girls_list[girl_index]["mood_state"]["good_mood"]["clothes"]["active"] = True
-                if min(all_girls_list[girl_index]["aura"]["devotion"],all_girls_list[girl_index]["mood"],master_style) >=3: 
+                if min(all_girls_list[girl_index]["aura"]["devotion"],all_girls_list[girl_index]["mood"],allure_value_3) >=3: 
                     all_girls_list[girl_index]["daily_bonus"]["devotion"] += 1
                     all_girls_list[girl_index]["daily_bonus"]["arousal"] += 1
                     all_girls_list[girl_index]["worn_mood"] += 5
@@ -1967,20 +1995,13 @@ screen home_menu():
         if is_tutorial:
             yalign 0.08
             xalign 0.74
-            if girl_index == 0:
-                textbutton "change girl":   
-                    style "home_button"
-                    action SetVariable("girl_index", 1),Jump("Home")
-                text "current mood: " + str(all_girls_list[girl_index]["mood"])
-                text "current home hygiene: " + str(home_mess_value)
-            if girl_index == 1:
-                textbutton "change girl":
-                    style "home_button"
-                    action SetVariable("girl_index", 2),Jump("Home")
-            if girl_index == 2:
-                textbutton "change girl":
-                    style "home_button"
-                    action SetVariable("girl_index", 0),Jump("Home")
+            textbutton "change girl":   
+                style "home_button"
+                action SetVariable("girl_index", (girl_index + 1) % len(all_girls_list)), Jump("Home")
+            text "current slave mood: " + str(all_girls_list[girl_index]["mood"])
+            text str(hygiene_value_9) 
+            text str(hygiene_experience_value_9)
+            text str(mood_value_10)
 screen slave_activities_menu():
     key "K_SPACE" action SetVariable("current_menu", 0),Jump("Home")
     imagebutton pos(0.02,0.4):

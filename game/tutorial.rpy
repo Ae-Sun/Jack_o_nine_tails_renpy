@@ -547,6 +547,7 @@ label choose_inicial_girl:
         all_girls_list[girl_index].setdefault("races_won",0)
         all_girls_list[girl_index].setdefault("supermacy",0)
         all_girls_list[girl_index].setdefault("bonus_fear",0)
+        all_girls_list[girl_index].setdefault("make_up",0)
         all_girls_list[girl_index].setdefault("epilation",0)
         all_girls_list[girl_index].setdefault("manicure",0)
         all_girls_list[girl_index].setdefault("hairstyle",0)
@@ -563,9 +564,9 @@ label choose_inicial_girl:
         all_girls_list[girl_index]["mood_state"].setdefault("good_mood",{})
         all_girls_list[girl_index]["mood_state"].setdefault("bad_mood",{})
         for key in dic_slave_mood["good_mood"]:
-            all_girls_list[girl_index]["mood_state"]["good_mood"].setdefault(key, {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1})
+            all_girls_list[girl_index]["mood_state"]["good_mood"].setdefault(key, {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1})
         for key in dic_slave_mood["bad_mood"]:
-            all_girls_list[girl_index]["mood_state"]["bad_mood"].setdefault(key, {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1})
+            all_girls_list[girl_index]["mood_state"]["bad_mood"].setdefault(key, {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1})
         all_girls_list[girl_index]["experience"].setdefault("aura", {})
         all_girls_list[girl_index]["experience"]["aura"].setdefault("fear", 0)
         all_girls_list[girl_index]["experience"]["aura"].setdefault("despair", 0)
@@ -600,11 +601,18 @@ label choose_inicial_girl:
         all_girls_list[girl_index].setdefault("days_without_sleep",0)
         all_girls_list[girl_index].setdefault("daily_count",{})
         all_girls_list[girl_index].setdefault("arousal",0)
+        all_girls_list[girl_index].setdefault("arousal_rate",0)
         all_girls_list[girl_index].setdefault("status_met",False)
         all_girls_list[girl_index].setdefault("last_cooked_meat_level",0)
         all_girls_list[girl_index].setdefault("slave_auto_sleep",False)
         all_girls_list[girl_index].setdefault("slave_auto_cook",False)
         all_girls_list[girl_index].setdefault("slave_auto_maid",False)
+        all_girls_list[girl_index].setdefault("slave_auto_bath",False)
+        all_girls_list[girl_index].setdefault("did_bath_yesterday",False)
+        all_girls_list[girl_index].setdefault("already_bath",False)
+
+        
+        
 
         # variables need for screen logic
         all_girls_list[girl_index].setdefault("maid_slave_skill_performance",0)
@@ -613,6 +621,7 @@ label choose_inicial_girl:
         all_girls_list[girl_index].setdefault("slave_auto_sleep_folder",False)
         all_girls_list[girl_index].setdefault("slave_auto_cook_folder",False)
         all_girls_list[girl_index].setdefault("slave_auto_maid_folder",False)
+        all_girls_list[girl_index].setdefault("slave_auto_bath_folder",False)
 
 
 
@@ -696,6 +705,25 @@ label choose_inicial_girl:
         all_girls_list[girl_index]["rules"].setdefault("no_masturbation",False)   
         all_girls_list[girl_index]["rules"].setdefault("use_vaginal_beads",False)
         all_girls_list[girl_index]["rules"].setdefault("enforce_rules",False)
+        ###########################################
+        all_girls_list[girl_index].setdefault("rules_broken", {})
+        all_girls_list[girl_index]["rules_broken"].setdefault("act_as_cook",False)
+        all_girls_list[girl_index]["rules_broken"].setdefault("act_as_maid",False)
+        all_girls_list[girl_index]["rules_broken"].setdefault("bath_slave",False)
+        all_girls_list[girl_index]["rules_broken"].setdefault("behave_alarm",False)
+        all_girls_list[girl_index]["rules_broken"].setdefault("behave_humility",False)
+        all_girls_list[girl_index]["rules_broken"].setdefault("behave_pet",False)
+        all_girls_list[girl_index]["rules_broken"].setdefault("behave_silence",False)
+        all_girls_list[girl_index]["rules_broken"].setdefault("behave_toilet",False)
+        all_girls_list[girl_index]["rules_broken"].setdefault("behave_urinal",False)
+        all_girls_list[girl_index]["rules_broken"].setdefault("deny_orgasm",False)
+        all_girls_list[girl_index]["rules_broken"].setdefault("deny_toileting",False)
+        all_girls_list[girl_index]["rules_broken"].setdefault("milk_the_fiend",False)
+        all_girls_list[girl_index]["rules_broken"].setdefault("no_masturbation",False)   
+        all_girls_list[girl_index]["rules_broken"].setdefault("use_vaginal_beads",False)
+        all_girls_list[girl_index]["rules_broken"].setdefault("enforce_rules",False)
+
+
         traits_skills = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]
         traits_sexual = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"]
         traits_miscellaneous = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]
@@ -919,19 +947,6 @@ label choose_inicial_girl:
         # TODO TRIBU AND OCUPATION
         
         
-        
-        
-        
-        
-        
-        
-        all_girls_list[girl_index]["sex_experience"]["petting"]["petting"] = (all_girls_list[girl_index]["sex_experience"]["petting"]["handjob"] + all_girls_list[girl_index]["sex_experience"]["petting"]["footjob"] + all_girls_list[girl_index]["sex_experience"]["petting"]["rubbing"] + all_girls_list[girl_index]["sex_experience"]["petting"]["titjob"]) // 4
-        all_girls_list[girl_index]["sex_experience"]["oral_pleasure"]["oral_pleasure"] = (all_girls_list[girl_index]["sex_experience"]["oral_pleasure"]["kissing"] + all_girls_list[girl_index]["sex_experience"]["oral_pleasure"]["licking"] + all_girls_list[girl_index]["sex_experience"]["oral_pleasure"]["blowjob"] + all_girls_list[girl_index]["sex_experience"]["oral_pleasure"]["deep_throat"] + all_girls_list[girl_index]["sex_experience"]["oral_pleasure"]["rimming"]) // 5
-        all_girls_list[girl_index]["sex_experience"]["penetration"]["penetration"] = (all_girls_list[girl_index]["sex_experience"]["penetration"]["vaginal_sex"] + all_girls_list[girl_index]["sex_experience"]["penetration"]["fisting"] + all_girls_list[girl_index]["sex_experience"]["penetration"]["anal_sex"] + all_girls_list[girl_index]["sex_experience"]["penetration"]["anal_fisting"]) // 4
-        all_girls_list[girl_index]["sex_experience"]["group_sex"]["group_sex"] = (all_girls_list[girl_index]["sex_experience"]["group_sex"]["threesome"] + all_girls_list[girl_index]["sex_experience"]["group_sex"]["bukkake"] + all_girls_list[girl_index]["sex_experience"]["group_sex"]["doble_penetration"] + all_girls_list[girl_index]["sex_experience"]["group_sex"]["triple_penetration"] + all_girls_list[girl_index]["sex_experience"]["group_sex"]["gangbang"]) // 5
-        all_girls_list[girl_index]["sex_experience"]["demostration"]["demostration"] = (all_girls_list[girl_index]["sex_experience"]["demostration"]["seduction"] + all_girls_list[girl_index]["sex_experience"]["demostration"]["masturbation"] + all_girls_list[girl_index]["sex_experience"]["demostration"]["dildo"] + all_girls_list[girl_index]["sex_experience"]["demostration"]["humiliation"] + all_girls_list[girl_index]["sex_experience"]["demostration"]["exhibitionism"]) // 5
-        all_girls_list[girl_index]["sex_experience"]["fetishism"]["fetishism"] = (all_girls_list[girl_index]["sex_experience"]["fetishism"]["enema"] + all_girls_list[girl_index]["sex_experience"]["fetishism"]["masochism"] + all_girls_list[girl_index]["sex_experience"]["fetishism"]["self-torture"] + all_girls_list[girl_index]["sex_experience"]["fetishism"]["golden_shower"] + all_girls_list[girl_index]["sex_experience"]["fetishism"]["scat"]) // 5
-        all_girls_list[girl_index]["sex_experience"]["xenophily"]["xenophily"] = (all_girls_list[girl_index]["sex_experience"]["xenophily"]["dog_mating"] + all_girls_list[girl_index]["sex_experience"]["xenophily"]["pig_mating"] + all_girls_list[girl_index]["sex_experience"]["xenophily"]["house_mating"] + all_girls_list[girl_index]["sex_experience"]["xenophily"]["spider_mating"] + all_girls_list[girl_index]["sex_experience"]["xenophily"]["sea_tentacle_mating"] + all_girls_list[girl_index]["sex_experience"]["xenophily"]["field_mating"]) // 6
         all_girls_list[girl_index]["attributes"]["natural_beauty"] = all_girls_list[girl_index]["attributes"]["beauty"]
         all_girls_list[girl_index]["attributes"]["natural_exoticism"] = all_girls_list[girl_index]["attributes"]["exoticism"]
     if all_girls_list[girl_index]["sex_experience"]["penetration"]["vaginal_sex"] >= 1:

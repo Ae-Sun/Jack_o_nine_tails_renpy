@@ -22,7 +22,8 @@ define dic_girl_age_text2 = [
 define dic_girl_choosing_image_condition_short = {
     "slave_auto_sleep":"rest",
     "slave_auto_cook":"cook",
-    "slave_auto_maid":"clean"
+    "slave_auto_maid":"clean",
+    "slave_auto_bath":"wash"
 }
 define dic_slave_attributes_description_keys = {
     "beauty": "Beauty",
@@ -496,7 +497,8 @@ define dic_traits_sexual_description = {
     ]
 }
 define dic_traits_miscellaneous = {
-    "lust_driver":       ["None", "Pervert", "Nymphomanic", "Asexual", "frigid"],
+    "lust_driver":       ["None", "High lust", "Nymphomanic", "Asexual", "frigid"],
+    "sexual_openness":   ["None", "Open", "Pervert", "Puritanical", "Prudish"],
     "masochism":         ["None", "Accustomed to pain", "Masochism", "Pain averse", "Pain sensitive"],
     "exhibitionism":     ["None", "Likes Exhibitionism", "Loves Exhibitionism", "Hates Exhibitionism", "Dislikes Exhibitionism"],
     "sexual_orientation":["None", "Bi-curious", "Bisexual", "Homosexual", "Homoflexible"],
@@ -517,10 +519,17 @@ define dic_traits_miscellaneous = {
 define dic_traits_miscellaneous_description = {
     "lust_driver": [
         "Null",
-        "{b}Pervert{/b}\nYour slave shows a noticeable sexual drive, which influences her desires and responsiveness.",
+        "{b}High lust{/b}\nYour slave shows a noticeable sexual drive, which influences her desires and responsiveness.",
         "{b}Nymphomanic{/b}\nYour slave is a nymphomaniac, constantly craving and seeking out sexual pleasure.",
         "{b}Asexual{/b}\nYour slave is completely asexual, showing no interest in sexual activity, which greatly limits intimacy.",
         "{b}frigid{/b}\nYour slave is frigid and indifferent to sexual advances, making sexual connection very difficult."
+    ],
+    "sexual_openness": [
+        "Null",
+        "{b}Open{/b}\nYour slave is open-minded and enjoys exploring new experiences and partners.",
+        "{b}Pervert{/b}\nYour slave is a pervert, she doesn't mind fucking a dog or a sea tentacle",
+        "{b}Puritanical{/b}\nYour slave is a puritanical, she hates doing unconvencional things",
+        "{b}Prudish{/b}\nYour slave is prudish, she dislikes doing unconvencional things",
     ],
     "masochism": [
         "Null",
@@ -2612,5 +2621,12 @@ define dic_maid = [
     "[all_girls_list[girl_index]['name']] restored order quickly and competently. She washed up all the dishes, washed and hung clothes out to dry, washed the floor, made the bed and wiped down all dusty surfaces.",
     "Like a typhoon with a broom, [all_girls_list[girl_index]['name']] sweeps through the house, leaving a trail of order and cleanliness. Only half an hour's work - and all the rooms of the house shine with pristine purity. She leaves nothing left undone! Spotless!"
 ]
+define dic_bath_all = [
+    "  In your bath you relax and enjoy the warm waters. Sweat, tears, vaginal secretions, and worse – all just part of a slave master’s life. It’s an endless, glamorless, thankless job that’s gotta be done, but ahh, there’ nothing like washing off a hard day at work. Cleanliness – It’s the guarantee of health!",
+    "  [all_girls_list[girl_index]['name']] helps you to relax and freshen up before bedtime. She carefully and gently cleanses your whole body, then wipes you dry with a soft towel and delivers the bathrobe and slippers.",
+    "  [all_girls_list[girl_index]['name']] helps you to relax and freshen up before bedtime. She carefully and gently cleanses your whole body, then wipes you dry with a soft towel and delivers the bathrobe and slippers.",
+    "  [all_girls_list[girl_index]['name']] takes away your slave to the bathroom and cleans her well with soap and sponge."
+]
+
 
 
