@@ -25,3 +25,21 @@ screen master_diary_menu():
                     m += 1
         if m == 0:
             text "You have no bad moodlet effects" size 16 color "#0000D8" font "fonts/Segoe Print.ttf" xmaximum 700
+label bathing_label():
+    python:
+        choosing_image_condition = "slave_auto_bath_self"
+        pic_displayed = display_pic()
+        room_name = "Bath"
+        slave_bath_selfwash()
+        all_girls_list[girl_index]["slave_auto_bath_self"] = False
+        setup_interaction_screen()
+    call screen interaction_textdisplay_screen()
+
+
+
+screen interaction_screen():
+    add bgstyle2 xsize 1280 ysize 720 
+    add pic_displayed xsize 795 ysize 535
+    
+screen interaction_textdisplay_screen():
+    text "hello"

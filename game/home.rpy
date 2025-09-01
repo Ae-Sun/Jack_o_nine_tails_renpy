@@ -1,5 +1,5 @@
-# VERY INPORTANT when you change some define values, you need to also delete All rpyc files if not, the change wont be reflect. Also don't trust AI
-# 
+# VERY INPORTANT 
+# when you change some define values, you need to also delete All rpyc files if not, the change wont be reflect. Also don't trust AI
 ### testing variables
 default testvariable1 = 0
 default testvariable2 = 0
@@ -46,7 +46,6 @@ default dic_spellbook_info_index = "default"
 default mc_image = ""
 default mc_image2 = ""
 default text_slave_conditions_index = "default"
-default is_main_slave = False # this variable is used to check if the main slave is assigned, because if you try to check something that doesn't exist renpy will explote
 default show_main_slave = False # if main slave really exist this value show it 
 default is_assistant_assigned = False # this variable is used to check if the assistant is assigned
 default energy_value = 0 # this variable is used to show the energy value
@@ -55,7 +54,7 @@ default mood_value = 0 # this variable is used to show the mood value master
 default day_tracker = 1 # this variable is used to track the day
 default is_auspex_active = False # this variable is used to check if the auspex is active
 default slave_suicide = False # this variable is used to check if the slave is suicide
-default pic_displayed = "" # this variable is used to show the pic displayed
+default pic_displayed = "scene/item/clear_small" # this variable is used to show the pic displayed
 default choosing_image_condition = "" # this variable is used to check the choosing image condition
 default save_girl_index = 0 # this variable is used to save the girl index in the next day event screen
 default display_meat = False # not important variable need to make screen logic  
@@ -103,7 +102,6 @@ default already_prepared = False
 default already_bath = False
 default house_items = 0
 default alone_count = 0
-default is_main_assistant = False
 default best_kitchen = ""
 default girls_count = 0
 default target_skill = ""
@@ -416,7 +414,6 @@ label next_day_labellabel:
         is_auspex_active = False
         is_slave_nearly_fainted = False
         domini_dictum_active = False
-        already_bath = False
         slave_nearly_fainted = False
         already_prepared = False
         already_ate = False
@@ -506,16 +503,11 @@ label next_day_labellabel:
         hygiene_experience_value_9 += dic_hygiene_value_rate["idle"]
 
 
-    hide screen homehome_attributes_menu
     jump Next_day_event
 
 label Next_day_event:
-
-    hide screen goguild 
-    hide screen sparks_menu
-
-    scene bg_old
     python:
+        setup_interaction_screen()
         girls_keys = list(all_girls_list.keys())
         for i in range(len(girls_keys)):
             idx = (save_girl_index + i) % (len(girls_keys))
@@ -551,12 +543,19 @@ label Next_day_event:
                 girl_skills_rise_checkcheck()
                 all_girls_list[girl_index]["slave_auto_maid"] = False
                 renpy.call_screen("next_day_event_screen")
-            if all_girls_list[girl_index]["slave_auto_bath"] and all_girls_list[girl_index]["rules"]["bath_slave"]:
+            if all_girls_list[girl_index]["slave_auto_bath"]:
                 choosing_image_condition = "slave_auto_bath"
                 pic_displayed = display_pic()
-                next_day_event_screen_text = dic_bath_all[2]
+                next_day_event_screen_text = dic_bath_master[2]
                 room_name = "Bath"
                 all_girls_list[girl_index]["slave_auto_bath"] = False
+                renpy.call_screen("next_day_event_screen")
+            if all_girls_list[girl_index]["slave_auto_bath_self"]:
+                choosing_image_condition = "slave_auto_bath_self"
+                pic_displayed = display_pic()
+                next_day_event_screen_text = bathing_slave_alone[all_girls_list[girl_index]["psy_status"]]
+                room_name = "Bath"
+                all_girls_list[girl_index]["slave_auto_bath_self"] = False
                 renpy.call_screen("next_day_event_screen")
             
         if master_auto["clean"]:
@@ -590,6 +589,7 @@ label Next_day_event:
     python:
         food_meat_info["quality"] = 0
         display_meat_alfa = False
+        already_bath = False
         if did_bath_yesterday: #this is necesary because we expect if bath overnight doesn't start next day with mess
             did_bath_yesterday = False
             hygiene_experience_value_9 = 0
@@ -597,6 +597,8 @@ label Next_day_event:
         for girl_index in all_girls_list: #this is necesary because we expect if bath overnight doesn't start next day with mess
             if all_girls_list[girl_index]["did_bath_yesterday"]:
                 all_girls_list[girl_index]["hygiene_rate"] = 0
+                all_girls_list[girl_index]["did_bath_yesterday"] = False
+            all_girls_list[girl_index]["already_bath"] = False
         girl_index = save_girl_index
         
         msg("New day [day_tracker]")
@@ -606,8 +608,6 @@ label Next_day_event:
     jump equipment_check
 screen next_day_event_screen():
     key "K_SPACE" action SetVariable("current_menu", 0),Jump("Next_day_event")
-    add bgstyle2 xsize 1280 ysize 720
-    add pic_displayed xsize 795 ysize 535
     #text pic_displayed size 20
     vbox:
         xalign 0.655
@@ -623,7 +623,6 @@ screen next_day_event_screen():
         text home_localization size 30 color "#000000" font "fonts/victoriana.ttf" anchor (0.5, 0.5)
         add "spacer" size (0, 20)
         text "Information for consideration:" size 30 color "#000000" font "fonts/victoriana.ttf" anchor (0.5, 0.5)
-        text str(testvariable1)
 
 
     if not display_meat_alfa: 
@@ -643,13 +642,13 @@ label Home:
     show screen homehome_attributes_menu
     hide screen description_slave_attributes
     hide screen screen_attributes_skills_sexual_slave
+    hide screen interaction_screen
     python:
         infobox_jump = "Home"
         #sex_experience_average_update()
         all_hygiene_calculation()
         cryo_amount_calculation() #this doesn't need to constant check - TODO
         best_kitchen_calculation() #this doesn't need to constant check - TODO
-        sex_experience_average_update()
         # master moodlet calculation
         wealth_quality_modifier = standard_of_living_value_8 - brand_reputation_value_6 - 1
         if wealth_quality_modifier > 0: 
@@ -806,7 +805,8 @@ label Home:
             mood_textvalue_10 = dic_slave_moodlevel[11]
         # master mood end
         #slave calculation part 
-        if is_main_slave or is_main_assistant:
+        if len(all_girls_list) > 0:
+            sex_experience_average_update()
             # obedience difficulty ajustment
             if dic_custom_start_difficulty_selection_index_index == 0:
                 slave_obedience_bonus = 4
@@ -1938,7 +1938,7 @@ screen home_menu():
     vbox:
         yalign 0.5
         xalign 0.10
-        if is_main_slave:
+        if len(all_girls_list) > 0:
             $ home_menu_image1 = "ui overhaul/activity.webp"
             textbutton "Slave activities":
                 style "home_button"
@@ -1948,7 +1948,7 @@ screen home_menu():
             textbutton "Slave activities":
                 style "home_button_grey"
                 action NullAction()
-        if is_main_slave:
+        if len(all_girls_list) > 0:
             $ home_menu_image2 = "ui overhaul/slave_assignments.webp"
             textbutton "Slaves assignments":
                 style "home_button"
@@ -1993,8 +1993,9 @@ screen home_menu():
         add home_menu_image6 size(50,50)
     vbox:
         if is_tutorial:
-            yalign 0.08
-            xalign 0.74
+            key "K_TAB" action SetVariable("girl_index", (girl_index + 1) % len(all_girls_list)), Jump("Home")
+            pos(0.6,0.08)
+            anchor (0, 0)
             textbutton "change girl":   
                 style "home_button"
                 action SetVariable("girl_index", (girl_index + 1) % len(all_girls_list)), Jump("Home")
@@ -2002,6 +2003,8 @@ screen home_menu():
             text str(hygiene_value_9) 
             text str(hygiene_experience_value_9)
             text str(mood_value_10)
+            text str(all_girls_list[girl_index]["hygiene_rate"])
+            text "current hygiene value:" + str(hygiene_experience_value_9)
 screen slave_activities_menu():
     key "K_SPACE" action SetVariable("current_menu", 0),Jump("Home")
     imagebutton pos(0.02,0.4):
@@ -3181,7 +3184,8 @@ screen slave_rules_menu():
             textbutton "Enforce rules -" xalign 1.0:
                 style "slave_screen_order_button"
                 action SetDict(all_girls_list[girl_index]["rules"], "enforce_rules", True),SetVariable("text_slave_conditions_index","enforce_rules"), Jump("Home")
-screen screen_attributes_skills_sexual_slave():   
+screen screen_attributes_skills_sexual_slave():
+    key "K_TAB" action SetVariable("girl_index", (girl_index + 1) % len(all_girls_list)), Jump("Home")
     add bgstyle3 xsize 1280 ysize 720
     add home_decoration_mini xsize 795 ysize 535 pos(0.5028,0.42) anchor (0.5,0.5)
     imagebutton:
@@ -3618,6 +3622,26 @@ screen homehome_attributes_menu():
             style "home_condition_style" + str(home_hygiene_value)
             action SetVariable("all_hygiene_multidic",dic_home_condition), Show("all_hygiene_attributes")
         text "Cannned food" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
+    vbox:
+        pos(0.97,0.335)
+        anchor (0.5,0.0)
+        if hygiene_value_9 < 5:
+            imagebutton:
+                idle "buttons/fast_wash.webp"
+                hover "buttons/fast_wash_hover.webp"
+                action NullAction()
+                at Transform(size=(19, 19))
+        if hygiene_value_9 < 5:
+            add "spacer" size(0,204)
+        else:
+            add "spacer" size(0,223.5)
+        if len(all_girls_list) > 0:
+            if all_girls_list[girl_index]["hygiene"] < 5:
+                imagebutton:
+                    idle "buttons/fast_wash.webp"
+                    hover "buttons/fast_wash_hover.webp"
+                    action Jump("bathing_label")
+                    at Transform(size=(19, 19))
     hbox:
         pos(0.91,0.260)
         anchor (0.5,0.0)
@@ -3644,7 +3668,9 @@ screen homehome_attributes_menu():
             if has_half:
                 add energy_image2 size(7,7) anchor (0.5,0.5)
 screen bg_home():
-    if is_main_slave:
+    #TODO key "K_TAB" action SetVariable("girl_index", (girl_index + 1) % len(all_girls_list)), Jump("Home")
+
+    if len(all_girls_list) > 0:
         key "K_SPACE" action SetVariable("current_menu", 100), Jump("Home")
     else:
         key "K_SPACE" action SetVariable("current_menu", 200), Jump("Home")

@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 1991: 'test' is not a keyword argument or valid child of the vbox statement.
-    test str(mood_value_10)
-        ^
+File "game/tutorial.rpy", line 540: invalid syntax
+    girl_selection_list_for_text_display = ", ".join(girl_selection_list)
+     ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Sun Aug 31 23:28:53 2025
+Mon Sep  1 20:29:26 2025

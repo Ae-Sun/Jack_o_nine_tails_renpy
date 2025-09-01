@@ -23,7 +23,8 @@ define dic_girl_choosing_image_condition_short = {
     "slave_auto_sleep":"rest",
     "slave_auto_cook":"cook",
     "slave_auto_maid":"clean",
-    "slave_auto_bath":"wash"
+    "slave_auto_bath":"wash",
+    "slave_auto_bath_self":"bath"
 }
 define dic_slave_attributes_description_keys = {
     "beauty": "Beauty",
@@ -2621,12 +2622,29 @@ define dic_maid = [
     "[all_girls_list[girl_index]['name']] restored order quickly and competently. She washed up all the dishes, washed and hung clothes out to dry, washed the floor, made the bed and wiped down all dusty surfaces.",
     "Like a typhoon with a broom, [all_girls_list[girl_index]['name']] sweeps through the house, leaving a trail of order and cleanliness. Only half an hour's work - and all the rooms of the house shine with pristine purity. She leaves nothing left undone! Spotless!"
 ]
-define dic_bath_all = [
+define dic_bath_master = [
     "  In your bath you relax and enjoy the warm waters. Sweat, tears, vaginal secretions, and worse – all just part of a slave master’s life. It’s an endless, glamorless, thankless job that’s gotta be done, but ahh, there’ nothing like washing off a hard day at work. Cleanliness – It’s the guarantee of health!",
     "  [all_girls_list[girl_index]['name']] helps you to relax and freshen up before bedtime. She carefully and gently cleanses your whole body, then wipes you dry with a soft towel and delivers the bathrobe and slippers.",
     "  [all_girls_list[girl_index]['name']] helps you to relax and freshen up before bedtime. She carefully and gently cleanses your whole body, then wipes you dry with a soft towel and delivers the bathrobe and slippers.",
     "  [all_girls_list[girl_index]['name']] takes away your slave to the bathroom and cleans her well with soap and sponge."
 ]
+define bathing_slave_alone = {
+    "arrogant": "  Eying you with a disdainful look and strictly demanding that you not spy on her, [all_girls_list[girl_index]['name']] proceeds to the bathroom and indulges herself with water procedures. Of course, you unceremoniously drop in to make sure she is cleaning up carefully and understands who sets the rules here.",
+    "broken": "  With a completely indifferent face [all_girls_list[girl_index]['name']] proceeds to the bathroom, turns the water on and begins to methodically lather and bathe, like some retarded machine. She does not pay attention to you watching her. The whole process takes less than ten minutes.",
+    "depresive": "  [all_girls_list[girl_index]['name']] dejectedly goes to the bathroom and begins to wash. It seems that this procedure is not interesting for her: she is thinking about something else and sighs often. You have to hurry her not to waste time in vain.",
+    "docile": "  Following your instructions to keep herself clean, [all_girls_list[girl_index]['name']] goes to wash. You follow her to watch the process and demand she scrub herself inside as well as out to increase the sense of humiliation. [all_girls_list[girl_index]['name']] does not dare to contradict you, though she obviously feels uncomfortable.",
+    "frightened": "  [all_girls_list[girl_index]['name']] slips quietly into the bathroom and turns on the water. Even in warm water, she does not relax for a second, looking at the unclosed door all the time.",
+    "hateful": "  [all_girls_list[girl_index]['name']] goes into the bathroom and starts to rub herself with the washcloth so furiously, as if it would help her wash away your touch. When you look inside to watch the process, she hurls a bar of soap with anger at you and then gets a well-deserved slap for bad behavior.",
+    "horny": "  [all_girls_list[girl_index]['name']] goes to the bathroom but stops at the door, asking you whether you wish to join her. Having been refused she sighs and turns on the water. Judging by the time spent on the procedure, she had not only thoroughly cleaned up but also played with herself using the warm water jets.",
+    "hysteric": "  [all_girls_list[girl_index]['name']] runs into the bathroom and slams the door loudly behind her. You go in to strictly warn her to behave and to be careful not to splash water everywhere. The slave deliberately ignores your words but cleans herself nevertheless. After finishing the procedure, she slyly shows you her tongue.",
+    "lachrymose": "  [all_girls_list[girl_index]['name']] goes into the bathroom and remains there for a suspiciously long time. When you go in to check on her, you find her crying, sitting on a wet floor in an embrace with a washcloth. You shout at her to continue bathing and not waste time on foolishness.",
+    "obedient": "  [all_girls_list[girl_index]['name']] goes to the bathroom, leaving the door open so you can sit back and watch. She washes herself very carefully but does not spend so much time as to cause you displeasure.",
+    "optimistic": "  With a satisfied smile [all_girls_list[girl_index]['name']] proceeds to the bathroom. Looking in on her, she is obviously pleased to thoroughly wash and relax in warm water.<<$perv_bath_txt>>",
+    "reluctant": "  [all_girls_list[girl_index]['name']] looks at you suspiciously and goes to the bathroom. Apparently, she fears that someone will peep on her, which very possible, given that the door is not locked. Despite the discomfort, your slave washes carefully and with obvious pleasure.",
+    "resistant": "  [all_girls_list[girl_index]['name']] looks long and carefully at you, as if assessing whether she should wash if it is necessary not only for her but also for you. In the end, she still decides that being clean is more important than being persistent and proceeds to the bathroom.",
+    "servile": "  [all_girls_list[girl_index]['name']] goes to the bathroom, leaving the door open so you can sit back and watch. She washes herself very carefully, clearly trying to give you maximum viewing pleasure.<<$perv_bath_txt>>",
+    "soft": "  [all_girls_list[girl_index]['name']] is obviously pleased to be able to wash off the dirt and soak in warm water. You hear her humming softly, and you peer in at her.<<$perv_bath_txt>>"
+}
 
 
 
