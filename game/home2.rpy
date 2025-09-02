@@ -25,14 +25,14 @@ screen master_diary_menu():
                     m += 1
         if m == 0:
             text "You have no bad moodlet effects" size 16 color "#0000D8" font "fonts/Segoe Print.ttf" xmaximum 700
-label bathing_label():
+label slave_bathing_label():
     python:
         choosing_image_condition = "slave_auto_bath_self"
         pic_displayed = display_pic()
         room_name = "Bath"
-        slave_bath_selfwash()
-        all_girls_list[girl_index]["slave_auto_bath_self"] = False
+        slave_bath_selfwash_ask()
         setup_interaction_screen()
+        interaction_textdisplay_screen_text = bathing_slave_alone[all_girls_list[girl_index]["psy_status"]]
     call screen interaction_textdisplay_screen()
 
 
@@ -42,4 +42,20 @@ screen interaction_screen():
     add pic_displayed xsize 795 ysize 535
     
 screen interaction_textdisplay_screen():
-    text "hello"
+    text interaction_textdisplay_screen_text pos (0.02, 0.78) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
+    key "K_SPACE" action SetVariable("current_menu", 0),Jump("Home")
+    vbox:
+        xalign 0.655
+        yalign 0.96
+        imagebutton:
+            idle "buttons/auk_fwrd.webp" anchor (0.5, 0.5)
+            hover "buttons/auk_fwrd_hover.webp"
+            action Jump("Home")
+label master_bathing_label():
+    python:
+        interaction_textdisplay_screen_text = dic_bath_master[0]
+        master_bath()
+        setup_interaction_screen()
+    call screen interaction_textdisplay_screen()
+    
+

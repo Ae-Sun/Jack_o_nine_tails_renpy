@@ -2,9 +2,13 @@
 errors listed below, and try again.
 
 
-File "game/tutorial.rpy", line 540: invalid syntax
-    girl_selection_list_for_text_display = ", ".join(girl_selection_list)
-     ^
+File "game/home.rpy", line 687: expected statement.
+    hidden_trait_discover_text_display_check()  
+                                                ^
+
+File "game/home.rpy", line 688: expected statement.
+    handle_menu()
+                 ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Mon Sep  1 20:29:26 2025
+Tue Sep  2 14:08:56 2025

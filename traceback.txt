@@ -1,26 +1,34 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/tutorial.rpy", line 489, in script
+  File "game/home.rpy", line 652, in script
     python:
-  File "game/tutorial.rpy", line 538, in <module>
-    girl_index = girl_selection_list.index(demo_girl_selection)
-ValueError: 'Yasmin' is not in list
+  File "game/home.rpy", line 674, in <module>
+    slave_mood_giga_calculation()
+  File "game/fuctions.rpy", line 1636, in slave_mood_giga_calculation
+    slave_mood_calculation()
+  File "game/fuctions.rpy", line 1553, in slave_mood_calculation
+    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
+KeyError: 'residu_fear'
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/tutorial.rpy", line 489, in script
+  File "game/home.rpy", line 652, in script
     python:
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/tutorial.rpy", line 538, in <module>
-    girl_index = girl_selection_list.index(demo_girl_selection)
-ValueError: 'Yasmin' is not in list
+  File "game/home.rpy", line 674, in <module>
+    slave_mood_giga_calculation()
+  File "game/fuctions.rpy", line 1636, in slave_mood_giga_calculation
+    slave_mood_calculation()
+  File "game/fuctions.rpy", line 1553, in slave_mood_calculation
+    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
+KeyError: 'residu_fear'
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
 JONT Port by Rec3ks ver. 0.0.55
-Mon Sep  1 20:24:47 2025
+Tue Sep  2 14:39:49 2025

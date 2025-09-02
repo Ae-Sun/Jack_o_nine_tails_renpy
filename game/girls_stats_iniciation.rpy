@@ -144,6 +144,7 @@ define dic_slave_mood ={
         "slave"              : "[all_girls_list[girl_index][name]]\n- I got into this strange unfamiliar world and I was immediately made into a slave. How do you think I feel?",
         "angst"              : "[all_girls_list[girl_index][name]]\n- I do not know what will happen to me tomorrow or even the next minute. Why do I live? I feel like howling of hopelessness…",
         "fear"               : "[all_girls_list[girl_index][name]]\n- I know that you can punish me for any wrongdoing, and live in constant fear. Thoughts about various horrors do not go out of my head.",
+        "residu_fear"        : "[all_girls_list[girl_index][name]]\n- Even now, thoughts of various horrors do not go out of my head.",
         "meth"               : "[all_girls_list[girl_index][name]]\n- I feel sick. I feel very, very sick. My mouth is dry, I feel weak, my muscles ache… I NEED DUST!",
         "opium"              : "[all_girls_list[girl_index][name]]\n- I can't stand it. I NEED A DOSE, URGENTLY! Oh, please… I beg of you…",
         "koffe"              : "[all_girls_list[girl_index][name]]\n- I can not wake up before I drink some kamra. I can't even open my eyes.",
@@ -1148,7 +1149,7 @@ define learn_bonus ={
     "enchanter":0,
     "stamina":0,
 }
-define dic_overnight_rules_count =[2,2,4]
+define dic_overnight_rules_count =[0,2,4]
 
 define dic_girl_clothing_dress = {
     "naked": {
@@ -2639,11 +2640,11 @@ define bathing_slave_alone = {
     "hysteric": "  [all_girls_list[girl_index]['name']] runs into the bathroom and slams the door loudly behind her. You go in to strictly warn her to behave and to be careful not to splash water everywhere. The slave deliberately ignores your words but cleans herself nevertheless. After finishing the procedure, she slyly shows you her tongue.",
     "lachrymose": "  [all_girls_list[girl_index]['name']] goes into the bathroom and remains there for a suspiciously long time. When you go in to check on her, you find her crying, sitting on a wet floor in an embrace with a washcloth. You shout at her to continue bathing and not waste time on foolishness.",
     "obedient": "  [all_girls_list[girl_index]['name']] goes to the bathroom, leaving the door open so you can sit back and watch. She washes herself very carefully but does not spend so much time as to cause you displeasure.",
-    "optimistic": "  With a satisfied smile [all_girls_list[girl_index]['name']] proceeds to the bathroom. Looking in on her, she is obviously pleased to thoroughly wash and relax in warm water.<<$perv_bath_txt>>",
+    "optimistic": "  With a satisfied smile [all_girls_list[girl_index]['name']] proceeds to the bathroom. Looking in on her, she is obviously pleased to thoroughly wash and relax in warm water.",
     "reluctant": "  [all_girls_list[girl_index]['name']] looks at you suspiciously and goes to the bathroom. Apparently, she fears that someone will peep on her, which very possible, given that the door is not locked. Despite the discomfort, your slave washes carefully and with obvious pleasure.",
     "resistant": "  [all_girls_list[girl_index]['name']] looks long and carefully at you, as if assessing whether she should wash if it is necessary not only for her but also for you. In the end, she still decides that being clean is more important than being persistent and proceeds to the bathroom.",
-    "servile": "  [all_girls_list[girl_index]['name']] goes to the bathroom, leaving the door open so you can sit back and watch. She washes herself very carefully, clearly trying to give you maximum viewing pleasure.<<$perv_bath_txt>>",
-    "soft": "  [all_girls_list[girl_index]['name']] is obviously pleased to be able to wash off the dirt and soak in warm water. You hear her humming softly, and you peer in at her.<<$perv_bath_txt>>"
+    "servile": "  [all_girls_list[girl_index]['name']] goes to the bathroom, leaving the door open so you can sit back and watch. She washes herself very carefully, clearly trying to give you maximum viewing pleasure.",
+    "soft": "  [all_girls_list[girl_index]['name']] is obviously pleased to be able to wash off the dirt and soak in warm water. You hear her humming softly, and you peer in at her."
 }
 
 
