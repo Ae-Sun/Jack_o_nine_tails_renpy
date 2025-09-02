@@ -100,6 +100,7 @@ default master_objectives_index = ""
 default already_ate = False
 default already_prepared = False
 default already_bath = False
+default natural_grace_color = "000000"
 default house_items = 0
 default alone_count = 0
 default best_kitchen = ""
@@ -459,9 +460,8 @@ label next_day_labellabel:
                 update_moodlet_new_day_slave()
                 slave_dead_for_low_endurance_code()
                 slave_attack_escape_calculation()                
-                #TODO if not all_girls_list[girl_index]["assistant"]:
+                #TODO if not all_girls_list[girl_index]["assistant"]: # WIP assistent cooking code skipped
                 # Rules
-                # WIP assistent cooking code skipped
                 auto_cook_meal()
                 auto_maid()
                 auto_bath_slave_help_master()
@@ -657,6 +657,7 @@ label Home:
         master_moodlet_calculation()
         master_mood_calculation()
         if len(all_girls_list) > 0: #slave calculation part 
+            update_beauty_style_slave()
             sex_experience_average_update()
             obedience_difficulty_adjustment()
             girl_index_save = girl_index
@@ -1584,15 +1585,10 @@ screen home_menu():
             key "K_TAB" action SetVariable("girl_index", (girl_index + 1) % len(all_girls_list)), Jump("Home")
             pos(0.6,0.08)
             anchor (0, 0)
-            textbutton "change girl":   
-                style "home_button"
-                action SetVariable("girl_index", (girl_index + 1) % len(all_girls_list)), Jump("Home")
-            text "current slave mood: " + str(all_girls_list[girl_index]["mood"])
-            text str(hygiene_value_9) 
-            text str(hygiene_experience_value_9)
-            text str(mood_value_10)
-            text str(all_girls_list[girl_index]["hygiene_rate"])
-            text "current hygiene value:" + str(hygiene_experience_value_9)
+            if len(all_girls_list) > 1:
+                textbutton "change girl":   
+                    style "home_button"
+                    action SetVariable("girl_index", (girl_index + 1) % len(all_girls_list)), Jump("Home")
 screen slave_activities_menu():
     key "K_SPACE" action SetVariable("current_menu", 0),Jump("Home")
     imagebutton pos(0.02,0.4):
@@ -1751,7 +1747,7 @@ screen slave_anatomy_menu():
         pos(0.215,0.62)
 
         text "{color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["beauty"]] + "}Beauty{/color}{color=#0000D8} ={/color} {color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["natural_beauty"]] + "} Natural Beauty{/color}{color=#0000D8} +{/color} Neoplasty{color=#0000D8} - ({/color} No Scars{color=#0000D8} +{/color} Bruises{color=#0000D8} +{/color} Physique{color=#0000D8}){/color}" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf" 
-        text "{color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["style"]] + "}Style{/color} {color=#0000D8}={/color} Clothes{color=#0000D8} +{/color} {color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["natural_beauty"]] + "} Natural Beauty{/color}{color=#0000D8} +{/color} Tangled Hair{color=#0000D8} +{/color} Scent, Nails & Pelage{color=#0000D8} +{/color} Natural Grace{color=#0000D8} -{/color} Hygiene" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf" 
+        text "{color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["style"]] + "}Style{/color} {color=#0000D8}={/color} Clothes{color=#0000D8} +{/color} {color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["natural_beauty"]] + "} Natural Beauty{/color}{color=#0000D8} +{/color} Tangled Hair{color=#0000D8} +{/color} Scent, Nails & Pelage{color=#0000D8} +{/color} {color=[natural_grace_color]}Natural Grace{/color}{color=#0000D8} -{/color}{color=#" + dic_color_level[all_girls_list[girl_index]["hygiene"]] + "} Hygiene{/color}" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf" 
         text "{color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["exoticism"]] + "}Exoticism{/color} {color=#0000D8}={/color} {color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["natural_exoticism"]] + "}Natural Exoticism{/color}{color=#0000D8} +{/color} No Tattoos{color=#0000D8} +{/color} No Piercings{color=#0000D8} +{/color} Clothes" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf"
         add "spacer" size(0,2)
         if is_auspex_active:

@@ -640,60 +640,60 @@ define dic_traits_miscellaneous_description = {
     ]
 }
 define dic_traits_aura = {
-    "feartrait":       ["None", "Fearful", "Terrified", "Moronic", "Brave"],
-    "despairtrait":    ["None", "Positive", "High-spirited", "Crushed Spirit", "Hopeless"],
-    "awarenesstrait":  ["None", "Observant", "Highly Perceptive", "Oblivious", "Clueless"],
-    "tamingtrait":     ["None", "Easily Tamed", "Naturally Submissive", "Untamable", "Rebellious"],
-    "habittrait":      ["None", "Well-behaved", "Disciplined", "Undisciplined", "Inconsistent"],
-    "spoiltrait":      ["None", "Self-sufficient", "Stoic", "Spoiled Rotten", "Pampered"],
-    "devotiontrait":   ["None", "Loyal", "Fanatically Devoted", "Disloyal", "Detached"]
+    "feartrait":       ["Null", "Fearful", "Terrified", "Moronic", "Brave"],
+    "despairtrait":    ["Null", "Positive", "High-spirited", "Crushed Spirit", "Hopeless"],
+    "awarenesstrait":  ["Null", "Observant", "Highly Perceptive", "Oblivious", "Clueless"],
+    "tamingtrait":     ["Null", "Easily Tamed", "Naturally Submissive", "Untamable", "Rebellious"],
+    "habittrait":      ["Null", "Well-behaved", "Disciplined", "Undisciplined", "Inconsistent"],
+    "spoiltrait":      ["Null", "Self-sufficient", "Stoic", "Spoiled Rotten", "Pampered"],
+    "devotiontrait":   ["Null", "Loyal", "Fanatically Devoted", "Disloyal", "Detached"]
 }
 
 define dic_traits_aura_description = {
     "feartrait": [
-        "None",
+        "Null",
         "{b}Fearful{/b} \nYour slave shows a healthy level of fear that ensures obedience and respect. She is deeply fearful and compliant, making her extremely easy to control.",
         "{b}Terrified{/b} \nYour slave shows a healthy level of fear that ensures obedience and respect. She is deeply fearful and compliant, making her extremely easy to control. She has a bright aura with a special intensity, which will allow her to reach new heights.",
         "{b}Moronic{/b} \nYour slave is brave and unshaken, which may hinder submissive training. She lacks any fear or caution, acting recklessly and challenging authority. She has a dim aura, which will limit her potential for improvement.",
         "{b}Brave{/b} \nYour slave is brave and unshaken, which may hinder submissive training. She lacks any fear or caution, acting recklessly and challenging authority."
     ],
     "despairtrait": [
-        "None",
+        "Null",
         "{b}Positive{/b} \nYour slave remains optimistic and adapts well to her circumstances. She is exceptionally spirited and unshakably hopeful, even in adversity.",
         "{b}High-spirited{/b} \nYour slave remains optimistic and adapts well to her circumstances. She is exceptionally spirited and unshakably hopeful, even in adversity. She has a bright aura with a special intensity, which will allow her to reach new heights.",
         "{b}Crushed Spirit{/b} \nYour slave has become hopeless and emotionally unstable. Her spirit is completely crushed, making it hard for her to recover emotionally. She has a dim aura, which will limit her potential for improvement.",
         "{b}Hopeless{/b} \nYour slave has become hopeless and emotionally unstable. Her spirit is completely crushed, making it hard for her to recover emotionally."
     ],
     "awarenesstrait": [
-        "None",
+        "Null",
         "{b}Observant{/b} \nYour slave is observant and notices small details others may miss. She is highly perceptive and aware of her surroundings and dynamics.",
         "{b}Highly Perceptive{/b} \nYour slave is observant and notices small details others may miss. She is highly perceptive and aware of her surroundings and dynamics. She has a bright aura with a special intensity, which will allow her to reach new heights.",
         "{b}Oblivious{/b} \nYour slave is clueless and slow to catch on to changes or instructions. She is oblivious to what's going on, which limits her effectiveness. She has a dim aura, which will limit her potential for improvement.",
         "{b}Clueless{/b} \nYour slave is clueless and slow to catch on to changes or instructions. She is oblivious to what's going on, which limits her effectiveness."
     ],
     "tamingtrait": [
-        "None",
+        "Null",
         "{b}Easily Tamed{/b} \nYour slave is easily guided and responds well to training. She is naturally submissive and quickly accepts her role.",
         "{b}Naturally Submissive{/b} \nYour slave is easily guided and responds well to training. She is naturally submissive and quickly accepts her role. She has a bright aura with a special intensity, which will allow her to reach new heights.",
         "{b}Untamable{/b} \nYour slave is rebellious and resists taming efforts. She is wild and rejects all forms of control or authority. She has a dim aura, which will limit her potential for improvement.",
         "{b}Rebellious{/b} \nYour slave is rebellious and resists taming efforts. She is wild and rejects all forms of control or authority."
     ],
     "habittrait": [
-        "None",
+        "Null",
         "{b}Well-behaved{/b} \nYour slave behaves properly and follows routine with little guidance. She is highly disciplined and consistent in her actions.",
         "{b}Disciplined{/b} \nYour slave behaves properly and follows routine with little guidance. She is highly disciplined and consistent in her actions. She has a bright aura with a special intensity, which will allow her to reach new heights.",
         "{b}Undisciplined{/b} \nYour slave is inconsistent and unreliable in her behavior. She struggles with following rules and frequently acts out. She has a dim aura, which will limit her potential for improvement.",
         "{b}Inconsistent{/b} \nYour slave is inconsistent and unreliable in her behavior. She struggles with following rules and frequently acts out."
     ],
     "spoiltrait": [
-        "None",
+        "Null",
         "{b}Self-sufficient{/b} \nYour slave is content with little and rarely demands special treatment. She remains stoic and emotionally resilient, even without luxury.",
         "{b}Stoic{/b} \nYour slave is content with little and rarely demands special treatment. She remains stoic and emotionally resilient, even without luxury. She has a bright aura with a special intensity, which will allow her to reach new heights.",
         "{b}Spoiled Rotten{/b} \nYour slave is pampered and expects constant comfort and attention. She is spoiled rotten and throws tantrums if not indulged. She has a dim aura, which will limit her potential for improvement.",
         "{b}Pampered{/b} \nYour slave is pampered and expects constant comfort and attention. She is spoiled rotten and throws tantrums if not indulged."
     ],
     "devotiontrait": [
-        "None",
+        "Null",
         "{b}Loyal{/b} \nYour slave is loyal and shows clear dedication to her master. She is fanatically devoted and lives to serve without question.",
         "{b}Fanatically Devoted{/b} \nYour slave is loyal and shows clear dedication to her master. She is fanatically devoted and lives to serve without question. She has a bright aura with a special intensity, which will allow her to reach new heights.",
         "{b}Disloyal{/b} \nYour slave is emotionally detached and resists forming bonds. She is disloyal and may turn against her master when challenged. She has a dim aura, which will limit her potential for improvement.",
@@ -701,21 +701,22 @@ define dic_traits_aura_description = {
     ]
 }
 define dic_traits_attributes = {
-    "beautytrait":       ["None", "Attractive", "Divine beauty", "Hideous", "Unattractive"],
-    "endurancetrait":    ["None", "Tough", "Fortitude", "Very Frail", "Weak"],
-    "empathytrait":      ["None", "Compassionate", "Emotional resonancer", "Cold-hearted", "Insensitive"],
-    "temperamenttrait":  ["None", "Warm-hearted", "Fervent", "Very calm", "Calm"],
-    "intelligencetrait": ["None", "Smart", "Prodigy", "Very Dull", "Slow"],
-    "naturetrait":       ["None", "Tenacious disposition", "Unbreakable resolve", "Faint-hearted disposition", "Insecure disposition"],
-    "pridetrait":        ["None", "Meekness", "Very Meekness", "Confident", "Overbearing"],
-    "physicaltrait":     ["None", "Good metabolism", "Excellent metabolism", "Very bad metabolism", "bad metabolism"],
-    "exorticismtrait":   ["None", "Distinctive", "Strikingly Exotic", "Completely common", "Unremarkable"]
+    "beautytrait":       ["Null", "Attractive", "Divine beauty", "Null", "Null"],
+    "endurancetrait":    ["Null", "Tough", "Fortitude", "Very Frail", "Weak"],
+    "empathytrait":      ["Null", "Compassionate", "Emotional resonancer", "Cold-hearted", "Insensitive"],
+    "temperamenttrait":  ["Null", "Warm-hearted", "Fervent", "Very calm", "Calm"],
+    "intelligencetrait": ["Null", "Smart", "Prodigy", "Very Dull", "Slow"],
+    "naturetrait":       ["Null", "Tenacious disposition", "Unbreakable resolve", "Faint-hearted disposition", "Insecure disposition"],
+    "pridetrait":        ["Null", "Meekness", "Very Meekness", "Confident", "Overbearing"],
+    "physicaltrait":     ["Null", "Good metabolism", "Excellent metabolism", "Very bad metabolism", "bad metabolism"],
+    "exorticismtrait":   ["Null", "Distinctive", "Strikingly Exotic", "Completely common", "Unremarkable"],
+    "styletrait":        ["Null", "Graceful", "Very Graceful", "Clumsy", "Ungraceful"]
 }
 define dic_traits_attributes_description = {
     "beautytrait": [
         "None",
-        "{b}Attractive{/b} \nYour slave is attractive and pleasant to look at. She turns heads and draws attention with her charm. She possesses a divine beauty that captivates all who see her. Her appearance is mesmerizing and unforgettable.",
-        "{b}Divine beauty{/b} \nYour slave is attractive and pleasant to look at. She turns heads and draws attention with her charm. She possesses a divine beauty that captivates all who see her. Her appearance is mesmerizing and unforgettable. She has a gifted attribute, which will allow her to reach new heights.",
+        "{b}Attractive{/b} \nYour slave is attractive and pleasant to look at. She turns heads and draws attention with her charm. She may reach another level of beauty if you train her well.",
+        "{b}Divine beauty{/b} \nYour slave is attractive and pleasant to look at. She turns heads and draws attention with her charm. She may reach another level of beauty if you train her well.",
         "{b}Hideous{/b} \nYour slave is unattractive and plain. Her appearance doesn't stand out in any positive way. She is hideous to behold, with features that repel rather than attract. Her looks often make others uncomfortable. She has an ungifted attribute, which will limit her potential for improvement.",
         "{b}Unattractive{/b} \nYour slave is unattractive and plain. Her appearance doesn't stand out in any positive way. She is hideous to behold, with features that repel rather than attract. Her looks often make others uncomfortable."
     ],
@@ -774,6 +775,13 @@ define dic_traits_attributes_description = {
         "{b}Strikingly Exotic{/b} \nYour slave is distinctive and stands out with a unique charm. Her look draws attention and interest. She is strikingly exotic and exudes an allure few can resist. She has a gifted attribute, which will allow her to reach new heights.",
         "{b}Completely common{/b} \nYour slave is unremarkable, lacking any distinguishing features. Her look fails to attract attention in any way. She is completely common in appearance and blends into the crowd. She has an ungifted attribute, which will limit her potential for improvement.",
         "{b}Unremarkable{/b} \nYour slave is unremarkable, lacking any distinguishing features. Her look fails to attract attention in any way. She is completely common in appearance and blends into the crowd."
+    ],
+    "styletrait": [
+        "None",
+        "{b}Graceful{/b} \nYour slave is graceful and moves with ease. She exudes a natural elegance and poise, making her movements fluid and graceful.",
+        "{b}Very Graceful{/b} \nYour slave is graceful and moves with ease. She exudes a natural elegance and poise, making her movements fluid and graceful. She has a gifted attribute, which will allow her to reach new heights.",
+        "{b}Clumsy{/b} \nYour slave is clumsy and moves with difficulty. She struggles with balance and coordination, often tripping or bumping into things. She has an ungifted attribute, which will limit her potential for improvement.",
+        "{b}Ungraceful{/b} \nYour slave is clumsy and moves with difficulty. She struggles with balance and coordination, often tripping or bumping into things."
     ]
 }
 define aura_descriptions = {

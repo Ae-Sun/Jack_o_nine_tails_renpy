@@ -303,6 +303,10 @@
                 "exorticismtrait": {
                     "value": 0,
                     "revealed": false
+                },
+                "styletrait": {
+                    "value": 0,
+                    "revealed": false
                 }
             }
         }

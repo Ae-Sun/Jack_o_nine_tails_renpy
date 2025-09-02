@@ -1,111 +1,36 @@
-2025-09-02 12:05:38 UTC
+2025-09-02 19:16:23 UTC
 Windows-10-10.0.26100
 Ren'Py 8.3.7.25031702
 
 Early init took 0.57s
 Loading error handling took 0.07s
-Loading script took 1.07s
+Loading script took 1.25s
 Loading save slot metadata took 0.05s
 Loading persistent took 0.00s
-Running init code took 0.42s
-Loading analysis data took 0.09s
+Running init code took 0.36s
+Loading analysis data took 0.10s
 Analyze and compile ATL took 0.00s
 Reloading save slot metadata took 0.03s
 Index archives took 0.00s
 Dump and make backups took 0.07s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
-Initial gc took 0.10s
+Initial gc took 0.18s
 DPI scale factor: 2.500000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 0.42s
+Creating interface object took 0.40s
 Cleaning stores took 0.00s
 Init translation took 0.01s
 Build styles took 0.00s
-Load screen analysis took 0.09s
+Load screen analysis took 0.10s
 Analyze screens took 0.00s
 Save screen analysis took 0.00s
-Prepare screens took 0.32s
+Prepare screens took 0.34s
 Save pyanalysis. took 0.00s
-Save bytecode. took 0.08s
+Save bytecode. took 0.10s
 Running _start took 0.00s
-Interface start took 1.76s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.83'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
-Maximum texture size: 4096x4096
-Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 196.44s
-Loading error handling took 0.09s
-Loading script took 1.30s
-Loading save slot metadata took 0.03s
-Loading persistent took 0.00s
-
-File "game/home.rpy", line 687: expected statement.
-    hidden_trait_discover_text_display_check()  
-                                                ^
-
-File "game/home.rpy", line 688: expected statement.
-    handle_menu()
-                 ^
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Interface start took 0.64s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.83'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
-Maximum texture size: 4096x4096
-Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 213.72s
-Loading error handling took 0.10s
-Loading script took 1.24s
-Loading save slot metadata took 0.03s
-Loading persistent took 0.00s
-Running init code took 0.31s
-Loading analysis data took 0.11s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.03s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.07s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.11s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.37s
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.09s
-Save screen analysis took 0.07s
-Prepare screens took 0.59s
-Save pyanalysis. took 0.09s
-Save bytecode. took 0.04s
-Running _start took 0.00s
-Interface start took 1.40s
+Interface start took 1.68s
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 3840, 2400)
@@ -121,60 +46,32 @@ Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
 Maximum texture size: 4096x4096
 Cleaning stores took 0.00s
 Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.11s
+Build styles took 0.01s
+Load screen analysis took 0.08s
+Analyze screens took 0.00s
+Prepare screens took 0.00s
+Running _start took 0.00s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.01s
+Load screen analysis took 0.09s
+Analyze screens took 0.00s
+Prepare screens took 0.00s
+Running _start took 0.00s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.01s
+Load screen analysis took 0.08s
 Analyze screens took 0.00s
 Prepare screens took 0.00s
 Running _start took 0.00s
 Resetting cache.
-Early init took 1147.22s
-Loading error handling took 0.05s
-Loading script took 0.57s
+Early init took 341.55s
+Loading error handling took 0.09s
+Loading script took 1.08s
 Loading save slot metadata took 0.03s
 Loading persistent took 0.00s
-Running init code took 0.32s
-Loading analysis data took 0.08s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.03s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
-Dump and make backups took 0.07s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.20s
-DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.39s
-Cleaning stores took 0.00s
-Init translation took 0.01s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.04s
-Save screen analysis took 0.08s
-Prepare screens took 0.37s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.05s
-Running _start took 0.00s
-Interface start took 1.39s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 3840, 2400)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.83'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 1151.68s
-Loading error handling took 0.05s
-Loading script took 1.31s
-Loading save slot metadata took 0.03s
-Loading persistent took 0.00s
-Running init code took 0.32s
+Running init code took 0.30s
 Loading analysis data took 0.12s
 Analyze and compile ATL took 0.00s
 Reloading save slot metadata took 0.03s
@@ -183,19 +80,19 @@ Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jac
 Dump and make backups took 0.07s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
-Initial gc took 0.14s
+Initial gc took 0.21s
 DPI scale factor: 2.500000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 0.38s
+Creating interface object took 0.41s
 Cleaning stores took 0.00s
 Init translation took 0.01s
 Build styles took 0.00s
 Load screen analysis took 0.00s
 Analyze screens took 0.04s
 Save screen analysis took 0.07s
-Prepare screens took 0.36s
-Save pyanalysis. took 0.00s
+Prepare screens took 0.33s
+Save pyanalysis. took 0.09s
 Save bytecode. took 0.04s
 Running _start took 0.00s
 Interface start took 1.42s
@@ -212,107 +109,1013 @@ Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
 Maximum texture size: 4096x4096
 Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
 Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 656.91s
+Loading error handling took 0.05s
+Loading script took 0.50s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.31s
+Loading analysis data took 0.13s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.29s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.37s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.04s
+Save screen analysis took 0.07s
+Prepare screens took 0.33s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.04s
+Running _start took 0.00s
+Interface start took 1.59s
 
-Full traceback:
-  File "game/home.rpy", line 652, in script
-    python:
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/home.rpy", line 674, in <module>
-    slave_mood_giga_calculation()
-  File "game/fuctions.rpy", line 1636, in slave_mood_giga_calculation
-    slave_mood_calculation()
-  File "game/fuctions.rpy", line 1553, in slave_mood_calculation
-    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
-KeyError: 'residu_fear'
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 720) physical=(3840, 2224) drawable=(3840, 2224)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 759.34s
+Loading error handling took 0.05s
+Loading script took 1.16s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.32s
+Loading analysis data took 0.13s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.15s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.38s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.04s
+Save screen analysis took 0.07s
+Prepare screens took 0.34s
+Save pyanalysis. took 0.09s
+Save bytecode. took 0.04s
+Running _start took 0.00s
+Interface start took 1.46s
 
-While running game code:
-  File "game/home.rpy", line 652, in script
-    python:
-  File "game/home.rpy", line 674, in <module>
-    slave_mood_giga_calculation()
-  File "game/fuctions.rpy", line 1636, in slave_mood_giga_calculation
-    slave_mood_calculation()
-  File "game/fuctions.rpy", line 1553, in slave_mood_calculation
-    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
-KeyError: 'residu_fear'
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 764.72s
+Loading error handling took 0.05s
+Loading script took 0.25s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.31s
+Loading analysis data took 0.07s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.14s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.37s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.10s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.34s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 1.50s
 
-Full traceback:
-  File "game/home.rpy", line 652, in script
-    python:
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/home.rpy", line 674, in <module>
-    slave_mood_giga_calculation()
-  File "game/fuctions.rpy", line 1636, in slave_mood_giga_calculation
-    slave_mood_calculation()
-  File "game/fuctions.rpy", line 1553, in slave_mood_calculation
-    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
-KeyError: 'residu_fear'
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 785.87s
+Loading error handling took 0.05s
+Loading script took 1.40s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.31s
+Loading analysis data took 0.13s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.14s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.37s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.09s
+Save screen analysis took 0.06s
+Prepare screens took 0.60s
+Save pyanalysis. took 0.09s
+Save bytecode. took 0.05s
+Running _start took 0.00s
+Interface start took 1.45s
 
-While running game code:
-  File "game/home.rpy", line 652, in script
-    python:
-  File "game/home.rpy", line 674, in <module>
-    slave_mood_giga_calculation()
-  File "game/fuctions.rpy", line 1636, in slave_mood_giga_calculation
-    slave_mood_calculation()
-  File "game/fuctions.rpy", line 1553, in slave_mood_calculation
-    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
-KeyError: 'residu_fear'
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 862.16s
+Loading error handling took 0.06s
+Loading script took 0.24s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.30s
+Loading analysis data took 0.07s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.16s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.36s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.10s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.37s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 1.47s
 
-Full traceback:
-  File "game/home.rpy", line 652, in script
-    python:
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/home.rpy", line 674, in <module>
-    slave_mood_giga_calculation()
-  File "game/fuctions.rpy", line 1636, in slave_mood_giga_calculation
-    slave_mood_calculation()
-  File "game/fuctions.rpy", line 1553, in slave_mood_calculation
-    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
-KeyError: 'residu_fear'
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 943.62s
+Loading error handling took 0.06s
+Loading script took 1.50s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.34s
+Loading analysis data took 0.14s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.18s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.38s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.09s
+Save screen analysis took 0.07s
+Prepare screens took 0.63s
+Save pyanalysis. took 0.11s
+Save bytecode. took 0.05s
+Running _start took 0.00s
+Interface start took 1.53s
 
-While running game code:
-  File "game/home.rpy", line 652, in script
-    python:
-  File "game/home.rpy", line 674, in <module>
-    slave_mood_giga_calculation()
-  File "game/fuctions.rpy", line 1636, in slave_mood_giga_calculation
-    slave_mood_calculation()
-  File "game/fuctions.rpy", line 1553, in slave_mood_calculation
-    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
-KeyError: 'residu_fear'
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 949.71s
+Loading error handling took 0.06s
+Loading script took 0.26s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.31s
+Loading analysis data took 0.08s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.15s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.37s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.10s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.35s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 1.52s
 
-Full traceback:
-  File "game/home.rpy", line 652, in script
-    python:
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/home.rpy", line 674, in <module>
-    slave_mood_giga_calculation()
-  File "game/fuctions.rpy", line 1636, in slave_mood_giga_calculation
-    slave_mood_calculation()
-  File "game/fuctions.rpy", line 1553, in slave_mood_calculation
-    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
-KeyError: 'residu_fear'
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1013.15s
+Loading error handling took 0.13s
+Loading script took 0.56s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.30s
+Loading analysis data took 0.14s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.17s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.38s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.05s
+Save screen analysis took 0.08s
+Prepare screens took 0.37s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.04s
+Running _start took 0.00s
+Interface start took 1.64s
 
-While running game code:
-  File "game/home.rpy", line 652, in script
-    python:
-  File "game/home.rpy", line 674, in <module>
-    slave_mood_giga_calculation()
-  File "game/fuctions.rpy", line 1636, in slave_mood_giga_calculation
-    slave_mood_calculation()
-  File "game/fuctions.rpy", line 1553, in slave_mood_calculation
-    if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
-KeyError: 'residu_fear'
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1018.03s
+Loading error handling took 0.05s
+Loading script took 0.29s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.32s
+Loading analysis data took 0.08s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.19s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.40s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.12s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.38s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 1.67s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1081.87s
+Loading error handling took 0.06s
+Loading script took 0.30s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.33s
+Loading analysis data took 0.07s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.19s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.37s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.10s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.35s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 1.78s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1109.47s
+Loading error handling took 0.05s
+Loading script took 0.57s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.35s
+Loading analysis data took 0.22s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.04s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 0.11s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.19s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.38s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.04s
+Save screen analysis took 0.07s
+Prepare screens took 0.34s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.03s
+Running _start took 0.00s
+Interface start took 1.71s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.10s
+Analyze screens took 0.00s
+Prepare screens took 0.00s
+Running _start took 0.00s
+Resetting cache.
+Early init took 1157.67s
+Loading error handling took 0.05s
+Loading script took 0.58s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+ - Init at renpy/common/00images.rpy:55 took 0.25059 s.
+Running init code took 0.35s
+Loading analysis data took 0.14s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.24s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.38s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.05s
+Save screen analysis took 0.07s
+Prepare screens took 0.34s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.04s
+Running _start took 0.00s
+Interface start took 1.77s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.10s
+Analyze screens took 0.00s
+Prepare screens took 0.00s
+Running _start took 0.00s
+Resetting cache.
+Early init took 1223.89s
+Loading error handling took 0.06s
+Loading script took 0.25s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.31s
+Loading analysis data took 0.07s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Dump and make backups took 0.08s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.27s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.36s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.10s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.35s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 1.87s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.01s
+Load screen analysis took 0.09s
+Analyze screens took 0.00s
+Prepare screens took 0.00s
+Running _start took 0.00s
+Resetting cache.
+Early init took 1408.32s
+Loading error handling took 0.05s
+Loading script took 0.54s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.31s
+Loading analysis data took 0.14s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.27s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.38s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.04s
+Save screen analysis took 0.07s
+Prepare screens took 0.36s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.04s
+Running _start took 0.00s
+Interface start took 1.81s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1413.28s
+Loading error handling took 0.05s
+Loading script took 0.25s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.31s
+Loading analysis data took 0.07s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.16s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.38s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.10s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.35s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 1.70s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1951.14s
+Loading error handling took 0.05s
+Loading script took 0.51s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.32s
+Loading analysis data took 0.14s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.20s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.37s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.04s
+Save screen analysis took 0.07s
+Prepare screens took 0.34s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.04s
+Running _start took 0.00s
+Interface start took 2.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1956.18s
+Loading error handling took 0.06s
+Loading script took 0.24s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.30s
+Loading analysis data took 0.07s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.17s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.36s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.11s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.34s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 1.68s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.01s
+Load screen analysis took 0.09s
+Analyze screens took 0.00s
+Prepare screens took 0.00s
+Running _start took 0.00s
+Resetting cache.
+Early init took 2000.89s
+Loading error handling took 0.05s
+Loading script took 0.24s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.31s
+Loading analysis data took 0.07s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.20s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.35s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.10s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.35s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 1.68s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2098.71s
+Loading error handling took 0.05s
+Loading script took 0.61s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+ - Init at renpy/common/00images.rpy:55 took 0.26518 s.
+Running init code took 0.35s
+Loading analysis data took 0.16s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 0.08s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.23s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.37s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.04s
+Save screen analysis took 0.07s
+Prepare screens took 0.38s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.04s
+Running _start took 0.00s
+Interface start took 1.94s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.10s
+Analyze screens took 0.00s
+Prepare screens took 0.00s
+Running _start took 0.00s
+Resetting cache.
+Early init took 2275.87s
+Loading error handling took 0.05s
+Loading script took 0.26s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.32s
+Loading analysis data took 0.09s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.27s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.36s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.10s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.35s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 1.77s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2321.57s
+Loading error handling took 0.05s
+Loading script took 0.53s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.34s
+Loading analysis data took 0.19s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 0.08s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.22s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.36s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.04s
+Save screen analysis took 0.07s
+Prepare screens took 0.33s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.04s
+Running _start took 0.00s
+Interface start took 1.70s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.01s
+Load screen analysis took 0.10s
+Analyze screens took 0.00s
+Prepare screens took 0.00s
+Running _start took 0.00s
+Resetting cache.
+Early init took 2369.92s
+Loading error handling took 0.05s
+Loading script took 0.26s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.31s
+Loading analysis data took 0.07s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Dump and make backups took 0.08s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.21s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.37s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.10s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.35s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 1.67s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2393.20s
+Loading error handling took 0.05s
+Loading script took 0.25s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.31s
+Loading analysis data took 0.07s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.03s
+Index archives took 0.00s
+Dump and make backups took 0.07s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.18s
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.37s
+Cleaning stores took 0.00s
+Init translation took 0.01s
+Build styles took 0.00s
+Load screen analysis took 0.10s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.35s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 2.13s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 576.83'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(3840, 2160) drawable=(3840, 2160)
+Maximum texture size: 4096x4096

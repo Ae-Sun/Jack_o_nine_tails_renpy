@@ -2,13 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 687: expected statement.
-    hidden_trait_discover_text_display_check()  
-                                                ^
-
-File "game/home.rpy", line 688: expected statement.
-    handle_menu()
-                 ^
+File "game/girls_stats_iniciation.rpy", line 713: invalid syntax
+        "styletrait":        ["Null", "Graceful", "Very Graceful", "Clumsy", "Ungraceful"]\
+         ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Tue Sep  2 14:08:56 2025
+Tue Sep  2 20:57:53 2025

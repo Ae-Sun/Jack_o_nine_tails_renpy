@@ -757,7 +757,77 @@ init python:
                 already_bath = True
                 hygiene_value_9 = 5 #this is necessary since hygiene update check is made only on home screen 
                 hygiene_experience_value_9 = 0 
-    #TODO newloc_update_slave
+    def update_beauty_style_slave():
+        global girl_index
+        girl = all_girls_list[girl_index]
+        def update_slave_beauty():
+            global attribute_track_index, dictionary_track_index, dictionary_name, customboxcheck
+            girl["attributes"]["beauty"] = girl["attributes"]["natural_beauty"] - (girl["injuries"] + girl["scars"])/2
+            if girl["attributes"]["physical"] == 5:
+                girl["attributes"]["beauty"] -= 1
+            else:
+                girl["attributes"]["beauty"] -= max(1 - girl["attributes"]["physical"]*0.5, 0)
+            if girl["neoplasty"]:
+                girl["attributes"]["beauty"] += 1
+            if girl["attributes"]["beauty"] > 5:
+                girl["attributes"]["beauty"] = 5
+            if (girl["attributes"]["beauty"] == 5 
+            and girl["aura"]["devotion"] >= 5 #maybe change this for S+
+            and girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] == 2
+            or girl["attributes"]["beauty"] == 5
+            and girl["aura"]["devotion"] >= 5 #maybe change this for S+
+            and girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] == 1
+            and girl["neoplasty"]):
+                girl["attributes"]["beauty"] += 1
+            girl["attributes"]["beauty"] = int(girl["attributes"]["beauty"])
+            if girl["injuries"] + girl["scars"] == 0 and girl["attributes"]["physical"] == 4:
+                if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] != 0:
+                    if not girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["revealed"]:
+                        girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["revealed"] = True
+                        attribute_track_index = "beautytrait"
+                        dictionary_track_index = girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] 
+                        dictionary_name = dic_traits_attributes_description
+                        customboxcheck = True
+        def update_slave_style():
+            global natural_grace_color
+            global attribute_track_index, dictionary_track_index, dictionary_name, customboxcheck
+
+            girl["attributes"]["style"] = (girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["value"] 
+            + (girl["hygiene"] - 4)/2
+            + girl["hairstyle"] / 2)
+            for value in ["perfume","manicure","epilation","make_up"]:
+                if girl[value] > 0:
+                    girl["attributes"]["style"] += 0.5        
+            n = [1,3,6,9,13]     
+            for i in n:
+                if girl["style_plus"] >= i:
+                    girl["attributes"]["style"] += 0.5
+            girl["attributes"]["style"] = int(girl["attributes"]["style"])
+            girl["attributes"]["style"] = max(girl["attributes"]["style"], 0)
+            if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["value"] == 2:
+                girl["attributes"]["style"] = min(girl["attributes"]["style"], 6)
+            else:
+                girl["attributes"]["style"] = min(girl["attributes"]["style"], 5)
+            m = [(2,"#009900"),(1,"#0000D8"),(0,"#000000"),(-1,"#6B0084"),(-2,"#CD0000")]
+            for values, color in m:
+                if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["value"] == values:
+                    natural_grace_color = color
+                    break 
+            if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["value"] != 0:
+                if not girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["revealed"]:
+                    girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["revealed"] = True
+                    attribute_track_index = "styletrait"
+                    dictionary_track_index = girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["value"] 
+                    dictionary_name = dic_traits_attributes_description
+                    customboxcheck = True
+        if girl["age"] == 1:
+            girl["epilation"] = 100
+        update_slave_beauty()
+        update_slave_style()
+                
+
+
+        
     def slave_bath_alone():
         global girl_index, home_mess_value
         girl = all_girls_list[girl_index]
@@ -843,7 +913,14 @@ init python:
             a = "optimistic"
         if roll == 4:
             a = "depresive"
+        all_girls_list[girl_index].setdefault("neoplasty",False)
         all_girls_list[girl_index].setdefault("psy_status",a)
+        all_girls_list[girl_index].setdefault("ill",0)
+        all_girls_list[girl_index].setdefault("rehabilitation",0)
+        all_girls_list[girl_index].setdefault("injuries",0)
+        all_girls_list[girl_index].setdefault("scars",0)
+
+
         all_girls_list[girl_index].setdefault("name", "WIP")
         all_girls_list[girl_index].setdefault("hygiene",5)
         all_girls_list[girl_index].setdefault("hygiene_rate",0)
@@ -1273,6 +1350,14 @@ init python:
             all_girls_list[girl_index]["anal_tightness"] = 2
         elif all_girls_list[girl_index]["sex_experience"]["penetration"]["anal_fisting"] >= 4:
             all_girls_list[girl_index]["anal_tightness"] = 3
+        
+        # Extra code for beauty trait
+        if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] < 0:
+            all_girls_list[girl_index]["attributes"]["beauty"] = 0
+            all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] = 0
+        if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] > 0:
+            all_girls_list[girl_index]["attributes"]["beauty"] = 5
+
     def master_moodlet_calculation():
         global wealth_quality_modifier, standard_of_living_value_8, brand_reputation_value_6
         global estate_quality, estate_quality_modifier, brand_reputation_value_6
@@ -1402,9 +1487,9 @@ init python:
         mood_value_10 += master_worn_bonus
         mood_value_10 += master_temporal_mood
         if master_past_mood > 0:
-            mood_value_10 += master_past_mood/3.85
+            mood_value_10 += master_past_mood/10
         else:
-            mood_value_10 += master_past_mood/1.65
+            mood_value_10 += master_past_mood/4
         for key in dic_master_mood["good_mood"]:
             if master_mood_state["good_mood"][key]["active"]:
                 mood_value_10 += master_mood_state["good_mood"][key]["weight"]
@@ -1543,9 +1628,9 @@ init python:
         # + past mood, a slave that yesterday is depressing, will start more sad that one that was happy yesterday
         # more negative that positive because sadness stick longer that hapiness, like IRL
         if all_girls_list[girl_index]["past_mood"] > 0:
-            all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/3.85 # this number is arbitrary and can be balance change
+            all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/10 # this number is arbitrary and can be balance change
         else:
-            all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/1.65 # this number is arbitrary and can be balance change
+            all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/4 # this number is arbitrary and can be balance change
         for key in dic_slave_mood["good_mood"]:
             if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]:
                 all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["mood_state"]["good_mood"][key]["weight"]
