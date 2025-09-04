@@ -11,9 +11,9 @@
     "boobs_img": "boobs_CC",
     "pussy_img": "pussy_g3",
     "psy_basic": "hateful",
-    "world_description": "  [Yasmin]<br>- Previously, our universe was ruled by the great empire of the Ancients. But it collapsed. Now there are many tribes that roam the space on a starship created by the Ancients. The more ships in the tribe, the more powerful it is. Everyone wants to grab a new ships, because no one knows how to build them.",
-    "family_description": "  [Yasmin]<br>- My tribe is very powerful - we have three destroyers of 'Typhoon' type and two assault transports. Men like you we are keeping in bondage because they are stupid and unreliable. Only women are allowed to make decisions, as our mind is open to the Great Goddess.",
-    "occupation_description": "  [Yasmin]<br>- I've always been strong and quick, so I went into the boarding psingingy as soon as I could pick up an assault blaster. We had glorious fights. For my services the Mothers Council made me the commander of the wing. And then I got into the damn fogs, when I went to hunt on the planet where we restock.",
+    "world_description": "  [Yasmin]\n- Previously, our universe was ruled by the great empire of the Ancients. But it collapsed. Now there are many tribes that roam the space on a starship created by the Ancients. The more ships in the tribe, the more powerful it is. Everyone wants to grab a new ships, because no one knows how to build them.",
+    "family_description": "  [Yasmin]\n- My tribe is very powerful - we have three destroyers of 'Typhoon' type and two assault transports. Men like you we are keeping in bondage because they are stupid and unreliable. Only women are allowed to make decisions, as our mind is open to the Great Goddess.",
+    "occupation_description": "  [Yasmin]\n- I've always been strong and quick, so I went into the boarding psingingy as soon as I could pick up an assault blaster. We had glorious fights. For my services the Mothers Council made me the commander of the wing. And then I got into the damn fogs, when I went to hunt on the planet where we restock.",
     "name": "Yasmin",
     "virginity": 0,
     "haircolor": "red",
@@ -87,7 +87,7 @@
                     "value": 2,
                     "revealed": false
                 },
-                "exorticismtrait": {
+                "exoticismtrait": {
                     "value": 2,
                     "revealed": false
                 }

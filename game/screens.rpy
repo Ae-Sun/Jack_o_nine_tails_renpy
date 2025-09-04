@@ -635,6 +635,19 @@ style home_button:
     yminimum 50
     right_padding 15
     bottom_padding 15
+style rating_button:
+    background Frame("ui/jon-UIadds/sjm_bg.webp", 0, 0)
+    xminimum 25
+    yminimum 18
+    xmaximum 25
+    ymaximum 18
+    top_padding 7
+    
+
+style rating_button_text:
+    font "fonts/Consolas.ttf"
+    size 16
+    hover_color "#ffff00"
 
 style home_button_text:
     xalign 0.05

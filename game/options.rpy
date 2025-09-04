@@ -155,7 +155,7 @@ define config.save_directory = "JONT-1746121570"
 ##
 ## The icon displayed on the taskbar or dock.
 
-define config.window_icon = "gui/window_icon.png"
+define config.window_icon = "gui/logo.webp"
 
 
 ## Build configuration #########################################################

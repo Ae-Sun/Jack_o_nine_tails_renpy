@@ -461,7 +461,7 @@ define dic_master_mood = {
     }
 }
 define dic_master_clean = [
-    "This place is a pigsty; it’s depressing. <br>  As you tidy up you can’t help but think that there is something wrong with this picture. A slaver of your caliber should <i>not</i> have to dirty your hands with such work. <br>  Isn’t this what women are for?!",
+    "This place is a pigsty; it’s depressing. \n  As you tidy up you can’t help but think that there is something wrong with this picture. A slaver of your caliber should <i>not</i> have to dirty your hands with such work. \n  Isn’t this what women are for?!",
     "Definition of a loser: a slaver who cleans his own house. With a sad sigh, you start cleaning, solemnly promising yourself that next time your slaves will do this task.",
     "Cleaning isn’t so bad; so long as someone else is doing it, but doing it with your own hands has never been your strong suit. Unfortunately, the place is a mess and it seems it is up to you. Cursing, you quickly clean up the house.",
     "You have enough experience as a butler to handle even a serious mess, but still, there is something seriously wrong when you have to clean your own house.",

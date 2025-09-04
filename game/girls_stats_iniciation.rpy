@@ -79,6 +79,34 @@ define dic_slave_tier_classification_physical = {
     5: "F-",
     6: "S++",
 }
+define dic_rating = {
+    0: "F-",
+    1: "D-",
+    2: "D+",
+    3: "C-",
+    4: "C+",
+    5: "B-",
+    6: "B+",
+    7: "A-",
+    8: "A+",
+    9: "S-",
+    10: "S+",
+    11: "S++",
+}
+define dic_rating_colored = {
+    0: "{color=#CD0000}F-{/color}",
+    1: "{color=#EA0190}D-{/color}",
+    2: "{color=#FF4FBB}D+{/color}",
+    3: "{color=#6B0084}C-{/color}",
+    4: "{color=#2e0051}C+{/color}",
+    5: "{color=#0000D8}B-{/color}",
+    6: "{color=#5858d0}B+{/color}",
+    7: "{color=#009FEF}A-{/color}",
+    8: "{color=#50ffcb}A+{/color}",
+    9: "{color=#009900}S-{/color}",
+    10: "{color=#003000}S+{/color}",
+    11: "{color=#996515}S++{/color}"
+}
 define dic_slave_tier_classification_colored = {
     0: "{color=#CD0000}F-{/color}",
     1: "{color=#EA0090}D-{/color}",
@@ -709,7 +737,7 @@ define dic_traits_attributes = {
     "naturetrait":       ["Null", "Tenacious disposition", "Unbreakable resolve", "Faint-hearted disposition", "Insecure disposition"],
     "pridetrait":        ["Null", "Meekness", "Very Meekness", "Confident", "Overbearing"],
     "physicaltrait":     ["Null", "Good metabolism", "Excellent metabolism", "Very bad metabolism", "bad metabolism"],
-    "exorticismtrait":   ["Null", "Distinctive", "Strikingly Exotic", "Completely common", "Unremarkable"],
+    "exoticismtrait":   ["Null", "Distinctive", "Strikingly Exotic", "Completely common", "Unremarkable"],
     "styletrait":        ["Null", "Graceful", "Very Graceful", "Clumsy", "Ungraceful"]
 }
 define dic_traits_attributes_description = {
@@ -769,7 +797,7 @@ define dic_traits_attributes_description = {
         "{b}Very bad metabolism{/b} \nYour slave has a bad metabolism and struggles with energy and body regulation. She tires quickly and lacks fitness. She suffers from a very bad metabolism, gaining weight or losing energy easily. She has an ungifted attribute, which will limit her potential for improvement.",
         "{b}Bad metabolism{/b} \nYour slave has a bad metabolism and struggles with energy and body regulation. She tires quickly and lacks fitness. She suffers from a very bad metabolism, gaining weight or losing energy easily."
     ],
-    "exorticismtrait": [
+    "exoticismtrait": [
         "None",
         "{b}Distinctive{/b} \nYour slave is distinctive and stands out with a unique charm. Her look draws attention and interest. She is strikingly exotic and exudes an allure few can resist.",
         "{b}Strikingly Exotic{/b} \nYour slave is distinctive and stands out with a unique charm. Her look draws attention and interest. She is strikingly exotic and exudes an allure few can resist. She has a gifted attribute, which will allow her to reach new heights.",
@@ -2655,5 +2683,13 @@ define bathing_slave_alone = {
     "soft": "  [all_girls_list[girl_index]['name']] is obviously pleased to be able to wash off the dirt and soak in warm water. You hear her humming softly, and you peer in at her."
 }
 
-
+define dic_specializations = {
+    "Servant": ["Maid", "Cooking"],
+    "Assistant": ["Secretary", "Elocution"],
+    "Witch Doctor": ["Nursing", "Alchemy", "Witchcraft"],
+    "Gladiatrix": ["Gladiatrix", "Athletics", "Nature", "Temperament"],
+    "Artist": ["Dancing", "Music", "Painting"],
+    "Pet Ponygirl": ["Pet", "Pony Racing"],
+    "Cow": ["Cow Skill"]
+}
 

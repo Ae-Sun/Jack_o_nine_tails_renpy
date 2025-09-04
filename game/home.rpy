@@ -101,6 +101,7 @@ default already_ate = False
 default already_prepared = False
 default already_bath = False
 default natural_grace_color = "000000"
+default natural_exoticism_color = "000000"
 default house_items = 0
 default alone_count = 0
 default best_kitchen = ""
@@ -114,10 +115,13 @@ default interaction_sex_acceptance = 0
 default sum_of_sex_skill_slave_value = 0
 default slave_psy_hardness = 0
 default maxmotivation = 0
+default client_slave_requierement_tier = 0
+default rating_help_text = ""
 default master_auto = {
     "cook": False,
     "clean": False
 }
+default rating_text_display = ""
 default interaction_textdisplay_screen_text = ""
 default yesterday_exhaustion = 0
 default did_bath_yesterday = False
@@ -657,7 +661,7 @@ label Home:
         master_moodlet_calculation()
         master_mood_calculation()
         if len(all_girls_list) > 0: #slave calculation part 
-            update_beauty_style_slave()
+            update_beauty_style_exoticism_slave()
             sex_experience_average_update()
             obedience_difficulty_adjustment()
             girl_index_save = girl_index
@@ -665,7 +669,9 @@ label Home:
                 all_girls_list[girl_index]["skills"]["athletics"] = all_girls_list[girl_index]["attributes"]["endurance"]
                 maxmotivation = max(all_girls_list[girl_index]["aura"]["fear"],all_girls_list[girl_index]["aura"]["devotion"],all_girls_list[girl_index]["aura"]["spoil"],all_girls_list[girl_index]["aura"]["habit"],all_girls_list[girl_index]["aura"]["awareness"],all_girls_list[girl_index]["aura"]["taming"],all_girls_list[girl_index]["arousal"])
                 slave_psy_hardness = max(all_girls_list[girl_index]["attributes"]["temperament"],all_girls_list[girl_index]["attributes"]["nature"],(5 - all_girls_list[girl_index]["attributes"]["pride"]),all_girls_list[girl_index]["attributes"]["intelligence"]) #TODO I STILL NEED TO ADD COURAGE
+                slave_psy_hardness += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_aura(1/16)"]["feartrait"]["value"]
                 supermacy_calculation()
+                slave_rank_update()
                 cap_slave_values()
                 for skill in all_girls_list[girl_index]["skills"]: # Check skill increase
                     increase_check("skills",skill)
@@ -712,6 +718,7 @@ label equipment_check:
             all_girls_list[girl_index]["exotic_plus"] = 0
             all_girls_list[girl_index]["mood_state"]["good_mood"]["clothes"]["active"] = False
             all_girls_list[girl_index]["mood_state"]["bad_mood"]["clothes"]["active"] = False
+            all_girls_list[girl_index]["mood_state"]["bad_mood"]["naked"]["active"] = False
             all_girls_list[girl_index]["wig"] = False
             for keys in all_girls_list[girl_index]["learning_bonus"]:
                 all_girls_list[girl_index]["learning_bonus"][keys] = 0
@@ -723,17 +730,22 @@ label equipment_check:
                 all_girls_list[girl_index]["daily_bonus"]["endurance"] += 1 
                 all_girls_list[girl_index]["daily_bonus"]["taming"] += 1
                 all_girls_list[girl_index]["worn_mood"] += all_girls_list[girl_index]["attributes"]["pride"]*3 - 15 
+                all_girls_list[girl_index]["mood_state"]["bad_mood"]["naked"]["active"] = True
+                all_girls_list[girl_index]["mood_state"]["bad_mood"]["naked"]["weight"] = 1
+
                 if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"] != 0:
                     if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"] < 0 and all_girls_list[girl_index]["psy_status"] != "horny":
-                        all_girls_list[girl_index]["worn_mood"] += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"]*2
+                        all_girls_list[girl_index]["worn_mood"] += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"]*5
                     elif all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"] > 0:
-                        all_girls_list[girl_index]["worn_mood"] += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"]*2
+                        all_girls_list[girl_index]["mood_state"]["bad_mood"]["naked"]["active"] = False
+                        all_girls_list[girl_index]["worn_mood"] += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"]*5
                     if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["revealed"]:
                         attribute_track_index = "exhibitionism"
                         dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"] 
                         dictionary_name = dic_traits_miscellaneous_description
                         customboxcheck = True
                         all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["revealed"] = True
+
             if all_girls_list[girl_index]["equipment"]["clothes"] == "Frilly Apron":
                 all_girls_list[girl_index]["learning_bonus"]["cooking"] += 2
                 if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]["cookingtrait"]["value"] > 0:
@@ -3206,6 +3218,14 @@ screen homehome_attributes_menu():
             style "home_condition_style" + str(home_hygiene_value)
             action SetVariable("all_hygiene_multidic",dic_home_condition), Show("all_hygiene_attributes")
         text "Cannned food" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
+    add "black" pos(0.84572,0.36361) xysize(27,20)
+    textbutton rating_text_display pos(0.8465,0.365):
+        style "rating_button"
+        action Show("msg",msg_text=rating_help_text)
+        hovered SetVariable("rating_text_display",dic_rating[all_girls_list[girl_index]["rating"]])
+        unhovered SetVariable("rating_text_display",dic_rating_colored[all_girls_list[girl_index]["rating"]])
+
+
     vbox:
         pos(0.97,0.335)
         anchor (0.5,0.0)
