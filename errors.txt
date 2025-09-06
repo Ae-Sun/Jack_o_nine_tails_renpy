@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 3222: expected a keyword argument, colon, or end of line.
-    image black = Solid("#000000", xysize=(27, 20))
-                ^
+File "game/mc_stats_iniciation.rpy", line 532: expected statement.
+    }
+    ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Thu Sep  4 14:12:42 2025
+Sat Sep  6 14:36:30 2025

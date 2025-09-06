@@ -213,7 +213,8 @@ define dic_slave_mood ={
         "cheap_reward"       : "[all_girls_list[girl_index][name]]\n- The reward you promised… was that it?",
         "pony_died"          : "[all_girls_list[girl_index][name]]\n- My little pony died!",
         "default"            : "[all_girls_list[girl_index][name]]\n- Nohow, I do not care.",
-        "artifact"           : "[all_girls_list[girl_index][name]]\n- My magic decoration! My… My… precioooous… Angry master took it away from us… gollum… poor… poor us… so lonely…"
+        "artifact"           : "[all_girls_list[girl_index][name]]\n- My magic decoration! My… My… precioooous… Angry master took it away from us… gollum… poor… poor us… so lonely…",
+        "boring"             : "[all_girls_list[girl_index][name]]\n- Doing the same thing everyday is really boring."
     }
 }
 define dic_slave_skills = {

@@ -1,40 +1,30 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/home.rpy", line 695, in script
-    $ handle_menu()
-  File "game/home.rpy", line 695, in <module>
-    $ handle_menu()
-  File "game/fuctions.rpy", line 2108, in handle_menu
-    renpy.call_screen("home_menu")
-TypeError: 'str' object is not callable
+  File "game/home.rpy", line 422, in script
+    python:
+  File "game/home.rpy", line 466, in <module>
+    girl_already_done_update()
+  File "game/fuctions.rpy", line 2188, in girl_already_done_update
+    all_girls_list[girl_index]["already_done"][a[1]] = max(all_girls_list[girl_index]["already_done"][a[1]] - 2, 0)
+KeyError: ('Assistant', 0)
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/home.rpy", line 695, in script
-    $ handle_menu()
+  File "game/home.rpy", line 422, in script
+    python:
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/home.rpy", line 695, in <module>
-    $ handle_menu()
-  File "game/fuctions.rpy", line 2108, in handle_menu
-    renpy.call_screen("home_menu")
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\exports\statementexports.py", line 345, in call_screen
-    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ui.py", line 301, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2218, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2669, in interact_core
-    trans = instantiate_transition(None, old_root, layers_root)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2578, in instantiate_transition
-    trans = self.ongoing_transition[layer](
-TypeError: 'str' object is not callable
+  File "game/home.rpy", line 466, in <module>
+    girl_already_done_update()
+  File "game/fuctions.rpy", line 2188, in girl_already_done_update
+    all_girls_list[girl_index]["already_done"][a[1]] = max(all_girls_list[girl_index]["already_done"][a[1]] - 2, 0)
+KeyError: ('Assistant', 0)
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
 JONT Port by Rec3ks ver. 0.0.55
-Thu Sep  4 14:31:25 2025
+Sat Sep  6 14:22:28 2025

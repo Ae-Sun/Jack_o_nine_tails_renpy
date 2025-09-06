@@ -115,6 +115,7 @@ default interaction_sex_acceptance = 0
 default sum_of_sex_skill_slave_value = 0
 default slave_psy_hardness = 0
 default maxmotivation = 0
+default master_ill = 0
 default client_slave_requierement_tier = 0
 default rating_help_text = ""
 default master_auto = {
@@ -432,10 +433,9 @@ label next_day_labellabel:
         day_tracker += 1
         after_sex_effects -= 1
         pos_show_counter -= 1
-        if excitement_value >= 5 and master_equipment["earrings"] != "chimera_earring":
-            blazing_counter += 1
-        else:
-            blazing_counter = 0
+
+        master_libido_update()
+        all_rise_excitement_update()
         if debt_tracker > 0:
             debt_tracker -= 1
             if debt_tracker == 0 and debt > 0:
@@ -462,6 +462,8 @@ label next_day_labellabel:
                     all_girls_list[girl_index]["rules_broken"][i] = False
                 # TODO need to check permanent state of some moodlet 1/2 DONE
                 update_moodlet_new_day_slave()
+                slave_daily_bonus_update()
+                girl_already_done_update()
                 slave_dead_for_low_endurance_code()
                 slave_attack_escape_calculation()                
                 #TODO if not all_girls_list[girl_index]["assistant"]: # WIP assistent cooking code skipped
@@ -660,6 +662,8 @@ label Home:
         best_kitchen_calculation() 
         master_moodlet_calculation()
         master_mood_calculation()
+        master_excitement_check()
+        slave_rank_update() # this update globals variables must be outside of loop for
         if len(all_girls_list) > 0: #slave calculation part 
             update_beauty_style_exoticism_slave()
             sex_experience_average_update()
@@ -671,8 +675,8 @@ label Home:
                 slave_psy_hardness = max(all_girls_list[girl_index]["attributes"]["temperament"],all_girls_list[girl_index]["attributes"]["nature"],(5 - all_girls_list[girl_index]["attributes"]["pride"]),all_girls_list[girl_index]["attributes"]["intelligence"]) #TODO I STILL NEED TO ADD COURAGE
                 slave_psy_hardness += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_aura(1/16)"]["feartrait"]["value"]
                 supermacy_calculation()
-                slave_rank_update()
                 cap_slave_values()
+                girl_already_done_check()
                 for skill in all_girls_list[girl_index]["skills"]: # Check skill increase
                     increase_check("skills",skill)
                 slave_fainted()
@@ -3176,7 +3180,7 @@ screen homehome_attributes_menu():
             action SetVariable("current_menu",203), Jump("Home")
             hovered SetVariable("mood_textvalue_10",dic_slave_moodlevel_no_color[mood_textvalue_10])
             unhovered SetVariable("mood_textvalue_10",dic_slave_moodlevel2[mood_textvalue_10])
-        text "Contented" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
+        text dic_master_excitement[excitement_value] anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12 #TODO NEXT THING TO DO 
         textbutton dic_hygiene_condition[hygiene_value_9] anchor (0.5,0.5):
             style "home_condition_style" + str(hygiene_value_9)
             action SetVariable("all_hygiene_multidic",dic_hygiene_condition), Show("all_hygiene_attributes")

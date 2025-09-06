@@ -440,6 +440,7 @@ init python:
                 girl["hygiene_rate"] += dic_hygiene_value_rate["cook"]
 
                 slave_energy_drop_calculation()
+                girl["already_done"]["Servant"] += 1
         else:
             girl["rules_broken"]["slave_auto_cook"] = True
     def master_cook_meal():
@@ -554,6 +555,7 @@ init python:
 
             slave_energy_drop_calculation()
             girl["hygiene_rate"] += dic_hygiene_value_rate["maid"] - home_hygiene_value + 5
+            girl["already_done"]["Servant"] += 1
         else:
             girl["rules_broken"]["slave_auto_maid"] = True 
     def master_clean():
@@ -571,11 +573,13 @@ init python:
         home_mess_value -= max(8,stewardship_value_13*16)
         home_mess_value = max(0, home_mess_value)
     def update_moodlet_new_day_slave():
+        global girl_index
+        girl = all_girls_list[girl_index]
         # TODO need to check permanent state of some moodlet 1/2 DONE
         for key in dic_slave_mood["good_mood"]:
-            if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]:
-                if not all_girls_list[girl_index]["mood_state"]["good_mood"][key]["permanent"]:
-                    all_girls_list[girl_index]["mood_state"]["good_mood"][key]["duration"] -= 1
+            if girl["mood_state"]["good_mood"][key]["active"]:
+                if not girl["mood_state"]["good_mood"][key]["permanent"]:
+                    girl["mood_state"]["good_mood"][key]["duration"] -= 1
                     if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["duration"] == 0:
                         all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"] = False
                         all_girls_list[girl_index]["mood_state"]["good_mood"][key]["duration"] = all_girls_list[girl_index]["mood_state"]["good_mood"][key]["default_duration"]
@@ -601,9 +605,15 @@ init python:
             + all_girls_list[girl_index]["attributes"]["nature"] 
             + all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]*3)
         * all_girls_list[girl_index]["arousal"]))
-
-    
-    
+        if girl["portion_size"] == 0 or girl["days_without_food"] > 0:
+            girl["mood_state"]["bad_mood"]["hungry"]["active"] = True
+            girl["mood_state"]["bad_mood"]["hungry"]["weight"] = min(0.2*girl["days_without_food"],1)
+        else:
+            girl["mood_state"]["bad_mood"]["hungry"]["active"] = False
+        if girl["days_without_food"] > 0:
+            girl["mood_state"]["bad_mood"]["starvation"]["active"] = True
+        else:
+            girl["mood_state"]["bad_mood"]["starvation"]["active"] = False  
     def slave_dead_for_low_endurance_code():
         global girl_index, all_girls_list, sparks_37
         if all_girls_list[girl_index]["attributes"]["endurance"] == 0 and all_girls_list[girl_index]["experience"]["attributes"]["endurance"] <= -10:
@@ -1072,16 +1082,6 @@ init python:
                     missing += 1
             if missing == 0:
                 girl["specialization"][key] = True
-    
-
-
-
-
-
-
-            
-
-        
     def slave_bath_alone():
         global girl_index, home_mess_value
         girl = all_girls_list[girl_index]
@@ -1221,8 +1221,10 @@ init python:
             all_girls_list[girl_index]["mood_state"]["good_mood"].setdefault(key, {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1})
         for key in dic_slave_mood["bad_mood"]:
             all_girls_list[girl_index]["mood_state"]["bad_mood"].setdefault(key, {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1})
-        
-
+        all_girls_list[girl_index].setdefault("already_done",{})
+        for key in dic_specializations:
+            all_girls_list[girl_index]["already_done"].setdefault(key, 0)
+        all_girls_list[girl_index]["already_done"].setdefault("sex", 0)
         all_girls_list[girl_index]["experience"].setdefault("aura", {})
         all_girls_list[girl_index]["experience"]["aura"].setdefault("fear", 0)
         all_girls_list[girl_index]["experience"]["aura"].setdefault("despair", 0)
@@ -1624,8 +1626,6 @@ init python:
             all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] = 0
         if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] > 0:
             all_girls_list[girl_index]["attributes"]["beauty"] = 5
-        
-        
     def master_moodlet_calculation():
         global wealth_quality_modifier, standard_of_living_value_8, brand_reputation_value_6
         global estate_quality, estate_quality_modifier, brand_reputation_value_6
@@ -1961,15 +1961,6 @@ init python:
                 girl["mood_state"]["bad_mood"]["angst"]["weight"] = 0.2*girl["aura"]["despair"]
             else:
                 girl["mood_state"]["bad_mood"]["angst"]["active"] = False
-            if girl["days_without_food"] > 0:
-                girl["mood_state"]["bad_mood"]["hungry"]["active"] = True
-                girl["mood_state"]["bad_mood"]["hungry"]["weight"] = min(0.2*girl["days_without_food"],1)
-            else:
-                girl["mood_state"]["bad_mood"]["hungry"]["active"] = False
-            if girl["attributes"]["physical"] == 0 and girl["mood_state"]["bad_mood"]["hungry"]["active"]:
-                girl["mood_state"]["bad_mood"]["starvation"]["active"] = True
-            else:
-                girl["mood_state"]["bad_mood"]["starvation"]["active"] = False
             if girl["aura"]["fear"] == 0 and girl["aura"]["despair"] == 0:
                 girl["mood_state"]["good_mood"]["moral"]["active"] = True
                 girl["mood_state"]["good_mood"]["moral"]["weight"] = girl["aura"]["devotion"]*0.2
@@ -2161,3 +2152,84 @@ init python:
             else:
                 renpy.show_screen("tutorial_description")
                 renpy.hide_screen("tutorial_descriptionphysical")
+    def master_libido_update():
+        global libido_value_4, mood_value_10, strength_value_1, excitement_value, energy_value
+        global libido_experience_value_4, master_ill
+        if (mood_value_10 > 0 
+        and strength_value_1 > 2
+        and excitement_value > -5
+        and excitement_value < 5
+        and energy_value >= 0):
+            libido_experience_value_4 += (1 + libido_value_4)/2
+        if energy_value < 0:
+            libido_experience_value_4 -= 3
+        if mood_value_10 < 0:
+            libido_experience_value_4 -= 3
+        if master_ill > 6:
+            libido_experience_value_4 -= 5
+        libido_experience_value_4 -= injuries_value_11
+        if excitement_value == 5: #TODO need add chimera_gem_on
+            libido_experience_value_4 -= 3
+    def girl_already_done_check():
+        global girl_index
+        n = []
+        for key in all_girls_list[girl_index]["already_done"]:
+            n.append(all_girls_list[girl_index]["already_done"][key])
+
+        all_girls_list[girl_index]["mood_state"]["bad_mood"]["boring"]["weight"] = max(min(max(n)*0.2-0.6, 1), 0)
+        all_girls_list[girl_index]["mood_state"]["bad_mood"]["boring"]["active"] = False
+        if max(n) >= 3:
+            all_girls_list[girl_index]["mood_state"]["bad_mood"]["boring"]["active"] = True
+    def girl_already_done_update():
+        global girl_index
+        a = sorted(all_girls_list[girl_index]["already_done"].items(), key=lambda x: x[1])
+        for i in range(5):
+            key, value = a[i]
+            all_girls_list[girl_index]["already_done"][key] = max(value - 2, 0)
+    def all_rise_excitement_update():
+        global girl_index
+        global excitement_experience_value, libido_value_4, mood_textvalue_10
+        excitement_experience_value += libido_value_4*10 + max(0,mood_value_10*10)
+        if excitement_value >= 5 and master_equipment["earrings"] != "chimera_earring":
+            blazing_counter += 1
+        else:
+            blazing_counter = 0
+        save_girl_index = girl_index
+        for girl_index in all_girls_list:
+            if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"] > 0:
+                all_girls_list[girl_index]["arousal_rate"] += (all_girls_list[girl_index]["attributes"]["temperament"] + all_girls_list[girl_index]["attributes"]["empathy"] + all_girls_list[girl_index]["mood"])/2
+            if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"] < 0:
+                all_girls_list[girl_index]["arousal_rate"] -= (all_girls_list[girl_index]["attributes"]["temperament"])/2
+            if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"] >= 0:
+                all_girls_list[girl_index]["arousal_rate"] += all_girls_list[girl_index]["attributes"]["endurance"] + all_girls_list[girl_index]["attributes"]["empathy"] + all_girls_list[girl_index]["mood"] + all_girls_list[girl_index]["aura"]["devotion"]
+            all_girls_list[girl_index]["arousal_rate"] -= (6 
+            + all_girls_list[girl_index]["aura"]["despair"]
+            + ( 5 - all_girls_list[girl_index]["attributes"]["pride"])
+            + all_girls_list[girl_index]["aura"]["fear"]
+            + all_girls_list[girl_index]["aura"]["spoil"])
+        girl_index = save_girl_index
+    def slave_daily_bonus_update():
+        global girl_index
+        girl = all_girls_list[girl_index]
+        girl["experience"]["aura"]["devotion"] += girl["daily_bonus"]["devotion"]
+        girl["experience"]["aura"]["taming"] += girl["daily_bonus"]["taming"]
+        girl["arousal_rate"] += girl["daily_bonus"]["arousal"]
+        girl["experience"]["attributes"]["endurance"] += girl["daily_bonus"]["endurance"]
+        girl["experience"]["attributes"]["empathy"] += girl["daily_bonus"]["empathy"]
+        girl["experience"]["attributes"]["temperament"] += girl["daily_bonus"]["temperament"]
+        girl["experience"]["attributes"]["nature"] += girl["daily_bonus"]["nature"]
+        girl["experience"]["attributes"]["pride"] += girl["daily_bonus"]["pride"]
+    def master_excitement_check():
+        global excitement_value, excitement_experience_value
+        excitement_experience_value = max(-160,excitement_experience_value)
+        excitement_experience_value = min(160,excitement_experience_value)
+        a = [(-5,-160),(-4,-80),(-3,-40),(-2,-20),(-1,-10),(0,0),(1,10),(2,20),(3,40),(4,80),(5,160)]
+        for i in a:
+            if excitement_experience_value >= i[1]:
+                excitement_value = i[0]
+        
+            
+
+                
+
+        
