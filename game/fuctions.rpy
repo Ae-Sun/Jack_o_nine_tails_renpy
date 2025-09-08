@@ -2276,7 +2276,7 @@ init python:
             girl["rules_broken"]["behave_alarm"] = True
             return
         else:
-            girl["rules_explain"]["behave_alarm"] += "[all_girls_list[girl_index]["name"]] enters your room in the morning and wakes you up with a blowjob."
+            girl["rules_explain"]["behave_alarm"] += "[all_girls_list[girl_index]['name']] enters your room in the morning and wakes you up with a blowjob."
         if not girl["rules_broken"]["behave_alarm"]:
             girl["slave_auto_alarm"] = True
             a = (20
