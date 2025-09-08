@@ -1,30 +1,37 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/home.rpy", line 422, in script
-    python:
-  File "game/home.rpy", line 466, in <module>
-    girl_already_done_update()
-  File "game/fuctions.rpy", line 2188, in girl_already_done_update
-    all_girls_list[girl_index]["already_done"][a[1]] = max(all_girls_list[girl_index]["already_done"][a[1]] - 2, 0)
-KeyError: ('Assistant', 0)
+  File "renpy/common/00keymap.rpy", line 504, in script
+    python hide:
+  File "renpy/common/00keymap.rpy", line 504, in <module>
+    python hide:
+  File "renpy/common/00keymap.rpy", line 531, in _execute_python_hide
+    renpy.save("_reload-1", "reload save game")
+PicklingError: Can't pickle <function <lambda> at 0x0000000009cda1f0>: attribute lookup <lambda> on store failed
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/home.rpy", line 422, in script
-    python:
+  File "renpy/common/00keymap.rpy", line 504, in script
+    python hide:
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/home.rpy", line 466, in <module>
-    girl_already_done_update()
-  File "game/fuctions.rpy", line 2188, in girl_already_done_update
-    all_girls_list[girl_index]["already_done"][a[1]] = max(all_girls_list[girl_index]["already_done"][a[1]] - 2, 0)
-KeyError: ('Assistant', 0)
+  File "renpy/common/00keymap.rpy", line 504, in <module>
+    python hide:
+  File "renpy/common/00keymap.rpy", line 531, in _execute_python_hide
+    renpy.save("_reload-1", "reload save game")
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\loadsave.py", line 431, in save
+    reraise(t, e, tb)
+  File "lib/python3.9/future/utils/__init__.py", line 444, in raise_
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\loadsave.py", line 417, in save
+    dump((roots, renpy.game.log), logf)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\compat\pickle.py", line 107, in dump
+    pickle.dump(o, f, pickle.HIGHEST_PROTOCOL if highest else PROTOCOL)
+PicklingError: Can't pickle <function <lambda> at 0x0000000009cda1f0>: attribute lookup <lambda> on store failed
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
 JONT Port by Rec3ks ver. 0.0.55
-Sat Sep  6 14:22:28 2025
+Mon Sep  8 13:00:12 2025

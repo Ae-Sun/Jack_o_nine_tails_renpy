@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/mc_stats_iniciation.rpy", line 532: expected statement.
-    }
-    ^
+File "game/fuctions.rpy", line 2279: invalid syntax
+            girl["rules_explain"]["behave_alarm"] += "[all_girls_list[girl_index]["name"]] enters your room in the morning and wakes you up with a blowjob."
+                                                                                    ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Sat Sep  6 14:36:30 2025
+Mon Sep  8 14:02:57 2025

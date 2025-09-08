@@ -24,7 +24,8 @@ define dic_girl_choosing_image_condition_short = {
     "slave_auto_cook":"cook",
     "slave_auto_maid":"clean",
     "slave_auto_bath":"wash",
-    "slave_auto_bath_self":"bath"
+    "slave_auto_bath_self":"bath",
+    "slave_auto_alarm":"bj"
 }
 define dic_slave_attributes_description_keys = {
     "beauty": "Beauty",
@@ -2693,4 +2694,107 @@ define dic_specializations = {
     "Pet Ponygirl": ["Pet", "Pony Racing"],
     "Cow": ["Cow Skill"]
 }
+
+define dic_girl_rules_broken_explain = {
+    "act_as_cook": " [all_girls_list[girl_index]['name']] refuses to prepare meals for you.",
+    "act_as_maid": " [all_girls_list[girl_index]['name']] refuses to clean the house.",
+    "bath_slave": " [all_girls_list[girl_index]['name']] refuses to bathe you.",
+    "behave_alarm": " [all_girls_list[girl_index]['name']] does not come to your room to provide your morning blowjob.",
+    "behave_humility": " [all_girls_list[girl_index]['name']] refuses to call you 'Master'.",
+    "behave_pet": " [all_girls_list[girl_index]['name']] refuses to behave like a pet.",
+    "behave_silence": " [all_girls_list[girl_index]['name']] speaks as if she was allowed to.",
+    "behave_toilet":" [all_girls_list[girl_index]['name']] refuses to take your shit. Using a special toilet seat could solve the problem.",
+    "behave_urinal": " [all_girls_list[girl_index]['name']] refuses to take your urine. Tying her with a urinal rack could solve the problem.",
+    "deny_orgasm":" [all_girls_list[girl_index]['name']] WIP.",
+    "deny_toileting":" [all_girls_list[girl_index]['name']] uses the toilet as if it was allowed. You recall one of the slaver maxims: an anal pear each day keeps the shitting at bay.",
+    "milk_the_fiend":" [all_girls_list[girl_index]['name']] refuses to milk the fiend.",
+    "no_masturbation":" [all_girls_list[girl_index]['name']] WIP.",
+    "use_vaginal_beads":" [all_girls_list[girl_index]['name']] refuses to use the vaginal beads."
+}
+define dic_girl_rules_special_text = {
+    "behave_alarm":{
+        "assistant_pass":" [all_girls_list[girl_index]['name']] does not want to provide your morning blowjob, so your assistant forces her.",
+        "assistant_fail":" [all_girls_list[girl_index]['name']] Your assistant lacks the strength and fighting skill to compel her.",
+        "poor_job"      :" Though she tried, she could not make you cum. Disgust, distress and guilt is visible on her face.",
+        "disgust"       :" Disgust and distress is visible on her face.",
+        "good_job"      :" You leave her with a mouthful of cum and a satisfied smile on her face.",
+        "not_enough_excitement":" Though she tried diligently, she could not get you hard. She looks guilty.",
+        "almost_enough_excitement":" Though she tried diligently, she could not make you cum. She looks guilty."
+    },
+    "behave_humility":{
+        "force_rule":" [all_girls_list[girl_index]['name']] calls you 'Master' as her collar inexorably enforces.",
+        "poor_job":" [all_girls_list[girl_index]['name']]  But she is clearly too willful or proud to enjoy it",
+        "good_job":" [all_girls_list[girl_index]['name']]  And she seems to derive some satisfaction from it."
+    },
+    "behave_pet":{
+        "force_rule":" [all_girls_list[girl_index]['name']] cannot break out of her pet suit, maintaining her on all fours all day long.",
+        "poor_job":" [all_girls_list[girl_index]['name']]  She seems to resent this.",
+        "good_job":" [all_girls_list[girl_index]['name']]  She seems to enjoy it."
+    },
+    "behave_silence":{
+        "force_rule":" [all_girls_list[girl_index]['name']] regularly moans behind her gag.",
+        "poor_job":" [all_girls_list[girl_index]['name']] She is clearly unhappy with this suppression of her temperament.",
+        "good_job":" [all_girls_list[girl_index]['name']] She seems happy to attend to you without words."
+    },
+    "behave_toilet":{
+        "force_rule":" [all_girls_list[girl_index]['name']] would keep her mouth sealed or run away if not for the gag that force-spreads her lips and the toilet rack to which she is steadily tied.",
+        "poor_job":" [all_girls_list[girl_index]['name']] Being befouled with your waste seems to upset her.",
+        "good_job":" [all_girls_list[girl_index]['name']] She seems happy to receive your waste."
+    },
+    "behave_urinal":{
+        "force_rule":" [all_girls_list[girl_index]['name']] would flee if not restrained on the urinal rack.",
+        "poor_job":" [all_girls_list[girl_index]['name']] Being befouled with your urine seems to upset her.",
+        "good_job":" [all_girls_list[girl_index]['name']]  She seems happy to receive your waste."
+    },
+    "deny_toileting":{
+        "force_rule":" [all_girls_list[girl_index]['name']] regularly tries to remove her anal plug, unsuccessfully.",
+        "poor_job":" [all_girls_list[girl_index]['name']] She seems resentful.",
+        "good_job":" [all_girls_list[girl_index]['name']] She seems pleased to have more time with you."
+    },
+    "milk_the_fiend":{
+        "inexperience":" [all_girls_list[girl_index]['name']]  She is not familiar with the procedure."
+    },
+
+    "use_vaginal_beads":{
+        "force_rule":" [all_girls_list[girl_index]['name']] only uses the vaginal beads because the chastity belt prevents her from removing them.",
+        "poor_job":" [all_girls_list[girl_index]['name']] Too much self-esteem or a lack of experience makes this painful to her.",
+        "good_job":" [all_girls_list[girl_index]['name']] She seems to enjoy the sensations."
+    }
+}
+define auto_tasks = {
+    "slave_auto_sleep": {
+        "condition": "slave_auto_sleep",
+        "text": sleep_text,
+        "room": sleep_room,
+    },
+    "slave_auto_cook": {
+        "condition": "slave_auto_cook",
+        "text": cook_text,
+        "room": cook_room,
+        "extra": cook_extra,
+    },
+    "slave_auto_maid": {
+        "condition": "slave_auto_maid",
+        "text": maid_text,
+        "room": maid_room,
+    },
+    "slave_auto_bath": {
+        "condition": "slave_auto_bath",
+        "text": bath_text,
+        "room": bath_room,
+    },
+    "slave_auto_bath_self": {
+        "condition": "slave_auto_bath_self",
+        "text": bath_self_text,
+        "room": bath_self_room,
+    },
+    "slave_auto_alarm": {
+        "condition":"slave_auto_alarm",
+        "text": alarm_text,
+        "room": alarm_room,
+        "extra": alarm_extra,
+    }
+}
+
+
 

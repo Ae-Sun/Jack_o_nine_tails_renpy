@@ -529,6 +529,20 @@ define dic_master_excitement = {
     4: "Ardent",
     5: "Blazing",
 }
+define dic_master_excitement_colored = {
+    -5: "{color=#cd0000}Shriveled{/color}",
+    -4: "{color=#be0000}Flaccid{/color}",
+    -3: "{color=#af0000}Hanging{/color}",
+    -2: "{color=#a00000}Cold{/color}",
+    -1: "{color=#910000}Sated{/color}",
+    0: "{color=#000000}Contented{/color}",
+    1: "{color=#EA0090}Aroused{/color}",
+    2: "{color=#6B0084}Ignited{/color}",
+    3: "{color=#0000D8}Heated{/color}",
+    4: "{color=#009FEF}Ardent{/color}",
+    5: "{color=#009900}Blazing{/color}"
+}
+
 ###############################################################################################################################################################################################################
 ###############################################################################################################################################################################################################
 ###############################################################################################################################################################################################################
@@ -567,6 +581,7 @@ default oral_sex_textvalue_22 = ""
 default penetration_textvalue_23 = ""
 default fetishism_textvalue_24 = ""
 default reputation_textvalue_1 = ""
+default excitement_textvalue = ""
 ################################## values -rec3ks
 
 default strength_value_1 = 0
@@ -652,63 +667,63 @@ default pos_show_counter = 0
 default description_master_attributes_track_value = ""
 default master_mood_state = {
     "good_mood": {
-        "pos_energy"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_new_slave"      : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_housing"        : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_house_clean"    : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_master_cloth"   : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_self_clean"     : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_toilet"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_nice_slave"     : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_massage"        : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_good_morning"   : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_satisfied"      : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_optimism"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_good_pet"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_show"           : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_self_food"      : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_date"           : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_master_winner"  : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_deal"           : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_wealth"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_kannabis"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_drunk"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_opium"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_bahus"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "pos_master_precious": {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1}
+        "pos_energy"         : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_new_slave"      : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_housing"        : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_house_clean"    : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_master_cloth"   : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_self_clean"     : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_toilet"         : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_nice_slave"     : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_massage"        : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_good_morning"   : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_satisfied"      : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_optimism"       : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_good_pet"       : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_show"           : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_self_food"      : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_date"           : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_master_winner"  : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_deal"           : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_wealth"         : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_kannabis"       : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_drunk"          : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_opium"          : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_bahus"          : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "pos_master_precious": {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1}
     },
     "bad_mood": {
-        "neg_master_loser"   : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_boring"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_tired"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_drunk"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_wounded"        : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_no_koffe"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_no_opium"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_no_meth"        : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_softcore"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_boner"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_blazing"        : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_dirty"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_master_ill"     : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_cleaning"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_cook"           : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_food"           : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_housing"        : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_home_hygiene_value": {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_wealth"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_accounts"       : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_worn_clothes"   : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_master_cloth"   : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_alone"          : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_escape"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_slave_suicidal" : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_slave_died"     : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_slave_killed"   : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_slave_starved"  : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_rebell"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_grumpy"         : {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
-        "neg_master_precious": {"permanent": False , "accustomed": False, "accustomed_value": 20, "active": False, "weight": 1, "duration": 1, "default_duration": 1}
+        "neg_master_loser"   : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_boring"         : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_tired"          : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_drunk"          : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_wounded"        : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_no_koffe"       : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_no_opium"       : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_no_meth"        : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_softcore"       : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_boner"          : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_blazing"        : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_dirty"          : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_master_ill"     : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_cleaning"       : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_cook"           : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_food"           : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_housing"        : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_home_hygiene_value": {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_wealth"         : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_accounts"       : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_worn_clothes"   : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_master_cloth"   : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_alone"          : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_escape"         : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_slave_suicidal" : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_slave_died"     : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_slave_killed"   : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_slave_starved"  : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_rebell"         : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_grumpy"         : {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1},
+        "neg_master_precious": {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1}
     }
 }
 default master_house_reputation = {

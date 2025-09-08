@@ -27,6 +27,9 @@ default shameful = False
 default painful = False
 default disgusting = False
 default homosexual = False
+default damage = 0
+default bruising = False
+default scarification = False
 
 default bgstyle = "bg_main_old.webp"
 default bgstyle2 = "bg_old.webp"
@@ -45,6 +48,7 @@ default energy_image2 = "ui overhaul/energy/energy_green_half.webp"
 default dic_spellbook_info_index = "default"
 default mc_image = ""
 default mc_image2 = ""
+default sex_picture = False
 default text_slave_conditions_index = "default"
 default show_main_slave = False # if main slave really exist this value show it 
 default is_assistant_assigned = False # this variable is used to check if the assistant is assigned
@@ -435,6 +439,7 @@ label next_day_labellabel:
         pos_show_counter -= 1
 
         master_libido_update()
+        master_moodlet_update()
         all_rise_excitement_update()
         if debt_tracker > 0:
             debt_tracker -= 1
@@ -460,6 +465,8 @@ label next_day_labellabel:
                     all_girls_list[girl_index]["energised"] = max(all_girls_list[girl_index]["energised"]- random.randint(0, 7),0)
                 for i in all_girls_list[girl_index]["rules_broken"]:
                     all_girls_list[girl_index]["rules_broken"][i] = False
+                for i in all_girls_list[girl_index]["rules_explain"]:
+                    all_girls_list[girl_index]["rules_explain"][i] = ""
                 # TODO need to check permanent state of some moodlet 1/2 DONE
                 update_moodlet_new_day_slave()
                 slave_daily_bonus_update()
@@ -472,6 +479,7 @@ label next_day_labellabel:
                 auto_maid()
                 auto_bath_slave_help_master()
                 slave_bath_selfwash_auto()
+                auto_alarm()
                 #TODO NEXT THING TO DO 
 
                 well_rest_bonus_calculation()
@@ -521,52 +529,19 @@ label Next_day_event:
         for i in range(len(girls_keys)):
             idx = (save_girl_index + i) % (len(girls_keys))
             girl_index = girls_keys[idx]
-            if all_girls_list[girl_index]["slave_auto_sleep"]:
-                choosing_image_condition = "slave_auto_sleep"
-                pic_displayed = display_pic()
-                n = random.randint(0,4)
-                next_day_event_screen_text = all_girls_list[girl_index]["name"] +" " + dic_idle[n]
-                room_name = dic_slave_room_to_text[all_girls_list[girl_index]["sleep_room"]]
-                all_girls_list[girl_index]["slave_auto_sleep"] = False
-                renpy.call_screen("next_day_event_screen")
-            if all_girls_list[girl_index]["slave_auto_cook"]:
-                choosing_image_condition = "slave_auto_cook"
-                pic_displayed = display_pic()
-                next_day_event_screen_text = dic_cook[food_meat_info["quality"]] 
-                room_name = "Kitchen"
-                target_skill = "cooking" # this is necesary 
-                interaction_willingness_check()
-                diligence333_check333()
-                girl_skills_rise_checkcheck()
-                display_meat = True
-                all_girls_list[girl_index]["slave_auto_cook"] = False
-                renpy.call_screen("next_day_event_screen")
-            if all_girls_list[girl_index]["slave_auto_maid"]:
-                choosing_image_condition = "slave_auto_maid"
-                pic_displayed = display_pic()
-                next_day_event_screen_text = dic_maid[all_girls_list[girl_index]["maid_slave_skill_performance"]]
-                room_name = "Hall"
-                target_skill = "maid"
-                interaction_willingness_check()
-                diligence333_check333()
-                girl_skills_rise_checkcheck()
-                all_girls_list[girl_index]["slave_auto_maid"] = False
-                renpy.call_screen("next_day_event_screen")
-            if all_girls_list[girl_index]["slave_auto_bath"]:
-                choosing_image_condition = "slave_auto_bath"
-                pic_displayed = display_pic()
-                next_day_event_screen_text = dic_bath_master[2]
-                room_name = "Bath"
-                all_girls_list[girl_index]["slave_auto_bath"] = False
-                renpy.call_screen("next_day_event_screen")
-            if all_girls_list[girl_index]["slave_auto_bath_self"]:
-                choosing_image_condition = "slave_auto_bath_self"
-                pic_displayed = display_pic()
-                next_day_event_screen_text = bathing_slave_alone[all_girls_list[girl_index]["psy_status"]]
-                room_name = "Bath"
-                all_girls_list[girl_index]["slave_auto_bath_self"] = False
-                renpy.call_screen("next_day_event_screen")
-            
+            girl = all_girls_list[girl_index]
+            for a, b in auto_tasks.items():
+                if girl[a]:
+                    # Handle optional extras like target_skill or display_meat
+                    if "extra" in b:
+                        for k, v in b["extra"]().items():
+                            globals()[k] = v
+                    choosing_image_condition = b["condition"]
+                    pic_displayed = display_pic()
+                    next_day_event_screen_text = b["text"](girl)
+                    room_name = b["room"](girl)
+                    girl[a] = False
+                    renpy.call_screen("next_day_event_screen")            
         if master_auto["clean"]:
             pic_displayed = "scene/master_clean.webp"
             next_day_event_screen_text = dic_master_clean[stewardship_value_13]
@@ -639,7 +614,7 @@ screen information_for_consideration_screen():
         text home_localization size 30 color "#000000" font "fonts/victoriana.ttf" anchor (0.5, 0.5)
         add "spacer" size (0, 20)
         text "Information for consideration:" size 30 color "#000000" font "fonts/victoriana.ttf" anchor (0.5, 0.5)
-
+        text str(testvariable1)
 
 
 
@@ -665,8 +640,8 @@ label Home:
         master_excitement_check()
         slave_rank_update() # this update globals variables must be outside of loop for
         if len(all_girls_list) > 0: #slave calculation part 
-            update_beauty_style_exoticism_slave()
-            sex_experience_average_update()
+            beauty_style_exoticism_slave_calculation()
+            sex_experience_average_calculation()
             obedience_difficulty_adjustment()
             girl_index_save = girl_index
             for girl_index in all_girls_list:
@@ -3180,7 +3155,11 @@ screen homehome_attributes_menu():
             action SetVariable("current_menu",203), Jump("Home")
             hovered SetVariable("mood_textvalue_10",dic_slave_moodlevel_no_color[mood_textvalue_10])
             unhovered SetVariable("mood_textvalue_10",dic_slave_moodlevel2[mood_textvalue_10])
-        text dic_master_excitement[excitement_value] anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12 #TODO NEXT THING TO DO 
+        textbutton excitement_textvalue anchor (0.5,0.5):
+            style "slave_mood_style"
+            action NullAction()
+            hovered SetVariable("excitement_textvalue",dic_master_excitement[excitement_value])
+            unhovered SetVariable("excitement_textvalue",dic_master_excitement_colored[excitement_value])
         textbutton dic_hygiene_condition[hygiene_value_9] anchor (0.5,0.5):
             style "home_condition_style" + str(hygiene_value_9)
             action SetVariable("all_hygiene_multidic",dic_hygiene_condition), Show("all_hygiene_attributes")
@@ -3250,6 +3229,17 @@ screen homehome_attributes_menu():
                     hover "buttons/fast_wash_hover.webp"
                     action Jump("slave_bathing_label")
                     at Transform(size=(19, 19))
+    hbox:
+        pos(0.95,0.308)
+        anchor (0.5,0.0)
+        if excitement_value >= 0:
+            imagebutton:
+                idle "buttons/fast_button.webp"
+                hover "buttons/fast_button_hover.webp"
+                action NullAction()
+                at Transform(size=(19, 19))
+
+
     hbox:
         pos(0.91,0.260)
         anchor (0.5,0.0)
