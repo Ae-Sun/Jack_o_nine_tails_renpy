@@ -1,37 +1,60 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "renpy/common/00keymap.rpy", line 504, in script
-    python hide:
-  File "renpy/common/00keymap.rpy", line 504, in <module>
-    python hide:
-  File "renpy/common/00keymap.rpy", line 531, in _execute_python_hide
-    renpy.save("_reload-1", "reload save game")
-PicklingError: Can't pickle <function <lambda> at 0x0000000009cda1f0>: attribute lookup <lambda> on store failed
+  File "game/home.rpy", line 678, in script
+    $ handle_menu()
+  File "game/home.rpy", line 678, in <module>
+    $ handle_menu()
+  File "game/fuctions.rpy", line 2160, in handle_menu
+    renpy.show_screen("homehome_attributes_menu")
+  File "game/home.rpy", line 3154, in execute
+    screen homehome_attributes_menu():
+  File "game/home.rpy", line 3154, in execute
+    screen homehome_attributes_menu():
+  File "game/home.rpy", line 3229, in execute
+    textbutton all_girls_list[girl_index]["rating_text_display"] pos(0.8465,0.365):
+  File "game/home.rpy", line 3229, in keywords
+    textbutton all_girls_list[girl_index]["rating_text_display"] pos(0.8465,0.365):
+  File "game/home.rpy", line 3232, in <module>
+    hovered SetDict(all_girls_list[girl_index], rating_text_display,dic_rating[all_girls_list[girl_index]["rating"]])
+NameError: name 'rating_text_display' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "renpy/common/00keymap.rpy", line 504, in script
-    python hide:
+  File "game/home.rpy", line 678, in script
+    $ handle_menu()
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "renpy/common/00keymap.rpy", line 504, in <module>
-    python hide:
-  File "renpy/common/00keymap.rpy", line 531, in _execute_python_hide
-    renpy.save("_reload-1", "reload save game")
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\loadsave.py", line 431, in save
-    reraise(t, e, tb)
-  File "lib/python3.9/future/utils/__init__.py", line 444, in raise_
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\loadsave.py", line 417, in save
-    dump((roots, renpy.game.log), logf)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\compat\pickle.py", line 107, in dump
-    pickle.dump(o, f, pickle.HIGHEST_PROTOCOL if highest else PROTOCOL)
-PicklingError: Can't pickle <function <lambda> at 0x0000000009cda1f0>: attribute lookup <lambda> on store failed
+  File "game/home.rpy", line 678, in <module>
+    $ handle_menu()
+  File "game/fuctions.rpy", line 2160, in handle_menu
+    renpy.show_screen("homehome_attributes_menu")
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 1362, in show_screen
+    sls.add(_layer, d, _tag, zorder=_zorder, transient=_transient, keep_st=True, name=name)
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\scenelists.py", line 444, in add
+    if not self.hide_or_replace(layer, remove_index, "replaced"):
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\scenelists.py", line 503, in hide_or_replace
+    if not oldsle.displayable._handles_event(prefix):
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 533, in _handles_event
+    self.update()
+  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 700, in update
+    self.screen.function(**self.scope)
+  File "game/home.rpy", line 3154, in execute
+    screen homehome_attributes_menu():
+  File "game/home.rpy", line 3154, in execute
+    screen homehome_attributes_menu():
+  File "game/home.rpy", line 3229, in execute
+    textbutton all_girls_list[girl_index]["rating_text_display"] pos(0.8465,0.365):
+  File "game/home.rpy", line 3229, in keywords
+    textbutton all_girls_list[girl_index]["rating_text_display"] pos(0.8465,0.365):
+  File "game/home.rpy", line 3232, in <module>
+    hovered SetDict(all_girls_list[girl_index], rating_text_display,dic_rating[all_girls_list[girl_index]["rating"]])
+NameError: name 'rating_text_display' is not defined
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
 JONT Port by Rec3ks ver. 0.0.55
-Mon Sep  8 13:00:12 2025
+Tue Sep  9 21:26:48 2025

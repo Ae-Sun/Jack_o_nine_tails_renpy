@@ -15,7 +15,6 @@ default testvariable10 = 0
 
 ####
 default selected_json_data = None  # This will hold the content of the selected JSON
-default next_id = 0 # Initialize counter
 default all_hygiene_multidic = {} #  not important variable need to make screen logic 
 default home_condition = dic_home_condition[5] #  not important variable need to make screen logic 
 default home_hygiene_value = 5 # this variable is used to track the hygiene value of the home
@@ -30,7 +29,8 @@ default homosexual = False
 default damage = 0
 default bruising = False
 default scarification = False
-
+default guilt_potencial = 5 # default max
+default merit_potencial = 5 # default max 
 default bgstyle = "bg_main_old.webp"
 default bgstyle2 = "bg_old.webp"
 default bgstyle3 = "bg_stat_old.webp"
@@ -45,6 +45,7 @@ default home_menu_image5 = "ui overhaul/assistant_assignments.webp"
 default home_menu_image6 = "ui overhaul/end_day.webp"
 default energy_image1 = "ui overhaul/energy/energy_green.webp"
 default energy_image2 = "ui overhaul/energy/energy_green_half.webp"
+default tem_variable3214 = 0
 default dic_spellbook_info_index = "default"
 default mc_image = ""
 default mc_image2 = ""
@@ -57,6 +58,7 @@ default current_menu = 0 # this variable is used to show the current menu
 default mood_value = 0 # this variable is used to show the mood value master
 default day_tracker = 1 # this variable is used to track the day
 default is_auspex_active = False # this variable is used to check if the auspex is active
+default is_sententia_veritas_active = False
 default slave_suicide = False # this variable is used to check if the slave is suicide
 default pic_displayed = "scene/item/clear_small" # this variable is used to show the pic displayed
 default choosing_image_condition = "" # this variable is used to check the choosing image condition
@@ -110,6 +112,10 @@ default house_items = 0
 default alone_count = 0
 default best_kitchen = ""
 default girls_count = 0
+default tentacle = {
+    "active": False,
+    "type": ""
+}
 default target_skill = ""
 default slave_diligence = 0
 default motivation_repulse = 0
@@ -121,12 +127,10 @@ default slave_psy_hardness = 0
 default maxmotivation = 0
 default master_ill = 0
 default client_slave_requierement_tier = 0
-default rating_help_text = ""
 default master_auto = {
     "cook": False,
     "clean": False
 }
-default rating_text_display = ""
 default interaction_textdisplay_screen_text = ""
 default yesterday_exhaustion = 0
 default did_bath_yesterday = False
@@ -467,7 +471,6 @@ label next_day_labellabel:
                     all_girls_list[girl_index]["rules_broken"][i] = False
                 for i in all_girls_list[girl_index]["rules_explain"]:
                     all_girls_list[girl_index]["rules_explain"][i] = ""
-                # TODO need to check permanent state of some moodlet 1/2 DONE
                 update_moodlet_new_day_slave()
                 slave_daily_bonus_update()
                 girl_already_done_update()
@@ -638,7 +641,6 @@ label Home:
         master_moodlet_calculation()
         master_mood_calculation()
         master_excitement_check()
-        slave_rank_update() # this update globals variables must be outside of loop for
         if len(all_girls_list) > 0: #slave calculation part 
             beauty_style_exoticism_slave_calculation()
             sex_experience_average_calculation()
@@ -649,6 +651,7 @@ label Home:
                 maxmotivation = max(all_girls_list[girl_index]["aura"]["fear"],all_girls_list[girl_index]["aura"]["devotion"],all_girls_list[girl_index]["aura"]["spoil"],all_girls_list[girl_index]["aura"]["habit"],all_girls_list[girl_index]["aura"]["awareness"],all_girls_list[girl_index]["aura"]["taming"],all_girls_list[girl_index]["arousal"])
                 slave_psy_hardness = max(all_girls_list[girl_index]["attributes"]["temperament"],all_girls_list[girl_index]["attributes"]["nature"],(5 - all_girls_list[girl_index]["attributes"]["pride"]),all_girls_list[girl_index]["attributes"]["intelligence"]) #TODO I STILL NEED TO ADD COURAGE
                 slave_psy_hardness += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_aura(1/16)"]["feartrait"]["value"]
+                slave_specialization_check() #TODO need sometype of indication for specialization achieve
                 supermacy_calculation()
                 cap_slave_values()
                 girl_already_done_check()
@@ -659,6 +662,7 @@ label Home:
                 broken_slave_check()
                 slave_mood_giga_calculation()
                 obedience_calculation()
+                slave_rank_update() 
                 slave_psy_status_calculation()
             girl_index = girl_index_save
     if slave_rebellion_fight:
@@ -1572,14 +1576,13 @@ screen home_menu():
         add home_menu_image5 size(50,50)
         add home_menu_image6 size(50,50)
     vbox:
-        if is_tutorial:
+        if len(all_girls_list) > 1:
             key "K_TAB" action SetVariable("girl_index", (girl_index + 1) % len(all_girls_list)), Jump("Home")
             pos(0.6,0.08)
             anchor (0, 0)
-            if len(all_girls_list) > 1:
-                textbutton "change girl":   
-                    style "home_button"
-                    action SetVariable("girl_index", (girl_index + 1) % len(all_girls_list)), Jump("Home")
+            textbutton "change girl":   
+                style "home_button"
+                action SetVariable("girl_index", (girl_index + 1) % len(all_girls_list)), Jump("Home")
 screen slave_activities_menu():
     key "K_SPACE" action SetVariable("current_menu", 0),Jump("Home")
     imagebutton pos(0.02,0.4):
@@ -2595,16 +2598,23 @@ screen slave_rules_menu():
                 idle "buttons/unsel_button.webp"
                 hover "buttons/unsel_button_hover.webp"
                 action SetDict(all_girls_list[girl_index]["rules"], "deny_toileting", True),SetVariable("text_slave_conditions_index","deny_toileting_rules"),SetDict(all_girls_list[girl_index]["rules"],"rules_count",all_girls_list[girl_index]["rules"]["rules_count"] + 1), Jump("Home")
-        if all_girls_list[girl_index]["rules"]["milk_the_fiend"]:
-            imagebutton:
-                idle "buttons/sel_button.webp"
-                hover "buttons/sel_button_hover.webp"
-                action SetDict(all_girls_list[girl_index]["rules"], "milk_the_fiend", False),SetVariable("text_slave_conditions_index","slave_tentacle_rule_abort"),SetDict(all_girls_list[girl_index]["rules"],"rules_count",all_girls_list[girl_index]["rules"]["rules_count"] - 1), Jump("Home")
+        if tentacle["active"]:
+            if all_girls_list[girl_index]["rules"]["milk_the_fiend"]:
+                imagebutton:
+                    idle "buttons/sel_button.webp"
+                    hover "buttons/sel_button_hover.webp"
+                    action SetDict(all_girls_list[girl_index]["rules"], "milk_the_fiend", False),SetVariable("text_slave_conditions_index","slave_tentacle_rule_abort"),SetDict(all_girls_list[girl_index]["rules"],"rules_count",all_girls_list[girl_index]["rules"]["rules_count"] - 1), Jump("Home")
+            else:
+                imagebutton:
+                    idle "buttons/unsel_button.webp"
+                    hover "buttons/unsel_button_hover.webp"
+                    action SetDict(all_girls_list[girl_index]["rules"], "milk_the_fiend", True),SetVariable("text_slave_conditions_index","slave_tentacle_rule"),SetDict(all_girls_list[girl_index]["rules"],"rules_count",all_girls_list[girl_index]["rules"]["rules_count"] + 1), Jump("Home")
         else:
             imagebutton:
-                idle "buttons/unsel_button.webp"
-                hover "buttons/unsel_button_hover.webp"
-                action SetDict(all_girls_list[girl_index]["rules"], "milk_the_fiend", True),SetVariable("text_slave_conditions_index","slave_tentacle_rule"),SetDict(all_girls_list[girl_index]["rules"],"rules_count",all_girls_list[girl_index]["rules"]["rules_count"] + 1), Jump("Home")
+                idle "buttons/unactive_button.webp"
+                hover "buttons/unactive_button_hover.webp"
+                action NullAction()
+
         if all_girls_list[girl_index]["rules"]["no_masturbation"]:
             imagebutton:
                 idle "buttons/sel_button.webp"
@@ -3157,7 +3167,7 @@ screen homehome_attributes_menu():
             unhovered SetVariable("mood_textvalue_10",dic_slave_moodlevel2[mood_textvalue_10])
         textbutton excitement_textvalue anchor (0.5,0.5):
             style "slave_mood_style"
-            action NullAction()
+            action Show("excitement_screen")
             hovered SetVariable("excitement_textvalue",dic_master_excitement[excitement_value])
             unhovered SetVariable("excitement_textvalue",dic_master_excitement_colored[excitement_value])
         textbutton dic_hygiene_condition[hygiene_value_9] anchor (0.5,0.5):
@@ -3185,7 +3195,21 @@ screen homehome_attributes_menu():
                 action Show("mood_attributes")
                 hovered SetDict(all_girls_list[girl_index],"mood_label",dic_slave_moodlevel_no_color[all_girls_list[girl_index]["mood_label"]])
                 unhovered SetDict(all_girls_list[girl_index],"mood_label",dic_slave_moodlevel2[all_girls_list[girl_index]["mood_label"]])
-            text "No achievements" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
+
+            if all_girls_list[girl_index]["achievements"] > 0:
+                textbutton "Excelled [[" + str(all_girls_list[girl_index]["achievements"]) + "]" anchor (0.5,0.5):
+                    style "achievements_style" + str(all_girls_list[girl_index]["achievements"])
+                    action Show("msg",msg_text="{b}MERIT:{/b}\n potential merit is capped by temperament + 1, main factor: slave diligence, oft-repeated tasks give less merit, devoted slaves feel less deserving, spoiled slaves feel more deserving, and slaves who were already rewarded in the same day expect LESS subsequent rewards")
+            elif all_girls_list[girl_index]["achievements"] == 0:
+                textbutton "No achievements" anchor (0.5,0.5):
+                    style "achievements_style" + str(all_girls_list[girl_index]["achievements"])
+                    action Show("msg",msg_text="{b}No achievements{/b}\n Your slave doesn't have feel any guilt or merit")
+            else:
+                textbutton "Guilty [[" + str(tem_variable3214) + "]" anchor (0.5,0.5):
+                    style "something_guilty_style" + str(tem_variable3214) 
+                    action Show("msg",msg_text="{b}Guilty{/b}\n potential guilty is capped by fear + 1, main factor: fear, oft-repeated tasks give more guilt,  awared slave feel more guilt, and slaves who were already punished in the same day expect MORE subsequent punishments")
+
+
             textbutton dic_hygiene_condition[all_girls_list[girl_index]["hygiene"]] anchor (0.5,0.5):
                 style "home_condition_style" + str(all_girls_list[girl_index]["hygiene"])
                 action SetVariable("all_hygiene_multidic",dic_hygiene_condition), Show("all_hygiene_attributes")
@@ -3202,11 +3226,11 @@ screen homehome_attributes_menu():
             action SetVariable("all_hygiene_multidic",dic_home_condition), Show("all_hygiene_attributes")
         text "Cannned food" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
     add "black" pos(0.84572,0.36361) xysize(27,20)
-    textbutton rating_text_display pos(0.8465,0.365):
+    textbutton all_girls_list[girl_index]["rating_text_display"] pos(0.8465,0.365):
         style "rating_button"
-        action Show("msg",msg_text=rating_help_text)
-        hovered SetVariable("rating_text_display",dic_rating[all_girls_list[girl_index]["rating"]])
-        unhovered SetVariable("rating_text_display",dic_rating_colored[all_girls_list[girl_index]["rating"]])
+        action Show("msg",msg_text=all_girls_list[girl_index]["rating_help_text"])
+        hovered SetDict(all_girls_list[girl_index], "rating_text_display",dic_rating[all_girls_list[girl_index]["rating"]])
+        unhovered SetDict(all_girls_list[girl_index], "rating_text_display",dic_rating_colored[all_girls_list[girl_index]["rating"]])
 
 
     vbox:
@@ -3266,7 +3290,6 @@ screen homehome_attributes_menu():
             if has_half:
                 add energy_image2 size(7,7) anchor (0.5,0.5)
 screen bg_home():
-    #TODO key "K_TAB" action SetVariable("girl_index", (girl_index + 1) % len(all_girls_list)), Jump("Home")
 
     if len(all_girls_list) > 0:
         key "K_SPACE" action SetVariable("current_menu", 100), Jump("Home")

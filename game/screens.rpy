@@ -781,6 +781,83 @@ style home_condition_style5_text:
     font "fonts/Segoe Print.ttf"
     color "#009900"
     hover_color "#ffff00"
+style something_guilty_style5 is default
+style something_guilty_style5_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#cd0000"
+    hover_color "#ffff00"
+
+style something_guilty_style4 is default
+style something_guilty_style4_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#EA0090"
+    hover_color "#ffff00"
+
+style something_guilty_style3 is default
+style something_guilty_style3_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#FF4FBB"
+    hover_color "#ffff00"
+
+style something_guilty_style2 is default
+style something_guilty_style2_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#6B0084"
+    hover_color "#ffff00"
+
+style something_guilty_style1 is default
+style something_guilty_style1_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#A300CC"
+    hover_color "#ffff00"
+
+style achievements_style0 is default
+style achievements_style0_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#000000"
+    hover_color "#ffff00"
+
+style achievements_style1 is default
+style achievements_style1_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#0000D8"
+    hover_color "#ffff00"
+
+style achievements_style2 is default
+style achievements_style2_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#006599"
+    hover_color "#ffff00"
+
+style achievements_style3 is default
+style achievements_style3_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#009FEF"
+    hover_color "#ffff00"
+
+style achievements_style4 is default
+style achievements_style4_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#006600"
+    hover_color "#ffff00"
+
+style achievements_style5 is default
+style achievements_style5_text:
+    size 12
+    font "fonts/Segoe Print.ttf"
+    color "#009900"
+    hover_color "#ffff00"
+
 
 style default:
     properties gui.text_properties()

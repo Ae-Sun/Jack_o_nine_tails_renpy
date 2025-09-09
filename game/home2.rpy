@@ -58,4 +58,28 @@ label master_bathing_label():
         setup_interaction_screen()
     call screen interaction_textdisplay_screen()
     
-
+screen excitement_screen():
+    zorder 50
+    add "gui/confirm_frame.png" at truecenter
+    vbox:
+        pos (0.5, 0.28)
+        text "{b}EXCITEMENT:{/b}" xmaximum  445:
+            color "#191970"
+            anchor(0.5,0.0)
+            size 14
+            font "fonts/Segoe Print.ttf"
+        add "spacer" size(0,12)
+        for a in dic_master_excitement_colored:
+            textbutton dic_master_excitement_colored[a] anchor (0.5,0.5): 
+                style "attribute_mood"
+                action NullAction()
+    text " Press space to close this window.":
+        pos (0.33, 0.65)
+        color "#191970"
+        size 14
+        font "fonts/Segoe Print.ttf"
+    imagebutton:
+        idle "buttons/ok-icon.webp" pos (0.5, 0.7)
+        hover "buttons/ok-icon_hover.webp"
+        action Hide("excitement_screen")
+    key "K_SPACE" action Hide("excitement_screen")

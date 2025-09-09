@@ -2,9 +2,8 @@
 errors listed below, and try again.
 
 
-File "game/fuctions.rpy", line 2279: invalid syntax
-            girl["rules_explain"]["behave_alarm"] += "[all_girls_list[girl_index]["name"]] enters your room in the morning and wakes you up with a blowjob."
-                                                                                    ^
+File "game/fuctions.rpy", line 2437: invalid syntax
+        global is_sententia_veritas_active, testvariable1, testvariable2, 
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Mon Sep  8 14:05:12 2025
+Tue Sep  9 20:40:00 2025

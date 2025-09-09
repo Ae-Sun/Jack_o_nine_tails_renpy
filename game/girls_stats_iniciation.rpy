@@ -696,7 +696,7 @@ define dic_traits_aura_description = {
     ],
     "awarenesstrait": [
         "Null",
-        "{b}Observant{/b} \nYour slave is observant and notices small details others may miss. She is highly perceptive and aware of her surroundings and dynamics.",
+        "{b}{/b} \nYour slave is observant and notices small details others may miss. She is highly perceptive and aware of her surroundings and dynamics.",
         "{b}Highly Perceptive{/b} \nYour slave is observant and notices small details others may miss. She is highly perceptive and aware of her surroundings and dynamics. She has a bright aura with a special intensity, which will allow her to reach new heights.",
         "{b}Oblivious{/b} \nYour slave is clueless and slow to catch on to changes or instructions. She is oblivious to what's going on, which limits her effectiveness. She has a dim aura, which will limit her potential for improvement.",
         "{b}Clueless{/b} \nYour slave is clueless and slow to catch on to changes or instructions. She is oblivious to what's going on, which limits her effectiveness."
@@ -2686,13 +2686,14 @@ define bathing_slave_alone = {
 }
 
 define dic_specializations = {
-    "Servant": ["Maid", "Cooking"],
-    "Assistant": ["Secretary", "Elocution"],
-    "Witch Doctor": ["Nursing", "Alchemy", "Witchcraft"],
-    "Gladiatrix": ["Gladiatrix", "Athletics", "Nature", "Temperament"],
-    "Artist": ["Dancing", "Music", "Painting"],
-    "Pet Ponygirl": ["Pet", "Pony Racing"],
-    "Cow": ["Cow Skill"]
+    "Servant": ["maid", "cooking"],
+    "Assistant": ["secretary", "elocution"],
+    "Witch Doctor": ["nursing", "alchemy", "witchcraft"],
+    "Gladiatrix": ["gladiatrix", "athletics", "nature", "temperament"],
+    "Artist": ["dance", "music", "painting"],
+    "Pet Ponygirl": ["pet", "pony"],
+    "Cow": ["cow"],
+    "Concubine":["sex"]
 }
 
 define dic_girl_rules_broken_explain = {

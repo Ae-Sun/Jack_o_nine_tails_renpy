@@ -550,8 +550,4 @@ label choose_inicial_girl:
     
     call screen choose_inicial_girl_screen
     return
-#TODO imprement a way to unselect a girl 
-#keys_to_delete = [k for k in all_girls_list.keys() if k != girl_index]
-#for k in keys_to_delete:
-#del all_girls_list[k]
 
