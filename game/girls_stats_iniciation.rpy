@@ -203,6 +203,7 @@ define dic_slave_mood ={
         "slave_ill"          : "[all_girls_list[girl_index][name]]\n- It hurts to go to the toilet and secretions look strange. I guess I caught something…",
         "slave_dirty"        : "[all_girls_list[girl_index][name]]\n- I'm itchy from the dirt and bad smell. It would be nice to wash…",
         "menstruation"       : "[all_girls_list[girl_index][name]]\n- I have these days… during my period. So my mood isn't the best and I'm moody…",
+        "pregnant"           : "[all_girls_list[girl_index][name]]\n- I just feel bad, less energy",
         "job"                : "[all_girls_list[girl_index][name]]\n- You make me engage in boring and unpleasant work. From this I have a bad mood.",
         "prisoner"           : "[all_girls_list[girl_index][name]]\n- I spent so much time in prison. Not the most pleasant experience…",
         "naked"              : "[all_girls_list[girl_index][name]]\n- I have to go naked everywhere. It's cold and humiliating.",

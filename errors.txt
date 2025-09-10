@@ -2,8 +2,8 @@
 errors listed below, and try again.
 
 
-File "game/fuctions.rpy", line 2437: invalid syntax
-        global is_sententia_veritas_active, testvariable1, testvariable2, 
+File "game/fuctions.rpy", line 807: invalid syntax
+            if girl["portion_size"] == 0
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Tue Sep  9 20:40:00 2025
+Wed Sep 10 15:09:59 2025

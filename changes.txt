@@ -47,3 +47,4 @@
 - tutors boost now give +5 diligence instead of +3 (to expensive just for +1 diligence in comparison of school)
 - diligence calculation no longer max cap to 5 (I believe this make the game a lot less grid)
 - Slave can only have guilt or merit, not both (simplified the code)
+- rework slave calories calculation

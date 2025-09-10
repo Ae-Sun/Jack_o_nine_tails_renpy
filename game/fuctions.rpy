@@ -606,7 +606,7 @@ init python:
         hygiene_experience_value_9 += dic_hygiene_value_rate["maid"] - home_hygiene_value + 5
         home_mess_value -= max(8,stewardship_value_13*16)
         home_mess_value = max(0, home_mess_value)
-    def update_moodlet_new_day_slave():
+    def update_moodlet_new_day_slave(): # this function update moodlet that are not related to specific function
         global girl_index
         girl = all_girls_list[girl_index]
         for key in dic_slave_mood["good_mood"]:
@@ -644,15 +644,6 @@ init python:
             + girl["attributes"]["nature"] 
             + girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]*3)
         * girl["arousal"]))
-        if girl["portion_size"] == 0 or girl["days_without_food"] > 0:
-            girl["mood_state"]["bad_mood"]["hungry"]["active"] = True
-            girl["mood_state"]["bad_mood"]["hungry"]["weight"] = min(0.2*girl["days_without_food"],1)
-        else:
-            girl["mood_state"]["bad_mood"]["hungry"]["active"] = False
-        if girl["days_without_food"] > 0:
-            girl["mood_state"]["bad_mood"]["starvation"]["active"] = True
-        else:
-            girl["mood_state"]["bad_mood"]["starvation"]["active"] = False  
     def slave_dead_for_low_endurance_code():
         global girl_index, all_girls_list, sparks_37
         if all_girls_list[girl_index]["attributes"]["endurance"] == 0 and all_girls_list[girl_index]["experience"]["attributes"]["endurance"] <= -10:
@@ -721,7 +712,7 @@ init python:
         if all_girls_list[girl_index]["brand"] == 5:
             all_girls_list[girl_index]["experience"]["aura"]["habit"] += 1
         increase_check("aura","habit")
-    def spoiling_calculation():
+    def spoiling_update():
         ### spoiling - increase
         if all_girls_list[girl_index]["daily_count"]["rewards"] > 2:
             all_girls_list[girl_index]["experience"]["aura"]["spoil"] += all_girls_list[girl_index]["daily_count"]["rewards"]*5
@@ -749,21 +740,132 @@ init python:
     def energy_and_sleep_calculation():
         global girl_index
         if all_girls_list[girl_index]["sleep"] != 4:
-            # energy is capped to 10 if devotion is less than 3
-            if all_girls_list[girl_index]["aura"]["devotion"] >= 3:
-                all_girls_list[girl_index]["energy"] = all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 4 - all_girls_list[girl_index]["yesterday_exhaustion"] + all_girls_list[girl_index]["stored_yesterday_energy"] + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"]
-            else:
-                all_girls_list[girl_index]["energy"] = min(10, all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2 - all_girls_list[girl_index]["yesterday_exhaustion"] + all_girls_list[girl_index]["stored_yesterday_energy"]) + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"]
+            all_girls_list[girl_index]["energy"] = (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2 
+            - all_girls_list[girl_index]["yesterday_exhaustion"] 
+            + all_girls_list[girl_index]["stored_yesterday_energy"] 
+            + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"])
+            if medic_value_15 >= 5:
+                all_girls_list[girl_index]["energy"] += 2
             all_girls_list[girl_index]["stored_yesterday_energy"] = 0
             all_girls_list[girl_index]["days_without_sleep"] = 0
+            all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["active"] = False
         else:
             all_girls_list[girl_index]["energy"] = min(10, (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2) // 2 ) - all_girls_list[girl_index]["yesterday_exhaustion"] + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"]
             all_girls_list[girl_index]["days_without_sleep"] += 1
-            all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *3
-            all_girls_list[girl_index]["experience"]["aura"]["taming"] += all_girls_list[girl_index]["days_without_sleep"]
+            if medic_value_15 >= 5:
+                all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *2
+            else:
+                all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *3
+            all_girls_list[girl_index]["experience"]["aura"]["fear"] += all_girls_list[girl_index]["days_without_sleep"]*3
+            all_girls_list[girl_index]["experience"]["aura"]["taming"] += all_girls_list[girl_index]["days_without_sleep"]*2
+            all_girls_list[girl_index]["experience"]["aura"]["despair"] += all_girls_list[girl_index]["days_without_sleep"]
+            all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["active"] = True
+            all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["weight"] = 1 + all_girls_list[girl_index]["days_without_sleep"]*0.4
             reduce_check("attributes","endurance")
             increase_check("aura","taming")
+            increase_check("aura","fear")
+            increase_check("aura","despair")
             all_girls_list[girl_index]["stored_yesterday_energy"] = 0
+    def diet_update():
+        girl = all_girls_list[girl_index]
+        #TODO LACK SUPPREMENTS AND MASTER_LEFT OVER
+        def calories_check():
+            global medic_value_15
+            if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"] != 0:
+                if not girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["revealed"]:
+                    girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["revealed"] = True
+                    msg(dic_traits_attributes_description["physicaltrait"][girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"]])
+                # the trait make eazier to mantein body fat when positive and harder when negative
+                if girl["calories"] < 0:
+                    girl["calories"] += girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"]
+                if girl["calories"] > 0:
+                    girl["calories"] -= girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"]
+            if girl["portion_size"] == 4:
+                girl["calories"] = 0
+                if medic_value_15 < 5: #TODO NEED ASSISTANT CODE 
+                    medical_calculation_assistant_fee += 1
+            if girl["calories"] < -1:
+                girl["experience"]["attributes"]["physical"] -= girl["calories"] + 1 # physical goes from Chubby to Bony. Calories goes negative, physical increase
+                girl["experience"]["attributes"]["endurance"] += girl["calories"] + 1
+            elif girl["calories"] > 1:
+                girl["experience"]["attributes"]["physical"] -= girl["calories"] + 1 # physical goes from Chubby to Bony. Calories goes positive, physical decrease
+        def diet_mood_update():
+
+            if girl["calories"] < 1:
+                girl["mood_state"]["bad_mood"]["hungry"]["active"] = True
+                girl["mood_state"]["bad_mood"]["hungry"]["weight"] = min(girl["calories"]*-0.2,1)
+            else:
+                girl["mood_state"]["bad_mood"]["hungry"]["active"] = False
+            if girl["days_without_food"] > 0 or girl["calories"] < -5:
+                girl["mood_state"]["bad_mood"]["starvation"]["active"] = True
+            else:
+                girl["mood_state"]["bad_mood"]["starvation"]["active"] = False
+            if girl["diet"] == 0:
+                girl["mood_state"]["bad_mood"]["slave_food"]["active"] = True
+                girl["mood_state"]["bad_mood"]["slave_food"]["weight"] = 0.75
+            else:
+                girl["mood_state"]["bad_mood"]["slave_food"]["active"] = False
+            if girl["diet"] == 2 and not girl["field_tatto"]:
+                girl["mood_state"]["bad_mood"]["slave_food"]["active"] = True
+                girl["mood_state"]["bad_mood"]["slave_food"]["weight"] = 1.5
+            
+
+        
+        
+        def calories_update():
+            if girl["portion_size"] == 0:
+                girl["calories"] = -2
+                #refund parcial food portion
+                girl["food_portion"] -= 0.5 * girl["attributes"]["endurance"]
+            if girl["portion_size"] == 1:
+                girl["calories"] = 2
+            if girl["portion_size"] == 2:
+                girl["calories"] = 6
+            if girl["portion_size"] == 3:
+                girl["calories"] = 99
+            if girl["diet"] == 3:
+                girl["calories"] = -6
+                girl["days_without_food"] += 1
+                #complete refund food portion
+                girl["food_portion"] -= girl["attributes"]["endurance"] + 1
+
+
+        
+        def diet_portion_for_food_bill_update():
+            parasite_count = 0
+            #calculated total food portion, total food portion x portion price = decade slave food bill
+            girl["food_portion"] = girl["attributes"]["endurance"] + 1
+            if girl["pregnant"]["active"]:
+                girl["food_portion"] += 1
+                if girl["pregnant"]["stage"] >= 1:
+                    girl["food_portion"] += 1
+                if girl["pregnant"]["stage"] >= 2:
+                    girl["mood_state"]["bad_mood"]["pregnant"]["active"] = True
+                    all_girls_list[girl_index]["energy"] -= 2
+                else:
+                    girl["mood_state"]["bad_mood"]["pregnant"]["active"] = False
+            if girl["fertility"]["active"]:
+                girl["food_portion"] += 1
+            if girl["egg_laying"]:
+                farm_food["egg_layer"]["portion"] += 1
+            if girl["lactation"]["active"]:
+                farm_food["cow"]["portion"] += 1
+            for parasite in girl["parasite"]:
+                if girl["parasite"][parasite]["active"]:
+                    parasite_count += girl["parasite"][parasite]["stage"]
+            for i in range(99):
+                if parasite_count > i*2 + 1: 
+                    girl["food_portion"] += 1
+                else:
+                    break
+            girl["total_food_portion"] += girl["food_portion"] 
+
+        # do not change the order
+        calories_check()
+        diet_mood_update()
+        calories_update()
+        diet_portion_for_food_bill_update()
+
     def slave_energy_drop_calculation():
         global girl_index
         girl = all_girls_list[girl_index]
@@ -1206,7 +1308,6 @@ init python:
         global girl_index, traits_skills, traits_sexual, traits_miscellaneous, traits_aura, traits_attributes
         all_girls_list[girl_index].setdefault("obedience",0)
         all_girls_list[girl_index].setdefault("achievements",0)
-
         all_girls_list[girl_index].setdefault("aura",{
         "fear": 0,
         "despair": 0,
@@ -1231,7 +1332,30 @@ init python:
         all_girls_list[girl_index].setdefault("psy_status",a)
         all_girls_list[girl_index].setdefault("rating_help_text",a)
         all_girls_list[girl_index].setdefault("rating_text_display",a)
+        all_girls_list[girl_index].setdefault("parasite",{
+            "parasite_a": {"stage": 0, "active": False},
+            "parasite_b": {"stage": 0, "active": False},
+            "parasite_c": {"stage": 0, "active": False},
+            "parasite_d": {"stage": 0, "active": False},
+            "parasite_e": {"stage": 0, "active": False},
+        })
+        all_girls_list[girl_index].setdefault("pregnant",{
+            "active": False,
+            "stage": 0,
+            "days": 0,
+        })
+        all_girls_list[girl_index].setdefault("menstruation_cycle",{
+            "active": False,
+            "stage": 0,
+            "days": 0,
+        })
+        all_girls_list[girl_index].setdefault("lactation",{
+            "active": False,
+            "max_capacity": 20,
+            "current_capacity": 0,
+        })
 
+        all_girls_list[girl_index].setdefault("egg_laying",False)
         all_girls_list[girl_index].setdefault("attributes_sum",0)
         all_girls_list[girl_index].setdefault("skills_sum",0)
         all_girls_list[girl_index].setdefault("skills_max",0)
@@ -1262,7 +1386,11 @@ init python:
         all_girls_list[girl_index].setdefault("mood_state",{})
         all_girls_list[girl_index].setdefault("beaten_ever",False)
         all_girls_list[girl_index].setdefault("domini_dictum_ever",False)
-        all_girls_list[girl_index].setdefault("calories",0)
+        all_girls_list[girl_index].setdefault("calories",all_girls_list[girl_index]["attributes"]["endurance"])
+        all_girls_list[girl_index].setdefault("food_portion",all_girls_list[girl_index]["attributes"]["endurance"])
+        all_girls_list[girl_index].setdefault("total_food_portion",0)
+        all_girls_list[girl_index].setdefault("field_tattoo",False)
+
         all_girls_list[girl_index].setdefault("wig",False)
         all_girls_list[girl_index].setdefault("assistant",False)
         all_girls_list[girl_index].setdefault("races_won",0)
@@ -1320,7 +1448,7 @@ init python:
         all_girls_list[girl_index].setdefault("vagina_modification", 0)
         all_girls_list[girl_index].setdefault("vaginal_tightness",0)
         all_girls_list[girl_index].setdefault("anal_tightness",0)
-        all_girls_list[girl_index].setdefault("brand",2)
+        all_girls_list[girl_index].setdefault("brand",0)
         all_girls_list[girl_index].setdefault("equipment",{})
         all_girls_list[girl_index].setdefault("conscience",True)
         all_girls_list[girl_index].setdefault("days_without_food",0)
@@ -2439,7 +2567,8 @@ init python:
     def achievements_gain(): #all virtue and sin gain combined and reformulated
         global guilt_potencial, merit_potencial, target_skill
         global slave_diligence, interaction_willingness, interaction_repulse_difficulty
-        global is_sententia_veritas_active, testvariable1, testvariable2, tem_variable3214
+        global is_sententia_veritas_active, tem_variable3214
+        global mood_value_10
         girl = all_girls_list[girl_index]
         type_of_already_done = ""
         merit_count = 0
@@ -2481,8 +2610,6 @@ init python:
             merit_count -= 1
         if girl["aura"]["despair"] > 0:
             merit_count -= girl["aura"]["despair"] // 3 + 1
-        testvariable1 = merit_count
-        testvariable2 = guilt_count
 
         a = merit_count - guilt_count
         a = max(min_achievements, a)
@@ -2491,6 +2618,7 @@ init python:
         a = min(5, a)
         a = int(a)
         if a < 0:
+            mood_value_10 -= a/10
             if girl["achievements"] < 0:
                 girl["experience"]["aura"]["taming"] -= a
             if girl["achievements"] > a:
@@ -2508,6 +2636,7 @@ init python:
             tem_variable3214 = girl["achievements"] * -1
 
         if a > 0:
+            mood_value_10 += a/10
             if girl["achievements"] < a:
                 girl["achievements"] = a
             if is_sententia_veritas_active:

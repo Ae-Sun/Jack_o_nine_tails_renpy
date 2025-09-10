@@ -19,6 +19,11 @@ default all_hygiene_multidic = {} #  not important variable need to make screen 
 default home_condition = dic_home_condition[5] #  not important variable need to make screen logic 
 default home_hygiene_value = 5 # this variable is used to track the hygiene value of the home
 default home_mess_value = 0 # this variable is used to track the hygiene value rate of the home
+default farm_food = {
+    "egg_layer": {"portion": 0, "price":12},
+    "cow": {"portion": 0, "price":20}
+}
+default medical_calculation_assistant_fee = 0
 default rape = False
 default stimulating = False
 default orgastic = False
@@ -486,6 +491,7 @@ label next_day_labellabel:
                 #TODO NEXT THING TO DO 
 
                 well_rest_bonus_calculation()
+                slave_calories_update()
                         
 
                     
@@ -495,7 +501,7 @@ label next_day_labellabel:
                         increase_check("attributes","nature")
                 brand_effect_activation()
                 energy_and_sleep_calculation()
-                spoiling_calculation()
+                spoiling_update()
             # save pass mood slave
             all_girls_list[girl_index]["past_mood"] = all_girls_list[girl_index]["mood"]
             all_girls_list[girl_index]["hygiene_rate"] += dic_hygiene_value_rate["idle"]
@@ -2468,7 +2474,7 @@ screen slave_rules_menu():
                 action SetDict(all_girls_list[girl_index], "diet", 0),SetDict(all_girls_list[girl_index], "portion_size", 3),SetVariable("text_slave_conditions_index",dic_slave_conditions_food[0]), Jump("Home")
                 
         add "spacer" size(0,25)
-        textbutton "  2000":
+        textbutton str(all_girls_list[girl_index]["calories"]*100):
             style "slave_screen_order_button"
             action NullAction()
     vbox:

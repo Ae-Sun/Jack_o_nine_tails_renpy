@@ -498,6 +498,7 @@ label choose_inicial_girl:
                 girl_selection_list_image.append("demo/choose_slave.webp")
                 all_girls_list[girl_index] = load_json(premiun_girl_tutorial_selected_localization)
                 generation_slave()
+                all_girls_list[girl_index]["brand"] = 2
             elif demo_girl_selection in girl_selection_list and len(all_girls_list) > 1:
                 del all_girls_list[girl_selection_list.index(demo_girl_selection)]
                 girl_selection_list.remove(demo_girl_selection)
@@ -514,6 +515,7 @@ label choose_inicial_girl:
                 girl_selection_list_image.append("demo/choose_amazon.webp")
                 all_girls_list[girl_index] = load_json(premiun_girl_tutorial_selected_localization)
                 generation_slave()
+                all_girls_list[girl_index]["brand"] = 2
             elif demo_girl_selection in girl_selection_list and len(all_girls_list) > 1:
                 del all_girls_list[girl_selection_list.index(demo_girl_selection)]
                 girl_selection_list.remove(demo_girl_selection)
@@ -530,6 +532,7 @@ label choose_inicial_girl:
                 girl_selection_list_image.append("demo/choose_princess.webp")
                 all_girls_list[girl_index] = load_json(premiun_girl_tutorial_selected_localization)
                 generation_slave()
+                all_girls_list[girl_index]["brand"] = 2
             elif demo_girl_selection in girl_selection_list and len(all_girls_list) > 1:
                 del all_girls_list[girl_selection_list.index(demo_girl_selection)]
                 girl_selection_list.remove(demo_girl_selection)
@@ -547,7 +550,7 @@ label choose_inicial_girl:
                 demo_girl_text_index = 2
 
         girl_selection_list_for_text_display = ", ".join(girl_selection_list)
-    
+        
     call screen choose_inicial_girl_screen
     return
 
