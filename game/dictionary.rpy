@@ -344,6 +344,33 @@ define dic_improvement_rooms ={
             "risk": 250,
             "modifier": +2
         }
+    },
+    "bath":{
+        "Very bad bath":{
+            "cost": 150,
+            "size": 20,
+            "risk": 5,
+            "modifier": 0
+        },
+        "Basic bath":{
+            "cost": 500,
+            "size": 50,
+            "risk": 20,
+            "modifier": 3
+        },
+        "Good bath":{
+            "cost": 1500,
+            "size": 100,
+            "risk": 50,
+            "modifier": 6
+        },
+        "Excellent bath":{
+            "cost": 3000,
+            "size": 150,
+            "risk": 150,
+            "modifier": 10
+        }
+
     }
 }
 define dic_improvement_code = {

@@ -1051,8 +1051,8 @@ define dic_slave_conditions = {
     "cook_rules_abort": "  You allow your slave not to waste energy on a daily cooking. You have other plans in this regard.",
     "maid_rules": "  You give an order to your slave to take care of cleanliness and order in the house. Now, if she can find enough time and has energy left, she will do it herself without your further reminders.",
     "maid_rules_abort": "  You allow your slave not to waste time on keeping order in the house. You have other plans in this regard.",
-    "bath_slave_rule": "  There is no need to wash yourself; this work can be assigned to a beautiful and gentle girl. You order your slave to help you wash.",
-    "bath_slave_abort_rule": "  You decide to wash yourself, in order not to distract your slave from more important matters.",
+    "bath_slave_rules": "  There is no need to wash yourself; this work can be assigned to a beautiful and gentle girl. You order your slave to help you wash.",
+    "bath_slave_rules_abort": "  You decide to wash yourself, in order not to distract your slave from more important matters.",
     "behave_alarm_rules": "  You will use your slave as a human alarm clock. Every morning at the appointed time, [all_girls_list[girl_index]['name']] should wake you by taking care of your morning wood with a gentle, deep blowjob. This approach will improve your mood in the morning and prepare your slave for sexual practices.",
     "behave_alarm_rules_abort": "  You decide to wake up in the morning without being distracted by the slave's attempts to make you feel good or evade from her responsibilities.",
     "behave_humility_rules": "  You order the slave to behave as a well-mannered slave should from now on. She is to always call you politely, \"Master\". This way she will quickly get accustomed to absolute obedience.",
@@ -1069,12 +1069,12 @@ define dic_slave_conditions = {
     "deny_orgasm_rules_abort": "  You tell the slave she may orgasm without permission, allowing her release, but you warn her that you can change your mind!",
     "deny_toileting_rules": "  You forbid the slave go to the toilet without your permission. She will be allowed to visit the restroom rarely and only under your supervision. This will help teach her humility, though the price will be the slave mood.",
     "deny_toileting_rules_abort": "  You let the slave go to the toilet by herself whenever she wants. At least she will not distract you with her constant tears and pleas.",
-    "slave_tentacle_rule": "  You order the slave to take care of your fiend and regularly milk it so that it does not wither in captivity.",
-    "slave_tentacle_rule_abort": "  You say that the slave can forget about the fiend and need not take care of him.",
+    "slave_tentacle_rules": "  You order the slave to take care of your fiend and regularly milk it so that it does not wither in captivity.",
+    "slave_tentacle_rules_abort": "  You say that the slave can forget about the fiend and need not take care of him.",
     "no_masturbation_rules": "  You order your slave not to masturbate unless you instruct her otherwise. This will prevent her from relieving her arousal if she obeys, and successfully resisting the urge to masturbate will slightly increase her taming.",
     "no_masturbation_rules_abort": "  You let your slave masturbate freely.",
-    "use_vaginal_beads_rule": "  You put vaginal beads in the slave's pussy and order her to wear them all the time, so she can develop her sensitivity and desire.",
-    "use_vaginal_beads_rule_abort": "  You order the slave to remove the vaginal beads, wash them well, and give to you. Her excitement must be controlled so that it does not become an obstacle to learning.",
+    "use_vaginal_beads_rules": "  You put vaginal beads in the slave's pussy and order her to wear them all the time, so she can develop her sensitivity and desire.",
+    "use_vaginal_beads_rules_abort": "  You order the slave to remove the vaginal beads, wash them well, and give to you. Her excitement must be controlled so that it does not become an obstacle to learning.",
     "enforce_rules": "  You tell the slave that you will use various tools such as anal pears, gags, chastity belts, pet suits and toilet racks, as well as special supervision of your assistant in order to prevent her from ignoring the rules. Of course, this may make her miserable and depressed, but it will also humble her and teach her that compliance is in her own best interest.",
     "enforce_rules_abort": "  You tell the slave that henceforth she should obediently follow all her rules without the help of your special tools and additional supervision. Of course, this does not mean that ignoring orders will leave her unpunished…",    
     "default":""
@@ -2763,40 +2763,150 @@ define dic_girl_rules_special_text = {
         "good_job":" [all_girls_list[girl_index]['name']] She seems to enjoy the sensations."
     }
 }
-define auto_tasks = {
+define dic_auto_tasks = {
     "slave_auto_sleep": {
         "condition": "slave_auto_sleep",
-        "text": sleep_text,
-        "room": sleep_room,
+        "text": night_rules_fuctions.sleep_text,
+        "room": night_rules_fuctions.sleep_room,
     },
     "slave_auto_cook": {
         "condition": "slave_auto_cook",
-        "text": cook_text,
-        "room": cook_room,
-        "extra": cook_extra,
+        "text": night_rules_fuctions.cook_text,
+        "room": night_rules_fuctions.cook_room,
+        "extra": night_rules_fuctions.cook_extra,
     },
     "slave_auto_maid": {
         "condition": "slave_auto_maid",
-        "text": maid_text,
-        "room": maid_room,
+        "text": night_rules_fuctions.maid_text,
+        "room": night_rules_fuctions.maid_room,
     },
     "slave_auto_bath": {
         "condition": "slave_auto_bath",
-        "text": bath_text,
-        "room": bath_room,
+        "text": night_rules_fuctions.bath_text,
+        "room": night_rules_fuctions.bath_room,
     },
     "slave_auto_bath_self": {
         "condition": "slave_auto_bath_self",
-        "text": bath_self_text,
-        "room": bath_self_room,
+        "text": night_rules_fuctions.bath_self_text,
+        "room": night_rules_fuctions.bath_self_room,
     },
     "slave_auto_alarm": {
         "condition":"slave_auto_alarm",
-        "text": alarm_text,
-        "room": alarm_room,
-        "extra": alarm_extra,
+        "text": night_rules_fuctions.alarm_text,
+        "room": night_rules_fuctions.alarm_room,
+        "extra": night_rules_fuctions.alarm_extra,
     }
 }
-
-
+define dic_slave_rules = {
+    "act_as_cook": {
+        "condition": rules_fuctions.act_as_cook_condition,
+        "extra": rules_fuctions.act_as_cook_extra,
+        "active": "cook_rules",
+        "disable": "cook_rules_abort",
+        "count": True
+    },
+    "act_as_maid": {
+        "condition": rules_fuctions.act_as_maid_condition,
+        "active": "maid_rules",
+        "disable": "maid_rules_abort",
+        "count": True
+    },
+    "bath_slave": {
+        "condition": rules_fuctions.bath_slave_condition,
+        "extra": rules_fuctions.bath_slave_extra,
+        "active": "bath_slave_rules",
+        "disable": "bath_slave_rules_abort",
+        "count": True
+    },
+    "behave_alarm": {
+        "condition": rules_fuctions.behave_alarm_condition,
+        "active": "behave_alarm_rules",
+        "disable": "behave_alarm_rules_abort",
+        "count": True
+    },
+    "behave_humility": {
+        "condition": rules_fuctions.behave_humility_condition,
+        "active": "behave_humility_rules",
+        "disable": "behave_humility_rules_abort",
+        "count": True
+    },
+    "behave_pet": {
+        "condition": rules_fuctions.behave_pet_condition,
+        "active": "behave_pet_rules",
+        "disable": "behave_pet_rules_abort",
+        "count": True
+    },
+    "behave_silence": {
+        "condition": rules_fuctions.behave_silence_condition,
+        "active": "behave_silence_rules",
+        "disable": "behave_silence_rules_abort",
+        "count": True
+    },
+    "behave_toilet": {
+        "condition": rules_fuctions.behave_toilet_condition,
+        "active": "behave_toilet_rules",
+        "disable": "behave_toilet_rules_abort",
+        "count": True
+    },
+    "behave_urinal": {
+        "condition": rules_fuctions.behave_urinal_condition,
+        "active": "behave_urinal_rules",
+        "disable": "behave_urinal_rules_abort",
+        "count": True
+    },
+    "deny_orgasm": {
+        "condition": rules_fuctions.deny_orgasm_condition,
+        "active": "deny_orgasm_rules",
+        "disable": "deny_orgasm_rules_abort",
+        "count": True
+    },
+    "deny_toileting": {
+        "condition": rules_fuctions.deny_toileting_condition,
+        "active": "deny_toileting_rules",
+        "disable": "deny_toileting_rules_abort",
+        "count": True
+    },
+    "milk_the_fiend": {
+        "condition": rules_fuctions.milk_the_fiend_condition,
+        "extra": rules_fuctions.milk_the_fiend_extra,
+        "active": "slave_tentacle_rules",
+        "disable": "slave_tentacle_rules_abort",
+        "count": True
+    },
+    "no_masturbation": {
+        "condition": rules_fuctions.no_masturbation_condition,
+        "active": "no_masturbation_rules",
+        "disable": "no_masturbation_rules_abort",
+        "count": True
+    },
+    "use_vaginal_beads": {
+        "condition": rules_fuctions.use_vaginal_beads_condition,
+        "active": "use_vaginal_beads_rules",
+        "disable": "use_vaginal_beads_rules_abort",
+        "count": True
+    },
+    "enforce_rules": {
+        "condition": rules_fuctions.enforce_rules_condition,
+        "active": "enforce_rules",
+        "disable": "enforce_rules_abort",
+        "count": False
+    }
+}
+define dic_slave_rules_capital = {
+    "act_as_cook": "Act as cook -",
+    "act_as_maid": "Act as maid -",
+    "bath_slave": "Bath slave -",
+    "behave_alarm": "Behave: alarm -",
+    "behave_humility": "Behave: humility -",
+    "behave_pet": "Behave: pet -",
+    "behave_silence": "Behave: silence -",
+    "behave_toilet": "Behave: toilet -",
+    "behave_urinal": "Behave: urinal -",
+    "deny_orgasm": "Deny orgasm -",
+    "deny_toileting": "Deny toileting -",
+    "milk_the_fiend": "Milk the fiend -",
+    "no_masturbation": "No masturbation -",
+    "use_vaginal_beads": "Use vaginal beads -",
+    "enforce_rules": "Enforce rules -"
+}
 

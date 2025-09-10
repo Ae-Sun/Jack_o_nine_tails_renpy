@@ -261,30 +261,23 @@ init python:
             all_girls_list[girl_index]["experience"]["skills"][target_skill] += skill_rise * skill_adv_mul
         target_skill = ""
     def cryo_ingredients_loss_calculation():
-        global cryostore_ingredients, cryostore_ingredients_max
      
         keys_list = list(storage["ingredients"].keys())
         keys_list_index = 0
         
-        while cryostore_ingredients > cryostore_ingredients_max:
+        while home_estate["kitchen"]["storage_ingredients"] > home_estate["kitchen"]["storage_capacity"]:
             if storage["ingredients"][keys_list[keys_list_index]] == 0:
                 keys_list_index += 1
             else:
                 storage["ingredients"][keys_list[keys_list_index]] -= 1
             
-            # Recalculate cryostore_ingredients
-            cryostore_ingredients = sum(storage["ingredients"].values())
+            # Recalculate home_estate["kitchen"]["storage_ingredients"]
+            home_estate["kitchen"]["storage_ingredients"] = sum(storage["ingredients"].values())
     def cryo_amount_calculation():
-        global cryostore_ingredients, cryostore_ingredients_max
         global house_items, laboratory_ingredients
-        cryostore_ingredients = 0
+        home_estate["kitchen"]["storage_ingredients"] = 0
         for values in storage["ingredients"]:
-            cryostore_ingredients += storage["ingredients"][values]
-        cryostore_ingredients_max = 0
-        cryostore_ingredients_max += home_estate["kitchen"]["Deplorable kitchen"]*50
-        cryostore_ingredients_max += home_estate["kitchen"]["Basic kitchen"]*50
-        cryostore_ingredients_max += home_estate["kitchen"]["Well-equipped kitchen"]*50
-        cryostore_ingredients_max += home_estate["kitchen"]["Gourmet kitchen"]*50
+            home_estate["kitchen"]["storage_ingredients"] += storage["ingredients"][values]
         laboratory_ingredients = 0
         for values in storage["laboratory"]["ingredients"]:
             laboratory_ingredients += storage["laboratory"]["ingredients"][values]
@@ -384,11 +377,10 @@ init python:
         hygiene_value_9 = calculate_hygiene(hygiene_experience_value_9)
     def auto_cook_meal():
         global already_prepared, already_ate, food_meat_info, home_mess_value
-        global cryostore_ingredients_max
         global all_girls_list, dic_foods_list, storage, dic_hygiene_value_rate
         global girl_index, target_skill, tutor_modifier
         all_girls_list[girl_index]["slave_auto_cook"] = False
-        if cryostore_ingredients_max <= 0:
+        if home_estate["kitchen"]["storage_capacity"] <= 0:
             return
         
         girl = all_girls_list[girl_index]
@@ -436,7 +428,7 @@ init python:
                             #dont cook if cooking doesn't improve the quality
                             if food_meat_info["quality"] < n + 1:
                                 #don't cook if kitchen isn't good enough. this actually CAP the cooking quality
-                                if dic_improvement_rooms["kitchen"][best_kitchen]["modifier"] >= n + 1:
+                                if dic_improvement_rooms["kitchen"][home_estate["kitchen"]["type"]]["modifier"] >= n + 1:
                                     already_prepared = True
                                     food_not_found = False
 
@@ -478,12 +470,11 @@ init python:
             girl["rules_broken"]["slave_auto_cook"] = True
     def master_cook_meal():
         global already_prepared, already_ate, food_meat_info, home_mess_value
-        global cryostore_ingredients_max
         global dic_foods_list, storage, dic_hygiene_value_rate
         global hygiene_experience_value_9, energy_value
         global personality_value_2, stewardship_value_13, stewardship_experience_value_13
-        global skill_adv_mul, best_kitchen
-        if cryostore_ingredients_max <= 0:
+        global skill_adv_mul
+        if home_estate["kitchen"]["storage_capacity"] <= 0:
             return
         
 
@@ -518,7 +509,7 @@ init python:
                         #dont cook if cooking doesn't improve the quality
                         if food_meat_info["quality"] < n + 1:
                             #don't cook if kitchen isn't good enough. this actually CAP the cooking quality
-                            if dic_improvement_rooms["kitchen"][best_kitchen]["modifier"] >= n + 1:
+                            if dic_improvement_rooms["kitchen"][home_estate["kitchen"]["type"]]["modifier"] >= n + 1:
                                 already_prepared = True
                                 food_not_found = False
 
@@ -606,7 +597,7 @@ init python:
         hygiene_experience_value_9 += dic_hygiene_value_rate["maid"] - home_hygiene_value + 5
         home_mess_value -= max(8,stewardship_value_13*16)
         home_mess_value = max(0, home_mess_value)
-    def update_moodlet_new_day_slave(): # this function update moodlet that are not related to specific function
+    def moodlet_new_day_slave_update(): # this function update moodlet that are not related to specific function
         global girl_index
         girl = all_girls_list[girl_index]
         for key in dic_slave_mood["good_mood"]:
@@ -644,7 +635,7 @@ init python:
             + girl["attributes"]["nature"] 
             + girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]*3)
         * girl["arousal"]))
-    def slave_dead_for_low_endurance_code():
+    def slave_dead_for_low_endurance_update():
         global girl_index, all_girls_list, sparks_37
         if all_girls_list[girl_index]["attributes"]["endurance"] == 0 and all_girls_list[girl_index]["experience"]["attributes"]["endurance"] <= -10:
             roll = random.randint(1, 2)
@@ -656,7 +647,7 @@ init python:
                 msg("Your slave is dead, and you sale the meat to the butcher for [temporal_value]")
             if roll == 2:
                 all_girls_list[girl_index]["experience"]["attributes"]["endurance"] = -10
-    def slave_attack_escape_calculation():
+    def slave_attack_escape_update():
         global slave_escape_type, slave_rebellion_fight, slave_rebellion_attack, slave_suicide, girl_index
         if all_girls_list[girl_index]["sleep"] != 0 and all_girls_list[girl_index]["psy_status"] != "broken":
             if all_girls_list[girl_index]["attributes"]["endurance"] > 0:
@@ -699,7 +690,7 @@ init python:
                         all_girls_list[girl_index]["suicide_rate"] += 15
                 else:
                     all_girls_list[girl_index]["suicide_rate"] = min(all_girls_list[girl_index]["suicide_rate"] - 3, 0)
-    def well_rest_bonus_calculation():
+    def well_rest_bonus_update():
         if all_girls_list[girl_index]["energy"] > 0:
             if all_girls_list[girl_index]["mood"] > -2:
                 all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["energy"] / 20
@@ -713,64 +704,83 @@ init python:
             all_girls_list[girl_index]["experience"]["aura"]["habit"] += 1
         increase_check("aura","habit")
     def spoiling_update():
-        ### spoiling - increase
-        if all_girls_list[girl_index]["daily_count"]["rewards"] > 2:
-            all_girls_list[girl_index]["experience"]["aura"]["spoil"] += all_girls_list[girl_index]["daily_count"]["rewards"]*5
-        if all_girls_list[girl_index]["aura"]["devotion"] <= 2 and all_girls_list[girl_index]["aura"]["fear"] == 0 and all_girls_list[girl_index]["days_without_food"] == 0 and all_girls_list[girl_index]["days_without_sleep"] == 0 and all_girls_list[girl_index]["rules"]["rules_count"] < dic_overnight_rules_count[dic_overnight_rules_count_index]:
-            all_girls_list[girl_index]["experience"]["aura"]["spoil"] += 5 - all_girls_list[girl_index]["attributes"]["pride"] + all_girls_list[girl_index]["attributes"]["nature"] + all_girls_list[girl_index]["attributes"]["temperament"]
-        increase_check("aura","spoil")
-        if all_girls_list[girl_index]["aura"]["spoil"] > 0:
-            all_girls_list[girl_index]["experience"]["aura"]["devotion"] -= all_girls_list[girl_index]["aura"]["spoil"]
-            all_girls_list[girl_index]["experience"]["aura"]["awareness"] -= all_girls_list[girl_index]["aura"]["spoil"]
-            all_girls_list[girl_index]["experience"]["aura"]["taming"] -= all_girls_list[girl_index]["aura"]["spoil"]
-            all_girls_list[girl_index]["experience"]["aura"]["habit"] -= all_girls_list[girl_index]["aura"]["spoil"]
-        reduce_check( "aura","devotion")
-        reduce_check( "aura","awareness")
-        reduce_check( "aura","taming")
-        reduce_check( "aura","habit")
-        if all_girls_list[girl_index]["aura"]["spoil"] > max(0, all_girls_list[girl_index]["mood"], all_girls_list[girl_index]["aura"]["fear"]) and all_girls_list[girl_index]["sleep"] in [2,3]:
-            all_girls_list[girl_index]["neg_spoil"] = True
-        all_girls_list[girl_index]["daily_count"]["rewards"] == 0
-        ### spoiling - reduce
-        if all_girls_list[girl_index]["aura"]["spoil"] > 0 or all_girls_list[girl_index]["experience"]["aura"]["spoil"] > 0 and dic_overnight_rules_count[dic_overnight_rules_count_index] <= all_girls_list[girl_index]["rules"]["rules_count"] or all_girls_list[girl_index]["days_without_food"] != 0 or all_girls_list[girl_index]["days_without_sleep"] != 0 or all_girls_list[girl_index]["aura"]["fear"] > all_girls_list[girl_index]["aura"]["devotion"]:
-            all_girls_list[girl_index]["experience"]["aura"]["spoil"] -= 1 + all_girls_list[girl_index]["aura"]["devotion"] + all_girls_list[girl_index]["aura"]["fear"] + all_girls_list[girl_index]["aura"]["despair"]*2 + max(0, all_girls_list[girl_index]["days_without_food"])*3 + max(0, all_girls_list[girl_index]["days_without_sleep"])*3
-        if all_girls_list[girl_index]["mood"] < 0:
-            all_girls_list[girl_index]["experience"]["aura"]["spoil"] -= all_girls_list[girl_index]["attributes"]["empathy"]
-        reduce_check( "aura","spoil")
-    def energy_and_sleep_calculation():
-        global girl_index
-        if all_girls_list[girl_index]["sleep"] != 4:
-            all_girls_list[girl_index]["energy"] = (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2 
-            - all_girls_list[girl_index]["yesterday_exhaustion"] 
-            + all_girls_list[girl_index]["stored_yesterday_energy"] 
-            + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"])
-            if medic_value_15 >= 5:
-                all_girls_list[girl_index]["energy"] += 2
-            all_girls_list[girl_index]["stored_yesterday_energy"] = 0
-            all_girls_list[girl_index]["days_without_sleep"] = 0
-            all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["active"] = False
-        else:
-            all_girls_list[girl_index]["energy"] = min(10, (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2) // 2 ) - all_girls_list[girl_index]["yesterday_exhaustion"] + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"]
-            all_girls_list[girl_index]["days_without_sleep"] += 1
-            if medic_value_15 >= 5:
-                all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *2
+        def spoiling_increase():
+            if all_girls_list[girl_index]["daily_count"]["rewards"] > 2:
+                all_girls_list[girl_index]["experience"]["aura"]["spoil"] += all_girls_list[girl_index]["daily_count"]["rewards"]*5
+            if (all_girls_list[girl_index]["aura"]["devotion"] <= 2 
+                and all_girls_list[girl_index]["aura"]["fear"] == 0 
+                and all_girls_list[girl_index]["days_without_food"] == 0 
+                and all_girls_list[girl_index]["days_without_sleep"] == 0 
+                and all_girls_list[girl_index]["rules"]["rules_count"] < dic_overnight_rules_count[dic_overnight_rules_count_index]):
+
+                all_girls_list[girl_index]["experience"]["aura"]["spoil"] += 5 - all_girls_list[girl_index]["attributes"]["pride"] + all_girls_list[girl_index]["attributes"]["nature"] + all_girls_list[girl_index]["attributes"]["temperament"]
+            increase_check("aura","spoil")
+            if all_girls_list[girl_index]["aura"]["spoil"] > 0:
+                all_girls_list[girl_index]["experience"]["aura"]["devotion"] -= all_girls_list[girl_index]["aura"]["spoil"]
+                all_girls_list[girl_index]["experience"]["aura"]["awareness"] -= all_girls_list[girl_index]["aura"]["spoil"]
+                all_girls_list[girl_index]["experience"]["aura"]["taming"] -= all_girls_list[girl_index]["aura"]["spoil"]
+                all_girls_list[girl_index]["experience"]["aura"]["habit"] -= all_girls_list[girl_index]["aura"]["spoil"]
+            reduce_check( "aura","devotion")
+            reduce_check( "aura","awareness")
+            reduce_check( "aura","taming")
+            reduce_check( "aura","habit")
+            if all_girls_list[girl_index]["aura"]["spoil"] > max(0, all_girls_list[girl_index]["mood"], all_girls_list[girl_index]["aura"]["fear"]) and all_girls_list[girl_index]["sleep"] in [2,3]:
+                all_girls_list[girl_index]["neg_spoil"] = True
+            all_girls_list[girl_index]["daily_count"]["rewards"] == 0
+        def spoiling_reduce():
+            if all_girls_list[girl_index]["aura"]["spoil"] > 0 or all_girls_list[girl_index]["experience"]["aura"]["spoil"] > 0 and dic_overnight_rules_count[dic_overnight_rules_count_index] <= all_girls_list[girl_index]["rules"]["rules_count"] or all_girls_list[girl_index]["days_without_food"] != 0 or all_girls_list[girl_index]["days_without_sleep"] != 0 or all_girls_list[girl_index]["aura"]["fear"] > all_girls_list[girl_index]["aura"]["devotion"]:
+                all_girls_list[girl_index]["experience"]["aura"]["spoil"] -= 1 + all_girls_list[girl_index]["aura"]["devotion"] + all_girls_list[girl_index]["aura"]["fear"] + all_girls_list[girl_index]["aura"]["despair"]*2 + max(0, all_girls_list[girl_index]["days_without_food"])*3 + max(0, all_girls_list[girl_index]["days_without_sleep"])*3
+            if all_girls_list[girl_index]["mood"] < 0:
+                all_girls_list[girl_index]["experience"]["aura"]["spoil"] -= all_girls_list[girl_index]["attributes"]["empathy"]
+            reduce_check( "aura","spoil")
+        spoiling_increase()
+        spoiling_reduce()
+    def energy_and_sleep_update():
+        def negative_energy_endurance_reduction_update():
+            if all_girls_list[girl_index]["energy"] < 0:
+                all_girls_list[girl_index]["experience"]["attributes"]["endurance"] += all_girls_list[girl_index]["energy"]*3
+                reduce_check("attributes","endurance")
+        def energy_update():
+            if all_girls_list[girl_index]["sleep"] != 4:
+
+                all_girls_list[girl_index]["energy"] = (
+                    all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2 
+                    - all_girls_list[girl_index]["yesterday_exhaustion"] 
+                    + all_girls_list[girl_index]["stored_yesterday_energy"] 
+                    + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"])
+
+                if medic_value_15 >= 5:
+                    all_girls_list[girl_index]["energy"] += 2
+                all_girls_list[girl_index]["stored_yesterday_energy"] = 0
+                all_girls_list[girl_index]["days_without_sleep"] = 0
+                all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["active"] = False
             else:
-                all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *3
-            all_girls_list[girl_index]["experience"]["aura"]["fear"] += all_girls_list[girl_index]["days_without_sleep"]*3
-            all_girls_list[girl_index]["experience"]["aura"]["taming"] += all_girls_list[girl_index]["days_without_sleep"]*2
-            all_girls_list[girl_index]["experience"]["aura"]["despair"] += all_girls_list[girl_index]["days_without_sleep"]
-            all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["active"] = True
-            all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["weight"] = 1 + all_girls_list[girl_index]["days_without_sleep"]*0.4
-            reduce_check("attributes","endurance")
-            increase_check("aura","taming")
-            increase_check("aura","fear")
-            increase_check("aura","despair")
-            all_girls_list[girl_index]["stored_yesterday_energy"] = 0
+                all_girls_list[girl_index]["energy"] = min(10, (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2) // 2 ) - all_girls_list[girl_index]["yesterday_exhaustion"] + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"]
+                all_girls_list[girl_index]["days_without_sleep"] += 1
+                if medic_value_15 >= 5:
+                    all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *2
+                else:
+                    all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *3
+                all_girls_list[girl_index]["experience"]["aura"]["fear"] += all_girls_list[girl_index]["days_without_sleep"]*3
+                all_girls_list[girl_index]["experience"]["aura"]["taming"] += all_girls_list[girl_index]["days_without_sleep"]*2
+                all_girls_list[girl_index]["experience"]["aura"]["despair"] += all_girls_list[girl_index]["days_without_sleep"]
+                all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["active"] = True
+                all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["weight"] = 1 + all_girls_list[girl_index]["days_without_sleep"]*0.4
+                reduce_check("attributes","endurance")
+                increase_check("aura","taming")
+                increase_check("aura","fear")
+                increase_check("aura","despair")
+                all_girls_list[girl_index]["stored_yesterday_energy"] = 0
+        # def sleep_condition_mood_update():
+        #     if all_girls_list[girl_index]["sleep"] == 0:
+
+        negative_energy_endurance_reduction_update()
+        energy_update()
     def diet_update():
         girl = all_girls_list[girl_index]
         #TODO LACK SUPPREMENTS AND MASTER_LEFT OVER
         def calories_check():
-            global medic_value_15
+            global medic_value_15, supplements_portion
             if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"] != 0:
                 if not girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["revealed"]:
                     girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["revealed"] = True
@@ -789,8 +799,14 @@ init python:
                 girl["experience"]["attributes"]["endurance"] += girl["calories"] + 1
             elif girl["calories"] > 1:
                 girl["experience"]["attributes"]["physical"] -= girl["calories"] + 1 # physical goes from Chubby to Bony. Calories goes positive, physical decrease
-        def diet_mood_update():
+            if girl["supplements"]:
+                if girl["attributes"]["endurance"] < 3:
+                    girl["experience"]["attributes"]["endurance"] += 3
+                    increase_check("attributes","endurance")
+                supplements_portion += 1
+                
 
+        def diet_mood_update():
             if girl["calories"] < 1:
                 girl["mood_state"]["bad_mood"]["hungry"]["active"] = True
                 girl["mood_state"]["bad_mood"]["hungry"]["weight"] = min(girl["calories"]*-0.2,1)
@@ -844,8 +860,6 @@ init python:
                     all_girls_list[girl_index]["energy"] -= 2
                 else:
                     girl["mood_state"]["bad_mood"]["pregnant"]["active"] = False
-            if girl["fertility"]["active"]:
-                girl["food_portion"] += 1
             if girl["egg_laying"]:
                 farm_food["egg_layer"]["portion"] += 1
             if girl["lactation"]["active"]:
@@ -883,20 +897,18 @@ init python:
             yesterday_exhaustion += 2
         if strength_value_1 < 3:
             strength_experience_value_1 += 1 * skill_adv_mul
-    def best_kitchen_calculation():
-        global best_kitchen
-        best_kitchen = "Deplorable kitchen"
-        for kitchen in home_estate["kitchen"]:
-            if home_estate["kitchen"][kitchen] > 0 and dic_improvement_rooms["kitchen"][kitchen]["modifier"] > dic_improvement_rooms["kitchen"][best_kitchen]["modifier"]:
-                best_kitchen = kitchen
+
     def auto_bath_slave_help_master():
         global hygiene_value_9, shameful, interaction_repulse_difficulty
         global interaction_willingness, libido_value_4, hygiene_experience_value_9
         global girl_index, mood_value_10, home_mess_value, already_bath
         global did_bath_yesterday, target_skill
         target_skill = "sex"
-        if not home_estate["bathroom"] or hygiene_value_9 > 4 or already_bath:
+        if home_estate["bathroom"]["type"] == "":
             return
+        if hygiene_value_9 > 4 or already_bath:
+            return
+
         girl = all_girls_list[girl_index]
         if girl["rules"]["bath_slave"] and girl["energy"] > -1:
             if girl["aura"]["devotion"] == 0:
@@ -1022,7 +1034,7 @@ init python:
         update_slave_beauty()
         update_slave_style()
         update_slave_exoticism()
-    def slave_rank_update():
+    def slave_rank_calculation():
         girl = all_girls_list[girl_index]
         girl["skills_sum"] = 0
         girl["skills_max"] = 0
@@ -1245,6 +1257,8 @@ init python:
                 girl["specialization"][key] = True
     def slave_bath_alone():
         global girl_index, home_mess_value
+        if home_estate["bathroom"]["type"] == "":
+            return
         girl = all_girls_list[girl_index]
         girl["mood"] += (5 - girl["hygiene"]) / 5 # up to 1 mood, 2 is too op
         girl["did_bath_yesterday"] = True
@@ -1260,7 +1274,9 @@ init python:
     def slave_bath_selfwash_auto():
         global girl_index, home_mess_value
         girl = all_girls_list[girl_index]
-        if not home_estate["bathroom"] or girl["energy"] < 0 or girl["hygiene"] > 2 or girl["already_bath"]:
+        if home_estate["bathroom"]["type"] == "":
+            return
+        if girl["energy"] < 0 or girl["hygiene"] > 2 or girl["already_bath"]:
             return
         home_mess_value += 3
         slave_bath_alone()
@@ -1268,6 +1284,8 @@ init python:
     def slave_bath_selfwash_ask():
         global girl_index, home_mess_value
         girl = all_girls_list[girl_index]
+        if home_estate["bathroom"]["type"] == "":
+            return
         home_mess_value += 3
         slave_bath_alone()
     def setup_interaction_screen():
@@ -1279,6 +1297,8 @@ init python:
         renpy.show_screen("interaction_screen")
         renpy.show_screen("information_for_consideration_screen")
     def master_bath():
+        if home_estate["bathroom"]["type"] == "":
+            return
         global hygiene_experience_value_9, home_mess_value
         global hygiene_value_9, energy_value, pic_displayed
         global already_bath
@@ -1832,18 +1852,35 @@ init python:
             master_mood_state["good_mood"]['pos_wealth']["active"] = False
             master_mood_state["bad_mood"]['neg_wealth']["active"] = True
         estate_quality = 0
-        estate_quality += home_estate["kitchen"]["Deplorable kitchen"]*1
-        estate_quality += home_estate["kitchen"]["Basic kitchen"]*2
-        estate_quality += home_estate["kitchen"]["Well-equipped kitchen"]*3
-        estate_quality += home_estate["kitchen"]["Gourmet kitchen"]*4
-        estate_quality += home_estate["barn"]["Collapsing barn"]*1
-        estate_quality += home_estate["barn"]["Worn barn"]*2
-        estate_quality += home_estate["barn"]["Sturdy barn"]*3
-        estate_quality += home_estate["barn"]["Masterwork barn"]*4
-        estate_quality += home_estate["laboratory"]["Makeshift lab"]*1
-        estate_quality += home_estate["laboratory"]["Crude lab"]*2
-        estate_quality += home_estate["laboratory"]["Proper lab"]*3
-        estate_quality += home_estate["laboratory"]["Advanced laboratory"]*4
+        if home_estate["kitchen"]["type"] == "Deplorable kitchen":
+            estate_quality += 1
+        if home_estate["kitchen"]["type"] == "Basic kitchen":
+            estate_quality += 2
+        if home_estate["kitchen"]["type"] == "Well-equipped kitchen":
+            estate_quality += 3
+        if home_estate["kitchen"]["type"] == "Gourmet kitchen":
+            estate_quality += 4
+        for i in range(6):
+            if home_estate["kitchen"]["storage_capacity"] >= i*250 + 250:
+                estate_quality += 1
+            else:
+                break
+        if home_estate["barn"]["type"] == "Collapsing barn":
+            estate_quality += 1
+        if home_estate["barn"]["type"] == "Worn barn":
+            estate_quality += 2
+        if home_estate["barn"]["type"] == "Sturdy barn":
+            estate_quality += 3
+        if home_estate["barn"]["type"] == "Masterwork barn":
+            estate_quality += 4
+        if home_estate["laboratory"]["type"] == "Makeshift lab":
+            estate_quality += 1
+        if home_estate["laboratory"]["type"] == "Crude lab":
+            estate_quality += 2
+        if home_estate["laboratory"]["type"] == "Proper lab":
+            estate_quality += 3
+        if home_estate["laboratory"]["type"] == "Advanced laboratory":
+            estate_quality += 4
         estate_quality += home_estate["slaves_rooms"]["squalid_room"]*1
         estate_quality += home_estate["slaves_rooms"]["cramped_room"]*2
         estate_quality += home_estate["slaves_rooms"]["comfortable_room"]*3
@@ -2516,54 +2553,7 @@ init python:
                         master_mood_state["bad_mood"][key]["active"] = False
                         master_mood_state["bad_mood"][key]["duration"] = master_mood_state["bad_mood"][key]["default_duration"]
                         break # only 1 moodlet can be lost per day
-    # --- Define helper functions for auto tasks ---
 
-    # Sleep task
-    def sleep_text(girl):
-        return girl["name"] + " " + dic_idle[random.randint(0, 4)]
-    def sleep_room(girl):
-        return dic_slave_room_to_text[girl["sleep_room"]]
-
-    # Cook task
-    def cook_text(girl):
-        return dic_cook[food_meat_info["quality"]]
-
-    def cook_room(girl):
-        return "Kitchen"
-
-    def cook_extra():
-        return {"display_meat": True}
-
-    # Maid task
-    def maid_text(girl):
-        return dic_maid[girl["maid_slave_skill_performance"]]
-
-    def maid_room(girl):
-        return "Hall"
-
-    # Bath task
-    def bath_text(girl):
-        return dic_bath_master[2]
-
-    def bath_room(girl):
-        return "Bath"
-
-    # Bath self task
-    def bath_self_text(girl):
-        return bathing_slave_alone[girl["psy_status"]]
-
-    def bath_self_room(girl):
-        return "Bath"
-
-    # Alarm task
-    def alarm_text(girl):
-        return girl["rules_explain"]["behave_alarm"]
-
-    def alarm_room(girl):
-        return "Master bedroom"
-
-    def alarm_extra():
-        return {"sex_picture": True}
     def achievements_gain(): #all virtue and sin gain combined and reformulated
         global guilt_potencial, merit_potencial, target_skill
         global slave_diligence, interaction_willingness, interaction_repulse_difficulty

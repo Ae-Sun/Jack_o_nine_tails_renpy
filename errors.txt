@@ -2,8 +2,11 @@
 errors listed below, and try again.
 
 
-File "game/fuctions.rpy", line 807: invalid syntax
-            if girl["portion_size"] == 0
+File "game/home.rpy", line 2506: 'Jump' is not a keyword argument or valid child of the imagebutton statement.
+    action (SetDict(all_girls_list[girl_index]["rules"],"[a]", False), 
+                                    SetVariable("text_slave_conditions_index", b["disable"]), 
+                                    SetDict(all_girls_list[girl_index]["rules"],"rules_count",all_girls_list[girl_index]["rules"]["rules_count"] - 1))                             Jump("Home"))
+                                                                                                                                                                                         ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Wed Sep 10 15:09:59 2025
+Wed Sep 10 21:22:07 2025
