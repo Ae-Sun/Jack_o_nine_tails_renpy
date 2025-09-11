@@ -480,6 +480,10 @@ label next_day_labellabel:
                     all_girls_list[girl_index]["rules_broken"][i] = False
                 for i in all_girls_list[girl_index]["rules_explain"]:
                     all_girls_list[girl_index]["rules_explain"][i] = ""
+                if all_girls_list[girl_index]["assistant"]:
+                    if all_girls_list[girl_index]["attributes"]["nature"] < 3:
+                        all_girls_list[girl_index]["experience"]["attributes"]["nature"] +=1
+                        increase_check("attributes","nature")
                 moodlet_new_day_slave_update()
                 slave_daily_bonus_update()
                 girl_already_done_update()
@@ -495,16 +499,13 @@ label next_day_labellabel:
                 #TODO NEXT THING TO DO 
 
                 well_rest_bonus_update()
-                diet_update()
                         
 
                     
-                if all_girls_list[girl_index]["assistant"]:
-                    if all_girls_list[girl_index]["attributes"]["nature"] < 3:
-                        all_girls_list[girl_index]["experience"]["attributes"]["nature"] +=1
-                        increase_check("attributes","nature")
+
                 brand_effect_activation()
                 energy_and_sleep_update()
+                diet_update()
                 spoiling_update()
             # save pass mood slave
             all_girls_list[girl_index]["past_mood"] = all_girls_list[girl_index]["mood"]

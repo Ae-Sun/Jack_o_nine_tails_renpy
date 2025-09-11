@@ -778,7 +778,6 @@ init python:
         energy_update()
     def diet_update():
         girl = all_girls_list[girl_index]
-        #TODO LACK SUPPREMENTS AND MASTER_LEFT OVER
         def calories_check():
             global medic_value_15, supplements_portion
             if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"] != 0:
@@ -797,6 +796,7 @@ init python:
             if girl["calories"] < -1:
                 girl["experience"]["attributes"]["physical"] -= girl["calories"] + 1 # physical goes from Chubby to Bony. Calories goes negative, physical increase
                 girl["experience"]["attributes"]["endurance"] += girl["calories"] + 1
+                girl["experience"]["aura"]["awareness"] += 1
             elif girl["calories"] > 1:
                 girl["experience"]["attributes"]["physical"] -= girl["calories"] + 1 # physical goes from Chubby to Bony. Calories goes positive, physical decrease
             if girl["supplements"]:
@@ -804,8 +804,6 @@ init python:
                     girl["experience"]["attributes"]["endurance"] += 3
                     increase_check("attributes","endurance")
                 supplements_portion += 1
-                
-
         def diet_mood_update():
             if girl["calories"] < 1:
                 girl["mood_state"]["bad_mood"]["hungry"]["active"] = True
@@ -815,28 +813,50 @@ init python:
             if girl["days_without_food"] > 0 or girl["calories"] < -5:
                 girl["mood_state"]["bad_mood"]["starvation"]["active"] = True
             else:
-                girl["mood_state"]["bad_mood"]["starvation"]["active"] = False
+                girl["mood_state"]["bad_mood"]["starvation"]["active"] = False 
             if girl["diet"] == 0:
                 girl["mood_state"]["bad_mood"]["slave_food"]["active"] = True
                 girl["mood_state"]["bad_mood"]["slave_food"]["weight"] = 0.75
             else:
                 girl["mood_state"]["bad_mood"]["slave_food"]["active"] = False
-            if girl["diet"] == 2 and not girl["field_tatto"]:
-                girl["mood_state"]["bad_mood"]["slave_food"]["active"] = True
-                girl["mood_state"]["bad_mood"]["slave_food"]["weight"] = 1.5
-            
+            if girl["diet"] == 1:
+                girl["mood"] += 1 + girl["attributes"]["empathy"]
+                for i in range(4):
+                    if girl["aura"]["devotion"] == i:
+                        girl["experience"]["aura"]["spoil"] += max(0,girl["attributes"]["temperament"]*(3 - i*2)) + (4 - i)
 
-        
-        
+            if girl["diet"] == 2 
+                girl["experience"]["traits_miscellaneous"]["sexual_openness"] += 1
+                if not girl["field_tatto"]:
+                    girl["mood_state"]["bad_mood"]["slave_food"]["active"] = True
+                    girl["mood_state"]["bad_mood"]["slave_food"]["weight"] = (1 + (5 - girl["attributes"]["pride"])*0.2) - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"]
+
+            if girl["your_leftovers"]:
+                if food_meat_info["quality"] > (5 - girl["attributes"]["pride"])*2:
+                    girl["mood_state"]["good_mod"]["cookie"]["active"] = True
+                else:
+                    girl["mood_state"]["good_mod"]["cookie"]["active"] = False
+                girl["mood"] -=  (5 - girl["attributes"]["pride"])
+                for i in range(5):
+                    if girl["aura"]["devotion"] == i:
+                        girl["experience"]["aura"]["spoil"] +=  max(1,girl["attributes"]["temperament"] * (2 - i))
+                        
+                    # TODO maybe add the part when slave can eat complete meat, but for now master can't skip meal since meal is only prepared when master doesn't ate.
+                    # if cooked_food > 0 and master_eats_dinner = 0: girl["experience"]["aura"]["spoil"] += max(3, 3*(3 - i)) &! being allowed to eat an entire meal is a significant privilege (in total, 2x fresh food spoil) - ImperatorAugustus
+                    # also this part if slave['diet_portion'] = 3 and slave['diet_food_type'] ! 2: slave_rate['custom'] -= slave['temper'] &! eating as much as she wants drains habit (but not with nutritionist)
         def calories_update():
+
             if girl["portion_size"] == 0:
                 girl["calories"] = -2
                 #refund parcial food portion
                 girl["food_portion"] -= 0.5 * girl["attributes"]["endurance"]
+                girl["energy"] -= 1
             if girl["portion_size"] == 1:
                 girl["calories"] = 2
             if girl["portion_size"] == 2:
                 girl["calories"] = 6
+                if girl["mood_state"]["bad_mood"]["hungry"]["active"]:
+                    girl["food_portion"] += 1 # hungry slave ate more
             if girl["portion_size"] == 3:
                 girl["calories"] = 99
             if girl["diet"] == 3:
@@ -872,13 +892,28 @@ init python:
                     girl["food_portion"] += 1
                 else:
                     break
-            girl["total_food_portion"] += girl["food_portion"] 
+            if girl["diet"] == 0:
+                girl["total_food_portion"] += girl["food_portion"] 
+            elif girl["diet"] == 1:
+                girl["total_food_portion_premiun"] += girl["food_portion"] 
+            elif girl["diet"] == 2:
+                if storage["ingredients"]["Spawn's Semen"] > girl["food_portion"]:
+                    storage["ingredients"]["Spawn's Semen"] -= girl["food_portion"]
+                else:
+                    girl["food_portion"] -= storage["ingredients"]["Spawn's Semen"]
+                    storage["ingredients"]["Spawn's Semen"] = 0
+                    girl["total_food_portion_semen"] += girl["food_portion"]
+                
+
+
+
 
         # do not change the order
         calories_check()
         diet_mood_update()
         calories_update()
         diet_portion_for_food_bill_update()
+    # def healing_and_dependence_update():
 
     def slave_energy_drop_calculation():
         global girl_index
@@ -1409,6 +1444,9 @@ init python:
         all_girls_list[girl_index].setdefault("calories",all_girls_list[girl_index]["attributes"]["endurance"])
         all_girls_list[girl_index].setdefault("food_portion",all_girls_list[girl_index]["attributes"]["endurance"])
         all_girls_list[girl_index].setdefault("total_food_portion",0)
+        all_girls_list[girl_index].setdefault("total_food_portion_premiun",0)
+        all_girls_list[girl_index].setdefault("total_food_portion_semen",0)
+
         all_girls_list[girl_index].setdefault("field_tattoo",False)
 
         all_girls_list[girl_index].setdefault("wig",False)
