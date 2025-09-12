@@ -19,6 +19,8 @@ define dic_slave_attributes_keys = {
 define dic_girl_age_text2 = [
     "young","loli","milf"    
 ]
+
+
 define dic_girl_choosing_image_condition_short = {
     "slave_auto_sleep":"rest",
     "slave_auto_cook":"cook",
@@ -141,9 +143,9 @@ define dic_slave_mood ={
     "good_mood": {
         "slave_winner"           : "[all_girls_list[girl_index][name]]\n- Hooray, we won! That was amazing. I feel much more confident.",
         "multiple_orgasm"        : "[all_girls_list[girl_index][name]]\n- Ohh, it was great sex! Such a heavenly pleasure… I would like to experience this once again.",
-        "slave_kannabis"         : "[all_girls_list[girl_index][name]]\n- Oooo… …this weed is a thing. Such bliss, we need to add some relaxing music.",
-        "slave_opium"            : "[all_girls_list[girl_index][name]]\n- I feel good. I feel oblivion flowing through my veins, carrying away pain and sorrow.",
-        "slave_alco"             : "[all_girls_list[girl_index][name]]\n- I… hic… am soooooo drunk. Why did you get me drunk, eh? You want to take advantage of my… hic… helpless situation?",
+        "kannabis"         : "[all_girls_list[girl_index][name]]\n- Oooo… …this weed is a thing. Such bliss, we need to add some relaxing music.",
+        "opium"            : "[all_girls_list[girl_index][name]]\n- I feel good. I feel oblivion flowing through my veins, carrying away pain and sorrow.",
+        "alco"             : "[all_girls_list[girl_index][name]]\n- I… hic… am soooooo drunk. Why did you get me drunk, eh? You want to take advantage of my… hic… helpless situation?",
         "no_punish"              : "[all_girls_list[girl_index][name]]\n- You decided not to punish me, although I know that I was guilty. Nice to know that you are sorry for me ^ _ ^",
         "ineffective_punishment" : "[all_girls_list[girl_index][name]]\n- I know you meant to punish me, but it was not as bad as I expected…",
         "gentle"                 : "[all_girls_list[girl_index][name]]\n- It's nice to feel someone's care and affection…",

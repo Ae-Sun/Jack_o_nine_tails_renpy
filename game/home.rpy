@@ -77,6 +77,7 @@ default boobs3 =" empty breast-sacks"
 default boobs4 =" round tits"
 default boobs5 =" firm melons"
 default boobs6 =" shapely balloons"
+default debt_with_administration = 0
 default room_name = ""
 default dic_overnight_rules_count_index = 1
 default slave_rebellion_fight = False
@@ -145,6 +146,13 @@ default interaction_teach = False
 default interaction_teach_type = ""
 default master_equipment_choice_image = "scene/item/clear_small"
 default master_equipment_choice_image_text = "You can navigate up and down in the clothing equipment menu pressing the 1 and 2 keys."
+default master_health_state = {
+    "kamra": 0,
+    "kamra_addiction": 0
+
+}
+
+
 default guild_contract = {
     "active": False,
     "rank" : "D-",
@@ -323,11 +331,11 @@ default storage = {
     },
     "laboratory" : {
         "ingredients" : {
-            "Fiend's mucus": 0,
-            "Elysian datura": 0,
-            "Kamrian resin": 0,
-            "Faeries' pollen": 0,
-            "Essence of oblivion": 0
+            "Fiend's mucus": 0, #slime
+            "Elysian datura": 0,#cannabis_pressure
+            "Kamrian resin": 0, #kamrin
+            "Faeries' pollen": 0, #meth
+            "Essence of oblivion": 0 #opium
         },
         "potion" : {
             "Bacchic": 0,
@@ -467,44 +475,28 @@ label next_day_labellabel:
             girl_index = girls_keys[idx]
             if all_girls_list[girl_index]["conscience"]:
                 girls_count += 1
-                all_girls_list[girl_index]["exertion"] = 0
-                all_girls_list[girl_index]["epilation"] = max(all_girls_list[girl_index]["epilation"]-1,0)
-                all_girls_list[girl_index]["manicure"] = max(all_girls_list[girl_index]["manicure"]-1,0)
-                all_girls_list[girl_index]["hairstyle"] = max(all_girls_list[girl_index]["hairstyle"]-1,0)
-                all_girls_list[girl_index]["perfume"] = max(all_girls_list[girl_index]["perfume"]-1,0)
-                all_girls_list[girl_index]["caught_masturbating"] = max(all_girls_list[girl_index]["caught_masturbating"]-1,0)
-                all_girls_list[girl_index]["daring"] = max(all_girls_list[girl_index]["daring"]- random.randint(0, 3),0)
-                if all_girls_list[girl_index]["energised"] > 5:
-                    all_girls_list[girl_index]["energised"] = max(all_girls_list[girl_index]["energised"]- random.randint(0, 7),0)
-                for i in all_girls_list[girl_index]["rules_broken"]:
-                    all_girls_list[girl_index]["rules_broken"][i] = False
-                for i in all_girls_list[girl_index]["rules_explain"]:
-                    all_girls_list[girl_index]["rules_explain"][i] = ""
-                if all_girls_list[girl_index]["assistant"]:
-                    if all_girls_list[girl_index]["attributes"]["nature"] < 3:
-                        all_girls_list[girl_index]["experience"]["attributes"]["nature"] +=1
-                        increase_check("attributes","nature")
-                moodlet_new_day_slave_update()
-                slave_daily_bonus_update()
-                girl_already_done_update()
                 slave_dead_for_low_endurance_update()
                 slave_attack_escape_update()                
-                #TODO if not all_girls_list[girl_index]["assistant"]: # WIP assistent cooking code skipped
                 # Rules
                 auto_cook_meal()
                 auto_maid()
                 auto_bath_slave_help_master()
                 slave_bath_selfwash_auto()
                 auto_alarm()
+
+                energy_and_sleep_update() 
+                moodlet_new_day_slave_update()
+                assistant_passive_stats_update()
+                style_daring_energised_drop_update()
+                rules_reset_update()
+                slave_healing_and_dependence_update()
+                slave_daily_bonus_update()
+                girl_already_done_update()
+                #TODO if not all_girls_list[girl_index]["assistant"]: # WIP assistent cooking code skipped
                 #TODO NEXT THING TO DO 
 
                 well_rest_bonus_update()
-                        
-
-                    
-
                 brand_effect_activation()
-                energy_and_sleep_update()
                 diet_update()
                 spoiling_update()
             # save pass mood slave
@@ -2748,7 +2740,7 @@ screen screen_attributes_skills_sexual_slave():
                 textbutton label_text:
                     style style_used
                     action SetVariable("attribute_track_index", key),SetVariable("dictionary_track_index", val),SetVariable("dictionary_name", dic_traits_miscellaneous_description),SetVariable("customboxcheck", True),Jump("Home")
-                    hovered Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "wip")
+                    hovered Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", key)
                     unhovered Hide("description_slave_attributes")
         for key, values in dic_traits_aura.items():
 
@@ -2846,11 +2838,11 @@ screen description_slave_attributes():
             pos(curx + 150,cury)
             style "description_slave_attributes_frame"
             text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification_physical[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]] +"; " + str(all_girls_list[girl_index]["experience"]["attributes"][description_slave_attributes_track_value]) + " (+" + str(attributes_max_threshold_inverse[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]]) + "/" + str(attributes_min_threshold_inverse[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]]) + ")" style "description_slave_attributes_frame_text"
-    if description_slave_attributes_track_value == "wip":
+    if description_slave_attributes_track_value in dic_traits_miscellaneous:
         frame:
             pos(curx + 150,cury)
             style "description_slave_attributes_frame"
-            text "WIP" style "description_slave_attributes_frame_text"
+            text str(all_girls_list[girl_index]['experience']['traits_miscellaneous'][description_slave_attributes_track_value]) + " | " + str(dic_dificulty_traits_avance[all_girls_list[girl_index]['traits']['traits_hidden']['traits_miscellaneous(1/12)'][description_slave_attributes_track_value]['value']]) style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value == "petting":
         frame:
             pos(curx - 150,cury)
