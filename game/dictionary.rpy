@@ -1793,9 +1793,9 @@ define tips = {
 
 }
 define dic_dificulty_traits_avance = {
-    -2 : 75
-    -1 : 35
-    0 : 35
-    1 : 75
+    -2 : 75,
+    -1 : 35,
+    0 : 35,
+    1 : 75,
     2 : "Max"
 }

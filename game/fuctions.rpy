@@ -825,7 +825,7 @@ init python:
                     if girl["aura"]["devotion"] == i:
                         girl["experience"]["aura"]["spoil"] += max(0,girl["attributes"]["temperament"]*(3 - i*2)) + (4 - i)
 
-            if girl["diet"] == 2 
+            if girl["diet"] == 2 :
                 girl["experience"]["traits_miscellaneous"]["sexual_openness"] += 1
                 if not girl["field_tatto"]:
                     girl["mood_state"]["bad_mood"]["slave_food"]["active"] = True
@@ -936,7 +936,7 @@ init python:
             if girl["health_state"]["kamra"] > 0:
                 girl["health_state"]["kamra"] = 0
                 girl["health_state"]["kamra_addiction"] += 1
-                if girl["health_state"]["kamra_addiction"] > girl["attributes"]["endurance"]*8
+                if girl["health_state"]["kamra_addiction"] > girl["attributes"]["endurance"]*8:
                     girl["mood_state"]["bad_mood"]["slave_koffe"]["active"] = True
                     girl["mood_state"]["bad_mood"]["slave_koffe"]["duration"] = girl["health_state"]["kamra_addiction"]
                     girl["energy"] += 1 # using yester instead of energy because it go before energy uptade
@@ -950,7 +950,7 @@ init python:
                 girl["health_state"]["alcohol"] = 0
                 girl["health_state"]["alcohol_addiction"] += 1
                 girl["mood_state"]["good_mood"]["alco"]["active"] = False
-                if girl["health_state"]["alcohol_addiction"] > girl["attributes"]["endurance"]
+                if girl["health_state"]["alcohol_addiction"] > girl["attributes"]["endurance"]:
                     girl["mood_state"]["bad_mood"]["alco"]["active"] = True
                     girl["mood_state"]["bad_mood"]["alco"]["duration"] = girl["health_state"]["alcohol_addiction"]
                     girl["experience"]["attributes"]["endurance"] -= 1
@@ -1027,11 +1027,11 @@ init python:
             if girl["injuries_rate"] < 0:
                 girl["injuries_rate"] = 0
             roll = random.randint(1,10)
-            if (girl["injuries_rate"] >= 40 and girl["injuries_rate"] < 100)
+            if (girl["injuries_rate"] >= 40 and girl["injuries_rate"] < 100):
                 if roll > 4:
                     girl["scars_rate"] += 1
 
-            elif (girl["injuries_rate"] >= 100 and girl["injuries_rate"] < 120) 
+            elif (girl["injuries_rate"] >= 100 and girl["injuries_rate"] < 120):
                 if roll > 4:
                     girl["scars_rate"] += 1
                 if roll > 7:
@@ -1064,8 +1064,9 @@ init python:
 
 
     def slave_menstruation_pregnant_update():
-        global medic_value_15, debt_with_administration
+        global medic_value_15, debt_with_administration, all_girls_list
         girl = all_girls_list[girl_index]
+
         if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["value"] != 0:
             if medic_value_15 > 2: # Need at least B+ medic to notice if slave is fertile
                 if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["revealed"]:
@@ -1107,29 +1108,29 @@ init python:
                             else:
                                 menstrual_phase -= 1
 
-                if girl["menstruation_cycle"]["day"] >= menstrual_phase:
+                if girl["menstruation_cycle"]["days"] >= menstrual_phase:
                     girl["mood_state"]["bad_mood"]["menstruation"]["active"] = True
                     girl["energy"] -= 2
                     girl["menstruation_cycle"]["stage"] = 0
-                elif girl["menstruation_cycle"]["day"] >= menstrual_phase + follicular_phase:
+                elif girl["menstruation_cycle"]["days"] >= menstrual_phase + follicular_phase:
                     girl["mood_state"]["bad_mood"]["menstruation"]["active"] = False
                     girl["energy"] += 1
                     girl["mood"] += 1
                     girl["menstruation_cycle"]["stage"] = 1
-                elif girl["menstruation_cycle"]["day"] >= menstrual_phase + follicular_phase + ovulation:
+                elif girl["menstruation_cycle"]["days"] >= menstrual_phase + follicular_phase + ovulation:
                     girl["mood_state"]["bad_mood"]["menstruation"]["active"] = False # the cicle is reset when turning into a egg_layer so this is necessary
                     girl["energy"] += 2
                     girl["mood"] += 3
                     girl["menstruation_cycle"]["stage"] = 2
-                elif girl["menstruation_cycle"]["day"] >= a
+                elif girl["menstruation_cycle"]["days"] >= a:
                     girl["mood_state"]["bad_mood"]["menstruation"]["active"] = False
                     girl["energy"] -= 1
                     girl["mood"] -= 1
                     girl["menstruation_cycle"]["stage"] = 3
                 #avance the day
-                girl["menstruation_cycle"]["day"] += 1
-                if girl["menstruation_cycle"]["day"] == a:
-                    girl["menstruation_cycle"]["day"] = 0
+                girl["menstruation_cycle"]["days"] += 1
+                if girl["menstruation_cycle"]["days"] == a:
+                    girl["menstruation_cycle"]["days"] = 0
                     # fertile women have generally more consistent cicle 
                     if not girl["egg_laying"]:
                         roll1 = random.randint(-6 + girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["value"], 6 - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["value"])
@@ -1138,18 +1139,18 @@ init python:
                     girl["menstruation_cycle"]["variance"] = roll1
         else:
             if not girl["egg_laying"]:
-                if girl["pregnant"]["days"] < 12*7
+                if girl["pregnant"]["days"] < 12*7:
                     girl["pregnant"]["state"] = 0
-                elif girl["pregnant"]["days"] < 26*7
+                elif girl["pregnant"]["days"] < 26*7:
                     if girl["pregnant"]["days"] == 12*7:
                         msg("You notice your slave [all_girls_list[girl_index]['name']] is pregnant")
                     girl["pregnant"]["state"] = 1
-                elif girl["pregnant"]["days"] < 38*7
+                elif girl["pregnant"]["days"] < 38*7:
                     if girl["pregnant"]["days"] == 26*7:
                         msg("You notice your slave [all_girls_list[girl_index]['name']] has enter the middle fase of pregnacy, as a cultured citizen you know given born is HIGLY PROHIBITED in this land, you should abort before VATICAN take away what is yours")
                     girl["pregnant"]["state"] = 2
                 else:
-                    if girl["pregnant"]["days"] < 38*7
+                    if girl["pregnant"]["days"] < 38*7:
                         msg("You notice your slave [all_girls_list[girl_index]['name']] has enter the final fase of pregnacy, you must abort immediately, There's no change your slave give born before she is taken away.")
                     roll = random.randint(1,30)
                     if roll + (girl["pregnant"]["days"] - 38*7) > 30:
@@ -1735,15 +1736,15 @@ init python:
         all_girls_list[girl_index].setdefault("total_food_portion_premiun",0)
         all_girls_list[girl_index].setdefault("total_food_portion_semen",0)
         all_girls_list[girl_index].setdefault("health_state",{})
-        all_girls_list[girl_index].setdefault("kamra",0)
-        all_girls_list[girl_index].setdefault("alcohol",0)
-        all_girls_list[girl_index].setdefault("meth",0)
-        all_girls_list[girl_index].setdefault("opium",0)
-        all_girls_list[girl_index].setdefault("cannabis_pressure",0)
-        all_girls_list[girl_index].setdefault("kamra_addiction",0)
-        all_girls_list[girl_index].setdefault("alcohol_addiction",0)
-        all_girls_list[girl_index].setdefault("meth_addiction",0)
-        all_girls_list[girl_index].setdefault("opium_addiction",0)
+        all_girls_list[girl_index]["health_state"].setdefault("kamra",0)
+        all_girls_list[girl_index]["health_state"].setdefault("alcohol",0)
+        all_girls_list[girl_index]["health_state"].setdefault("meth",0)
+        all_girls_list[girl_index]["health_state"].setdefault("opium",0)
+        all_girls_list[girl_index]["health_state"].setdefault("cannabis_pressure",0)
+        all_girls_list[girl_index]["health_state"].setdefault("kamra_addiction",0)
+        all_girls_list[girl_index]["health_state"].setdefault("alcohol_addiction",0)
+        all_girls_list[girl_index]["health_state"].setdefault("meth_addiction",0)
+        all_girls_list[girl_index]["health_state"].setdefault("opium_addiction",0)
         all_girls_list[girl_index].setdefault("wig",False)
         all_girls_list[girl_index].setdefault("assistant",False)
         all_girls_list[girl_index].setdefault("races_won",0)

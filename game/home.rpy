@@ -477,6 +477,7 @@ label next_day_labellabel:
                 girls_count += 1
                 slave_dead_for_low_endurance_update()
                 slave_attack_escape_update()                
+                rules_reset_update() # must go before rules
                 # Rules
                 auto_cook_meal()
                 auto_maid()
@@ -488,8 +489,8 @@ label next_day_labellabel:
                 moodlet_new_day_slave_update()
                 assistant_passive_stats_update()
                 style_daring_energised_drop_update()
-                rules_reset_update()
                 slave_healing_and_dependence_update()
+                slave_menstruation_pregnant_update()
                 slave_daily_bonus_update()
                 girl_already_done_update()
                 #TODO if not all_girls_list[girl_index]["assistant"]: # WIP assistent cooking code skipped
