@@ -1,0 +1,3063 @@
+init python:
+    import os, json, random 
+    def load_random_json():
+        mods_path = os.path.join(config.gamedir, "girl_packs")
+        json_files = []
+        # Folder(s) to exclude
+        excluded_folders = {"original_premiun_slaves_pack"}
+
+        for root, dirs, files in os.walk(mods_path):
+            # Remove excluded folders from dirs to avoid walking into them
+            dirs[:] = [d for d in dirs if d not in excluded_folders]
+
+            for file in files:
+                if file.lower().endswith(".json"):
+                    json_path = os.path.join(root, file)
+                    json_files.append(json_path)
+
+        if json_files:
+            chosen_path = random.choice(json_files)
+            try:
+                with open(chosen_path, "r", encoding="utf-8") as f:
+                    global selected_json_data
+                    selected_json_data = json.load(f)
+                    renpy.log(f"Loaded JSON file: {chosen_path}")
+            except Exception as e:
+                renpy.log(f"Error loading JSON: {chosen_path} → {e}")
+        else:
+            renpy.log("No JSON files found.")
+    def load_json(filename):
+        try:
+            with renpy.loader.load(filename) as f:
+                return json.load(f)
+        except Exception as e:
+            renpy.log(f"Failed to load {filename}: {e}")
+            return None
+    def reduce_check(x,a):
+        if all_girls_list[girl_index]["experience"][x][a] <= attributes_min_threshold[all_girls_list[girl_index][x][a]] and all_girls_list[girl_index][x][a] > 0:
+            all_girls_list[girl_index]["experience"][x][a] -= attributes_min_threshold[all_girls_list[girl_index][x][a]]
+            all_girls_list[girl_index][x][a] = all_girls_list[girl_index][x][a] - 1
+    def increase_check(x,a):
+        if all_girls_list[girl_index]["experience"][x][a] >= attributes_max_threshold[all_girls_list[girl_index][x][a]] and all_girls_list[girl_index][x][a] < 5:
+            all_girls_list[girl_index]["experience"][x][a] -= attributes_max_threshold[all_girls_list[girl_index][x][a]]
+            all_girls_list[girl_index][x][a] = all_girls_list[girl_index][x][a] + 1
+    def msg(x):
+        renpy.show_screen("msg", msg_text=x)
+    def meat_evaluation():
+        base_meat_gain = all_girls_list[girl_index]["attributes"]["physical"] + 2
+        if all_girls_list[girl_index]["age"] == 0:
+            base_meat_gain = base_meat_gain*2
+        elif all_girls_list[girl_index]["age"] == 2:
+            base_meat_gain = base_meat_gain*3
+        mince_gain = all_girls_list[girl_index]["attributes"]["physical"] * all_girls_list[girl_index]["boobs"]
+        meat_max = 1 + all_girls_list[girl_index]["attributes"]["endurance"]
+        if all_girls_list[girl_index]["age"] == 0:
+            meat_max = meat_max*2
+        elif all_girls_list[girl_index]["age"] == 2:
+            meat_max = meat_max*3
+        if base_meat_gain > meat_max:
+            meat_gain = meat_max
+            mince_bonus = base_meat_gain - meat_max
+        else:
+            meat_gain = base_meat_gain
+            mince_gain += mince_bonus
+        if all_girls_list[girl_index]["age"] == 1 or ( all_girls_list[girl_index]["age"] == 0 and all_girls_list[girl_index]["vaginal_tightness"] == 0):
+            virgin_meat_gain = meat_gain
+            meat_gain = 0
+        else:
+            virgin_meat_gain = 0
+        meat_price = mince_gain + meat_gain*2 + virgin_meat_gain*4
+        return(meat_price)
+    def sex_acceptance_check():  # sex_acceptance_check() is literally interaction_willingness1 but for sex.
+        global interaction_sex_acceptance, girl_index, rape
+        global allure_value_3, sum_of_sex_skill_slave_value
+        global shameful, painful, disgusting, homosexual
+        global stimulating, orgastic
+        interaction_sex_acceptance = 0 
+        girl = all_girls_list[girl_index]
+        if girl["psy_status"] == "broken":
+            return
+        if girl["aura"]["devotion"] < 5 and rape:
+            # rape is opposed by nature ([-20, -4]) unless fully devoted - ImperatorAugustus
+            # but I will add devotion to the equation to make it more interesting
+            interaction_sex_acceptance -= girl["attributes"]["nature"] + girl["attributes"]["temperament"] + girl["attributes"]["pride"] + girl["attributes"]["intelligence"]
+            interaction_sex_acceptance = interaction_sex_acceptance // girl["aura"]["devotion"] + 1
+            rape = False
+            return
+        if stimulating or orgastic:
+            interaction_sex_acceptance = (allure_value_3 -5) + girl["mood"] + girl["aura"]["devotion"] + girl["arousal"]*2 - (10 - girl["attributes"]["pride"]*2)
+            # initial value ranges from +20 (alluring master, ecstatic, max devotion, max arousal, no pride) to -20 (repulsive master, depressed, no devotion, no arousal, max pride)
+            if girl["psy_status"] in ["frightened", "docile"]:
+                interaction_sex_acceptance += girl["aura"]["fear"]
+            elif girl["psy_status"] == "horny":
+                interaction_sex_acceptance += girl["arousal"]
+            elif girl["psy_status"] == 'servile':
+                interaction_sex_acceptance += girl["attributes"]["nature"]
+            elif girl["psy_status"] == 'obedient':
+                interaction_sex_acceptance += girl["attributes"]["intelligence"]
+            elif girl["psy_status"] == 'hysteric':
+                interaction_sex_acceptance -= girl["aura"]["devotion"]
+            elif girl["psy_status"] == 'hateful':
+                interaction_sex_acceptance -= girl["attributes"]["temperament"]
+            elif girl["psy_status"] == 'resistant':
+                interaction_sex_acceptance -= girl["attributes"]["nature"]
+            elif girl["psy_status"] == 'arrogant':
+                interaction_sex_acceptance -= girl["attributes"]["pride"]
+            elif girl["psy_status"] in ["reluctant", "depresive", "lachrymose"]:
+                interaction_sex_acceptance += girl["attributes"]["empathy"]
+            # check lust_driver trait
+            if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"] > 0:
+                interaction_sex_acceptance += girl["arousal"] * girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]
+            if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"] < 0:
+                interaction_sex_acceptance -= girl["attributes"]["empathy"] * girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]
+            sum_of_sex_skill_slave_value += (girl["sex_experience"]["petting"]["petting"] 
+                                            + girl["sex_experience"]["oral_pleasure"]["oral_pleasure"] 
+                                            + girl["sex_experience"]["penetration"]["penetration"]  
+                                            + girl["sex_experience"]["group_sex"]["group_sex"] 
+                                            + girl["sex_experience"]["demostration"]["demostration"]
+                                            + girl["sex_experience"]["fetishism"]["fetishism"]
+                                            + girl["sex_experience"]["xenophily"]["xenophily"])
+            interaction_sex_acceptance += sum_of_sex_skill_slave_value // 2
+            if shameful:
+                interaction_sex_acceptance += girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"] * 4
+            if painful:
+                interaction_sex_acceptance += girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["masochism"]["value"] * 4
+            if disgusting:
+                interaction_sex_acceptance += girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] * 4
+            if homosexual:
+                interaction_sex_acceptance += girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_orientation"]["value"] * 4
+            shameful = False
+            painful = False
+            disgusting = False
+            homosexual = False
+        stimulating = False
+        orgastic = False
+    def interaction_willingness_check(): # A.K.A $dyn_repulse_check
+        global attribute_track_index, dictionary_track_index, dictionary_name
+        global dic_traits_skills_descriptions, target_skill, interaction_willingness
+        global domini_dictum_active, interaction_sex_acceptance, interaction_repulse_difficulty
+        sex_acceptance_check()
+        interaction_willingness = all_girls_list[girl_index]["obedience"] + interaction_sex_acceptance + interaction_repulse_difficulty
+        if target_skill != "":
+            if target_skill != "sex":
+                target_skill2 = target_skill + "trait"
+                if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] and not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] == 0:
+                    attribute_track_index = target_skill2
+                    dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 
+                    dictionary_name = dic_traits_skills_descriptions
+                    all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] = True
+                    renpy.show_screen("tutorial_attribute")
+                interaction_willingness += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] * 3
+
+        if interaction_willingness > 0:
+            all_girls_list[girl_index]["daring"] = max(all_girls_list[girl_index]["daring"], interaction_repulse_difficulty)
+        if domini_dictum_active and interaction_willingness < 0:
+            interaction_willingness = 0 
+        achievements_gain()
+        interaction_repulse_difficulty = 0
+    def diligence333_check333():
+        global slave_diligence, motivation_repulse, girl_index, target_skill
+        global interaction_willingness, testvariable1,testvariable2, testvariable3
+        slave_diligence = (all_girls_list[girl_index]["mood"] 
+        + all_girls_list[girl_index]["aura"]["devotion"] 
+        + all_girls_list[girl_index]["aura"]["fear"]*2 
+        - all_girls_list[girl_index]["aura"]["despair"] // 2 
+        - all_girls_list[girl_index]["aura"]["spoil"]
+        + all_girls_list[girl_index]["aura"]["habit"] // 2)
+        # Aura -Based MOTIVATION
+        slave_diligence -= (1 + motivation_repulse // 2) # ! reduce initial diligence by [0,3] - ImperatorAugustus
+        if all_girls_list[girl_index]["aura"]["devotion"] > motivation_repulse:
+            slave_diligence += 1
+        if all_girls_list[girl_index]["aura"]["taming"] > motivation_repulse:
+            slave_diligence += 1
+        if all_girls_list[girl_index]["aura"]["awareness"] > motivation_repulse:
+            slave_diligence += 1
+        slave_diligence += (all_girls_list[girl_index]["aura"]["awareness"] + all_girls_list[girl_index]["aura"]["taming"] - 4) // 3
+        slave_diligence += all_girls_list[girl_index]["learning_bonus"][target_skill]
+        #TODO I Will ignore phobias for now WIP #rec3ks    
+        slave_diligence += all_girls_list[girl_index]["daily_count"]["punishments"]
+        if all_girls_list[girl_index]["energy"] < 0:
+            slave_diligence += all_girls_list[girl_index]["energy"]*4
+        slave_diligence -= 5 - all_girls_list[girl_index]["attributes"]["pride"] - max(0,all_girls_list[girl_index]["arousal"] -3 )
+        if dic_girl_psy_status[all_girls_list[girl_index]["psy_status"]] < 0:
+            slave_diligence += dic_girl_psy_status[all_girls_list[girl_index]["psy_status"]]
+        else:
+            slave_diligence -= dic_girl_psy_status[all_girls_list[girl_index]["psy_status"]]
+        if interaction_willingness < 0:
+            slave_diligence += interaction_willingness // 2
+        # BONUSES FOR TEACHING ABILITY
+        if interaction_teach:
+            if interaction_teach_type == "master_teaches_slave":
+                slave_diligence += max(0, master_tutor - 2)
+            # elif interaction_teach_type = "assistant_teaches_slave" and assistant['intellect'] > 3:
+            #     slave_diligence += (assistant['intellect'] - 3) 
+            #TODO SKIPPED ASSISTANT CODE
+            elif interaction_teach_type == "school_class":
+                slave_diligence += 2
+            elif interaction_teach_type == 'coach_teaches_slave':
+                slave_diligence += 5
+        # NORMAL DIFFICULTY OVERRIDING, I'm going to do something eazier, because I believe the original code is just complicating things -rec3ks
+        if dic_custom_start_difficulty_selection_index_index == 0:
+            slave_diligence += 2
+        elif dic_custom_start_difficulty_selection_index_index == 1:
+            slave_diligence += 1
+        elif dic_custom_start_difficulty_selection_index_index == 2:
+            slave_diligence += 0
+        # SPECIAL CASES
+        if domini_dictum_active and interaction_willingness < 0 or all_girls_list[girl_index]["psy_status"] == "broken":
+            slave_diligence = 1
+        # I will just lower capping diligence, because high capping is just more grid and less fun - rec3ks
+        if target_skill != "":
+            if target_skill != "sex":
+                target_skill2 = target_skill + "trait"
+                slave_diligence += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] * 5
+        slave_diligence = max(slave_diligence, 1) # i think 0 is too heavy for the game -rec3ks
+    def girl_skills_rise_checkcheck():
+        global skill_adv_mul, target_skill, slave_diligence, tutor_modifier
+        global attribute_track_index, dictionary_track_index, dictionary_name
+        target_skill2 = target_skill + "trait"
+        if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] and not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] == 0: 
+            attribute_track_index = target_skill2
+            dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 
+            dictionary_name = dic_traits_skills_descriptions
+            all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] = True
+            renpy.show_screen("tutorial_attribute")
+        if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] > 0:
+            all_girls_list[girl_index]["mood_state"]["good_mood"]["job"]["active"] = True
+        else:
+            all_girls_list[girl_index]["mood_state"]["bad_mood"]["job"]["active"] = True
+        #MAY HAVE SOME PROBLEMS IF MORE THAN ONE TRAIT IS REVEALED AT THE SAME TIME, but for now is good enough -rec3ks
+        #tutor modifier
+        if all_girls_list[girl_index]["attributes"]["intelligence"] >= 5:
+            tutor_modifier += 2
+        elif all_girls_list[girl_index]["attributes"]["intelligence"] >= 4:
+            tutor_modifier += 1
+        elif all_girls_list[girl_index]["attributes"]["intelligence"] >= 3:
+            tutor_modifier += 0
+        elif all_girls_list[girl_index]["attributes"]["intelligence"] >= 2:
+            tutor_modifier -= 1
+        else:
+            tutor_modifier -= 2
+        skill_rise = ((max(1,tutor_modifier)) * slave_diligence) / 4   
+        if target_skill == "":
+            return
+        if target_skill == "athletics":
+            skill_rise = skill_rise / 2
+            if skill_rise > 3:
+                skill_rise = 3
+            if all_girls_list[girl_index]["exertion"] >= all_girls_list[girl_index]["attributes"]["endurance"]:
+                skill_rise *= -1 
+            all_girls_list[girl_index]["exertion"] += 1
+            skill_rise = skill_rise // 1 #this is to avoid floating point numbers
+            all_girls_list[girl_index]["experience"]["attributes"]["endurance"] += skill_rise * skill_adv_mul
+        else:
+            if target_skill != "cow":
+                all_girls_list[girl_index]["experience"]["skills"]["cow"] -= 3
+            elif all_girls_list[girl_index]["skills"]["cow"] == 5:
+                skill_rise = max(1, skill_rise - all_girls_list[girl_index]["skills"]["cow"]) #! S+ cow skill greatly impedes training other skills - ImperatorAugustus
+            if skill_rise < 1: 
+                skill_rise = 1
+            skill_rise = skill_rise // 1 #this is to avoid floating point numbers
+            all_girls_list[girl_index]["experience"]["skills"][target_skill] += skill_rise * skill_adv_mul
+        target_skill = ""
+    def cryo_ingredients_loss_calculation():
+     
+        keys_list = list(storage["ingredients"].keys())
+        keys_list_index = 0
+        
+        while home_estate["kitchen"]["storage_ingredients"] > home_estate["kitchen"]["storage_capacity"]:
+            if storage["ingredients"][keys_list[keys_list_index]] == 0:
+                keys_list_index += 1
+            else:
+                storage["ingredients"][keys_list[keys_list_index]] -= 1
+            
+            # Recalculate home_estate["kitchen"]["storage_ingredients"]
+            home_estate["kitchen"]["storage_ingredients"] = sum(storage["ingredients"].values())
+    def cryo_amount_calculation():
+        global house_items, laboratory_ingredients
+        home_estate["kitchen"]["storage_ingredients"] = 0
+        for values in storage["ingredients"]:
+            home_estate["kitchen"]["storage_ingredients"] += storage["ingredients"][values]
+        laboratory_ingredients = 0
+        for values in storage["laboratory"]["ingredients"]:
+            laboratory_ingredients += storage["laboratory"]["ingredients"][values]
+        for values in storage["laboratory"]["potion"]:
+            laboratory_ingredients += storage["laboratory"]["potion"][values]
+        house_items = 0
+        for values in storage["house"]["artistic_material"]:
+            house_items += storage["house"]["artistic_material"][values]
+        for values in storage["house"]["sex_items"]:
+            house_items += storage["house"]["sex_items"][values]
+    def display_pic():
+        global girl_index, choosing_image_condition
+        if all_girls_list[girl_index]["hairlength"] == "":
+            if "white" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["haircolor"] = "white"
+            elif "red" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["haircolor"] = "red"
+            elif "purple" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["haircolor"] = "purple"
+            elif "pink" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["haircolor"] = "pink"
+            elif "green" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["haircolor"] = "green"
+            elif "brown" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["haircolor"] = "brown"
+            elif "blue" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["haircolor"] = "blue"
+            elif "blond" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["haircolor"] = "blond"
+            elif "black" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["haircolor"] = "black"
+            if "short" in all_girls_list[girl_index]["fullimage"]:
+                all_girls_list[girl_index]["hairlength"] = "short"
+            else:
+                all_girls_list[girl_index]["hairlength"] = "long"
+
+        x = all_girls_list[girl_index]["haircolor"]
+        y = all_girls_list[girl_index]["hairlength"]
+        z = dic_girl_age_text2[all_girls_list[girl_index]["age"]]
+        def choose_image():
+            global sex_picture
+            choosing_image_condition2 = choosing_image_condition + "_folder"
+            if all_girls_list[girl_index][choosing_image_condition2]:
+                choosing_image_condition3 = choosing_image_condition + "_folder_localization"
+                path = os.path.join(config.gamedir, all_girls_list[girl_index][choosing_image_condition3]) # i'm not sure if this part works untested -rec3ks
+                rest_girl = [
+                    f for f in os.listdir(path)
+                ]
+                return all_girls_list[girl_index][choosing_image_condition3] + random.choice(rest_girl) 
+            else:
+                if sex_picture:
+                    path = os.path.join(config.gamedir, "images", "girls", "sex_scenes")
+                    all_pictures = [
+                        f for f in os.listdir(path)
+                        if (f.startswith(dic_girl_choosing_image_condition_short[choosing_image_condition] + "_" + x + "_" + y + "_" + z)
+                        or f.startswith(dic_girl_choosing_image_condition_short[choosing_image_condition] + "_" + "general" + "_" + z)
+                        )
+                    ]
+                    sex_picture = False
+                    return "girls/sex_scenes/" + random.choice(all_pictures)
+                else:
+                    path = os.path.join(config.gamedir, "images", "girls", "normal_scenes")
+                    all_pictures = [
+                        f for f in os.listdir(path)
+                        if (f.startswith(dic_girl_choosing_image_condition_short[choosing_image_condition] + "_" + x + "_" + y + "_" + z)
+                        or f.startswith(dic_girl_choosing_image_condition_short[choosing_image_condition] + "_" + "general" + "_" + z)
+                        )
+                    ]
+                    return "girls/normal_scenes/" + random.choice(all_pictures)
+
+        return choose_image()
+    def all_hygiene_calculation():
+        global home_hygiene_value, home_mess_value, home_condition, girl_index, save_girl_index
+        global hygiene_value_9, hygiene_experience_value_9
+        # Define hygiene thresholds
+        hygiene_thresholds = [(80, 0), (60, 1), (40, 2), (20, 3), (10, 4), (0, 5)]
+
+        def calculate_hygiene(value):
+            """Return hygiene level based on thresholds."""
+            for threshold, hygiene_level in hygiene_thresholds:
+                if value >= threshold:
+                    return hygiene_level
+            return 5  # default if none matched
+
+        # Update home hygiene
+        home_hygiene_value = calculate_hygiene(home_mess_value)
+        # Update home condition
+        home_condition = dic_home_condition[home_hygiene_value]
+        
+        # Update each girl's hygiene
+        save_girl_index = girl_index
+        for girl_index in all_girls_list:
+            all_girls_list[girl_index]["hygiene"] = calculate_hygiene(all_girls_list[girl_index]["hygiene_rate"])
+        
+        girl_index = save_girl_index
+        # Update master hygiene
+        hygiene_value_9 = calculate_hygiene(hygiene_experience_value_9)
+    def auto_cook_meal():
+        global already_prepared, already_ate, food_meat_info, home_mess_value
+        global all_girls_list, dic_foods_list, storage, dic_hygiene_value_rate
+        global girl_index, target_skill, tutor_modifier
+        all_girls_list[girl_index]["slave_auto_cook"] = False
+        if home_estate["kitchen"]["storage_capacity"] <= 0:
+            return
+        
+        girl = all_girls_list[girl_index]
+        target_skill = "cooking"
+        required_obedience = (
+            -6 
+            - girl["attributes"]["pride"] // 2 + 2
+            + girl["attributes"]["nature"] // 3 
+            + girl["attributes"]["intelligence"] // 3
+        )
+
+        if (not already_prepared
+            and girl["rules"]["act_as_cook"]
+            and girl["energy"] > 0
+            and girl["obedience"] >= required_obedience):
+
+            if not already_ate or food_actions["eat_best_food"]:
+                girl["slave_auto_cook"] = True
+                tutor_modifier = 0
+                # Cooking skill level
+                slave_skill = min(
+                    girl["skills"]["cooking"],
+                    max(1, girl["mood"] // 1),
+                    5
+                )
+
+                keys_list = ["D- quality", "C- quality", "B+ quality", "A+ quality", "S+ quality"]
+                n = slave_skill - 1
+                food_not_found = True
+                roll = random.randint(0, 1000000)
+
+                # Try recipes from highest to lowest skill tier
+                while n >= 0 and food_not_found:
+                    for i, entry in enumerate(dic_foods_list[keys_list[n]]):
+                        i = (i + roll) % len(dic_foods_list[keys_list[n]])
+                        missing = 0
+
+                        # Check if ingredients are available
+                        for slot in range(4):
+                            ingredient = dic_foods_list[keys_list[n]][i][1][slot]
+                            if ingredient != "none" and storage["ingredients"][ingredient] == 0:
+                                missing += 1
+
+                        if missing == 0:
+                            #dont cook if cooking doesn't improve the quality
+                            if food_meat_info["quality"] < n + 1:
+                                #don't cook if kitchen isn't good enough. this actually CAP the cooking quality
+                                if dic_improvement_rooms["kitchen"][home_estate["kitchen"]["type"]]["modifier"] >= n + 1:
+                                    already_prepared = True
+                                    food_not_found = False
+
+                                    # Deduct ingredients
+                                    for slot in range(4):
+                                        ingredient = dic_foods_list[keys_list[n]][i][1][slot]
+                                        if ingredient != "none":
+                                            storage["ingredients"][ingredient] -= 1
+
+                                    already_ate = True
+                                    food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
+                                    food_meat_info["quality"] = n + 1
+
+                                    # Check sub-par diligence
+                                    if food_meat_info["quality"] < slave_skill: 
+                                        tutor_modifier -= 5
+                            else:
+                                return
+                    n -= 1
+
+                # Default to canned food
+                if food_not_found and food_meat_info["quality"] == 0:
+                    already_ate = True
+                    already_prepared = True
+                    food_meat_info["quality"] = 0
+                    food_meat_info["name"] = "Canned food"
+
+                # Hygiene and energy changes
+                home_mess_value += dic_hygiene_value_rate["cook"]
+                girl["hygiene_rate"] += dic_hygiene_value_rate["cook"]
+
+                slave_energy_drop_calculation()
+                interaction_willingness_check()
+                diligence333_check333()
+                girl_skills_rise_checkcheck()
+                target_skill = ""
+                girl["already_done"]["Servant"] += 1 #must go last
+        else:
+            girl["rules_broken"]["slave_auto_cook"] = True
+    def master_cook_meal():
+        global already_prepared, already_ate, food_meat_info, home_mess_value
+        global dic_foods_list, storage, dic_hygiene_value_rate
+        global hygiene_experience_value_9, energy_value
+        global personality_value_2, stewardship_value_13, stewardship_experience_value_13
+        global skill_adv_mul
+        if home_estate["kitchen"]["storage_capacity"] <= 0:
+            return
+        
+
+        if not already_ate or food_actions["eat_best_food"]:
+            master_auto["cook"] = True
+
+            # Cooking skill level
+            master_skill = min(
+                stewardship_value_13,
+                max(1, (mood_value_10 + 2)// 1),
+                5
+            )
+            keys_list = ["D- quality", "C- quality", "B+ quality", "A+ quality", "S+ quality"]
+            n = master_skill - 1
+            n = n // 1
+            food_not_found = True
+            roll = random.randint(0, 1000000)
+
+            # Try recipes from highest to lowest skill tier
+            while n >= 0 and food_not_found:
+                for i, entry in enumerate(dic_foods_list[keys_list[n]]):
+                    i = (i + roll) % len(dic_foods_list[keys_list[n]])
+                    missing = 0
+
+                    # Check if ingredients are available
+                    for slot in range(4):
+                        ingredient = dic_foods_list[keys_list[n]][i][1][slot]
+                        if ingredient != "none" and storage["ingredients"][ingredient] == 0:
+                            missing += 1
+
+                    if missing == 0:
+                        #dont cook if cooking doesn't improve the quality
+                        if food_meat_info["quality"] < n + 1:
+                            #don't cook if kitchen isn't good enough. this actually CAP the cooking quality
+                            if dic_improvement_rooms["kitchen"][home_estate["kitchen"]["type"]]["modifier"] >= n + 1:
+                                already_prepared = True
+                                food_not_found = False
+
+                                # Deduct ingredients
+                                for slot in range(4):
+                                    ingredient = dic_foods_list[keys_list[n]][i][1][slot]
+                                    if ingredient != "none":
+                                        storage["ingredients"][ingredient] -= 1
+                                already_ate = True
+                                food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
+                                food_meat_info["quality"] = n + 1
+                                stewardship_experience_value_13 += 1* skill_adv_mul
+                n -= 1
+
+            # Default to canned food
+            if food_not_found and food_meat_info["quality"] == 0:
+                already_ate = True
+                already_prepared = True
+                food_meat_info["quality"] = 0
+                food_meat_info["name"] = "Canned food"
+            master_mood_state["bad_mood"]["neg_cook"]["duration"] = max(0, 3 + personality_value_2 - stewardship_value_13)
+            if master_mood_state["bad_mood"]["neg_cook"]["duration"] > 0:
+                master_mood_state["bad_mood"]["neg_cook"]["active"] = True
+            else:
+                master_mood_state["bad_mood"]["neg_cook"]["active"] = False
+
+
+            # Hygiene and energy changes
+            home_mess_value += dic_hygiene_value_rate["cook"]
+            hygiene_experience_value_9 += dic_hygiene_value_rate["cook"]
+            master_energy_drop_calculation()
+    def auto_maid():
+        global home_hygiene_value, home_mess_value, target_skill
+        if home_hygiene_value >= 4:
+            return
+        girl = all_girls_list[girl_index]
+        target_skill = "maid"
+        required_obedience = (
+            -5 
+            + girl["attributes"]["endurance"] // 2 - 1
+            + girl["attributes"]["intelligence"] // 2 - 1
+            - girl["attributes"]["pride"] // 2 + 2
+            + girl["attributes"]["nature"] // 3
+            + girl["attributes"]["intelligence"] // 2 - 1
+        )
+
+        if (girl["rules"]["act_as_maid"]
+            and girl["energy"] > 0
+            and girl["obedience"] >= required_obedience):
+            girl["slave_auto_maid"] = True
+            tutor_modifier = 0
+
+            slave_skill = min(
+                girl["skills"]["maid"],
+                girl["mood"] + 2 // 1
+            )
+            slave_skill = max(slave_skill, 0)
+            girl["maid_slave_skill_performance"] = int(slave_skill)
+
+            home_mess_value -= max(8, slave_skill*16)
+            home_mess_value = max(0, home_mess_value)
+            if slave_skill < 3 and home_mess_value == 0: 
+                home_mess_value = 10
+            slave_energy_drop_calculation()
+            girl["hygiene_rate"] += dic_hygiene_value_rate["maid"] - home_hygiene_value + 5
+            interaction_willingness_check()
+            diligence333_check333()
+            girl_skills_rise_checkcheck()
+            target_skill = ""
+            girl["already_done"]["Servant"] += 1 #must go last
+        else:
+            target_skill = ""
+            girl["rules_broken"]["slave_auto_maid"] = True 
+    def master_clean():
+        global home_hygiene_value, home_mess_value, energy_value , stewardship_experience_value_13
+        global skill_adv_mul, personality_value_2, hygiene_experience_value_9
+        if energy_value < 0 or home_hygiene_value >= 2 : 
+            return
+        master_auto["clean"] = True
+        stewardship_experience_value_13 += 1 * skill_adv_mul
+
+        master_mood_state["bad_mood"]["neg_cleaning"]["duration"] = 1 + personality_value_2 
+        master_mood_state["bad_mood"]["neg_cleaning"]["active"] = True
+        master_energy_drop_calculation()
+        hygiene_experience_value_9 += dic_hygiene_value_rate["maid"] - home_hygiene_value + 5
+        home_mess_value -= max(8,stewardship_value_13*16)
+        home_mess_value = max(0, home_mess_value)
+    def moodlet_new_day_slave_update(): # this function update moodlet that are not related to specific function
+        global girl_index
+        girl = all_girls_list[girl_index]
+        for key in dic_slave_mood["good_mood"]:
+            if girl["mood_state"]["good_mood"][key]["active"]:
+                girl["mood_state"]["good_mood"][key]["accustomed_value"] = max(-10, girl["mood_state"]["good_mood"][key]["accustomed_value"] - 1)
+                if girl["mood_state"]["good_mood"][key]["accustomed_value"] <= 0:
+                    girl["mood_state"]["good_mood"][key]["accustomed"] = True
+                if girl["mood_state"]["good_mood"][key]["accustomed"]:
+                    girl["mood_state"]["good_mood"][key]["weight"] /= 1.2
+                if not girl["mood_state"]["good_mood"][key]["permanent"]:
+                    girl["mood_state"]["good_mood"][key]["duration"] -= 1
+                    if girl["mood_state"]["good_mood"][key]["duration"] == 0:
+                        girl["mood_state"]["good_mood"][key]["active"] = False
+                        girl["mood_state"]["good_mood"][key]["duration"] = girl["mood_state"]["good_mood"][key]["default_duration"]
+                        break # only 1 moodlet can be lost per day
+            else:
+                girl["mood_state"]["good_mood"][key]["accustomed_value"] = min(5, girl["mood_state"]["good_mood"][key]["accustomed_value"] + 1)
+        for key in dic_slave_mood["bad_mood"]:
+            if girl["mood_state"]["bad_mood"][key]["active"]:
+                # girl["mood_state"]["bad_mood"][key]["accustomed_value"] = max(-10, girl["mood_state"]["bad_mood"][key]["accustomed_value"] - 1)
+                # if girl["mood_state"]["bad_mood"][key]["accustomed_value"] <= 0:
+                #     girl["mood_state"]["bad_mood"][key]["accustomed"] = True
+                # if girl["mood_state"]["bad_mood"][key]["accustomed"]: this may made the game alot more eazier
+                #     girl["mood_state"]["bad_mood"][key]["weight"] /= 2
+                if not girl["mood_state"]["bad_mood"][key]["permanent"]:
+                    girl["mood_state"]["bad_mood"][key]["duration"] -= 1
+                    if girl["mood_state"]["bad_mood"][key]["duration"] == 0:
+                        girl["mood_state"]["bad_mood"][key]["active"] = False
+                        girl["mood_state"]["bad_mood"][key]["duration"] = girl["mood_state"]["bad_mood"][key]["default_duration"]
+                        break # only 1 moodlet can be lost per day
+        girl["affection_needs"] = (max(0,girl["affection_needs"] 
+        - (
+            girl["attributes"]["empathy"] 
+            + girl["attributes"]["temperament"] 
+            + girl["attributes"]["nature"] 
+            + girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]*3)
+        * girl["arousal"]))
+    def slave_dead_for_low_endurance_update():
+        global girl_index, all_girls_list, sparks_37
+        if all_girls_list[girl_index]["attributes"]["endurance"] == 0 and all_girls_list[girl_index]["experience"]["attributes"]["endurance"] <= -10:
+            roll = random.randint(1, 2)
+            if roll == 1:
+                temporal_value = meat_evaluation()
+                key_to_delete = list(all_girls_list.keys())[girl_index]
+                del all_girls_list[key_to_delete]                       
+                sparks_37 += temporal_value
+                msg("Your slave is dead, and you sale the meat to the butcher for [temporal_value]")
+            if roll == 2:
+                all_girls_list[girl_index]["experience"]["attributes"]["endurance"] = -10
+    def slave_attack_escape_update():
+        global slave_escape_type, slave_rebellion_fight, slave_rebellion_attack, slave_suicide, girl_index
+        if all_girls_list[girl_index]["sleep"] != 0 and all_girls_list[girl_index]["psy_status"] != "broken":
+            if all_girls_list[girl_index]["attributes"]["endurance"] > 0:
+                if all_girls_list[girl_index]["mood"] < -1 and all_girls_list[girl_index]["attributes"]["temperament"] > all_girls_list[girl_index]["obedience"]:
+                    n = 7 + personality_value_2 - all_girls_list[girl_index]["aura"]["despair"]
+                    for girl_index in all_girls_list:
+                        # this doble for is not a error -rec3ks 
+                        if all_girls_list[girl_index]["conscience"]:
+                            if all_girls_list[girl_index]["assistant"]:
+                                n += all_girls_list[girl_index]["attributes"]["intelligence"] + all_girls_list[girl_index]["aura"]["devotion"]
+                    ### need assistant supervision code  - TODO
+                    roll = random.randint(1, n)
+                    if roll == 1:
+                        if all_girls_list[girl_index]["aura"]["despair"] > 0:
+                            if all_girls_list[girl_index]["attributes"]["gladiatrix"] > 0 and all_girls_list[girl_index]["aura"]["despair"] > max(0, (master_supermacy - all_girls_list[girl_index]["supermacy"]) - 5 + allure_value_3): 
+                                slave_rebellion_fight = True
+                                slave_rebellion_attack = True
+                        elif dic_girl_equipment_neck_mod[all_girls_list[girl_index]["equipment"]["neck"]]["escape"]:
+                            if all_girls_list[girl_index]["brand"] == 5:
+                                slave_escape_type = 2
+                            else: 
+                                slave_escape_type = 1
+                        elif all_girls_list[girl_index]["brand"] in [1,4]:
+                            slave_escape_type = 3
+                        elif all_girls_list[girl_index]["brand"] == 3:
+                            slave_escape_type = 4
+                if all_girls_list[girl_index]["aura"]["despair"] > 2 and all_girls_list[girl_index]["attributes"]["endurance"] > 3 and all_girls_list[girl_index]["skills"]["gladiatrix"] > 0 and all_girls_list[girl_index]["aura"]["devotion"] == 0 and all_girls_list[girl_index]["mood"] < 0: #TODO and (master_supermacy - allure_value_3) < 2 and exam_in_progress = 0:
+                    slave_rebellion_fight = True
+                    slave_rebellion_attack = True
+                    slave_escape_type = 0
+                if all_girls_list[girl_index]["obedience"] > 7 or all_girls_list[girl_index]["aura"]["devotion"] > 1:
+                    slave_rebellion_fight = False
+                    slave_escape_type = 0
+                if all_girls_list[girl_index]["mood"] <= -5 and all_girls_list[girl_index]["aura"]["despair"] > max(all_girls_list[girl_index]["attributes"]["nature"], all_girls_list[girl_index]["attributes"]["temperament"]):
+                    roll = random.randint(1, 100)
+                    roll += all_girls_list[girl_index]["suicide_rate"]
+                    if roll >= 90:
+                        slave_suicide = True
+                    else:
+                        all_girls_list[girl_index]["suicide_rate"] += 15
+                else:
+                    all_girls_list[girl_index]["suicide_rate"] = min(all_girls_list[girl_index]["suicide_rate"] - 3, 0)
+    def well_rest_bonus_update():
+        if all_girls_list[girl_index]["energy"] > 0:
+            if all_girls_list[girl_index]["mood"] > -2:
+                all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["energy"] / 20
+                all_girls_list[girl_index]["mood_state"]["good_mood"]["well_rested"]["active"] = True # Thanks to the new system using true and false and weight this is too op
+                all_girls_list[girl_index]["mood_state"]["good_mood"]["well_rested"]["weight"] = 0 
+                all_girls_list[girl_index]["slave_auto_sleep"] = True
+    def brand_effect_activation():
+        if all_girls_list[girl_index]["brand"] != 0:
+            all_girls_list[girl_index]["experience"]["aura"]["habit"] += 1
+        if all_girls_list[girl_index]["brand"] == 5:
+            all_girls_list[girl_index]["experience"]["aura"]["habit"] += 1
+        increase_check("aura","habit")
+    def spoiling_update():
+        def spoiling_increase():
+            if all_girls_list[girl_index]["daily_count"]["rewards"] > 2:
+                all_girls_list[girl_index]["experience"]["aura"]["spoil"] += all_girls_list[girl_index]["daily_count"]["rewards"]*5
+            if (all_girls_list[girl_index]["aura"]["devotion"] <= 2 
+                and all_girls_list[girl_index]["aura"]["fear"] == 0 
+                and all_girls_list[girl_index]["days_without_food"] == 0 
+                and all_girls_list[girl_index]["days_without_sleep"] == 0 
+                and all_girls_list[girl_index]["rules"]["rules_count"] < dic_overnight_rules_count[dic_overnight_rules_count_index]):
+
+                all_girls_list[girl_index]["experience"]["aura"]["spoil"] += 5 - all_girls_list[girl_index]["attributes"]["pride"] + all_girls_list[girl_index]["attributes"]["nature"] + all_girls_list[girl_index]["attributes"]["temperament"]
+            increase_check("aura","spoil")
+            if all_girls_list[girl_index]["aura"]["spoil"] > 0:
+                all_girls_list[girl_index]["experience"]["aura"]["devotion"] -= all_girls_list[girl_index]["aura"]["spoil"]
+                all_girls_list[girl_index]["experience"]["aura"]["awareness"] -= all_girls_list[girl_index]["aura"]["spoil"]
+                all_girls_list[girl_index]["experience"]["aura"]["taming"] -= all_girls_list[girl_index]["aura"]["spoil"]
+                all_girls_list[girl_index]["experience"]["aura"]["habit"] -= all_girls_list[girl_index]["aura"]["spoil"]
+            reduce_check( "aura","devotion")
+            reduce_check( "aura","awareness")
+            reduce_check( "aura","taming")
+            reduce_check( "aura","habit")
+            if all_girls_list[girl_index]["aura"]["spoil"] > max(0, all_girls_list[girl_index]["mood"], all_girls_list[girl_index]["aura"]["fear"]) and all_girls_list[girl_index]["sleep"] in [2,3]:
+                all_girls_list[girl_index]["neg_spoil"] = True
+            all_girls_list[girl_index]["daily_count"]["rewards"] == 0
+        def spoiling_reduce():
+            if all_girls_list[girl_index]["aura"]["spoil"] > 0 or all_girls_list[girl_index]["experience"]["aura"]["spoil"] > 0 and dic_overnight_rules_count[dic_overnight_rules_count_index] <= all_girls_list[girl_index]["rules"]["rules_count"] or all_girls_list[girl_index]["days_without_food"] != 0 or all_girls_list[girl_index]["days_without_sleep"] != 0 or all_girls_list[girl_index]["aura"]["fear"] > all_girls_list[girl_index]["aura"]["devotion"]:
+                all_girls_list[girl_index]["experience"]["aura"]["spoil"] -= 1 + all_girls_list[girl_index]["aura"]["devotion"] + all_girls_list[girl_index]["aura"]["fear"] + all_girls_list[girl_index]["aura"]["despair"]*2 + max(0, all_girls_list[girl_index]["days_without_food"])*3 + max(0, all_girls_list[girl_index]["days_without_sleep"])*3
+            if all_girls_list[girl_index]["mood"] < 0:
+                all_girls_list[girl_index]["experience"]["aura"]["spoil"] -= all_girls_list[girl_index]["attributes"]["empathy"]
+            reduce_check( "aura","spoil")
+        spoiling_increase()
+        spoiling_reduce()
+    def energy_and_sleep_update():
+        def negative_energy_endurance_reduction_update():
+            if all_girls_list[girl_index]["energy"] < 0:
+                all_girls_list[girl_index]["experience"]["attributes"]["endurance"] += all_girls_list[girl_index]["energy"]*3
+                reduce_check("attributes","endurance")
+        def energy_update():
+            if all_girls_list[girl_index]["sleep"] != 4:
+
+                all_girls_list[girl_index]["energy"] = (
+                    all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2 
+                    - all_girls_list[girl_index]["yesterday_exhaustion"] 
+                    + all_girls_list[girl_index]["stored_yesterday_energy"] 
+                    + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"])
+
+                if medic_value_15 >= 5:
+                    all_girls_list[girl_index]["energy"] += 2
+                all_girls_list[girl_index]["stored_yesterday_energy"] = 0
+                all_girls_list[girl_index]["days_without_sleep"] = 0
+                all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["active"] = False
+            else:
+                all_girls_list[girl_index]["energy"] = min(10, (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2) // 2 ) - all_girls_list[girl_index]["yesterday_exhaustion"] + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"]
+                all_girls_list[girl_index]["days_without_sleep"] += 1
+                if medic_value_15 >= 5:
+                    all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *2
+                else:
+                    all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *3
+                all_girls_list[girl_index]["experience"]["aura"]["fear"] += all_girls_list[girl_index]["days_without_sleep"]*3
+                all_girls_list[girl_index]["experience"]["aura"]["taming"] += all_girls_list[girl_index]["days_without_sleep"]*2
+                all_girls_list[girl_index]["experience"]["aura"]["despair"] += all_girls_list[girl_index]["days_without_sleep"]
+                all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["active"] = True
+                all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["weight"] = 1 + all_girls_list[girl_index]["days_without_sleep"]*0.4
+                reduce_check("attributes","endurance")
+                increase_check("aura","taming")
+                increase_check("aura","fear")
+                increase_check("aura","despair")
+                all_girls_list[girl_index]["stored_yesterday_energy"] = 0
+        # def sleep_condition_mood_update():
+        #     if all_girls_list[girl_index]["sleep"] == 0:
+
+        negative_energy_endurance_reduction_update()
+        energy_update()
+    def diet_update():
+        girl = all_girls_list[girl_index]
+        def calories_check():
+            global medic_value_15, supplements_portion
+            if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"] != 0:
+                if not girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["revealed"]:
+                    girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["revealed"] = True
+                    msg(dic_traits_attributes_description["physicaltrait"][girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"]])
+                # the trait make eazier to mantein body fat when positive and harder when negative
+                if girl["calories"] < 0:
+                    girl["calories"] += girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"]
+                if girl["calories"] > 0:
+                    girl["calories"] -= girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"]
+            if girl["portion_size"] == 4:
+                girl["calories"] = 0
+                if medic_value_15 < 5: #TODO NEED ASSISTANT CODE 
+                    medical_calculation_assistant_fee += 1
+            if girl["calories"] < -1:
+                girl["experience"]["attributes"]["physical"] -= girl["calories"] + 1 # physical goes from Chubby to Bony. Calories goes negative, physical increase
+                girl["experience"]["attributes"]["endurance"] += girl["calories"] + 1
+                girl["experience"]["aura"]["awareness"] += 1
+            elif girl["calories"] > 1:
+                girl["experience"]["attributes"]["physical"] -= girl["calories"] + 1 # physical goes from Chubby to Bony. Calories goes positive, physical decrease
+            if girl["supplements"]:
+                if girl["attributes"]["endurance"] < 3:
+                    girl["experience"]["attributes"]["endurance"] += 3
+                    increase_check("attributes","endurance")
+                supplements_portion += 1
+        def diet_mood_update():
+            if girl["calories"] < 1:
+                girl["mood_state"]["bad_mood"]["hungry"]["active"] = True
+                girl["mood_state"]["bad_mood"]["hungry"]["weight"] = min(girl["calories"]*-0.2,1)
+            else:
+                girl["mood_state"]["bad_mood"]["hungry"]["active"] = False
+            if girl["days_without_food"] > 0 or girl["calories"] < -5:
+                girl["mood_state"]["bad_mood"]["starvation"]["active"] = True
+            else:
+                girl["mood_state"]["bad_mood"]["starvation"]["active"] = False 
+            if girl["diet"] == 0:
+                girl["mood_state"]["bad_mood"]["slave_food"]["active"] = True
+                girl["mood_state"]["bad_mood"]["slave_food"]["weight"] = 0.75
+            else:
+                girl["mood_state"]["bad_mood"]["slave_food"]["active"] = False
+            if girl["diet"] == 1:
+                girl["mood"] += 1 + girl["attributes"]["empathy"]
+                for i in range(4):
+                    if girl["aura"]["devotion"] == i:
+                        girl["experience"]["aura"]["spoil"] += max(0,girl["attributes"]["temperament"]*(3 - i*2)) + (4 - i)
+
+            if girl["diet"] == 2 :
+                girl["experience"]["traits_miscellaneous"]["sexual_openness"] += 1
+                if not girl["field_tatto"]:
+                    girl["mood_state"]["bad_mood"]["slave_food"]["active"] = True
+                    girl["mood_state"]["bad_mood"]["slave_food"]["weight"] = (1 + (5 - girl["attributes"]["pride"])*0.2) - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"]
+
+            if girl["your_leftovers"]:
+                if food_meat_info["quality"] > (5 - girl["attributes"]["pride"])*2:
+                    girl["mood_state"]["good_mod"]["cookie"]["active"] = True
+                else:
+                    girl["mood_state"]["good_mod"]["cookie"]["active"] = False
+                girl["mood"] -=  (5 - girl["attributes"]["pride"])
+                for i in range(5):
+                    if girl["aura"]["devotion"] == i:
+                        girl["experience"]["aura"]["spoil"] +=  max(1,girl["attributes"]["temperament"] * (2 - i))
+                        
+                    # TODO maybe add the part when slave can eat complete meat, but for now master can't skip meal since meal is only prepared when master doesn't ate.
+                    # if cooked_food > 0 and master_eats_dinner = 0: girl["experience"]["aura"]["spoil"] += max(3, 3*(3 - i)) &! being allowed to eat an entire meal is a significant privilege (in total, 2x fresh food spoil) - ImperatorAugustus
+                    # also this part if slave['diet_portion'] = 3 and slave['diet_food_type'] ! 2: slave_rate['custom'] -= slave['temper'] &! eating as much as she wants drains habit (but not with nutritionist)
+        def calories_update():
+
+            if girl["portion_size"] == 0:
+                girl["calories"] = -2
+                #refund parcial food portion
+                girl["food_portion"] -= 0.5 * girl["attributes"]["endurance"]
+                girl["energy"] -= 1
+            if girl["portion_size"] == 1:
+                girl["calories"] = 2
+            if girl["portion_size"] == 2:
+                girl["calories"] = 6
+                if girl["mood_state"]["bad_mood"]["hungry"]["active"]:
+                    girl["food_portion"] += 1 # hungry slave ate more
+            if girl["portion_size"] == 3:
+                girl["calories"] = 99
+            if girl["diet"] == 3:
+                girl["calories"] = -6
+                girl["days_without_food"] += 1
+                #complete refund food portion
+                girl["food_portion"] -= girl["attributes"]["endurance"] + 1
+
+
+        
+        def diet_portion_for_food_bill_update():
+            parasite_count = 0
+            #calculated total food portion, total food portion x portion price = decade slave food bill
+            girl["food_portion"] = girl["attributes"]["endurance"] + 1
+            girl["mood_state"]["bad_mood"]["pregnant"]["active"] = False
+            if girl["pregnant"]["active"]:
+                girl["attributes"]["endurance"] -= 1
+                girl["food_portion"] += 1
+                if girl["pregnant"]["stage"] == 1:
+                    girl["mood_state"]["bad_mood"]["pregnant"]["active"] = True
+                    girl["food_portion"] += 1
+                    girl["energy"] -= 1
+                elif girl["pregnant"]["stage"] == 2:
+                    girl["mood_state"]["bad_mood"]["pregnant"]["active"] = True
+                    girl["food_portion"] += 1
+                    girl["energy"] -= 2
+                elif girl["pregnant"]["stage"] == 3:
+                    girl["mood_state"]["bad_mood"]["pregnant"]["active"] = True
+                    girl["food_portion"] += 2
+                    girl["energy"] -= 3
+
+            if girl["egg_laying"]:
+                farm_food["egg_layer"]["portion"] += 1
+            if girl["lactation"]["active"]:
+                farm_food["cow"]["portion"] += 1
+            for parasite in girl["parasite"]:
+                if girl["parasite"][parasite]["active"]:
+                    parasite_count += girl["parasite"][parasite]["stage"]
+            for i in range(99):
+                if parasite_count > i*2 + 1: 
+                    girl["food_portion"] += 1
+                else:
+                    break
+            if girl["diet"] == 0:
+                girl["total_food_portion"] += girl["food_portion"] 
+            elif girl["diet"] == 1:
+                girl["total_food_portion_premiun"] += girl["food_portion"] 
+            elif girl["diet"] == 2:
+                if storage["ingredients"]["Spawn's Semen"] > girl["food_portion"]:
+                    storage["ingredients"]["Spawn's Semen"] -= girl["food_portion"]
+                else:
+                    girl["food_portion"] -= storage["ingredients"]["Spawn's Semen"]
+                    storage["ingredients"]["Spawn's Semen"] = 0
+                    girl["total_food_portion_semen"] += girl["food_portion"]
+                
+
+
+
+
+        # do not change the order
+        calories_check()
+        diet_mood_update()
+        calories_update()
+        diet_portion_for_food_bill_update()
+    def slave_healing_and_dependence_update():
+        global girl_index, save_girl_index
+        girl = all_girls_list[girl_index]
+        def assistant_addicted():
+            if girl["assistant"]:
+                if girl["health_state"]["kamra_addiction"] > girl["attributes"]["endurance"]*8:
+                    if girl["health_state"]["kamra"] == 0:
+                        storage["laboratory"]["ingredients"]["Kamrian resin"] -= 1
+                        girl["health_state"]["kamra"] += 1
+                if girl["health_state"]["meth_addiction"] > girl["attributes"]["endurance"]:
+                    if girl["health_state"]["meth"] == 0:
+                        storage["laboratory"]["ingredients"]["Faeries' pollen"] -= 1
+                        girl["health_state"]["meth"] += 1
+                if girl["health_state"]["opium_addiction"] > girl["attributes"]["endurance"]:
+                    if girl["health_state"]["opium"] == 0:
+                        storage["laboratory"]["ingredients"]["Essence of oblivion"] -= 1
+                        girl["health_state"]["opium"] += 1
+        def dependence_update():
+            # Kamra handling
+            if girl["health_state"]["kamra"] > 0:
+                girl["health_state"]["kamra"] = 0
+                girl["health_state"]["kamra_addiction"] += 1
+                if girl["health_state"]["kamra_addiction"] > girl["attributes"]["endurance"]*8:
+                    girl["mood_state"]["bad_mood"]["slave_koffe"]["active"] = True
+                    girl["mood_state"]["bad_mood"]["slave_koffe"]["duration"] = girl["health_state"]["kamra_addiction"]
+                    girl["energy"] += 1 # using yester instead of energy because it go before energy uptade
+                    girl["experience"]["attributes"]["endurance"] -= 1
+            elif girl["health_state"]["kamra_addiction"] > 0:
+                roll = random.randint(0,1)
+                if roll == 0:
+                    girl["health_state"]["kamra_addiction"] -= 1
+            # Alcohol handling
+            if girl["health_state"]["alcohol"] > 0:
+                girl["health_state"]["alcohol"] = 0
+                girl["health_state"]["alcohol_addiction"] += 1
+                girl["mood_state"]["good_mood"]["alco"]["active"] = False
+                if girl["health_state"]["alcohol_addiction"] > girl["attributes"]["endurance"]:
+                    girl["mood_state"]["bad_mood"]["alco"]["active"] = True
+                    girl["mood_state"]["bad_mood"]["alco"]["duration"] = girl["health_state"]["alcohol_addiction"]
+                    girl["experience"]["attributes"]["endurance"] -= 1
+            elif girl["health_state"]["alcohol_addiction"] > 0:
+                roll = random.randint(0,2)
+                if roll == 0:
+                    girl["health_state"]["alcohol_addiction"] -= 1
+            # Cannabis/Marijuana handling
+            if girl["health_state"]["cannabis_pressure"] > 0:
+                roll = random.randint(0,1)
+                if roll == 0:
+                    girl["health_state"]["cannabis_pressure"] -= 1
+
+            # Methamphetamine handling
+            if girl["health_state"]["meth"] > 0:
+                girl["health_state"]["meth"] = 0
+                girl["health_state"]["meth_addiction"] += 1
+                if girl["health_state"]["meth_addiction"] > girl["attributes"]["endurance"]:
+                    girl["mood_state"]["bad_mood"]["meth"]["active"] = True
+                    girl["mood_state"]["bad_mood"]["meth"]["duration"] = girl["health_state"]["meth_addiction"]
+                    girl["energy"] -= 1  
+                    girl["experience"]["attributes"]["endurance"] -= girl["health_state"]["meth_addiction"] // 2  # addiction penalty is higher if taken yesterday
+            else:
+                if girl["health_state"]["meth_addiction"] > 0:
+                    roll = random.randint(0,2)
+                    if roll == 0:
+                        girl["health_state"]["meth_addiction"] -= 1
+                
+                if girl["health_state"]["meth_addiction"] > 1:
+                    girl["mood_state"]["bad_mood"]["meth"]["active"] = True
+                    girl["mood_state"]["bad_mood"]["meth"]["duration"] = girl["health_state"]["meth_addiction"]
+                    girl["experience"]["attributes"]["endurance"] -= girl["health_state"]["meth_addiction"] 
+
+            # Opium handling
+            if girl["health_state"]["opium"] > 0:
+                girl["health_state"]["opium"] = 0
+                girl["health_state"]["opium_addiction"] += 1
+                girl["mood_state"]["good_mood"]["opium"]["active"] = False
+                if girl["health_state"]["opium_addiction"] > girl["attributes"]["endurance"]:
+                    girl["mood_state"]["bad_mood"]["opium"]["duration"] = 4
+                    girl["mood_state"]["bad_mood"]["opium"]["active"] = True
+                    
+                    if girl["mood_state"]["bad_mood"]["opium"]["duration"] > 1:
+                        girl["mood"] -= girl["health_state"]["opium_addiction"] *5
+                    
+                    girl["experience"]["attributes"]["endurance"] -= girl["health_state"]["opium_addiction"]  # addiction penalty is higher if taken yesterday
+            else:
+                if girl["health_state"]["opium_addiction"] > 0:
+                    roll = random.randint(0,3)
+                    if roll == 0:
+                        girl["health_state"]["opium_addiction"] -= 1
+                
+                if girl["health_state"]["opium_addiction"] > girl["attributes"]["endurance"]:
+                    girl["mood_state"]["bad_mood"]["opium"]["active"] = True
+                    girl["mood_state"]["bad_mood"]["opium"]["duration"] = girl["health_state"]["opium_addiction"]
+                    girl["experience"]["attributes"]["endurance"] -= 1  # lingering addiction penalty
+        def slave_healing():
+            # Bruises healing
+
+            if girl["bruises_rate"] > 0:
+                girl["bruises_rate"] -= max(0, girl["attributes"]["endurance"] + girl["mood"])
+            # Ensure bruises rate doesn't go negative
+            if girl["bruises_rate"] < 0:
+                girl["bruises_rate"] = 0
+            # Wounds/Injuries handling
+            if girl["injuries"] > 0:
+                girl["experience"]["attributes"]["endurance"] -= girl["injuries"]*3
+                girl["injuries_rate"] -= girl["attributes"]["endurance"] - (4 - girl["hygiene"])
+                girl["scars_rate"] += girl["injuries"]
+                girl["mood_state"]["bad_mood"]["wounded"]["active"] = True
+            elif girl["injuries_rate"] > 0:
+                girl["injuries_rate"] -= girl["attributes"]["endurance"]
+            # Ensure wounds rate doesn't go negative
+            if girl["injuries_rate"] < 0:
+                girl["injuries_rate"] = 0
+            roll = random.randint(1,10)
+            if (girl["injuries_rate"] >= 40 and girl["injuries_rate"] < 100):
+                if roll > 4:
+                    girl["scars_rate"] += 1
+
+            elif (girl["injuries_rate"] >= 100 and girl["injuries_rate"] < 120):
+                if roll > 4:
+                    girl["scars_rate"] += 1
+                if roll > 7:
+                    girl["scars_rate"] += 1
+
+            elif girl["injuries_rate"] >= 120:
+                if roll > 4:
+                    girl["scars_rate"] += 1
+                if roll > 6:
+                    girl["scars_rate"] += 1
+                if roll > 8:
+                    girl["scars_rate"] += 1
+            if girl["ill"] > 0:
+                girl["ill"] += 1
+                roll = random.randint(1,60)
+                if roll < girl["attributes"]["endurance"]:
+                    girl["ill"] = 0
+                if girl["ill"] > girl["attributes"]["endurance"]:
+                    girl["experience"]["attributes"]["endurance"] -= 1
+                if girl["ill"] > 6:
+                    girl["mood_state"]["bad_mood"]["slave_ill"]["active"] = True
+                    girl["mood_state"]["bad_mood"]["slave_ill"]["weight"] = 3
+                    girl["mood_state"]["bad_mood"]["slave_ill"]["permanent"] = True
+                else:
+                    girl["mood_state"]["bad_mood"]["slave_ill"]["permanent"] = False
+                #parasite code skipped #TODO
+        assistant_addicted()
+        dependence_update()
+        slave_healing()
+
+
+    def slave_menstruation_pregnant_update():
+<<<<<<< HEAD
+        global medic_value_15, debt_with_administration, sparks_37
+=======
+        global medic_value_15, debt_with_administration, all_girls_list
+>>>>>>> origin/main
+        girl = all_girls_list[girl_index]
+
+        if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["value"] != 0:
+            if medic_value_15 > 2: # Need at least B+ medic to notice if slave is fertile
+                if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["revealed"]:
+                    girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["revealed"] = True
+                    msg(dic_traits_miscellaneous_description["fertility"][girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["value"]])
+        
+        if not girl["pregnant"]["active"]:
+            if girl["menstruation_cycle"]["active"]:
+                if not girl["egg_laying"]:
+                    a = 28 + girl["menstruation_cycle"]["variance"]
+                    menstrual_phase = 5
+                    follicular_phase = 9
+                    ovulation = 1
+                    luteal_phase = 13
+                else: # when egg_layer reduce menstruation to 7 days for eazy pregnancy
+                    menstrual_phase = 1
+                    follicular_phase = 2
+                    ovulation = 1
+                    luteal_phase = 3
+
+
+                if girl["menstruation_cycle"]["variance"] != 0:
+                    alfa = abs(girl["menstruation_cycle"]["variance"])
+
+                    for i in range(alfa): #can't go negative numbers
+                        
+                        if girl["menstruation_cycle"]["variance"] > 0:
+                            if i % 3 == 0:
+                                luteal_phase += 1
+                            elif i % 3 == 1:
+                                follicular_phase += 1
+                            else:
+                                menstrual_phase += 1
+                        else:
+                            if i % 3 == 0:
+                                luteal_phase -= 1
+                            elif i % 3 == 1:
+                                follicular_phase -= 1
+                            else:
+                                menstrual_phase -= 1
+
+                if girl["menstruation_cycle"]["days"] >= menstrual_phase:
+                    girl["mood_state"]["bad_mood"]["menstruation"]["active"] = True
+                    girl["energy"] -= 2
+                    girl["menstruation_cycle"]["stage"] = 0
+                elif girl["menstruation_cycle"]["days"] >= menstrual_phase + follicular_phase:
+                    girl["mood_state"]["bad_mood"]["menstruation"]["active"] = False
+                    girl["energy"] += 1
+                    girl["mood"] += 1
+                    girl["menstruation_cycle"]["stage"] = 1
+                elif girl["menstruation_cycle"]["days"] >= menstrual_phase + follicular_phase + ovulation:
+                    girl["mood_state"]["bad_mood"]["menstruation"]["active"] = False # the cicle is reset when turning into a egg_layer so this is necessary
+                    girl["energy"] += 2
+                    girl["mood"] += 3
+                    girl["menstruation_cycle"]["stage"] = 2
+<<<<<<< HEAD
+                    if girl["semen_in_the_womb"] > 0:
+                        girl["semen_in_the_womb"] -= 1
+                        if not girl["egg_laying"]:
+                            roll = random.randint(0,9)
+                            if roll < 3:
+                                girl["pregnant"]["active"] = True
+                                girl["pregnant"]["days"] = 0
+                                girl["pregnant"]["stage"] = 0
+                        else:
+                            girl["pregnant"]["active"] = True
+                            girl["pregnant"]["days"] = 0
+                            girl["pregnant"]["stage"] = 0
+                elif girl["menstruation_cycle"]["day"] >= a
+=======
+                elif girl["menstruation_cycle"]["days"] >= a:
+>>>>>>> origin/main
+                    girl["mood_state"]["bad_mood"]["menstruation"]["active"] = False
+                    girl["energy"] -= 1
+                    girl["mood"] -= 1
+                    girl["menstruation_cycle"]["stage"] = 3
+                #avance the day
+                girl["menstruation_cycle"]["days"] += 1
+                if girl["menstruation_cycle"]["days"] == a:
+                    girl["menstruation_cycle"]["days"] = 0
+                    # fertile women have generally more consistent cicle 
+                    if not girl["egg_laying"]:
+                        roll1 = random.randint(-6 + girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["value"], 6 - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["value"])
+                    else: 
+                        roll1 = random.randint( -1 , 1)
+                    girl["menstruation_cycle"]["variance"] = roll1
+        else:
+            if not girl["egg_laying"]:
+<<<<<<< HEAD
+                if girl["pregnant"]["days"] < 12*7
+                    girl["pregnant"]["stage"] = 0
+                elif girl["pregnant"]["days"] < 26*7
+                    if girl["pregnant"]["days"] == 12*7:
+                        msg("You notice your slave [all_girls_list[girl_index]['name']] is pregnant")
+                    girl["pregnant"]["stage"] = 1
+                elif girl["pregnant"]["days"] < 38*7
+=======
+                if girl["pregnant"]["days"] < 12*7:
+                    girl["pregnant"]["state"] = 0
+                elif girl["pregnant"]["days"] < 26*7:
+                    if girl["pregnant"]["days"] == 12*7:
+                        msg("You notice your slave [all_girls_list[girl_index]['name']] is pregnant")
+                    girl["pregnant"]["state"] = 1
+                elif girl["pregnant"]["days"] < 38*7:
+>>>>>>> origin/main
+                    if girl["pregnant"]["days"] == 26*7:
+                        msg("You notice your slave [all_girls_list[girl_index]['name']] has enter the middle fase of pregnacy, as a cultured citizen you know given born is HIGLY PROHIBITED in this land, you should abort before VATICAN take away what is yours")
+                    girl["pregnant"]["stage"] = 2
+                else:
+<<<<<<< HEAD
+                    girl["pregnant"]["stage"] = 3
+=======
+>>>>>>> origin/main
+                    if girl["pregnant"]["days"] < 38*7:
+                        msg("You notice your slave [all_girls_list[girl_index]['name']] has enter the final fase of pregnacy, you must abort immediately, There's no change your slave give born before she is taken away.")
+                    roll = random.randint(1,30)
+                    if roll + (girl["pregnant"]["days"] - 38*7) > 30:
+                        del all_girls_list[girl_selection_list.index(girl_index)]
+                        all_girls_list = {i: v for i, v in enumerate(all_girls_list.values())}
+                        msg("Oh no, VATICAN has taken away your slave. They left nothing behind except a fine of 500 Sparks.")
+                        debt_with_administration += 500
+                girl["pregnant"]["days"] += 1
+            else:
+                # eggs are produce in batch
+                for i in range(3):
+                    if girl["pregnant"]["days"] <= i*3 + 3:
+                        girl["pregnant"]["days"] += 1
+                        girl["pregnant"]["stage"] = i
+                        girl["egg_laying_eggs"] += girl["mood"] / 2
+                        break
+
+                if girl["pregnant"]["days"] == 10:
+                    age_factor = 0
+                    if girl["age"] == 0: # Young slave are more fertile
+                        age_factor = 1
+                    if girl["age"] == 1: # lolis are debatable
+                        age_factor = 0
+                    if girl["age"] == 2: # Mature slave are less fertile
+                        age_factor = -3
+
+
+                    addictional_factor = girl["attributes"]["endurance"] + girl["skills"]["pet"] + age_factor + girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["value"]*3
+                    girl["egg_laying_eggs"] += addictional_factor
+                    girl["egg_laying_eggs"] = int(girl["egg_laying_eggs"])
+                    girl["egg_laying_eggs"] = max(girl["egg_laying_eggs"], 3)
+                    msg("You notice your slave [all_girls_list[girl_index]['name']] is laying [str(girl["egg_laying_eggs"])] eggs")
+                    for i in range(girl["egg_laying_eggs"]):
+                        if home_estate["kitchen"]["storage_capacity"] > home_estate["kitchen"]["storage_ingredients"]:
+                            storage["ingredients"]["Eggs"] += 1
+                            cryo_amount_calculation()
+                            girl["egg_laying_eggs"] -= 1
+                    girl["egg_laying_eggs"]
+                    spark += girl["egg_laying_eggs"] * 3
+                    msg("You notice your slave [all_girls_list[girl_index]['name']] is laying [str(girl["egg_laying_eggs"])] eggs, you sell the extras for [str(girl["egg_laying_eggs"] * 3)] Sparks")
+                    girl["pregnant"]["active"] = False 
+
+
+
+
+
+
+
+            
+
+            
+            
+                
+
+
+        
+            
+            
+
+
+
+
+    def style_daring_energised_drop_update():
+        all_girls_list[girl_index]["exertion"] = 0
+        all_girls_list[girl_index]["epilation"] = max(all_girls_list[girl_index]["epilation"]-1,0)
+        all_girls_list[girl_index]["manicure"] = max(all_girls_list[girl_index]["manicure"]-1,0)
+        all_girls_list[girl_index]["hairstyle"] = max(all_girls_list[girl_index]["hairstyle"]-1,0)
+        all_girls_list[girl_index]["perfume"] = max(all_girls_list[girl_index]["perfume"]-1,0)
+        all_girls_list[girl_index]["caught_masturbating"] = max(all_girls_list[girl_index]["caught_masturbating"]-1,0)
+        all_girls_list[girl_index]["daring"] = max(all_girls_list[girl_index]["daring"]- random.randint(0, 3),0)
+        if all_girls_list[girl_index]["energised"] > 5:
+            all_girls_list[girl_index]["energised"] = max(all_girls_list[girl_index]["energised"]- random.randint(0, 7),0)
+    def rules_reset_update():
+        for i in all_girls_list[girl_index]["rules_broken"]:
+            all_girls_list[girl_index]["rules_broken"][i] = False
+        for i in all_girls_list[girl_index]["rules_explain"]:
+            all_girls_list[girl_index]["rules_explain"][i] = ""
+    def assistant_passive_stats_update():
+        if all_girls_list[girl_index]["assistant"]:
+            if all_girls_list[girl_index]["attributes"]["nature"] < 3:
+                all_girls_list[girl_index]["experience"]["attributes"]["nature"] +=1
+                increase_check("attributes","nature")
+
+
+
+    def slave_energy_drop_calculation():
+        global girl_index
+        girl = all_girls_list[girl_index]
+        if girl["energy"] > 0:
+            girl["energy"] -= 2
+        else:
+            girl["yesterday_exhaustion"] += 2
+        girl["calories"] -= 1
+    def master_energy_drop_calculation():
+        global energy_value, yesterday_exhaustion, strength_experience_value_1, strength_value_1
+        global skill_adv_mul
+        if energy_value > 0:
+            energy_value -= 2
+        else:
+            yesterday_exhaustion += 2
+        if strength_value_1 < 3:
+            strength_experience_value_1 += 1 * skill_adv_mul
+
+    def auto_bath_slave_help_master():
+        global hygiene_value_9, shameful, interaction_repulse_difficulty
+        global interaction_willingness, libido_value_4, hygiene_experience_value_9
+        global girl_index, mood_value_10, home_mess_value, already_bath
+        global did_bath_yesterday, target_skill
+        target_skill = "sex"
+        if home_estate["bathroom"]["type"] == "":
+            return
+        if hygiene_value_9 > 4 or already_bath:
+            return
+
+        girl = all_girls_list[girl_index]
+        if girl["rules"]["bath_slave"] and girl["energy"] > -1:
+            if girl["aura"]["devotion"] == 0:
+                shameful = True
+            interaction_repulse_difficulty = 0
+            interaction_willingness_check()
+            target_skill = ""
+            if interaction_willingness < 0:
+                girl["rules_broken"]["bath_slave"] = True
+            else:
+                girl["arousal_rate"] -= libido_value_4
+                did_bath_yesterday = True
+                master_mood_state["good_mood"]["pos_self_clean"]["active"] = True
+                mood_value_10 += (min(girl["sex_experience"]["petting"]["petting"], girl["sex_experience"]["oral_pleasure"]["oral_pleasure"])) / 10 
+                slave_bath_alone()
+                home_mess_value += 3
+                girl["slave_auto_bath"] = True
+                already_bath = True
+                hygiene_value_9 = 5 #this is necessary since hygiene update check is made only on home screen 
+                hygiene_experience_value_9 = 0 
+    def beauty_style_exoticism_slave_calculation():
+        global girl_index
+        girl = all_girls_list[girl_index]
+        def update_slave_beauty():
+            global attribute_track_index, dictionary_track_index, dictionary_name, customboxcheck
+            girl["attributes"]["beauty"] = girl["attributes"]["natural_beauty"] - (girl["injuries"] + girl["scars"])/2
+            if girl["attributes"]["physical"] == 5:
+                girl["attributes"]["beauty"] -= 1
+            else:
+                girl["attributes"]["beauty"] -= max(1 - girl["attributes"]["physical"]*0.5, 0)
+            if girl["neoplasty"]:
+                girl["attributes"]["beauty"] += 1
+            if girl["attributes"]["beauty"] > 5:
+                girl["attributes"]["beauty"] = 5
+            if (girl["attributes"]["beauty"] == 5 
+            and girl["aura"]["devotion"] >= 5 #maybe change this for S+
+            and girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] == 2
+            or girl["attributes"]["beauty"] == 5
+            and girl["aura"]["devotion"] >= 5 #maybe change this for S+
+            and girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] == 1
+            and girl["neoplasty"]):
+                girl["attributes"]["beauty"] += 1
+            girl["attributes"]["beauty"] = int(girl["attributes"]["beauty"])
+            if girl["injuries"] + girl["scars"] == 0 and girl["attributes"]["physical"] == 4:
+                if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] != 0:
+                    if not girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["revealed"]:
+                        girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["revealed"] = True
+                        attribute_track_index = "beautytrait"
+                        dictionary_track_index = girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] 
+                        dictionary_name = dic_traits_attributes_description
+                        customboxcheck = True
+        def update_slave_style():
+            global natural_grace_color
+            global attribute_track_index, dictionary_track_index, dictionary_name, customboxcheck
+
+            girl["attributes"]["style"] = (girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["value"] 
+            + (girl["hygiene"] - 4)/2
+            + girl["hairstyle"] / 2)
+            for value in ["perfume","manicure","epilation","make_up"]:
+                if girl[value] > 0:
+                    girl["attributes"]["style"] += 0.5        
+            n = [1,3,5,7,9,11,13]     
+            for i in n:
+                if girl["style_plus"] >= i:
+                    girl["attributes"]["style"] += 0.5
+            # IN TOTAL 7 POINTS for normal slaves
+            girl["attributes"]["style"] = int(girl["attributes"]["style"])
+            girl["attributes"]["style"] = max(girl["attributes"]["style"], 0)
+            if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["value"] == 2:
+                girl["attributes"]["style"] = min(girl["attributes"]["style"], 6)
+            else:
+                girl["attributes"]["style"] = min(girl["attributes"]["style"], 5)
+            m = [(2,"#009900"),(1,"#0000D8"),(0,"#000000"),(-1,"#812000"),(-2,"#320000")]
+            for values, color in m:
+                if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["value"] == values:
+                    natural_grace_color = color
+                    break 
+            if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["value"] != 0:
+                if not girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["revealed"]:
+                    girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["revealed"] = True
+                    attribute_track_index = "styletrait"
+                    dictionary_track_index = girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["value"] 
+                    dictionary_name = dic_traits_attributes_description
+                    customboxcheck = True
+        def update_slave_exoticism():
+            global natural_exoticism_color
+            girl["attributes"]["exoticism"] = girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["exoticismtrait"]["value"]
+            a = [1,3,5,7,9]
+            for i in a:
+                if girl["piercings"] >= i:
+                    girl["attributes"]["exoticism"] += 0.3
+                if girl["exotic_plus"] >= 1:
+                    girl["attributes"]["exoticism"] += 0.3
+            e = [11,13]
+            for i in e:
+                if girl["exotic_plus"] >= i:
+                    girl["attributes"]["exoticism"] += 0.5
+            b = [(1,0.2),(2,0.4),(3,0.6),(4,0.8),(5,1)]
+            for values, value in b:
+                if girl["tattoo"] >= values:
+                    girl["attributes"]["exoticism"] += value
+            # IN TOTAL 7 POINTS for normal slaves
+            girl["attributes"]["exoticism"] = int(girl["attributes"]["exoticism"])
+            girl["attributes"]["exoticism"] = max(girl["attributes"]["exoticism"], 0)
+            if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["exoticismtrait"]["value"] == 2:
+                girl["attributes"]["exoticism"] = min(girl["attributes"]["exoticism"], 6)
+            else:
+                girl["attributes"]["exoticism"] = min(girl["attributes"]["exoticism"], 5)
+            m = [(2,"#009900"),(1,"#0000D8"),(0,"#000000"),(-1,"#812000"),(-2,"#320000")]
+            for values, color in m:
+                if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["exoticismtrait"]["value"] == values:
+                    natural_exoticism_color = color
+                    break 
+            if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["exoticismtrait"]["value"] != 0:
+                if not girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["exoticismtrait"]["revealed"]:
+                    girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["exoticismtrait"]["revealed"] = True
+                    attribute_track_index = "exoticismtrait"
+                    dictionary_track_index = girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["exoticismtrait"]["value"] 
+                    dictionary_name = dic_traits_attributes_description
+                    customboxcheck = True
+        if girl["age"] == 1:
+            girl["epilation"] = 100
+        update_slave_beauty()
+        update_slave_style()
+        update_slave_exoticism()
+    def slave_rank_calculation():
+        girl = all_girls_list[girl_index]
+        girl["skills_sum"] = 0
+        girl["skills_max"] = 0
+        girl["sex_skills_sum"] = 0
+        girl["sex_skill_max"] = 0
+        girl["attributes_sum"] = (
+            girl["attributes"]["endurance"]
+            + girl["attributes"]["empathy"]
+            + girl["attributes"]["temperament"]
+            + girl["attributes"]["intelligence"]
+            + girl["attributes"]["nature"]
+            - (5 - girl["attributes"]["pride"]))
+        for skills in girl["skills"]:
+            girl["skills_sum"] += girl["skills"][skills]
+            if girl["skills"][skills] >= 5:
+                girl["skills_max"] += 1
+        for sex_skills in girl["sex_experience"]:
+            for values in girl["sex_experience"][sex_skills]:
+                if values == sex_skills:
+                    girl["sex_skills_sum"] += girl["sex_experience"][sex_skills][values]
+                    if girl["sex_experience"][sex_skills][values] >= 5:
+                        girl["sex_skill_max"] += 1
+        a = max(girl["attributes"]["beauty"], girl["attributes"]["fame"])
+        b =[(6,5,0),(8,10,0),(10,15,2),(12,18,4),(13,20,8),(14,24,10),(15,28,15),(16,30,18),(18,35,20),(20,40,25),(26,76,36),(999,999,999)]
+        for i in range (12):
+            if (a < i/2 
+            or girl["attributes_sum"] < b[i][0]
+            or girl["skills_sum"] < b[i][1]
+            or girl["sex_skills_sum"] < b[i][2]):
+                girl["rating"] = i
+                break
+            if i >= 0:
+                if girl["obedience"] < 1:
+                    girl["rating"] = i
+                    break
+            if i >= 1:
+                if girl["obedience"] < 5:
+                    girl["rating"] = i
+                    break
+            if i >= 2:
+                if girl["obedience"] < 6:
+                    girl["rating"] = i
+                    break
+            if i >= 3:
+                if girl["aura"]["devotion"] < 1:
+                    girl["rating"] = i
+                    break
+            if i >= 4:
+                if (girl["skills_max"] < 2
+                or girl["sex_skill_max"] < 1
+                or girl["aura"]["devotion"] < 2):
+                    girl["rating"] = i
+                    break
+            if i >= 5:
+                if girl["aura"]["devotion"] < 3:
+                    girl["rating"] = i
+                    break
+            if i >= 6:
+                if (girl["skills_max"] < 3
+                or girl["sex_skill_max"] < 2
+                or girl["aura"]["devotion"] < 4):
+                    girl["rating"] = i
+                    break
+            if i >= 8:
+                if (girl["skills_max"] < 4
+                or girl["sex_skill_max"] < 3
+                or girl["aura"]["devotion"] < 5):
+                    girl["rating"] = i
+                    break
+            if i >= 9:
+                if (girl["skills_max"] < 5
+                or girl["sex_skill_max"] < 4):
+                    girl["rating"] = i
+                    break
+        a = max(girl["attributes"]["beauty"], girl["attributes"]["fame"])
+        rating = girl["rating"]
+        girl["rating_help_text"] = ""
+        match rating:
+            case 0:
+                if a < 0.0:
+                    girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
+                if girl["obedience"] < 1:
+                    girl["rating_help_text"] += f"- {girl['name']} needs to learn obedience\n"
+                if girl["skills_sum"] < 5:
+                    girl["rating_help_text"] += "- Teach this slave some common skills\n"
+                if girl["attributes_sum"] < 6:
+                    girl["rating_help_text"] += "- Develop this slave’s basic attributes\n"
+                if girl["attributes"]["endurance"] < 2:
+                    girl["rating_help_text"] += f"- {girl['name']} has low stamina and cannot rank higher or be sold to many customers\n"
+
+            case 1:
+                if a < 0.5:
+                    girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
+                if girl["obedience"] < 5:
+                    girl["rating_help_text"] += f"- {girl['name']} needs to be more obedient\n"
+                if girl["skills_sum"] < 10:
+                    girl["rating_help_text"] += "- Teach this slave some common skills\n"
+                if girl["attributes_sum"] < 8:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+
+            case 2:
+                if a < 1.0:
+                    girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
+                if girl["obedience"] < 6:
+                    girl["rating_help_text"] += f"- {girl['name']} needs to be more obedient\n"
+                if girl["sex_skills_sum"] < 2:
+                    girl["rating_help_text"] += "- Improve this slave’s sexual skills\n"
+                if girl["skills_sum"] < 15:
+                    girl["rating_help_text"] += "- Improve this slave’s common skills\n"
+                if girl["attributes_sum"] < 10:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+
+            case 3:
+                if girl["attributes"]["endurance"] < 3:
+                    girl["rating_help_text"] += f"- {girl['name']} has low stamina and cannot rank higher or be sold to many customers\n"
+                if girl["sex_skills_sum"] < 4:
+                    girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
+                if girl["skills_sum"] < 18:
+                    girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
+                if girl["attributes_sum"] < 12:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+                if girl["aura"]["devotion"] < 1:
+                    girl["rating_help_text"] += "- Encourage a strong sense of loyalty in this slave\n"
+
+            case 4:
+                if a < 2.0:
+                    girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
+                if girl["sex_skills_sum"] < 8:
+                    girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
+                if girl["skills_sum"] < 20:
+                    girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
+                if girl["attributes_sum"] < 13:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+                if girl["aura"]["devotion"] < 2:
+                    girl["rating_help_text"] += "- Encourage a stronger sense of loyalty in this slave\n"
+                if girl["skills_max"] < 2:
+                    girl["rating_help_text"] += f"- {girl['name']} should master a total of 2 common skills\n"
+                if girl["sex_skill_max"] < 1:
+                    girl["rating_help_text"] += f"- {girl['name']} should master 1 sexual skill\n"
+
+            case 5:
+                if girl["sex_skills_sum"] < 10:
+                    girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
+                if girl["skills_sum"] < 22:
+                    girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
+                if girl["attributes_sum"] < 14:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+                if girl["aura"]["devotion"] < 3:
+                    girl["rating_help_text"] += "- Encourage a stronger sense of loyalty in this slave\n"
+
+            case 6:
+                if a < 3.0:
+                    girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
+                if girl["sex_skills_sum"] < 15:
+                    girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
+                if girl["skills_sum"] < 24:
+                    girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
+                if girl["attributes_sum"] < 15:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+                if girl["aura"]["devotion"] < 4:
+                    girl["rating_help_text"] += "- Encourage a stronger sense of loyalty in this slave\n"
+                if girl["skills_max"] < 3:
+                    girl["rating_help_text"] += f"- {girl['name']} should master a total of 3 common skills\n"
+                if girl["sex_skill_max"] < 2:
+                    girl["rating_help_text"] += f"- {girl['name']} should master a total of 2 sexual skills\n"
+
+            case 7:
+                if girl["attributes_sum"] < 16:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+                if girl["sex_skills_sum"] < 18:
+                    girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
+                if girl["skills_sum"] < 26:
+                    girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
+
+            case 8:
+                if a < 4.0:
+                    girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
+                if girl["sex_skills_sum"] < 20:
+                    girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
+                if girl["skills_sum"] < 28:
+                    girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
+                if girl["attributes_sum"] < 18:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+                if girl["aura"]["devotion"] < 5:
+                    girl["rating_help_text"] += "- Develop absolute loyalty in this slave\n"
+                if girl["skills_max"] < 4:
+                    girl["rating_help_text"] += f"- {girl['name']} should master a total of 4 common skills\n"
+                if girl["sex_skill_max"] < 3:
+                    girl["rating_help_text"] += f"- {girl['name']} should master a total of 3 sexual skills\n"
+
+            case 9:
+                if girl["sex_skills_sum"] < 25:
+                    girl["rating_help_text"] += "- Perfect this slave’s sexual skills\n"
+                if girl["skills_sum"] < 30:
+                    girl["rating_help_text"] += "- Perfect this slave’s common skills\n"
+                if girl["attributes_sum"] < 20:
+                    girl["rating_help_text"] += "- Fully develop this slave’s basic attributes\n"
+                if girl["skills_max"] < 5:
+                    girl["rating_help_text"] += f"- {girl['name']} should master a total of 5 common skills\n"
+                if girl["sex_skill_max"] < 4:
+                    girl["rating_help_text"] += f"- {girl['name']} should master a total of 4 sexual skills\n"
+        girl["rating_text_display"] = dic_rating_colored[all_girls_list[girl_index]["rating"]]
+    def slave_specialization_check():
+        global girl_index, client_slave_requierement_tier
+        girl = all_girls_list[girl_index]
+        for key in girl["specialization"]:
+            n = len(dic_specializations[key])
+            missing = 0
+            if key != "Concubine":
+                for i in range(n):
+                    try:
+                        if girl["skills"][dic_specializations[key][i]] < max(client_slave_requierement_tier,3):
+                            missing += 1
+                    except KeyError:
+                        if girl["attributes"][dic_specializations[key][i]] < max(client_slave_requierement_tier,3):
+                            missing += 1
+            else:                            
+                if girl["sex_skills_sum"] < 15:
+                    missing = 1
+            if missing == 0:
+                girl["specialization"][key] = True
+    def slave_bath_alone():
+        global girl_index, home_mess_value
+        if home_estate["bathroom"]["type"] == "":
+            return
+        girl = all_girls_list[girl_index]
+        girl["mood"] += (5 - girl["hygiene"]) / 5 # up to 1 mood, 2 is too op
+        girl["did_bath_yesterday"] = True
+        girl["mood_state"]["good_mood"]["slave_clean"]["active"] = True
+        girl["mood_state"]["good_mood"]["slave_clean"]["weight"] = 0 #too op
+        girl["make_up"] = 0
+        girl["perfume"] = 0
+        home_mess_value += 1
+        girl["energy"] -= 1
+        girl["already_bath"] = True
+        girl["hygiene"] = 5
+        girl["hygiene_rate"] = 0
+    def slave_bath_selfwash_auto():
+        global girl_index, home_mess_value
+        girl = all_girls_list[girl_index]
+        if home_estate["bathroom"]["type"] == "":
+            return
+        if girl["energy"] < 0 or girl["hygiene"] > 2 or girl["already_bath"]:
+            return
+        home_mess_value += 3
+        slave_bath_alone()
+        girl["slave_auto_bath_self"] = True
+    def slave_bath_selfwash_ask():
+        global girl_index, home_mess_value
+        girl = all_girls_list[girl_index]
+        if home_estate["bathroom"]["type"] == "":
+            return
+        home_mess_value += 3
+        slave_bath_alone()
+    def setup_interaction_screen():
+        # Hide the screens
+        renpy.hide_screen("homehome_attributes_menu")
+        renpy.hide_screen("goguild")
+        renpy.hide_screen("sparks_menu")
+        # Show the screens
+        renpy.show_screen("interaction_screen")
+        renpy.show_screen("information_for_consideration_screen")
+    def master_bath():
+        if home_estate["bathroom"]["type"] == "":
+            return
+        global hygiene_experience_value_9, home_mess_value
+        global hygiene_value_9, energy_value, pic_displayed
+        global already_bath
+        roll = random.randint(1, 3)
+        if roll == 1:
+            pic_displayed = "scene/master_bathing.webp"
+        elif roll == 2:
+            pic_displayed = "scene/master_bathing_2.webp"
+        elif roll == 3:
+            pic_displayed = "scene/master_bathing_3.webp"
+        hygiene_value_9 = 5
+        hygiene_experience_value_9 = 0
+        home_mess_value += 4 # because slave bath is also 4 (3 + 1)
+        energy_value -= 1
+        master_mood_state["good_mood"]["pos_self_clean"]["active"] = True
+        already_bath = True
+    def sex_experience_average_calculation():
+        global girl_index
+        all_girls_list[girl_index]["sex_experience"]["petting"]["petting"] = (all_girls_list[girl_index]["sex_experience"]["petting"]["handjob"] + all_girls_list[girl_index]["sex_experience"]["petting"]["footjob"] + all_girls_list[girl_index]["sex_experience"]["petting"]["rubbing"] + all_girls_list[girl_index]["sex_experience"]["petting"]["titjob"]) // 4
+        all_girls_list[girl_index]["sex_experience"]["oral_pleasure"]["oral_pleasure"] = (all_girls_list[girl_index]["sex_experience"]["oral_pleasure"]["kissing"] + all_girls_list[girl_index]["sex_experience"]["oral_pleasure"]["licking"] + all_girls_list[girl_index]["sex_experience"]["oral_pleasure"]["blowjob"] + all_girls_list[girl_index]["sex_experience"]["oral_pleasure"]["deep_throat"] + all_girls_list[girl_index]["sex_experience"]["oral_pleasure"]["rimming"]) // 5
+        all_girls_list[girl_index]["sex_experience"]["penetration"]["penetration"] = (all_girls_list[girl_index]["sex_experience"]["penetration"]["vaginal_sex"] + all_girls_list[girl_index]["sex_experience"]["penetration"]["fisting"] + all_girls_list[girl_index]["sex_experience"]["penetration"]["anal_sex"] + all_girls_list[girl_index]["sex_experience"]["penetration"]["anal_fisting"]) // 4
+        all_girls_list[girl_index]["sex_experience"]["group_sex"]["group_sex"] = (all_girls_list[girl_index]["sex_experience"]["group_sex"]["threesome"] + all_girls_list[girl_index]["sex_experience"]["group_sex"]["bukkake"] + all_girls_list[girl_index]["sex_experience"]["group_sex"]["doble_penetration"] + all_girls_list[girl_index]["sex_experience"]["group_sex"]["triple_penetration"] + all_girls_list[girl_index]["sex_experience"]["group_sex"]["gangbang"]) // 5
+        all_girls_list[girl_index]["sex_experience"]["demostration"]["demostration"] = (all_girls_list[girl_index]["sex_experience"]["demostration"]["seduction"] + all_girls_list[girl_index]["sex_experience"]["demostration"]["masturbation"] + all_girls_list[girl_index]["sex_experience"]["demostration"]["dildo"] + all_girls_list[girl_index]["sex_experience"]["demostration"]["humiliation"] + all_girls_list[girl_index]["sex_experience"]["demostration"]["exhibitionism"]) // 5
+        all_girls_list[girl_index]["sex_experience"]["fetishism"]["fetishism"] = (all_girls_list[girl_index]["sex_experience"]["fetishism"]["enema"] + all_girls_list[girl_index]["sex_experience"]["fetishism"]["masochism"] + all_girls_list[girl_index]["sex_experience"]["fetishism"]["self-torture"] + all_girls_list[girl_index]["sex_experience"]["fetishism"]["golden_shower"] + all_girls_list[girl_index]["sex_experience"]["fetishism"]["scat"]) // 5
+        all_girls_list[girl_index]["sex_experience"]["xenophily"]["xenophily"] = (all_girls_list[girl_index]["sex_experience"]["xenophily"]["dog_mating"] + all_girls_list[girl_index]["sex_experience"]["xenophily"]["pig_mating"] + all_girls_list[girl_index]["sex_experience"]["xenophily"]["house_mating"] + all_girls_list[girl_index]["sex_experience"]["xenophily"]["spider_mating"] + all_girls_list[girl_index]["sex_experience"]["xenophily"]["sea_tentacle_mating"] + all_girls_list[girl_index]["sex_experience"]["xenophily"]["field_mating"]) // 6
+    def generation_slave():
+        global girl_index, traits_skills, traits_sexual, traits_miscellaneous, traits_aura, traits_attributes
+        all_girls_list[girl_index].setdefault("obedience",0)
+        all_girls_list[girl_index].setdefault("achievements",0)
+        all_girls_list[girl_index].setdefault("aura",{
+        "fear": 0,
+        "despair": 0,
+        "awareness": 0,
+        "taming": 0,
+        "habit": 0,
+        "spoil": 0,
+        "devotion": 0,
+        })
+        all_girls_list[girl_index]["aura"].setdefault("obedience_bonus",0)
+        all_girls_list[girl_index].setdefault("experience", {})
+        roll = random.randint(1,4)
+        a = ""
+        if roll == 1:
+            a = "reluctant"
+        if roll == 2:
+            a = "soft"
+        if roll == 3:
+            a = "optimistic"
+        if roll == 4:
+            a = "depresive"
+        all_girls_list[girl_index].setdefault("psy_status",a)
+        all_girls_list[girl_index].setdefault("rating_help_text",a)
+        all_girls_list[girl_index].setdefault("rating_text_display",a)
+        all_girls_list[girl_index].setdefault("parasite",{
+            "parasite_a": {"stage": 0, "active": False},
+            "parasite_b": {"stage": 0, "active": False},
+            "parasite_c": {"stage": 0, "active": False},
+            "parasite_d": {"stage": 0, "active": False},
+            "parasite_e": {"stage": 0, "active": False},
+        })
+        all_girls_list[girl_index].setdefault("pregnant",{
+            "active": False,
+            "stage": 0,
+            "days": 0,
+        })
+        roll1 = random.randint(0,28)
+        roll2 = random.randint(-6,6)
+        roll3 = roll1 + roll2
+        all_girls_list[girl_index].setdefault("menstruation_cycle",{
+            "active": True,
+            "stage": 0,
+            "days": roll3,
+            "variance": roll2
+        })
+        all_girls_list[girl_index].setdefault("sterilization",False)
+        all_girls_list[girl_index].setdefault("lactation",{
+            "active": False,
+            "max_capacity": 20,
+            "current_capacity": 0,
+        })
+        all_girls_list[girl_index].setdefault("semen_in_the_womb",0)
+        all_girls_list[girl_index].setdefault("egg_laying",False)
+        all_girls_list[girl_index].setdefault("egg_laying_eggs",0)
+        all_girls_list[girl_index].setdefault("attributes_sum",0)
+        all_girls_list[girl_index].setdefault("skills_sum",0)
+        all_girls_list[girl_index].setdefault("skills_max",0)
+        all_girls_list[girl_index].setdefault("sex_skills_sum",0)
+        all_girls_list[girl_index].setdefault("sex_skills_max",0)
+        all_girls_list[girl_index].setdefault("rating",0)
+        all_girls_list[girl_index].setdefault("neoplasty",0)
+        all_girls_list[girl_index].setdefault("ill",0)
+        all_girls_list[girl_index].setdefault("rehabilitation",0)
+        all_girls_list[girl_index].setdefault("injuries",0)
+        all_girls_list[girl_index].setdefault("injuries_rate",0)
+        all_girls_list[girl_index].setdefault("scars",0)
+        all_girls_list[girl_index].setdefault("scars_rate",0)
+        all_girls_list[girl_index].setdefault("bruises",0)
+        all_girls_list[girl_index].setdefault("bruises_rate",0)
+        all_girls_list[girl_index].setdefault("piercings",0)
+        all_girls_list[girl_index].setdefault("tattoo",0)
+        all_girls_list[girl_index].setdefault("affection_needs",100)
+        all_girls_list[girl_index].setdefault("name", "WIP")
+        all_girls_list[girl_index].setdefault("hygiene",5)
+        all_girls_list[girl_index].setdefault("hygiene_rate",0)
+        all_girls_list[girl_index].setdefault("style_plus",0)
+        all_girls_list[girl_index].setdefault("exotic_plus",0)
+        all_girls_list[girl_index].setdefault("mood",0)
+        all_girls_list[girl_index].setdefault("mood_temporal",0)
+        all_girls_list[girl_index].setdefault("past_mood",0)
+        all_girls_list[girl_index].setdefault("worn_mood",0)
+        all_girls_list[girl_index].setdefault("mood_state",{})
+        all_girls_list[girl_index].setdefault("beaten_ever",False)
+        all_girls_list[girl_index].setdefault("domini_dictum_ever",False)
+        all_girls_list[girl_index].setdefault("calories",all_girls_list[girl_index]["attributes"]["endurance"])
+        all_girls_list[girl_index].setdefault("food_portion",all_girls_list[girl_index]["attributes"]["endurance"])
+        all_girls_list[girl_index].setdefault("total_food_portion",0)
+        all_girls_list[girl_index].setdefault("total_food_portion_premiun",0)
+        all_girls_list[girl_index].setdefault("total_food_portion_semen",0)
+        all_girls_list[girl_index].setdefault("health_state",{})
+        all_girls_list[girl_index]["health_state"].setdefault("kamra",0)
+        all_girls_list[girl_index]["health_state"].setdefault("alcohol",0)
+        all_girls_list[girl_index]["health_state"].setdefault("meth",0)
+        all_girls_list[girl_index]["health_state"].setdefault("opium",0)
+        all_girls_list[girl_index]["health_state"].setdefault("cannabis_pressure",0)
+        all_girls_list[girl_index]["health_state"].setdefault("kamra_addiction",0)
+        all_girls_list[girl_index]["health_state"].setdefault("alcohol_addiction",0)
+        all_girls_list[girl_index]["health_state"].setdefault("meth_addiction",0)
+        all_girls_list[girl_index]["health_state"].setdefault("opium_addiction",0)
+        all_girls_list[girl_index].setdefault("wig",False)
+        all_girls_list[girl_index].setdefault("assistant",False)
+        all_girls_list[girl_index].setdefault("races_won",0)
+        all_girls_list[girl_index].setdefault("supermacy",0)
+        all_girls_list[girl_index].setdefault("bonus_fear",0)
+        all_girls_list[girl_index].setdefault("make_up",0)
+        all_girls_list[girl_index].setdefault("epilation",0)
+        all_girls_list[girl_index].setdefault("manicure",0)
+        all_girls_list[girl_index].setdefault("hairstyle",0)
+        all_girls_list[girl_index].setdefault("perfume",0)
+        all_girls_list[girl_index].setdefault("caught_masturbating",0)
+        all_girls_list[girl_index].setdefault("daring",0)
+        all_girls_list[girl_index].setdefault("energised",0)
+        all_girls_list[girl_index].setdefault("suicide_rate",0)
+        all_girls_list[girl_index].setdefault("mood_label","{color=#009FEF}Euphoric{/color}")
+        all_girls_list[girl_index].setdefault("exertion","")
+        all_girls_list[girl_index].setdefault("yesterday_exhaustion",0)
+        all_girls_list[girl_index].setdefault("haircolor","")
+        all_girls_list[girl_index].setdefault("hairlength","")
+        all_girls_list[girl_index]["mood_state"].setdefault("good_mood",{})
+        all_girls_list[girl_index]["mood_state"].setdefault("bad_mood",{})
+        
+        for key in dic_slave_mood["good_mood"]:
+            all_girls_list[girl_index]["mood_state"]["good_mood"].setdefault(key, {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1})
+        for key in dic_slave_mood["bad_mood"]:
+            all_girls_list[girl_index]["mood_state"]["bad_mood"].setdefault(key, {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1})
+        all_girls_list[girl_index].setdefault("already_done",{})
+        for key in dic_specializations:
+            all_girls_list[girl_index]["already_done"].setdefault(key, 0)
+        all_girls_list[girl_index]["already_done"].setdefault("sex", 0)
+        all_girls_list[girl_index]["experience"].setdefault("aura", {})
+        all_girls_list[girl_index]["experience"]["aura"].setdefault("fear", 0)
+        all_girls_list[girl_index]["experience"]["aura"].setdefault("despair", 0)
+        all_girls_list[girl_index]["experience"]["aura"].setdefault("awareness", 0)
+        all_girls_list[girl_index]["experience"]["aura"].setdefault("taming", 0)
+        all_girls_list[girl_index]["experience"]["aura"].setdefault("habit", 0)
+        all_girls_list[girl_index]["experience"]["aura"].setdefault("spoil", 0)
+        all_girls_list[girl_index]["experience"]["aura"].setdefault("devotion", 0)
+        all_girls_list[girl_index]["experience"].setdefault("attributes", {})
+        all_girls_list[girl_index]["experience"].setdefault("skills", {})
+        all_girls_list[girl_index]["experience"].setdefault("traits", {})
+        all_girls_list[girl_index]["experience"].setdefault("sex_experience", {})
+        all_girls_list[girl_index]["experience"].setdefault("traits_skills", {})
+        all_girls_list[girl_index]["experience"].setdefault("traits_sexual", {})
+        all_girls_list[girl_index]["experience"].setdefault("traits_miscellaneous", {})
+        all_girls_list[girl_index]["experience"].setdefault("traits_aura", {})
+        all_girls_list[girl_index]["experience"].setdefault("traits_attributes", {})
+        all_girls_list[girl_index].setdefault("energy", all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2)
+        all_girls_list[girl_index].setdefault("stored_yesterday_energy", 0)
+        all_girls_list[girl_index].setdefault("attributes", {})
+        all_girls_list[girl_index].setdefault("skills", {})
+        all_girls_list[girl_index].setdefault("traits", {})
+        all_girls_list[girl_index].setdefault("lactation", False)
+        all_girls_list[girl_index].setdefault("breast_modification", 0)
+        all_girls_list[girl_index].setdefault("vagina_modification", 0)
+        all_girls_list[girl_index].setdefault("vaginal_tightness",0)
+        all_girls_list[girl_index].setdefault("anal_tightness",0)
+        all_girls_list[girl_index].setdefault("brand",0)
+        all_girls_list[girl_index].setdefault("equipment",{})
+        all_girls_list[girl_index].setdefault("conscience",True)
+        all_girls_list[girl_index].setdefault("days_without_food",0)
+        all_girls_list[girl_index].setdefault("days_without_sleep",0)
+        all_girls_list[girl_index].setdefault("daily_count",{})
+        all_girls_list[girl_index].setdefault("arousal",0)
+        all_girls_list[girl_index].setdefault("arousal_rate",0)
+        all_girls_list[girl_index].setdefault("status_met",False)
+        all_girls_list[girl_index].setdefault("slave_auto_sleep",False)
+        all_girls_list[girl_index].setdefault("slave_auto_cook",False)
+        all_girls_list[girl_index].setdefault("slave_auto_maid",False)
+        all_girls_list[girl_index].setdefault("slave_auto_bath",False)
+        all_girls_list[girl_index].setdefault("slave_auto_bath_self",False)
+        all_girls_list[girl_index].setdefault("slave_auto_alarm",False)
+        all_girls_list[girl_index].setdefault("did_bath_yesterday",False)
+        all_girls_list[girl_index].setdefault("already_bath",False)
+        # variables need for screen logic
+        all_girls_list[girl_index].setdefault("maid_slave_skill_performance",0)
+        # custom images
+        all_girls_list[girl_index].setdefault("slave_auto_sleep_folder",False)
+        all_girls_list[girl_index].setdefault("slave_auto_cook_folder",False)
+        all_girls_list[girl_index].setdefault("slave_auto_maid_folder",False)
+        all_girls_list[girl_index].setdefault("slave_auto_bath_folder",False)
+        all_girls_list[girl_index].setdefault("slave_auto_bath_self_folder",False)
+        all_girls_list[girl_index].setdefault("slave_auto_alarm_folder",False)
+        #all_girls_list[girl_index].setdefault("max_daily_reward_level",0)
+        #all_girls_list[girl_index].setdefault("max_daily_punishment_level",0)
+        all_girls_list[girl_index]["day_bought"] = day_tracker
+        all_girls_list[girl_index]["daily_count"].setdefault("rewards",0)
+        all_girls_list[girl_index]["daily_count"].setdefault("punishments",0)
+        all_girls_list[girl_index]["equipment"].setdefault("armour","Without armour")
+        all_girls_list[girl_index]["equipment"].setdefault("weapon","Fist")
+        all_girls_list[girl_index]["equipment"].setdefault("weapon2","Fist")
+        all_girls_list[girl_index]["equipment"].setdefault("amulet","")
+        all_girls_list[girl_index]["equipment"].setdefault("ring","")
+        all_girls_list[girl_index]["equipment"].setdefault("clothes","Naked")
+        all_girls_list[girl_index]["equipment"].setdefault("headgear","")
+        all_girls_list[girl_index]["equipment"].setdefault("neck","")
+        all_girls_list[girl_index]["equipment"].setdefault("hands","")
+        all_girls_list[girl_index]["equipment"].setdefault("feet","")
+        all_girls_list[girl_index]["equipment"].setdefault("ring1","")
+        all_girls_list[girl_index]["equipment"].setdefault("ring2","")
+        all_girls_list[girl_index]["equipment"].setdefault("earrings",{"pierced":True,"type":""})
+        all_girls_list[girl_index]["equipment"].setdefault("tongue",{"pierced":True,"type":""})
+        all_girls_list[girl_index]["equipment"].setdefault("nipples",{"pierced":True,"type":""})
+        all_girls_list[girl_index]["equipment"].setdefault("clitoris",{"pierced":False,"type":""})
+        all_girls_list[girl_index]["equipment"].setdefault("navel",{"pierced":False,"type":""})
+        all_girls_list[girl_index]["equipment"].setdefault("anus","")
+        all_girls_list[girl_index]["equipment"].setdefault("aura_bound",{})
+        for key in dic_girl_clothing_full:
+            all_girls_list[girl_index]["equipment"]["aura_bound"].setdefault(key, False)
+        all_girls_list[girl_index].setdefault("learning_bonus",{})
+        for key in dic_slave_skills:
+            all_girls_list[girl_index]["learning_bonus"].setdefault(key,0)
+        all_girls_list[girl_index]["learning_bonus"].setdefault("sex",0)
+        all_girls_list[girl_index]["learning_bonus"].setdefault("academy",0)
+        all_girls_list[girl_index].setdefault("specialization",{})
+        for key in dic_specializations:
+            all_girls_list[girl_index]["specialization"].setdefault(key,False)
+        all_girls_list[girl_index].setdefault("daily_bonus",{})
+        all_girls_list[girl_index]["daily_bonus"].setdefault("devotion",0)
+        all_girls_list[girl_index]["daily_bonus"].setdefault("taming",0)
+        all_girls_list[girl_index]["daily_bonus"].setdefault("arousal",0)
+        all_girls_list[girl_index]["daily_bonus"].setdefault("endurance",0)
+        all_girls_list[girl_index]["daily_bonus"].setdefault("empathy",0)
+        all_girls_list[girl_index]["daily_bonus"].setdefault("temperament",0)
+        all_girls_list[girl_index]["daily_bonus"].setdefault("nature",0)
+        all_girls_list[girl_index]["daily_bonus"].setdefault("pride",0)
+        all_girls_list[girl_index]["traits"].setdefault("traits_open", {})
+        all_girls_list[girl_index]["traits"]["traits_open"].setdefault("traits_always", {})
+        all_girls_list[girl_index]["traits"]["traits_open"].setdefault("traits_especial", {})
+        all_girls_list[girl_index]["traits"].setdefault("traits_hidden", {})
+        all_girls_list[girl_index]["traits"]["traits_hidden"].setdefault("traits_skills(1/8)", {})
+        all_girls_list[girl_index]["traits"]["traits_hidden"].setdefault("traits_sexual(1/10)", {})       
+        all_girls_list[girl_index]["traits"]["traits_hidden"].setdefault("traits_miscellaneous(1/12)", {})       
+        all_girls_list[girl_index]["traits"]["traits_hidden"].setdefault("traits_aura(1/16)", {})     
+        all_girls_list[girl_index]["traits"]["traits_hidden"].setdefault("traits_attributes(1/20)", {})
+        all_girls_list[girl_index].setdefault("sex_experience", {})
+        all_girls_list[girl_index]["sex_experience"].setdefault("petting", {})
+        all_girls_list[girl_index]["sex_experience"].setdefault("oral_pleasure", {})
+        all_girls_list[girl_index]["sex_experience"].setdefault("penetration", {})
+        all_girls_list[girl_index]["sex_experience"].setdefault("group_sex", {})
+        all_girls_list[girl_index]["sex_experience"].setdefault("demostration", {})
+        all_girls_list[girl_index]["sex_experience"].setdefault("fetishism", {})
+        all_girls_list[girl_index]["sex_experience"].setdefault("xenophily", {})
+        all_girls_list[girl_index].setdefault("sleep", 2)
+        all_girls_list[girl_index].setdefault("diet", 0)
+        all_girls_list[girl_index].setdefault("first_menstruation_timer", -1) # -1, already got mestruation, this is later fix for lolis
+        all_girls_list[girl_index].setdefault("portion_size", 1)
+        all_girls_list[girl_index].setdefault("your_leftovers",False)
+        all_girls_list[girl_index].setdefault("supplements",False)
+        all_girls_list[girl_index].setdefault("rules", {})
+        all_girls_list[girl_index]["rules"].setdefault("rules_count",0)
+        all_girls_list[girl_index]["rules"].setdefault("act_as_cook",False)
+        all_girls_list[girl_index]["rules"].setdefault("act_as_maid",False)
+        all_girls_list[girl_index]["rules"].setdefault("bath_slave",False)
+        all_girls_list[girl_index]["rules"].setdefault("behave_alarm",False)
+        all_girls_list[girl_index]["rules"].setdefault("behave_humility",False)
+        all_girls_list[girl_index]["rules"].setdefault("behave_pet",False)
+        all_girls_list[girl_index]["rules"].setdefault("behave_silence",False)
+        all_girls_list[girl_index]["rules"].setdefault("behave_toilet",False)
+        all_girls_list[girl_index]["rules"].setdefault("behave_urinal",False)
+        all_girls_list[girl_index]["rules"].setdefault("deny_orgasm",False)
+        all_girls_list[girl_index]["rules"].setdefault("deny_toileting",False)
+        all_girls_list[girl_index]["rules"].setdefault("milk_the_fiend",False)
+        all_girls_list[girl_index]["rules"].setdefault("no_masturbation",False)   
+        all_girls_list[girl_index]["rules"].setdefault("use_vaginal_beads",False)
+        all_girls_list[girl_index]["rules"].setdefault("enforce_rules",False)
+        all_girls_list[girl_index]["rules"].setdefault("num_rules_wanttobreak",0)
+        ###########################################
+    
+        all_girls_list[girl_index].setdefault("rules_explain", {})
+        for rules in all_girls_list[girl_index]["rules"]:
+            all_girls_list[girl_index]["rules_explain"].setdefault(rules,"")
+        all_girls_list[girl_index].setdefault("rules_broken", {})
+        for rules in all_girls_list[girl_index]["rules"]:
+            all_girls_list[girl_index]["rules_broken"].setdefault(rules,False)
+
+        traits_skills = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]
+        traits_sexual = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"]
+        traits_miscellaneous = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]
+        traits_aura = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_aura(1/16)"]
+        traits_attributes = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_attributes(1/20)"]
+
+        for key, values in dic_slave_skills.items():
+            all_girls_list[girl_index]["experience"]["skills"].setdefault(key,0)
+            if key not in all_girls_list[girl_index]["skills"]:
+                roll = random.randint(1, 3)
+                if roll == 1:
+                    roll2 = random.randint(1, 5)
+                    val = 2 if roll2 == 1 else 1
+                else:
+                    val = 0
+                all_girls_list[girl_index]["skills"][key] = val
+        for key, values in dic_traits_skills.items():
+            all_girls_list[girl_index]["experience"]["traits_skills"].setdefault(key,0)
+            if key not in traits_skills:
+                roll = random.randint(1, 16)
+                if roll == 1:
+                    roll2 = random.randint(1, 5)
+                    val = 2 if roll2 == 1 else 1
+                elif roll == 16:
+                    roll2 = random.randint(1, 5)
+                    val = -2 if roll2 == 1 else -1
+                else:
+                    val = 0
+                traits_skills[key] = {"value": val, "revealed": False}    
+        for key, values in dic_traits_sexual.items():
+            all_girls_list[girl_index]["experience"]["traits_sexual"].setdefault(key,0)
+            if key not in traits_sexual:
+                roll = random.randint(1, 20)
+                if roll == 1:
+                    roll2 = random.randint(1, 5)
+                    val = 2 if roll2 == 1 else 1
+                elif roll == 20:
+                    roll2 = random.randint(1, 5)
+                    val = -2 if roll2 == 1 else -1
+                else:
+                    val = 0
+                traits_sexual[key] = {"value": val, "revealed": False}
+        for key, values in dic_traits_miscellaneous.items():
+            all_girls_list[girl_index]["experience"]["traits_miscellaneous"].setdefault(key,0)
+            if key not in traits_miscellaneous:
+                roll = random.randint(1, 24)
+                if roll == 1:
+                    roll2 = random.randint(1, 5)
+                    val = 2 if roll2 == 1 else 1
+                elif roll == 24:
+                    roll2 = random.randint(1, 5)
+                    val = -2 if roll2 == 1 else -1
+                else:
+                    val = 0
+                traits_miscellaneous[key] = {"value": val, "revealed": False}
+        for key, values in dic_traits_aura.items():
+            all_girls_list[girl_index]["experience"]["traits_aura"].setdefault(key,0)
+            if key not in traits_aura:
+                roll = random.randint(1, 32)
+                if roll == 1:
+                    roll2 = random.randint(1, 5)
+                    val = 2 if roll2 == 1 else 1
+                elif roll == 32:
+                    roll2 = random.randint(1, 5)
+                    val = -2 if roll2 == 1 else -1
+                else:
+                    val = 0
+                traits_aura[key] = {"value": val, "revealed": False}
+        for key, values in dic_traits_attributes.items():
+            all_girls_list[girl_index]["experience"]["traits_attributes"].setdefault(key,0)
+            if key not in traits_attributes:
+                roll = random.randint(1, 40)
+                if roll == 1:
+                    roll2 = random.randint(1, 5)
+                    val = 2 if roll2 == 1 else 1
+                elif roll == 40:
+                    roll2 = random.randint(1, 5)
+                    val = -2 if roll2 == 1 else -1
+                else:
+                    val = 0
+                traits_attributes[key] = {"value": val, "revealed": False}
+        for key, values in dic_sex_experience.items():
+            all_girls_list[girl_index]["experience"]["sex_experience"].setdefault(key, {})
+            for key2, values2 in dic_sex_experience[key].items():
+                if key2 not in all_girls_list[girl_index]["sex_experience"][key]:
+                    roll = random.randint(1, 3)
+                    if roll == 1:
+                        roll2 = random.randint(1, 2)
+                        val = 2 if roll2 == 1 else 1
+                    else:
+                        val = 0
+                    all_girls_list[girl_index]["sex_experience"][key][key2] = val
+                all_girls_list[girl_index]["experience"]["sex_experience"][key].setdefault(key2,0)
+        for key, values in dic_slave_attributes.items():
+            all_girls_list[girl_index]["experience"]["attributes"].setdefault(key,0)
+            if key not in all_girls_list[girl_index]["attributes"]:
+                if key == "beauty":
+                    roll = random.randint(1, 5)
+                elif key in ["exoticism", "style", "fame"]:
+                    roll = 0
+                else:
+                    roll = random.randint(0, 5)
+                all_girls_list[girl_index]["attributes"].setdefault(key, roll)
+        if not "world_description" in all_girls_list[girl_index]:
+            roll = random.randint(0,13)
+            all_girls_list[girl_index]["world"] = world[roll][name]
+            roll = random.randint(0, len(shared_families[all_girls_list[girl_index]["world"]])-1)
+            all_girls_list[girl_index]["family"] = shared_families[all_girls_list[girl_index]["world"]][roll]
+            roll = random.randint(0, len(occupation[all_girls_list[girl_index]["family"]])-1)
+            all_girls_list[girl_index]["ocupation"] = ocupation[all_girls_list[girl_index]["family"]][roll]
+            if all_girls_list[girl_index]["world"] == "prehistoric":
+                all_girls_list[girl_index]["attributes"]["exotic"] += 1
+                if all_girls_list[girl_index]["attributes"]["endurance"] < 5:
+                    all_girls_list[girl_index]["attributes"]["endurance"] += 1
+                if all_girls_list[girl_index]["attributes"]["temperament"] < 5:
+                    all_girls_list[girl_index]["attributes"]["temperament"] += 1
+                if all_girls_list[girl_index]["attributes"]["nature"] > 0:
+                    all_girls_list[girl_index]["attributes"]["nature"] -= 1
+                if all_girls_list[girl_index]["attributes"]["intelligence"] > 0:
+                    all_girls_list[girl_index]["attributes"]["intelligence"] -= 1
+            elif all_girls_list[girl_index]["world"] == "barbarian":
+                if all_girls_list[girl_index]["attributes"]["endurance"] < 5:
+                    all_girls_list[girl_index]["attributes"]["endurance"] += 1
+                if all_girls_list[girl_index]["attributes"]["temperament"] < 5:
+                    all_girls_list[girl_index]["attributes"]["temperament"] += 1
+                if all_girls_list[girl_index]["attributes"]["nature"] > 0:
+                    all_girls_list[girl_index]["attributes"]["nature"] -= 1
+                if all_girls_list[girl_index]["attributes"]["intelligence"] > 0:
+                    all_girls_list[girl_index]["attributes"]["intelligence"] -= 1
+            elif all_girls_list[girl_index]["world"] == "sns":
+                if all_girls_list[girl_index]["attributes"]["endurance"] < 5:
+                    all_girls_list[girl_index]["attributes"]["endurance"] += 1
+                if all_girls_list[girl_index]["attributes"]["nature"] > 0:
+                    all_girls_list[girl_index]["attributes"]["nature"] -= 1 
+                if all_girls_list[girl_index]["attributes"]["intelligence"] > 0:
+                    all_girls_list[girl_index]["attributes"]["intelligence"] -= 1
+            elif all_girls_list[girl_index]["world"] == "medieval":
+                if all_girls_list[girl_index]["attributes"]["temperament"] > 0:
+                    all_girls_list[girl_index]["attributes"]["temperament"] -= 1
+                if all_girls_list[girl_index]["attributes"]["nature"] > 0:
+                    all_girls_list[girl_index]["attributes"]["nature"] -= 1
+                if all_girls_list[girl_index]["attributes"]["intelligence"] > 0:
+                    all_girls_list[girl_index]["attributes"]["intelligence"] -= 1
+                all_girls_list[girl_index]["aura"]["habit"] += 1
+            elif all_girls_list[girl_index]["world"] == "highfantasy":
+                all_girls_list[girl_index]["attributes"]["exotic"] += 1
+                if all_girls_list[girl_index]["attributes"]["empathy"] < 5:
+                    all_girls_list[girl_index]["attributes"]["empathy"] += 1
+            elif all_girls_list[girl_index]["world"] == "darkfantasy":
+                all_girls_list[girl_index]["attributes"]["exotic"] += 1
+                all_girls_list[girl_index]["aura"]["habit"] += 2
+                if all_girls_list[girl_index]["attributes"]["endurance"] > 0:
+                    all_girls_list[girl_index]["attributes"]["endurance"] -= 1
+                if all_girls_list[girl_index]["attributes"]["temperament"] > 0:
+                    all_girls_list[girl_index]["attributes"]["temperament"] -= 1
+                if all_girls_list[girl_index]["attributes"]["nature"] > 0:
+                    all_girls_list[girl_index]["attributes"]["nature"] -= 1
+                if all_girls_list[girl_index]["attributes"]["empathy"] > 0:
+                    all_girls_list[girl_index]["attributes"]["empathy"] -= 1
+                if all_girls_list[girl_index]["attributes"]["intelligence"] > 0:
+                    all_girls_list[girl_index]["attributes"]["intelligence"] -= 1
+                if all_girls_list[girl_index]["attributes"]["pride"] < 5:
+                    all_girls_list[girl_index]["attributes"]["pride"] += 1
+            elif all_girls_list[girl_index]["world"] == "steampunk":
+                all_girls_list[girl_index]["aura"]["habit"] += 1
+            elif all_girls_list[girl_index]["world"] == "industrial":
+                all_girls_list[girl_index]["aura"]["habit"] += 1
+            elif all_girls_list[girl_index]["world"] == "modern":
+                if all_girls_list[girl_index]["attributes"]["nature"] < 5:
+                    all_girls_list[girl_index]["attributes"]["nature"] += 1
+                if all_girls_list[girl_index]["attributes"]["pride"] > 0:
+                    all_girls_list[girl_index]["attributes"]["pride"] -= 1
+                if all_girls_list[girl_index]["attributes"]["intelligence"] < 5:
+                    all_girls_list[girl_index]["attributes"]["intelligence"] += 1
+                if all_girls_list[girl_index]["attributes"]["endurance"] > 0:
+                    all_girls_list[girl_index]["attributes"]["endurance"] -= 1
+            elif all_girls_list[girl_index]["world"] == "cyberpunk":
+                if all_girls_list[girl_index]["attributes"]["pride"] > 0:
+                    all_girls_list[girl_index]["attributes"]["pride"] -= 1                                
+                if all_girls_list[girl_index]["attributes"]["intelligence"] < 5:
+                    all_girls_list[girl_index]["attributes"]["intelligence"] += 1
+                if all_girls_list[girl_index]["attributes"]["temperament"] > 0:
+                    all_girls_list[girl_index]["attributes"]["temperament"] -= 1      
+                if all_girls_list[girl_index]["attributes"]["endurance"] > 0:
+                    all_girls_list[girl_index]["attributes"]["endurance"] -= 1
+            elif all_girls_list[girl_index]["world"] == "utopia":
+                all_girls_list[girl_index]["attributes"]["exotic"] += 1
+                all_girls_list[girl_index]["aura"]["spoil"] += 1
+                if all_girls_list[girl_index]["attributes"]["intelligence"] < 5:
+                    all_girls_list[girl_index]["attributes"]["intelligence"] += 1
+                all_girls_list[girl_index]["attributes"]["empathy"] = min(all_girls_list[girl_index]["attributes"]["empathy"]+2,5)
+                if all_girls_list[girl_index]["attributes"]["pride"] > 0:
+                    all_girls_list[girl_index]["attributes"]["pride"] -= 1        
+            elif all_girls_list[girl_index]["world"] == "darkfuture":
+                all_girls_list[girl_index]["aura"]["habit"] += 2
+                all_girls_list[girl_index]["attributes"]["temperament"] = max(all_girls_list[girl_index]["attributes"]["temperament"]-2,0)
+                all_girls_list[girl_index]["attributes"]["nature"] = max(all_girls_list[girl_index]["attributes"]["nature"]-2,0)
+                if all_girls_list[girl_index]["attributes"]["endurance"] > 0:
+                    all_girls_list[girl_index]["attributes"]["endurance"] -= 1        
+                if all_girls_list[girl_index]["attributes"]["temperament"] > 0:
+                    all_girls_list[girl_index]["attributes"]["temperament"] -= 1  
+                if all_girls_list[girl_index]["attributes"]["intelligence"] < 5:
+                    all_girls_list[girl_index]["attributes"]["intelligence"] += 1
+                if all_girls_list[girl_index]["attributes"]["empathy"] > 0:
+                    all_girls_list[girl_index]["attributes"]["empathy"] -= 1
+                if all_girls_list[girl_index]["attributes"]["pride"] > 0:
+                    all_girls_list[girl_index]["attributes"]["pride"] -= 1 
+                if all_girls_list[girl_index]["attributes"]["physical"] < 5:
+                    all_girls_list[girl_index]["attributes"]["physical"] += 1 
+            elif all_girls_list[girl_index]["world"] == "space":
+                all_girls_list[girl_index]["attributes"]["exotic"] += 1
+                if all_girls_list[girl_index]["attributes"]["endurance"] > 0:
+                    all_girls_list[girl_index]["attributes"]["endurance"] -= 1                
+                if all_girls_list[girl_index]["attributes"]["intelligence"] < 5:
+                    all_girls_list[girl_index]["attributes"]["intelligence"] += 1
+                if all_girls_list[girl_index]["attributes"]["pride"] > 0:
+                    all_girls_list[girl_index]["attributes"]["pride"] -= 1         
+                if all_girls_list[girl_index]["attributes"]["nature"] < 5:
+                    all_girls_list[girl_index]["attributes"]["nature"] += 1    
+        # TODO TRIBU AND OCUPATION
+        
+        
+        all_girls_list[girl_index]["attributes"]["natural_beauty"] = all_girls_list[girl_index]["attributes"]["beauty"]
+        all_girls_list[girl_index]["attributes"]["natural_exoticism"] = all_girls_list[girl_index]["attributes"]["exoticism"] 
+        if all_girls_list[girl_index]["sex_experience"]["penetration"]["vaginal_sex"] >= 1:
+            all_girls_list[girl_index]["vaginal_tightness"] = 2
+        elif all_girls_list[girl_index]["sex_experience"]["penetration"]["fisting"] >= 4:
+            all_girls_list[girl_index]["vaginal_tightness"] = 3
+        if all_girls_list[girl_index]["sex_experience"]["penetration"]["anal_sex"] >= 1:
+            all_girls_list[girl_index]["anal_tightness"] = 2
+        elif all_girls_list[girl_index]["sex_experience"]["penetration"]["anal_fisting"] >= 4:
+            all_girls_list[girl_index]["anal_tightness"] = 3
+        
+        # Extra code for ajustment
+        if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] < 0:
+            all_girls_list[girl_index]["attributes"]["beauty"] = 0
+            all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] = 0
+        if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] > 0:
+            all_girls_list[girl_index]["attributes"]["beauty"] = 5
+        if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["value"] == -2:
+            all_girls_list[girl_index]["menstruation_cycle"]["active"] = False
+        #### thinking about this make me looks like very creepy. loli age is too abstract. should they have menstruation or no ? I will take a middle approch considering age between 5 - 14. -rec3ks
+        if all_girls_list[girl_index]["age"] == 1:
+            roll = random.randint(5,14) #posible age of loli
+            if roll < 12:
+                all_girls_list[girl_index]["menstruation_cycle"]["active"] = False
+                roll2 = random.randint(1, (12 - roll)*365) # I know this can become insanely big. maybe add a way to accelerate in medical centre #TODO
+            
+        
+                
+
+
+    
+    def master_moodlet_calculation():
+        global wealth_quality_modifier, standard_of_living_value_8, brand_reputation_value_6
+        global estate_quality, estate_quality_modifier, brand_reputation_value_6
+        global personality_value_2, home_hygiene_value, hygiene_value_9
+        global after_sex_effects, excitement_value, libido_value_4
+        global blazing_counter, injuries_value_11,energy_value, strength_value_1
+        global pos_show_counter, alone_count, girl_index, save_girl_index
+        wealth_quality_modifier = standard_of_living_value_8 - brand_reputation_value_6 - 1
+        if wealth_quality_modifier > 0: 
+            master_mood_state["good_mood"]['pos_wealth']["active"] = True
+            master_mood_state["bad_mood"]['neg_wealth']["active"] = False
+        if wealth_quality_modifier == 0: 
+            master_mood_state["good_mood"]['pos_wealth']["active"] = False
+            master_mood_state["bad_mood"]['neg_wealth']["active"] = False
+        if wealth_quality_modifier < 0: 
+            master_mood_state["good_mood"]['pos_wealth']["active"] = False
+            master_mood_state["bad_mood"]['neg_wealth']["active"] = True
+        estate_quality = 0
+        if home_estate["kitchen"]["type"] == "Deplorable kitchen":
+            estate_quality += 1
+        if home_estate["kitchen"]["type"] == "Basic kitchen":
+            estate_quality += 2
+        if home_estate["kitchen"]["type"] == "Well-equipped kitchen":
+            estate_quality += 3
+        if home_estate["kitchen"]["type"] == "Gourmet kitchen":
+            estate_quality += 4
+        for i in range(6):
+            if home_estate["kitchen"]["storage_capacity"] >= i*250 + 250:
+                estate_quality += 1
+            else:
+                break
+        if home_estate["barn"]["type"] == "Collapsing barn":
+            estate_quality += 1
+        if home_estate["barn"]["type"] == "Worn barn":
+            estate_quality += 2
+        if home_estate["barn"]["type"] == "Sturdy barn":
+            estate_quality += 3
+        if home_estate["barn"]["type"] == "Masterwork barn":
+            estate_quality += 4
+        if home_estate["laboratory"]["type"] == "Makeshift lab":
+            estate_quality += 1
+        if home_estate["laboratory"]["type"] == "Crude lab":
+            estate_quality += 2
+        if home_estate["laboratory"]["type"] == "Proper lab":
+            estate_quality += 3
+        if home_estate["laboratory"]["type"] == "Advanced laboratory":
+            estate_quality += 4
+        estate_quality += home_estate["slaves_rooms"]["squalid_room"]*1
+        estate_quality += home_estate["slaves_rooms"]["cramped_room"]*2
+        estate_quality += home_estate["slaves_rooms"]["comfortable_room"]*3
+        estate_quality += home_estate["slaves_rooms"]["luxurios_room"]*4
+        estate_quality += dic_home_state2[master_house_reputation["home_estate"]]["prestige"]*20
+        estate_quality_modifier = (estate_quality //20) - brand_reputation_value_6
+        if estate_quality_modifier > personality_value_2 - home_hygiene_value + 5: 
+            master_mood_state["good_mood"]["pos_housing"]["active"] = True
+            master_mood_state["bad_mood"]["neg_housing"]["active"] = False
+        else: 
+            master_mood_state["good_mood"]["pos_housing"]["active"] = False
+            master_mood_state["bad_mood"]["neg_housing"]["active"] = False
+        if personality_value_2 > standard_of_living_value_8 - 1 :
+            master_mood_state["good_mood"]["pos_housing"]["active"] = False
+            master_mood_state["bad_mood"]["neg_housing"]["active"] = True
+        if personality_value_2 > estate_quality_modifier :
+            master_mood_state["good_mood"]["pos_wealth"]["active"] = False
+            master_mood_state["bad_mood"]["neg_wealth"]["active"] = True
+        if home_hygiene_value == 5:
+            master_mood_state["good_mood"]["pos_house_clean"]["active"] = True
+            master_mood_state["bad_mood"]["neg_home_hygiene_value"]["active"] = False
+        elif home_hygiene_value >= 3:
+            master_mood_state["good_mood"]["pos_house_clean"]["active"] = False
+            master_mood_state["bad_mood"]["neg_home_hygiene_value"]["active"] = False
+        else:
+            master_mood_state["good_mood"]["pos_house_clean"]["active"] = False
+            master_mood_state["bad_mood"]["neg_home_hygiene_value"]["active"] = True
+        if hygiene_value_9 >= 4:
+            master_mood_state["good_mood"]["pos_self_clean"]["active"] = True
+            master_mood_state["bad_mood"]["neg_dirty"]["active"] = False
+        elif hygiene_value_9 < 2:
+            master_mood_state["good_mood"]["pos_self_clean"]["active"] = False
+            master_mood_state["bad_mood"]["neg_dirty"]["active"] = True
+        else:
+            master_mood_state["good_mood"]["pos_self_clean"]["active"] = False
+            master_mood_state["bad_mood"]["neg_dirty"]["active"] = False
+        if after_sex_effects < 0:
+            after_sex_effects = 0
+            master_mood_state["good_mood"]["pos_satisfied"]["active"] = False
+        if excitement_value > after_sex_effects:
+            master_mood_state["bad_mood"]["neg_boner"]["active"] = True
+        if after_sex_effects > 2:
+            master_mood_state["bad_mood"]["neg_boner"]["active"] = False
+        if excitement_value < after_sex_effects:
+            master_mood_state["bad_mood"]["neg_boner"]["active"] = False
+        if excitement_value < -2 and libido_value_4 > 0:
+            master_mood_state["bad_mood"]["neg_softcore"]["active"] = True
+        if excitement_value > 3 or libido_value_4 == 0:
+            master_mood_state["bad_mood"]["neg_softcore"]["active"] = False
+        if excitement_value >= 5 and blazing_counter >= 3:
+            master_mood_state["bad_mood"]["neg_blazing"]["active"] = True
+        else:
+            master_mood_state["bad_mood"]["neg_blazing"]["active"] = False
+        if injuries_value_11 >= 5:
+            master_mood_state["bad_mood"]["neg_wounded"]["active"] = False
+        else:
+            master_mood_state["bad_mood"]["neg_wounded"]["active"] = True
+        if energy_value < 0:
+            master_mood_state["good_mood"]["pos_energy"]["active"] = False
+            master_mood_state["bad_mood"]["neg_tired"]["active"] = True
+        elif energy_value >= strength_value_1:
+            for values in ["neg_drunk","neg_wounded","neg_no_koffe","neg_no_meth","neg_no_opium","neg_master_ill"]:
+                n = 0
+                if master_mood_state["bad_mood"][values]["active"]:
+                    n += 1
+            if n == 0:
+                master_mood_state["good_mood"]["pos_energy"]["active"] = True
+                master_mood_state["bad_mood"]["neg_tired"]["active"] = False
+        else: 
+            master_mood_state["good_mood"]["pos_energy"]["active"] = False
+            master_mood_state["bad_mood"]["neg_tired"]["active"] = False
+        if pos_show_counter > 0:
+            master_mood_state["bad_mood"]["neg_boring"]["active"] = False
+        if alone_count > 2: 
+            master_mood_state["bad_mood"]["neg_alone"]["active"] = True
+        else:
+            master_mood_state["bad_mood"]["neg_alone"]["active"] = False
+        save_girl_index = girl_index
+        # this pos_optimism is higher when more slave are horny, servile or obedient
+        master_mood_state["good_mood"]["pos_optimism"]["weight"] = 0.5
+        for girl_index in all_girls_list:
+            if all_girls_list[girl_index]["psy_status"] in ["horny","servile","obedient"]:
+                all_girls_list[girl_index]["status_met"] = True
+            else:
+                all_girls_list[girl_index]["status_met"] = False
+            if all_girls_list[girl_index]["attributes"]["beauty"] > 2 and all_girls_list[girl_index]["skills"]["elocution"] > 3 and all_girls_list[girl_index]["status_met"]:
+                master_mood_state["good_mood"]["pos_optimism"]["active"] = True
+                master_mood_state["good_mood"]["pos_optimism"]["weight"] += 0.5
+            if all_girls_list[girl_index]["psy_status"] == "broken":
+                master_mood_state["good_mood"]["pos_optimism"]["active"] = False
+                master_mood_state["bad_mood"]["neg_grumpy"]["active"] = True
+        girl_index = save_girl_index
+    def master_mood_calculation():
+        global mood_value_10, master_past_mood, master_worn_bonus, master_temporal_mood
+        global mood_textvalue_10
+        mood_value_10 = 0
+        mood_value_10 += master_worn_bonus
+        mood_value_10 += master_temporal_mood
+        if master_past_mood > 0:
+            mood_value_10 += master_past_mood/10
+        else:
+            mood_value_10 += master_past_mood/4
+        for key in dic_master_mood["good_mood"]:
+            if master_mood_state["good_mood"][key]["active"]:
+                mood_value_10 += master_mood_state["good_mood"][key]["weight"]
+        for key in dic_master_mood["bad_mood"]:
+            if master_mood_state["bad_mood"][key]["active"]:
+                mood_value_10 -= master_mood_state["bad_mood"][key]["weight"]
+        if mood_value_10 <= -5:
+            mood_textvalue_10 = dic_slave_moodlevel[0]
+        elif mood_value_10 <= -4:
+            mood_textvalue_10 = dic_slave_moodlevel[1]
+        elif mood_value_10 <= -3:
+            mood_textvalue_10 = dic_slave_moodlevel[2]
+        elif mood_value_10 <= -2:
+            mood_textvalue_10 = dic_slave_moodlevel[3]
+        elif mood_value_10 <= -1:
+            mood_textvalue_10 = dic_slave_moodlevel[4]
+        elif mood_value_10 < 1:
+            mood_textvalue_10 = dic_slave_moodlevel[5]
+        elif mood_value_10 < 2:
+            mood_textvalue_10 = dic_slave_moodlevel[6]
+        elif mood_value_10 < 3:
+            mood_textvalue_10 = dic_slave_moodlevel[7]
+        elif mood_value_10 < 4:
+            mood_textvalue_10 = dic_slave_moodlevel[8]
+        elif mood_value_10 < 5:
+            mood_textvalue_10 = dic_slave_moodlevel[9]
+        elif mood_value_10 >= 5:
+            mood_textvalue_10 = dic_slave_moodlevel[10]
+        if mood_value_10 >= 5 and reputation_value_1 >= 5:
+            mood_textvalue_10 = dic_slave_moodlevel[11]
+    def obedience_difficulty_adjustment():
+        global slave_difficulty, slave_obedience_bonus, dic_overnight_rules_count_index
+        global dic_custom_start_difficulty_selection_index_index
+        if dic_custom_start_difficulty_selection_index_index == 0:
+            slave_obedience_bonus = 4
+            slave_difficulty = 2
+            dic_overnight_rules_count_index = 0
+        elif dic_custom_start_difficulty_selection_index_index == 1:
+            slave_obedience_bonus = 0
+            slave_difficulty = 4
+            dic_overnight_rules_count_index = 1
+        elif dic_custom_start_difficulty_selection_index_index == 2:
+            slave_obedience_bonus = 0
+            slave_difficulty = 14 - min(8, 4*all_girls_list[girl_index]["aura"]["devotion"])
+            dic_overnight_rules_count_index =2
+    def supermacy_calculation():
+        global master_supermacy, girl_index, personality_value_2, allure_value_3, dominance_value_5, strength_value_1, magna_magnifika
+
+        master_supermacy = personality_value_2 + allure_value_3 + dominance_value_5 + strength_value_1 + magna_magnifika
+        all_girls_list[girl_index]["supermacy"] = (
+        all_girls_list[girl_index]["attributes"]["temperament"] 
+        + all_girls_list[girl_index]["attributes"]["nature"] 
+        + 5 - all_girls_list[girl_index]["attributes"]["pride"] 
+        + all_girls_list[girl_index]["attributes"]["endurance"] 
+        + all_girls_list[girl_index]["attributes"]["intelligence"] - 3
+        )
+        if all_girls_list[girl_index]["beaten_ever"]:
+            all_girls_list[girl_index]["supermacy"] -= 1
+        if all_girls_list[girl_index]["domini_dictum_ever"]:
+            all_girls_list[girl_index]["supermacy"] -= 1
+    def cap_slave_values():
+        global girl_index
+        # Cap aura values
+        for aura in ["fear","despair","awareness","taming","habit","spoil","devotion"]:
+            if all_girls_list[girl_index]["aura"][aura] == 0 and all_girls_list[girl_index]["experience"]["aura"][aura] < -10:
+                all_girls_list[girl_index]["experience"]["aura"][aura] = -10
+            if all_girls_list[girl_index]["aura"][aura] == 5 and all_girls_list[girl_index]["experience"]["aura"][aura] > 10:
+                all_girls_list[girl_index]["experience"]["aura"][aura] = 10
+        # Cap attributes values
+        for attributes in ["endurance","nature","temperament","exoticism","style","fame","intelligence"]:
+            if all_girls_list[girl_index]["attributes"][attributes] == 0 and all_girls_list[girl_index]["experience"]["attributes"][attributes] < -10:
+                all_girls_list[girl_index]["experience"]["attributes"][attributes] = -10
+            if all_girls_list[girl_index]["attributes"][attributes] == 5 and all_girls_list[girl_index]["experience"]["attributes"][attributes] > 10:
+                all_girls_list[girl_index]["experience"]["attributes"][attributes] = 10
+        # Cap attributes for especial values
+        for attributes in ["pride","physical"]:
+            if all_girls_list[girl_index]["attributes"][attributes] == 0 and all_girls_list[girl_index]["experience"]["attributes"][attributes] < -10:
+                all_girls_list[girl_index]["experience"]["attributes"][attributes] = 10
+            if all_girls_list[girl_index]["attributes"][attributes] == 5 and all_girls_list[girl_index]["experience"]["attributes"][attributes] > 10:
+                all_girls_list[girl_index]["experience"]["attributes"][attributes] = -10
+        # Cap skills
+        for skill in all_girls_list[girl_index]["skills"]:
+            if all_girls_list[girl_index]["skills"][skill] == 0 and all_girls_list[girl_index]["experience"]["skills"][skill] < -10:
+                all_girls_list[girl_index]["experience"]["skills"][skill] = -10
+            if all_girls_list[girl_index]["skills"][skill] == 5 and all_girls_list[girl_index]["experience"]["skills"][skill] > 10:
+                all_girls_list[girl_index]["experience"]["skills"][skill] = 10
+        # Cap sexual experience
+        for sex_experience in all_girls_list[girl_index]["sex_experience"]:
+            for type in all_girls_list[girl_index]["sex_experience"][sex_experience]:
+                if type != sex_experience:
+                    if all_girls_list[girl_index]["sex_experience"][sex_experience][type] == 0 and all_girls_list[girl_index]["experience"]["sex_experience"][sex_experience][type] < -10:
+                        all_girls_list[girl_index]["experience"]["sex_experience"][sex_experience][type] = -10
+                    if all_girls_list[girl_index]["sex_experience"][sex_experience][type] == 5 and all_girls_list[girl_index]["experience"]["sex_experience"][sex_experience][type] > 10:
+                        all_girls_list[girl_index]["experience"]["sex_experience"][sex_experience][type] = 10
+    def slave_fainted():
+        global is_slave_nearly_fainted
+        if all_girls_list[girl_index]["energy"] <= -5 and all_girls_list[girl_index]["conscience"]:
+            all_girls_list[girl_index]["conscience"] = False
+            msg("Your slave fainted due to extreme exhaustion.")
+        elif all_girls_list[girl_index]["attributes"]["endurance"] == 0 and all_girls_list[girl_index]["conscience"]:
+            all_girls_list[girl_index]["conscience"] = False
+            msg("Your slave fainted due to having no stamina.")
+        elif all_girls_list[girl_index]["attributes"]["endurance"] == 1 and all_girls_list[girl_index]["experience"]["attributes"]["endurance"] <= 0:
+            if not is_slave_nearly_fainted:
+                is_slave_nearly_fainted = True
+                msg("Be careful, your slave nearly fainted due to a lack of stamina.")
+        if all_girls_list[girl_index]["attributes"]["endurance"] > 0 and all_girls_list[girl_index]["attributes"]["physical"] > 0:
+            all_girls_list[girl_index]["conscience"] = True
+    def dead_slave_check():
+        global sparks_37
+        if (all_girls_list[girl_index]["attributes"]["endurance"] == 0 
+        and all_girls_list[girl_index]["attributes"]["physical"] == 5 
+        and max(all_girls_list[girl_index]["experience"]["attributes"]["endurance"], all_girls_list[girl_index]["experience"]["attributes"]["physical"]) <= -10):    
+            temporal_value = meat_evaluation()
+            del all_girls_list[girl_index]
+            sparks_37 += temporal_value
+            msg("Your slave is dead, and you sale the meat to the butcher for [temporal_value]")
+    def broken_slave_check():
+        if all_girls_list[girl_index]["attributes"]["nature"] + all_girls_list[girl_index]["attributes"]["temperament"] + 5 - all_girls_list[girl_index]["attributes"]["pride"] < 3:
+            all_girls_list[girl_index]["psy_status"] = "broken"
+            all_girls_list[girl_index]["experience"]["attributes"]["pride"] = 0
+            all_girls_list[girl_index]["experience"]["attributes"]["temperament"] = 0
+            all_girls_list[girl_index]["experience"]["aura"]["fear"] = 0
+            all_girls_list[girl_index]["experience"]["aura"]["despair"] = 0
+            all_girls_list[girl_index]["experience"]["aura"]["devotion"] = 0
+            all_girls_list[girl_index]["experience"]["aura"]["spoil"] = 0
+            all_girls_list[girl_index]["experience"]["aura"]["habit"] = 0
+            all_girls_list[girl_index]["experience"]["aura"]["taming"] = 0
+            all_girls_list[girl_index]["experience"]["aura"]["awareness"] = 0
+            all_girls_list[girl_index]["arousal"] = 0
+    def obedience_calculation():
+        slave_nature = (5 - all_girls_list[girl_index]["attributes"]["pride"] 
+        + all_girls_list[girl_index]["attributes"]["temperament"] 
+        + all_girls_list[girl_index]["attributes"]["nature"] 
+        + all_girls_list[girl_index]["attributes"]["intelligence"])
+        if all_girls_list[girl_index]["aura"]["fear"] > 0:    
+            if slave_nature < 11:
+                all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2
+            elif slave_nature == 11:
+                all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 1
+            elif slave_nature == 12:
+                all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 2
+            elif slave_nature == 13:
+                all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 3
+            elif slave_nature == 14:
+                all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 4
+            elif slave_nature > 14:
+                all_girls_list[girl_index]["bonus_fear"] = all_girls_list[girl_index]["aura"]["fear"] *2 + 5
+        else:
+            all_girls_list[girl_index]["bonus_fear"] = 0
+        all_girls_list[girl_index]["obedience"] = (slave_obedience_bonus 
+        + all_girls_list[girl_index]["mood"] 
+        + all_girls_list[girl_index]["bonus_fear"] 
+        + all_girls_list[girl_index]["aura"]["devotion"]*4 
+        + all_girls_list[girl_index]["aura"]["taming"] * 2 
+        + int((1+all_girls_list[girl_index]["aura"]["despair"]) // 2) 
+        + all_girls_list[girl_index]["aura"]["awareness"] 
+        + all_girls_list[girl_index]["aura"]["habit"] 
+        - all_girls_list[girl_index]["aura"]["spoil"]*2 
+        - int(slave_difficulty/2) 
+        - slave_nature + 100)
+        # set obedience to 100 if broken
+        if all_girls_list[girl_index]["psy_status"] == "broken":
+            all_girls_list[girl_index]["obedience"] = 100
+    def slave_mood_giga_calculation():
+        def slave_moodlet_check():
+            global home_hygiene_value
+            girl = all_girls_list[girl_index]
+            if girl["attributes"]["beauty"] == 0:
+                girl["mood_state"]["bad_mood"]["ugly"]["active"] = True
+            else:
+                girl["mood_state"]["bad_mood"]["ugly"]["active"] = False
+            if home_hygiene_value < 2:
+                girl["mood_state"]["bad_mood"]["slave_mess"]["active"] = True
+                girl["mood_state"]["bad_mood"]["slave_mess"]["weight"] = 0.5 # I think 1 is too heavy
+            else:
+                girl["mood_state"]["bad_mood"]["slave_mess"]["active"] = False
+            if girl["hygiene"] >= 4:
+                girl["mood_state"]["good_mood"]["slave_clean"]["active"] = True
+                girl["mood_state"]["bad_mood"]["slave_dirty"]["active"] = False
+            elif girl["hygiene"] < 2:
+                girl["mood_state"]["good_mood"]["slave_clean"]["active"] = False
+                girl["mood_state"]["bad_mood"]["slave_dirty"]["active"] = True
+            else:
+                girl["mood_state"]["good_mood"]["slave_clean"]["active"] = False
+                girl["mood_state"]["bad_mood"]["slave_dirty"]["active"] = False
+            if girl["affection_needs"] == 0:
+                girl["mood_state"]["bad_mood"]["horny"]["active"] = True
+            else:
+                girl["mood_state"]["bad_mood"]["horny"]["active"] = False
+            if girl["injuries"] > 0:
+                girl["mood_state"]["bad_mood"]["wounded"]["active"] = True
+                girl["mood_state"]["bad_mood"]["wounded"]["weight"] = 0.2*girl["injuries"]
+            else:
+                girl["mood_state"]["bad_mood"]["wounded"]["active"] = False
+            if girl["ill"] > 0:
+                girl["mood_state"]["bad_mood"]["slave_ill"]["active"] = True
+                girl["mood_state"]["bad_mood"]["slave_ill"]["weight"] = 0.2*girl["ill"]
+            else:
+                girl["mood_state"]["bad_mood"]["slave_ill"]["active"] = False
+            if girl["aura"]["despair"] > 0:
+                girl["mood_state"]["bad_mood"]["angst"]["active"] = True
+                girl["mood_state"]["bad_mood"]["angst"]["weight"] = 0.2*girl["aura"]["despair"]
+            else:
+                girl["mood_state"]["bad_mood"]["angst"]["active"] = False
+            if girl["aura"]["fear"] == 0 and girl["aura"]["despair"] == 0:
+                girl["mood_state"]["good_mood"]["moral"]["active"] = True
+                girl["mood_state"]["good_mood"]["moral"]["weight"] = girl["aura"]["devotion"]*0.2
+            else:
+                girl["mood_state"]["good_mood"]["moral"]["active"] = False
+            if girl["aura"]["devotion"] == 0:
+                girl["mood_state"]["bad_mood"]["slave"]["active"] = True
+            else:
+                girl["mood_state"]["bad_mood"]["slave"]["active"] = False
+
+
+        def slave_mood_calculation():
+            global girl_index, all_girls_list
+            all_girls_list[girl_index]["mood"] = 0
+            # + clothes mood 
+            all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["worn_mood"]
+            # + all temporal mood
+            all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["mood_temporal"]
+            # + past mood, a slave that yesterday is depressing, will start more sad that one that was happy yesterday
+            # more negative that positive because sadness stick longer that hapiness, like IRL
+            if all_girls_list[girl_index]["past_mood"] > 0:
+                all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/10 # this number is arbitrary and can be balance change
+            else:
+                all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/4 # this number is arbitrary and can be balance change
+            for key in dic_slave_mood["good_mood"]:
+                if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]:
+                    all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["mood_state"]["good_mood"][key]["weight"]
+            for key in dic_slave_mood["bad_mood"]:
+                if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
+                    all_girls_list[girl_index]["mood"] -= all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["weight"]           
+            all_girls_list[girl_index]["mood"] +=  (all_girls_list[girl_index]["aura"]["devotion"] + all_girls_list[girl_index]["attributes"]["endurance"] - 3 - all_girls_list[girl_index]["aura"]["fear"] - all_girls_list[girl_index]["aura"]["spoil"] - all_girls_list[girl_index]["aura"]["despair"]*2 + all_girls_list[girl_index]["hygiene"] - 5 + (home_hygiene_value - 4))/5 
+        def slave_mood_adjustment():
+            global slave_psy_hardness, girl_index, all_girls_list
+            if all_girls_list[girl_index]["mood"] >= 1 and all_girls_list[girl_index]["mood_state"]["good_mood"]["clothes"]["active"]:
+                all_girls_list[girl_index]["mood"] -= 1
+                if all_girls_list[girl_index]["mood"] < 1:
+                    all_girls_list[girl_index]["mood"] = 1
+            if all_girls_list[girl_index]["aura"]["despair"] > all_girls_list[girl_index]["attributes"]["temperament"]:
+                if all_girls_list[girl_index]["mood"] > 0:
+                    all_girls_list[girl_index]["mood"] = 0
+            elif all_girls_list[girl_index]["aura"]["despair"] > 0:
+                all_girls_list[girl_index]["mood"] = min(all_girls_list[girl_index]["mood"], (2 - (all_girls_list[girl_index]["aura"]["despair"]/2)))
+            elif all_girls_list[girl_index]["obedience"] < slave_psy_hardness:
+                if all_girls_list[girl_index]["mood"] > 2:
+                    all_girls_list[girl_index]["mood"] = 2
+            elif all_girls_list[girl_index]["aura"]["fear"] >= all_girls_list[girl_index]["aura"]["devotion"]:
+                if all_girls_list[girl_index]["mood"] > 3:
+                    all_girls_list[girl_index]["mood"] = 3
+            all_girls_list[girl_index]["mood"] = round(all_girls_list[girl_index]["mood"], 4) # I dont like too much decimals
+
+        def slave_mood_apply():
+            global girl_index, all_girls_list
+            if all_girls_list[girl_index]["mood"] <= -5:
+                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[0]
+            elif all_girls_list[girl_index]["mood"] <= -4:
+                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[1]
+            elif all_girls_list[girl_index]["mood"] <= -3:
+                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[2]
+            elif all_girls_list[girl_index]["mood"] <= -2:
+                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[3]
+            elif all_girls_list[girl_index]["mood"] <= -1:
+                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[4]
+            elif all_girls_list[girl_index]["mood"] < 1:
+                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[5]
+            elif all_girls_list[girl_index]["mood"] < 2:
+                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[6]
+            elif all_girls_list[girl_index]["mood"] < 3:
+                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[7]
+            elif all_girls_list[girl_index]["mood"] < 4:
+                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[8]
+            elif all_girls_list[girl_index]["mood"] < 5:
+                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[9]
+            elif all_girls_list[girl_index]["mood"] >= 5:
+                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[10]
+            if all_girls_list[girl_index]["mood"] >= 5 and all_girls_list[girl_index]["aura"]["devotion"] >= 5:
+                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[11]
+        if all_girls_list[girl_index]["psy_status"] != "broken": # only calculated if not broken
+            slave_moodlet_check()
+            slave_mood_calculation()                                       
+            slave_mood_adjustment()
+            slave_mood_apply()              
+        else:
+            all_girls_list[girl_index]["mood"] = 0
+            all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[0]
+    def slave_psy_status_calculation():
+        global maxmotivation, slave_difficulty, slave_obedience_bonus, slave_psy_hardness
+        if all_girls_list[girl_index]["psy_status"] != "broken":
+            ### Slaves psy status calculation
+            if all_girls_list[girl_index]["psy_status"] == "lachrymose" and all_girls_list[girl_index]["aura"]["devotion"] > 0:
+                all_girls_list[girl_index]["psy_status"] = "soft"
+            # if mood is positive - better psy status for slaves
+            if all_girls_list[girl_index]["mood"] < 0:
+                if all_girls_list[girl_index]["aura"]["devotion"] < 2:
+                    if all_girls_list[girl_index]["attributes"]["temperament"] >= max(4, maxmotivation):
+                        all_girls_list[girl_index]["psy_status"] = "hateful"
+                    if all_girls_list[girl_index]["attributes"]["nature"] >= max(4, maxmotivation):
+                        all_girls_list[girl_index]["psy_status"] = "resistant"
+                    if all_girls_list[girl_index]["attributes"]["pride"] >= max(4, maxmotivation):
+                        all_girls_list[girl_index]["psy_status"] = "arrogant"
+                else:
+                    if all_girls_list[girl_index]["attributes"]["temperament"] >= max(4, maxmotivation):
+                        all_girls_list[girl_index]["psy_status"] = "hysteric"
+                    if all_girls_list[girl_index]["attributes"]["nature"] >= max(4, maxmotivation):
+                        all_girls_list[girl_index]["psy_status"] = "docile"
+                    if all_girls_list[girl_index]["attributes"]["pride"] >= max(4, maxmotivation):
+                        all_girls_list[girl_index]["psy_status"] = "soft"
+            if all_girls_list[girl_index]["aura"]["fear"] == maxmotivation and all_girls_list[girl_index]["aura"]["fear"] > all_girls_list[girl_index]["attributes"]["nature"]:
+                all_girls_list[girl_index]["psy_status"] = "frightened"
+            elif all_girls_list[girl_index]["mood"] < 2 and all_girls_list[girl_index]["aura"]["despair"] > 1 or all_girls_list[girl_index]["mood"] <= -5:
+                all_girls_list[girl_index]["psy_status"] = "depresive"
+                if all_girls_list[girl_index]["attributes"]["empathy"] > 3 and all_girls_list[girl_index]["mood"] < 2:
+                    all_girls_list[girl_index]["psy_status"] = "lachrymose"
+            elif all_girls_list[girl_index]["obedience"] > slave_psy_hardness/2:
+                if all_girls_list[girl_index]["aura"]["spoil"] > max(1, all_girls_list[girl_index]["aura"]["fear"], (all_girls_list[girl_index]["aura"]["devotion"]+1)/2):
+                    all_girls_list[girl_index]["psy_status"] = "hysteric"
+                elif all_girls_list[girl_index]["mood"] >= 0:
+                    if maxmotivation != 0:
+                        if maxmotivation == all_girls_list[girl_index]["aura"]["fear"]:
+                            all_girls_list[girl_index]["psy_status"] = "docile"
+                        if maxmotivation == all_girls_list[girl_index]["aura"]["taming"] or all_girls_list[girl_index]["aura"]["devotion"] > 1:
+                            all_girls_list[girl_index]["psy_status"] = "obedient"
+                        if maxmotivation == all_girls_list[girl_index]["aura"]["devotion"] or all_girls_list[girl_index]["aura"]["devotion"] > 3:
+                            all_girls_list[girl_index]["psy_status"] = "servile"
+                        if all_girls_list[girl_index]["aura"]["spoil"] >= (all_girls_list[girl_index]["aura"]["devotion"]+1)/2:
+                            all_girls_list[girl_index]["psy_status"] = "docile"
+                        if maxmotivation == all_girls_list[girl_index]["arousal"] and all_girls_list[girl_index]["aura"]["devotion"] > 0:
+                            all_girls_list[girl_index]["psy_status"] = "horny"
+    def handle_menu():
+        global current_menu, show_main_slave
+        # Handle home menu case
+        if current_menu == 0:
+            show_main_slave = False
+            renpy.hide_screen("main_slave_image")
+            renpy.hide_screen("screen_attributes_skills_sexual_slave")
+            renpy.show_screen("homehome_attributes_menu")
+            renpy.call_screen("home_menu")
+        else:
+            renpy.hide_screen("home_menu")
+
+        # Slave menus
+        if current_menu == 1:
+            renpy.call_screen("slave_activities_menu")
+        elif current_menu == 2:
+            renpy.call_screen("slave_assignments_menu")
+        elif current_menu == 3:
+            renpy.call_screen("domestic_issues_menu")
+        elif current_menu == 4:
+            renpy.call_screen("cast_spell_menu")
+        elif current_menu == 41:
+            renpy.call_screen("spellbook_info")
+        elif current_menu == 42:
+            renpy.call_screen("home_menu_auspex")
+        elif current_menu in [100, 101, 102, 103]:
+            renpy.hide_screen("sparks_menu")
+            renpy.hide_screen("homehome_attributes_menu")
+            renpy.show_screen("screen_attributes_skills_sexual_slave")
+            screens = {
+                100: "slave_rules_menu",
+                101: "slave_anatomy_menu",
+                102: "slave_equipment_menu",
+                103: "slave_aura_menu"
+            }
+            renpy.call_screen(screens[current_menu])
+
+        # Master menus
+        elif current_menu in [200, 201, 202, 203]:
+            renpy.hide_screen("sparks_menu")
+            renpy.hide_screen("homehome_attributes_menu")
+            renpy.show_screen("master_attributes_screen")
+            screens = {
+                200: "master_storage",
+                201: "master_objectives",
+                202: "master_equipment_menu",
+                203: "master_diary_menu"
+            }
+            renpy.call_screen(screens[current_menu])
+    def hidden_trait_discover_text_display_check():
+        global customboxcheck, attribute_checkbox, attributeisphysical
+        if customboxcheck:
+            renpy.hide_screen("tutorial_description")
+            renpy.hide_screen("tutorial_description2")
+            renpy.hide_screen("tutorial_descriptionphysical")
+            renpy.show_screen("tutorial_attribute")
+        if attribute_checkbox:
+            renpy.hide_screen("tutorial_attribute")
+            if attributeisphysical:
+                renpy.show_screen("tutorial_descriptionphysical")
+                renpy.hide_screen("tutorial_description")
+            else:
+                renpy.show_screen("tutorial_description")
+                renpy.hide_screen("tutorial_descriptionphysical")
+    def master_libido_update():
+        global libido_value_4, mood_value_10, strength_value_1, excitement_value, energy_value
+        global libido_experience_value_4, master_ill
+        if (mood_value_10 > 0 
+        and strength_value_1 > 2
+        and excitement_value > -5
+        and excitement_value < 5
+        and energy_value >= 0):
+            libido_experience_value_4 += (1 + libido_value_4)/2
+        if energy_value < 0:
+            libido_experience_value_4 -= 3
+        if mood_value_10 < 0:
+            libido_experience_value_4 -= 3
+        if master_ill > 6:
+            libido_experience_value_4 -= 5
+        libido_experience_value_4 -= injuries_value_11
+        if excitement_value == 5: #TODO need add chimera_gem_on
+            libido_experience_value_4 -= 3
+    def girl_already_done_check():
+        global girl_index
+        n = []
+        for key in all_girls_list[girl_index]["already_done"]:
+            n.append(all_girls_list[girl_index]["already_done"][key])
+
+        all_girls_list[girl_index]["mood_state"]["bad_mood"]["boring"]["weight"] = max(min(max(n)*0.2-0.6, 1), 0)
+        all_girls_list[girl_index]["mood_state"]["bad_mood"]["boring"]["active"] = False
+        if max(n) >= 3:
+            all_girls_list[girl_index]["mood_state"]["bad_mood"]["boring"]["active"] = True
+    def girl_already_done_update():
+        global girl_index
+        a = sorted(all_girls_list[girl_index]["already_done"].items(), key=lambda x: x[1])
+        for i in range(5):
+            key, value = a[i]
+            all_girls_list[girl_index]["already_done"][key] = max(value - 2, 0)
+    def all_rise_excitement_update():
+        global girl_index, blazing_counter
+        global excitement_experience_value, libido_value_4, mood_textvalue_10
+        excitement_experience_value += libido_value_4*10 + max(0,mood_value_10*10)
+        if excitement_value >= 5 and master_equipment["earrings"] != "chimera_earring":
+            blazing_counter += 1
+        else:
+            blazing_counter = 0
+        save_girl_index = girl_index
+        for girl_index in all_girls_list:
+            if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"] > 0:
+                all_girls_list[girl_index]["arousal_rate"] += (all_girls_list[girl_index]["attributes"]["temperament"] + all_girls_list[girl_index]["attributes"]["empathy"] + all_girls_list[girl_index]["mood"])/2
+            if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"] < 0:
+                all_girls_list[girl_index]["arousal_rate"] -= (all_girls_list[girl_index]["attributes"]["temperament"])/2
+            if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"] >= 0:
+                all_girls_list[girl_index]["arousal_rate"] += all_girls_list[girl_index]["attributes"]["endurance"] + all_girls_list[girl_index]["attributes"]["empathy"] + all_girls_list[girl_index]["mood"] + all_girls_list[girl_index]["aura"]["devotion"]
+            all_girls_list[girl_index]["arousal_rate"] -= (6 
+            + all_girls_list[girl_index]["aura"]["despair"]
+            + ( 5 - all_girls_list[girl_index]["attributes"]["pride"])
+            + all_girls_list[girl_index]["aura"]["fear"]
+            + all_girls_list[girl_index]["aura"]["spoil"])
+        girl_index = save_girl_index
+    def slave_daily_bonus_update():
+        global girl_index
+        girl = all_girls_list[girl_index]
+        girl["experience"]["aura"]["devotion"] += girl["daily_bonus"]["devotion"]
+        girl["experience"]["aura"]["taming"] += girl["daily_bonus"]["taming"]
+        girl["arousal_rate"] += girl["daily_bonus"]["arousal"]
+        girl["experience"]["attributes"]["endurance"] += girl["daily_bonus"]["endurance"]
+        girl["experience"]["attributes"]["empathy"] += girl["daily_bonus"]["empathy"]
+        girl["experience"]["attributes"]["temperament"] += girl["daily_bonus"]["temperament"]
+        girl["experience"]["attributes"]["nature"] += girl["daily_bonus"]["nature"]
+        girl["experience"]["attributes"]["pride"] += girl["daily_bonus"]["pride"]
+    def master_excitement_check():
+        global excitement_value, excitement_experience_value, excitement_textvalue
+        excitement_experience_value = max(-160,excitement_experience_value)
+        excitement_experience_value = min(160,excitement_experience_value)
+        a = [(-5,-160),(-4,-80),(-3,-40),(-2,-20),(-1,-10),(0,0),(1,10),(2,20),(3,40),(4,80),(5,160)]
+        for i in a:
+            if excitement_experience_value >= i[1]:
+                excitement_value = i[0]
+        excitement_textvalue = dic_master_excitement_colored[excitement_value]
+    def auto_alarm():
+        global girl_index, stimulating, interaction_willingness
+        global damage, brusing, excitement_value, penetration_value_23
+        girl = all_girls_list[girl_index]
+        if not girl["rules"]["behave_alarm"]:
+            return
+        stimulating = True
+        interaction_repulse_difficulty = 6
+        interaction_willingness_check()
+        if interaction_willingness < 0:
+            # if girl["rules"]["enforce_rules"]: #and assistant TODO
+            #     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
+            #     girl["rules"]["num_rules_wanttobreak"] += 1
+            #     # lack assistant code
+            #     girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["assistant_pass"]
+            #     damage = 3
+            #     brusing = 1
+            #     slave_damage_calculation()
+            #     girl["experience"]["aura"]["despair"] += girl["attributes"]["empathy"]*2
+            # else:
+            #     girl["rules_broken"]["behave_alarm"] = True
+            #     #lack assistant code 
+            #     girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["assistant_fail"]
+            girl["rules_broken"]["behave_alarm"] = True
+            return
+        else:
+            girl["rules_explain"]["behave_alarm"] += "[all_girls_list[girl_index]['name']] enters your room in the morning and wakes you up with a blowjob."
+        if not girl["rules_broken"]["behave_alarm"]:
+            girl["slave_auto_alarm"] = True
+            a = (20
+            + girl["attributes"]["temperament"] 
+            + (5 - girl["attributes"]["pride"])
+            + girl["attributes"]["nature"]
+            + girl["aura"]["despair"]
+            - girl["aura"]["devotion"] * 4
+            - girl["sex_experience"]["oral_pleasure"]["blowjob"] * 2
+            - girl["aura"]["taming"]
+            - girl["aura"]["habit"]
+            - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]*3
+            - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"]*3)/10 # TODO I didn't add meekness, I not sure if add submissive/dominant as trait
+            girl["mood"] -= a # look alot but this is taking in considerantion the 80 - 90% new day mood reduction. (Tested with the original game, pretty close)
+            b = max(0, min(excitement_value + 1, girl["sex_experience"]["oral_pleasure"]["blowjob"] - penetration_value_23 // 2))
+            if interaction_willingness < 0 or a > 0: #slave who is not willing but actually like it , will do it anyways
+                if b < 1:
+                    girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["poor_job"]
+                else:
+                    girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["disgust"]
+            elif b > 0:
+                girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["good_job"]
+            elif excitement_value < -2:
+                girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["not_enough_excitement"]
+            else:
+                girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["almost_enough_excitement"]
+    def slave_damage_calculation():
+        if damage > girl["attributes"]["endurance"]:
+            girl["injuries_rate"] += damage
+        damage += (girl["attributes"]["empathy"] 
+        + min(girl["injuries"], girl["hygiene"])
+        - girl["attributes"]["endurance"])
+        if damage < 0:
+            damage = 0
+        girl["experience"]["attributes"]["endurance"] -= damage
+        if bruising:
+            girl["bruises_rate"] += damage * (8 - girl["attributes"]["endurance"])
+            if girl["bruises_rate"] < 10:
+                girl["bruises_rate"] = 10
+        if scarification:
+            girl["scars_rate"] += damage
+        damage = 0
+    def master_moodlet_update():
+        for key in dic_master_mood["good_mood"]:
+            if master_mood_state["good_mood"][key]["active"]:
+                master_mood_state["good_mood"][key]["accustomed_value"] = max(-10, master_mood_state["good_mood"][key]["accustomed_value"] - 1)
+                if master_mood_state["good_mood"][key]["accustomed_value"] <= 0:
+                    master_mood_state["good_mood"][key]["accustomed"] = True
+                if master_mood_state["good_mood"][key]["accustomed"]:
+                    master_mood_state["good_mood"][key]["weight"] /= 1.2
+                if not master_mood_state["good_mood"][key]["permanent"]:
+                    master_mood_state["good_mood"][key]["duration"] -= 1
+                    if master_mood_state["good_mood"][key]["duration"] == 0:
+                        master_mood_state["good_mood"][key]["active"] = False
+                        master_mood_state["good_mood"][key]["duration"] = master_mood_state["good_mood"][key]["default_duration"]
+                        break # only 1 moodlet can be lost per day
+            else:
+                master_mood_state["good_mood"][key]["accustomed_value"] = min(5, master_mood_state["good_mood"][key]["accustomed_value"] + 1)
+        for key in dic_master_mood["bad_mood"]:
+            if master_mood_state["bad_mood"][key]["active"]:
+                # master_mood_state["bad_mood"][key]["accustomed_value"] = max(-10, master_mood_state["bad_mood"][key]["accustomed_value"] - 1)
+                # if master_mood_state["bad_mood"][key]["accustomed_value"] <= 0:
+                #     master_mood_state["bad_mood"][key]["accustomed"] = True
+                # if master_mood_state["bad_mood"][key]["accustomed"]: this may made the game alot more eazier
+                #     master_mood_state["bad_mood"][key]["weight"] /= 2
+                if not master_mood_state["bad_mood"][key]["permanent"]:
+                    master_mood_state["bad_mood"][key]["duration"] -= 1
+                    if master_mood_state["bad_mood"][key]["duration"] == 0:
+                        master_mood_state["bad_mood"][key]["active"] = False
+                        master_mood_state["bad_mood"][key]["duration"] = master_mood_state["bad_mood"][key]["default_duration"]
+                        break # only 1 moodlet can be lost per day
+    def achievements_gain(): #all virtue and sin gain combined and reformulated
+        global guilt_potencial, merit_potencial, target_skill
+        global slave_diligence, interaction_willingness, interaction_repulse_difficulty
+        global is_sententia_veritas_active, tem_variable3214
+        global mood_value_10
+        girl = all_girls_list[girl_index]
+        type_of_already_done = ""
+        merit_count = 0
+        guilt_count = 0
+        if target_skill == "":
+            c = girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["value"]
+        else:
+            for spec, skills in dic_specializations.items():
+                if target_skill in skills:
+                    type_of_already_done = spec
+                    break
+            c = - girl["already_done"][type_of_already_done] // 3 + girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["value"]
+            if girl["already_done"][type_of_already_done] < 3:
+                merit_count += 1
+            else:
+                guilt_count += 1
+        max_achievements = min(merit_potencial, girl["attributes"]["temperament"] + 1) + c
+        min_achievements = (min(guilt_potencial, girl["aura"]["fear"] + 1) + c) * -1
+        for i in range(6): 
+            if slave_diligence > i*(max(girl["rating"] / 2, 1)) + 1: #minimun diligence is always 1
+                merit_count += 1
+            else:
+                break
+        if interaction_willingness < 0:
+            guilt_count += 1
+            guilt_count += girl["aura"]["awareness"] // 2 
+            merit_count = 0
+        else:
+            guilt_count = 0
+        guilt_count += girl["aura"]["fear"] # main factor
+        guilt_count += girl["daily_count"]["punishments"] 
+        merit_count += girl["aura"]["spoil"] # main factor 
+        merit_count -= girl["daily_count"]["rewards"] # main negative factor
+        if girl["daring"] < interaction_repulse_difficulty:
+            merit_count += 1            
+        if girl["aura"]["devotion"] >= 5:
+            merit_count -= 1
+        if girl["psy_status"] == "frightened":
+            merit_count -= 1
+        if girl["aura"]["despair"] > 0:
+            merit_count -= girl["aura"]["despair"] // 3 + 1
+
+        a = merit_count - guilt_count
+        a = max(min_achievements, a)
+        a = min(max_achievements, a)
+        a = max(-5, a) #TODO for now capped to [-5,5] because the current code doesn't support values beyond those
+        a = min(5, a)
+        a = int(a)
+        if a < 0:
+            mood_value_10 -= a/10
+            if girl["achievements"] < 0:
+                girl["experience"]["aura"]["taming"] -= a
+            if girl["achievements"] > a:
+                girl["achievements"] = a
+            if is_sententia_veritas_active:
+                girl["achievements"] = -5
+                is_sententia_veritas_active = False
+            master_mood_state["good_mood"]["pos_nice_slave"]["active"] = False
+            master_mood_state["bad_mood"]["neg_rebell"]["active"] = True
+            if target_skill != "":
+                if girl["already_done"][type_of_already_done] == 0:
+                    girl["experience"]["aura"]["taming"] -= (1 + (5 - girl["attributes"]["pride"])) // 2
+                    girl["experience"]["aura"]["despair"] -= 2
+                    girl["experience"]["attributes"]["pride"] -= 2
+            tem_variable3214 = girl["achievements"] * -1
+
+        if a > 0:
+            mood_value_10 += a/10
+            if girl["achievements"] < a:
+                girl["achievements"] = a
+            if is_sententia_veritas_active:
+                girl["achievements"] = 5
+                is_sententia_veritas_active = False
+            master_mood_state["good_mood"]["pos_nice_slave"]["active"] = True
+            master_mood_state["bad_mood"]["neg_rebell"]["active"] = False
+        if girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["value"] != 0:
+            if not girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["revealed"]:
+                girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["revealed"] = True   
+                msg(dic_traits_aura_description["awarenesstrait"][girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["value"]])
+
+      
+
+        
