@@ -597,6 +597,34 @@ init python:
         hygiene_experience_value_9 += dic_hygiene_value_rate["maid"] - home_hygiene_value + 5
         home_mess_value -= max(8,stewardship_value_13*16)
         home_mess_value = max(0, home_mess_value)
+    def auto_slave_humility():
+        global girl_index
+        girl = all_girls_list[girl_index]
+        if not girl["rules"]["behave_humility"]:
+            return
+        if girl["obedience"] < 1 + dic_girl_psy_status[girl["psy_status"]] - girl["fear"]:
+            if girl["enforce_rules"] and girl["equipment"]["neck"] == "Shock Collar":
+                girl["mood_state"]["bad_mood"]["rules"]["active"] = True
+                girl["rules"]["num_rules_wanttobreak"] += 1
+                girl["rules_explain"]["behave_humility"] += f"{all_girls_list[girl_index]['name']} calls you 'Master' as her collar inexorably enforces."
+            else:
+                girl["rules_broken"]["behave_humility"] = True
+                girl["rules_explain"]["behave_humility"] += f"{all_girls_list[girl_index]['name']} refuses to call you 'Master'."
+        if not girl["rules_broken"]["behave_humility"]:
+            a = girl["attributes"]["nature"] + girl["attributes"]["pride"] - girl["aura"]["devotion"]
+            girl["mood"] -= a
+            if a > 0 :
+                girl["rules_explain"]["behave_humility"] += " But she is clearly too willful or proud to enjoy it."
+            else:
+                girl["rules_explain"]["behave_humility"] += " And she seems to derive some satisfaction from it."
+    def auto_slave_pet():
+        global girl_index
+        girl = all_girls_list[girl_index]
+        if girl["obedience"] < 0 - 5*girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"]:
+            if (girl["enforce_rules"] and girl["equipment"]["clothes"] == "Petsuit"
+            or girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"] > 0 
+            or girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] > 0):
+                #TODO next thing to do  
     def moodlet_new_day_slave_update(): # this function update moodlet that are not related to specific function
         global girl_index
         girl = all_girls_list[girl_index]
@@ -1246,6 +1274,7 @@ init python:
         if all_girls_list[girl_index]["energised"] > 5:
             all_girls_list[girl_index]["energised"] = max(all_girls_list[girl_index]["energised"]- random.randint(0, 7),0)
     def rules_reset_update():
+        all_girls_list[girl_index]["rules"]["num_rules_wanttobreak"] = 0
         for i in all_girls_list[girl_index]["rules_broken"]:
             all_girls_list[girl_index]["rules_broken"][i] = False
         for i in all_girls_list[girl_index]["rules_explain"]:

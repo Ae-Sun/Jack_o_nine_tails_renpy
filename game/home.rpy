@@ -560,6 +560,7 @@ label Next_day_event:
                 room_name = "Hall"
                 girl["display_menstruation"] = False
                 renpy.call_screen("next_day_event_screen")
+            
 
         if master_auto["clean"]:
             pic_displayed = "scene/master_clean.webp"

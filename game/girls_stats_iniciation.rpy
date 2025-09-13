@@ -366,108 +366,108 @@ define dic_slave_mood_show = {
 define dic_traits_skills_descriptions = {
     "cookingtrait": [
         "Null",
-        "{b}Good Cook{/b} \nYour slave enjoys cooking. This will allow her to become an excellent cook!",
-        "{b}Excellent Cook{/b} \nYour slave enjoys cooking. This will allow her to become an excellent cook! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Cook{/b} \nYour slave shows little interest in cooking. Becoming a good cook may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Cook{/b} \nYour slave shows little interest in cooking. Becoming a good cook may prove difficult for her."
+        "{b}Good Cook{/b} \nYour slave, [all_girls_list[girl_index]['name']] enjoys cooking. This will allow her to become an excellent cook!",
+        "{b}Excellent Cook{/b} \nYour slave, [all_girls_list[girl_index]['name']] enjoys cooking. This will allow her to become an excellent cook! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Cook{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in cooking. Becoming a good cook may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Cook{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in cooking. Becoming a good cook may prove difficult for her."
     ],
     "maidtrait": [
         "Null",
-        "{b}Good Maid{/b} \nYour slave seems to take great pleasure in keeping order in the house. This will allow her to become an excellent maid!",
-        "{b}Excellent Maid{/b} \nYour slave seems to take great pleasure in keeping order in the house. This will allow her to become an excellent maid! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Maid{/b} \nYour slave shows little interest in maintaining order around the house. Becoming a good maid may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Maid{/b} \nYour slave shows little interest in maintaining order around the house. Becoming a good maid may prove difficult for her."
+        "{b}Good Maid{/b} \nYour slave, [all_girls_list[girl_index]['name']] seems to take great pleasure in keeping order in the house. This will allow her to become an excellent maid!",
+        "{b}Excellent Maid{/b} \nYour slave, [all_girls_list[girl_index]['name']] seems to take great pleasure in keeping order in the house. This will allow her to become an excellent maid! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Maid{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in maintaining order around the house. Becoming a good maid may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Maid{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in maintaining order around the house. Becoming a good maid may prove difficult for her."
     ],
     "secretarytrait": [
         "Null",
-        "{b}Good Secretary{/b} \nYour slave has excellent instincts for a personal assistant – she is collected, attentive, and easily copes with paperwork. You should use this talent to its maximum!",
-        "{b}Excellent Secretary{/b} \nYour slave has excellent instincts for a personal assistant – she is collected, attentive, and easily copes with paperwork. You should use this talent to its maximum! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Secretary{/b} \nYour slave shows little interest in administrative tasks. Becoming a good secretary may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Secretary{/b} \nYour slave shows little interest in administrative tasks. Becoming a good secretary may prove difficult for her."
+        "{b}Good Secretary{/b} \nYour slave, [all_girls_list[girl_index]['name']] has excellent instincts for a personal assistant – she is collected, attentive, and easily copes with paperwork. You should use this talent to its maximum!",
+        "{b}Excellent Secretary{/b} \nYour slave, [all_girls_list[girl_index]['name']] has excellent instincts for a personal assistant – she is collected, attentive, and easily copes with paperwork. You should use this talent to its maximum! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Secretary{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in administrative tasks. Becoming a good secretary may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Secretary{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in administrative tasks. Becoming a good secretary may prove difficult for her."
     ],
     "elocutiontrait": [
         "Null",
-        "{b}Good Speaker{/b} \nYour slave shows a talent for self-expression. Developing her etiquette and rhetoric will be easy, and this is clearly good news!",
-        "{b}Excellent Speaker{/b} \nYour slave shows a talent for self-expression. Developing her etiquette and rhetoric will be easy, and this is clearly good news! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Speaker{/b} \nYour slave shows little interest in speaking skills. Becoming a good orator may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Speaker{/b} \nYour slave shows little interest in speaking skills. Becoming a good orator may prove difficult for her."
+        "{b}Good Speaker{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows a talent for self-expression. Developing her etiquette and rhetoric will be easy, and this is clearly good news!",
+        "{b}Excellent Speaker{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows a talent for self-expression. Developing her etiquette and rhetoric will be easy, and this is clearly good news! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Speaker{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in speaking skills. Becoming a good orator may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Speaker{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in speaking skills. Becoming a good orator may prove difficult for her."
     ],
     "nursingtrait": [
         "Null",
-        "{b}Good Nurse{/b} \nYour slave shows care and attention toward others. This will allow her to become an excellent nurse!",
-        "{b}Excellent Nurse{/b} \nYour slave shows care and attention toward others. This will allow her to become an excellent nurse! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Nurse{/b} \nYour slave shows little interest in nursing. Becoming a good nurse may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Nurse{/b} \nYour slave shows little interest in nursing. Becoming a good nurse may prove difficult for her."
+        "{b}Good Nurse{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows care and attention toward others. This will allow her to become an excellent nurse!",
+        "{b}Excellent Nurse{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows care and attention toward others. This will allow her to become an excellent nurse! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Nurse{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in nursing. Becoming a good nurse may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Nurse{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in nursing. Becoming a good nurse may prove difficult for her."
     ],
     "alchemytrait": [
         "Null",
-        "{b}Good Alchemist{/b} \nYour slave enjoys experimenting with potions and ingredients. This will allow her to become an excellent alchemist!",
-        "{b}Excellent Alchemist{/b} \nYour slave enjoys experimenting with potions and ingredients. This will allow her to become an excellent alchemist! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Alchemist{/b} \nYour slave shows little interest in alchemy. Becoming a good alchemist may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Alchemist{/b} \nYour slave shows little interest in alchemy. Becoming a good alchemist may prove difficult for her."
+        "{b}Good Alchemist{/b} \nYour slave, [all_girls_list[girl_index]['name']] enjoys experimenting with potions and ingredients. This will allow her to become an excellent alchemist!",
+        "{b}Excellent Alchemist{/b} \nYour slave, [all_girls_list[girl_index]['name']] enjoys experimenting with potions and ingredients. This will allow her to become an excellent alchemist! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Alchemist{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in alchemy. Becoming a good alchemist may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Alchemist{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in alchemy. Becoming a good alchemist may prove difficult for her."
     ],
     "witchcrafttrait": [
         "Null",
-        "{b}Good Witch{/b} \nYour slave is attuned to magical forces. This will allow her to become an excellent witch!",
-        "{b}Excellent Witch{/b} \nYour slave is attuned to magical forces. This will allow her to become an excellent witch! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Witch{/b} \nYour slave shows little interest in witchcraft. Becoming a good witch may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Witch{/b} \nYour slave shows little interest in witchcraft. Becoming a good witch may prove difficult for her."
+        "{b}Good Witch{/b} \nYour slave, [all_girls_list[girl_index]['name']] is attuned to magical forces. This will allow her to become an excellent witch!",
+        "{b}Excellent Witch{/b} \nYour slave, [all_girls_list[girl_index]['name']] is attuned to magical forces. This will allow her to become an excellent witch! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Witch{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in witchcraft. Becoming a good witch may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Witch{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in witchcraft. Becoming a good witch may prove difficult for her."
     ],
     "athleticstrait": [
         "Null",
-        "{b}Good Athlete{/b} \nYour slave is energetic and enjoys physical activity. This will allow her to become an excellent athlete!",
-        "{b}Excellent Athlete{/b} \nYour slave is energetic and enjoys physical activity. This will allow her to become an excellent athlete! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Athlete{/b} \nYour slave shows little interest in athletics. Becoming a good athlete may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Athlete{/b} \nYour slave shows little interest in athletics. Becoming a good athlete may prove difficult for her."
+        "{b}Good Athlete{/b} \nYour slave, [all_girls_list[girl_index]['name']] is energetic and enjoys physical activity. This will allow her to become an excellent athlete!",
+        "{b}Excellent Athlete{/b} \nYour slave, [all_girls_list[girl_index]['name']] is energetic and enjoys physical activity. This will allow her to become an excellent athlete! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Athlete{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in athletics. Becoming a good athlete may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Athlete{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in athletics. Becoming a good athlete may prove difficult for her."
     ],
     "gladiatrixtrait": [
         "Null",
-        "{b}Good Gladiatrix{/b} \nYour slave shows confidence and determination in combat training. This will allow her to become an excellent gladiatrix!",
-        "{b}Excellent Gladiatrix{/b} \nYour slave shows confidence and determination in combat training. This will allow her to become an excellent gladiatrix! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Gladiatrix{/b} \nYour slave shows little interest in combat training. Becoming a good gladiatrix may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Gladiatrix{/b} \nYour slave shows little interest in combat training. Becoming a good gladiatrix may prove difficult for her."
+        "{b}Good Gladiatrix{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows confidence and determination in combat training. This will allow her to become an excellent gladiatrix!",
+        "{b}Excellent Gladiatrix{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows confidence and determination in combat training. This will allow her to become an excellent gladiatrix! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Gladiatrix{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in combat training. Becoming a good gladiatrix may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Gladiatrix{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in combat training. Becoming a good gladiatrix may prove difficult for her."
     ],
     "dancetrait": [
         "Null",
-        "{b}Good Dancer{/b} \nYour slave moves gracefully and enjoys expressing herself through dance. This will allow her to become an excellent dancer!",
-        "{b}Excellent Dancer{/b} \nYour slave moves gracefully and enjoys expressing herself through dance. This will allow her to become an excellent dancer! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Dancer{/b} \nYour slave shows little interest in dancing. Becoming a good dancer may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Dancer{/b} \nYour slave shows little interest in dancing. Becoming a good dancer may prove difficult for her."
+        "{b}Good Dancer{/b} \nYour slave, [all_girls_list[girl_index]['name']] moves gracefully and enjoys expressing herself through dance. This will allow her to become an excellent dancer!",
+        "{b}Excellent Dancer{/b} \nYour slave, [all_girls_list[girl_index]['name']] moves gracefully and enjoys expressing herself through dance. This will allow her to become an excellent dancer! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Dancer{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in dancing. Becoming a good dancer may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Dancer{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in dancing. Becoming a good dancer may prove difficult for her."
     ],
     "musictrait": [
         "Null",
-        "{b}Good Musician{/b} \nYour slave enjoys playing music and has a good sense of rhythm. This will allow her to become an excellent musician!",
-        "{b}Excellent Musician{/b} \nYour slave enjoys playing music and has a good sense of rhythm. This will allow her to become an excellent musician! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Musician{/b} \nYour slave shows little interest in music. Becoming a good musician may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Musician{/b} \nYour slave shows little interest in music. Becoming a good musician may prove difficult for her."
+        "{b}Good Musician{/b} \nYour slave, [all_girls_list[girl_index]['name']] enjoys playing music and has a good sense of rhythm. This will allow her to become an excellent musician!",
+        "{b}Excellent Musician{/b} \nYour slave, [all_girls_list[girl_index]['name']] enjoys playing music and has a good sense of rhythm. This will allow her to become an excellent musician! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Musician{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in music. Becoming a good musician may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Musician{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in music. Becoming a good musician may prove difficult for her."
     ],
     "paintingtrait": [
         "Null",
-        "{b}Good Painter{/b} \nYour slave has a good eye for detail and enjoys creating art. This will allow her to become an excellent painter!",
-        "{b}Excellent Painter{/b} \nYour slave has a good eye for detail and enjoys creating art. This will allow her to become an excellent painter! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Painter{/b} \nYour slave shows little interest in painting. Becoming a good painter may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Painter{/b} \nYour slave shows little interest in painting. Becoming a good painter may prove difficult for her."
+        "{b}Good Painter{/b} \nYour slave, [all_girls_list[girl_index]['name']] has a good eye for detail and enjoys creating art. This will allow her to become an excellent painter!",
+        "{b}Excellent Painter{/b} \nYour slave, [all_girls_list[girl_index]['name']] has a good eye for detail and enjoys creating art. This will allow her to become an excellent painter! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Painter{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in painting. Becoming a good painter may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Painter{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in painting. Becoming a good painter may prove difficult for her."
     ],
     "pettrait": [
         "Null",
-        "{b}Good Pet{/b} \nIt seems that your slave really likes to pretend to be a pet. And, most importantly, she is doing it great. Training will go well!",
-        "{b}Excellent Pet{/b} \nIt seems that your slave really likes to pretend to be a pet. And, most importantly, she is doing it great. Training will go well! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Pet{/b} \nYour slave shows little interest in pet play. Becoming a good pet may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Pet{/b} \nYour slave shows little interest in pet play. Becoming a good pet may prove difficult for her."
+        "{b}Good Pet{/b} \nIt seems that your slave, [all_girls_list[girl_index]['name']] really likes to pretend to be a pet. And, most importantly, she is doing it great. Training will go well!",
+        "{b}Excellent Pet{/b} \nIt seems that your slave, [all_girls_list[girl_index]['name']] really likes to pretend to be a pet. And, most importantly, she is doing it great. Training will go well! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Pet{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in pet play. Becoming a good pet may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Pet{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in pet play. Becoming a good pet may prove difficult for her."
     ],
     "ponytrait": [
         "Null",
-        "{b}Good Pony{/b} \nApparently, your slave loves to be a horse. What others would consider humiliating and difficult, she finds fun and interesting. This will allow her to become an excellent pony!",
-        "{b}Excellent Pony{/b} \nApparently, your slave loves to be a horse. What others would consider humiliating and difficult, she finds fun and interesting. This will allow her to become an excellent pony! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Pony{/b} \nYour slave shows little interest in pony play. Becoming a good pony may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Pony{/b} \nYour slave shows little interest in pony play. Becoming a good pony may prove difficult for her."
+        "{b}Good Pony{/b} \nApparently, your slave, [all_girls_list[girl_index]['name']] loves to be a horse. What others would consider humiliating and difficult, she finds fun and interesting. This will allow her to become an excellent pony!",
+        "{b}Excellent Pony{/b} \nApparently, your slave, [all_girls_list[girl_index]['name']] loves to be a horse. What others would consider humiliating and difficult, she finds fun and interesting. This will allow her to become an excellent pony! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Pony{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in pony play. Becoming a good pony may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Pony{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in pony play. Becoming a good pony may prove difficult for her."
     ],
     "cowtrait": [
         "Null",
-        "{b}Good Cow{/b} \nYour slave is not in a hurry to use her body or her mind, and likes to just loaf: perhaps she could be more easily turned into a milk cow?",
-        "{b}Excellent Cow{/b} \nYour slave is not in a hurry to use her body or her mind, and likes to just loaf: perhaps she could be more easily turned into a milk cow? She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Disastrous Cow{/b} \nYour slave shows little interest in the cow lifestyle. Becoming a good cow slave may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Bad Cow{/b} \nYour slave shows little interest in the cow lifestyle. Becoming a good cow slave may prove difficult for her."
+        "{b}Good Cow{/b} \nYour slave, [all_girls_list[girl_index]['name']] is not in a hurry to use her body or her mind, and likes to just loaf: perhaps she could be more easily turned into a milk cow?",
+        "{b}Excellent Cow{/b} \nYour slave, [all_girls_list[girl_index]['name']] is not in a hurry to use her body or her mind, and likes to just loaf: perhaps she could be more easily turned into a milk cow? She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Disastrous Cow{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in the cow lifestyle. Becoming a good cow slave may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Bad Cow{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in the cow lifestyle. Becoming a good cow slave may prove difficult for her."
     ]
 }
 define dic_traits_sexual = {
@@ -483,52 +483,52 @@ define dic_traits_sexual = {
 define dic_traits_sexual_description = {
     "pettingtrait": [
         "Null",
-        "{b}Likes Petting{/b} \nYour slave absolutely loves being petted and craves physical closeness. This will greatly enhance her sensuality!",
-        "{b}Loves Petting{/b} \nYour slave absolutely loves being petted and craves physical closeness. This will greatly enhance her sensuality! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Hates Petting{/b} \nYour slave shows little interest in petting and gentle touch. Becoming affectionate may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Dislikes Petting{/b} \nYour slave shows little interest in petting and gentle touch. Becoming affectionate may prove difficult for her."
+        "{b}Likes Petting{/b} \nYour slave, [all_girls_list[girl_index]['name']], absolutely loves being petted and craves physical closeness. This will greatly enhance her sensuality!",
+        "{b}Loves Petting{/b} \nYour slave, [all_girls_list[girl_index]['name']], absolutely loves being petted and craves physical closeness. This will greatly enhance her sensuality! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Hates Petting{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows little interest in petting and gentle touch. Becoming affectionate may prove difficult for her. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Dislikes Petting{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows little interest in petting and gentle touch. Becoming affectionate may prove difficult for her."
     ],
     "oral_pleasuretrait": [
         "Null",
-        "{b}Likes Oral Pleasure{/b} \nYour slave has a strong passion for oral intimacy and excels at it. This will heighten her desirability!",
-        "{b}Loves Oral Pleasure{/b} \nYour slave has a strong passion for oral intimacy and excels at it. This will heighten her desirability! She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Hates Oral Pleasure{/b} \nYour slave shows little interest in oral pleasure. Developing skills here may be challenging. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Dislikes Oral Pleasure{/b} \nYour slave shows little interest in oral pleasure. Developing skills here may be challenging."
+        "{b}Likes Oral Pleasure{/b} \nYour slave, [all_girls_list[girl_index]['name']], has a strong passion for oral intimacy and excels at it. This will heighten her desirability!",
+        "{b}Loves Oral Pleasure{/b} \nYour slave, [all_girls_list[girl_index]['name']], has a strong passion for oral intimacy and excels at it. This will heighten her desirability! She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Hates Oral Pleasure{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows little interest in oral pleasure. Developing skills here may be challenging. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Dislikes Oral Pleasure{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows little interest in oral pleasure. Developing skills here may be challenging."
     ],
     "penetrationtrait": [
         "Null",
-        "{b}Likes Penetration{/b} \nYour slave loves penetration and finds great pleasure in it, enhancing her sexual experiences.",
-        "{b}Loves Penetration{/b} \nYour slave loves penetration and finds great pleasure in it, enhancing her sexual experiences. She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Hates Penetration{/b} \nYour slave dislikes penetration and avoids it whenever possible. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Dislikes Penetration{/b} \nYour slave dislikes penetration and avoids it whenever possible."
+        "{b}Likes Penetration{/b} \nYour slave, [all_girls_list[girl_index]['name']], loves penetration and finds great pleasure in it, enhancing her sexual experiences.",
+        "{b}Loves Penetration{/b} \nYour slave, [all_girls_list[girl_index]['name']], loves penetration and finds great pleasure in it, enhancing her sexual experiences. She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Hates Penetration{/b} \nYour slave, [all_girls_list[girl_index]['name']], dislikes penetration and avoids it whenever possible. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Dislikes Penetration{/b} \nYour slave, [all_girls_list[girl_index]['name']], dislikes penetration and avoids it whenever possible."
     ],
     "group_sextrait": [
         "Null",
-        "{b}Likes Group Sex{/b} \nYour slave loves group sex and thrives in shared intimate situations.",
-        "{b}Loves Group Sex{/b} \nYour slave loves group sex and thrives in shared intimate situations. She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Hates Group Sex{/b} \nYour slave shows little interest in group sex and prefers one-on-one encounters. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Dislikes Group Sex{/b} \nYour slave shows little interest in group sex and prefers one-on-one encounters."
+        "{b}Likes Group Sex{/b} \nYour slave, [all_girls_list[girl_index]['name']], loves group sex and thrives in shared intimate situations.",
+        "{b}Loves Group Sex{/b} \nYour slave, [all_girls_list[girl_index]['name']], loves group sex and thrives in shared intimate situations. She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Hates Group Sex{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows little interest in group sex and prefers one-on-one encounters. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Dislikes Group Sex{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows little interest in group sex and prefers one-on-one encounters."
     ],
     "demotrationtrait": [
         "Null",
-        "{b}Likes Demonstrations{/b} \nYour slave loves being the center of attention and enjoys sexual demonstrations.",
-        "{b}Loves Demonstrations{/b} \nYour slave loves being the center of attention and enjoys sexual demonstrations. She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Hates Demonstrations{/b} \nYour slave shows little interest in demonstrating her skills openly. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Dislikes Demonstrations{/b} \nYour slave shows little interest in demonstrating her skills openly."
+        "{b}Likes Demonstrations{/b} \nYour slave, [all_girls_list[girl_index]['name']], loves being the center of attention and enjoys sexual demonstrations.",
+        "{b}Loves Demonstrations{/b} \nYour slave, [all_girls_list[girl_index]['name']], loves being the center of attention and enjoys sexual demonstrations. She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Hates Demonstrations{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows little interest in demonstrating her skills openly. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Dislikes Demonstrations{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows little interest in demonstrating her skills openly."
     ],
     "fetishismtrait": [
         "Null",
-        "{b}Likes Fetishism{/b} \nYour slave loves exploring fetishes and alternative sexual interests.",
-        "{b}Loves Fetishism{/b} \nYour slave loves exploring fetishes and alternative sexual interests. She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Hates Fetishism{/b} \nYour slave shows little interest in fetishism and prefers vanilla intimacy. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Dislikes Fetishism{/b} \nYour slave shows little interest in fetishism and prefers vanilla intimacy."
+        "{b}Likes Fetishism{/b} \nYour slave, [all_girls_list[girl_index]['name']], loves exploring fetishes and alternative sexual interests.",
+        "{b}Loves Fetishism{/b} \nYour slave, [all_girls_list[girl_index]['name']], loves exploring fetishes and alternative sexual interests. She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Hates Fetishism{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows little interest in fetishism and prefers vanilla intimacy. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Dislikes Fetishism{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows little interest in fetishism and prefers vanilla intimacy."
     ],
     "xenophily": [
         "Null",
-        "{b}Likes Xenophily{/b} \nYour slave loves trying new experiences and partners, showing strong xenophily.",
-        "{b}Loves Xenophily{/b} \nYour slave loves trying new experiences and partners, showing strong xenophily. She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Hates Xenophily{/b} \nYour slave shows little interest in unfamiliar partners or new experiences. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Dislikes Xenophily{/b} \nYour slave shows little interest in unfamiliar partners or new experiences."
+        "{b}Likes Xenophily{/b} \nYour slave, [all_girls_list[girl_index]['name']], loves trying new experiences and partners, showing strong xenophily.",
+        "{b}Loves Xenophily{/b} \nYour slave, [all_girls_list[girl_index]['name']], loves trying new experiences and partners, showing strong xenophily. She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Hates Xenophily{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows little interest in unfamiliar partners or new experiences. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Dislikes Xenophily{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows little interest in unfamiliar partners or new experiences."
     ]
 }
 define dic_traits_miscellaneous = {
@@ -554,122 +554,122 @@ define dic_traits_miscellaneous = {
 define dic_traits_miscellaneous_description = {
     "lust_driver": [
         "Null",
-        "{b}High lust{/b}\nYour slave shows a noticeable sexual drive, which influences her desires and responsiveness.",
-        "{b}Nymphomanic{/b}\nYour slave is a nymphomaniac, constantly craving and seeking out sexual pleasure.",
-        "{b}Asexual{/b}\nYour slave is completely asexual, showing no interest in sexual activity, which greatly limits intimacy.",
-        "{b}frigid{/b}\nYour slave is frigid and indifferent to sexual advances, making sexual connection very difficult."
+        "{b}High lust{/b}\nYour slave, [all_girls_list[girl_index]['name']], shows a noticeable sexual drive, which influences her desires and responsiveness.",
+        "{b}Nymphomanic{/b}\nYour slave, [all_girls_list[girl_index]['name']], is a nymphomaniac, constantly craving and seeking out sexual pleasure.",
+        "{b}Asexual{/b}\nYour slave, [all_girls_list[girl_index]['name']], is completely asexual, showing no interest in sexual activity, which greatly limits intimacy.",
+        "{b}frigid{/b}\nYour slave, [all_girls_list[girl_index]['name']], is frigid and indifferent to sexual advances, making sexual connection very difficult."
     ],
     "sexual_openness": [
         "Null",
-        "{b}Open{/b}\nYour slave is open-minded and enjoys exploring new experiences and partners.",
-        "{b}Pervert{/b}\nYour slave is a pervert, she doesn't mind fucking a dog or a sea tentacle",
-        "{b}Puritanical{/b}\nYour slave is a puritanical, she hates doing unconvencional things",
-        "{b}Prudish{/b}\nYour slave is prudish, she dislikes doing unconvencional things",
+        "{b}Open{/b}\nYour slave, [all_girls_list[girl_index]['name']], is open-minded and enjoys exploring new experiences and partners.",
+        "{b}Pervert{/b}\nYour slave, [all_girls_list[girl_index]['name']], is a pervert, she doesn't mind fucking a dog or a sea tentacle",
+        "{b}Puritanical{/b}\nYour slave, [all_girls_list[girl_index]['name']], is a puritanical, she hates doing unconvencional things",
+        "{b}Prudish{/b}\nYour slave, [all_girls_list[girl_index]['name']], is prudish, she dislikes doing unconvencional things",
     ],
     "masochism": [
         "Null",
-        "{b}Accustomed to pain{/b}\nYour slave is somewhat accustomed to pain and can tolerate it in intimate settings.",
-        "{b}Masochism{/b}\nYour slave embraces masochism, finding pleasure in pain and submission.",
-        "{b}Pain averse{/b}\nYour slave is extremely pain averse, avoiding even mild discomfort during intimacy.",
-        "{b}Pain sensitive{/b}\nYour slave is highly sensitive to pain and any discomfort greatly distresses her."
+        "{b}Accustomed to pain{/b}\nYour slave, [all_girls_list[girl_index]['name']], is somewhat accustomed to pain and can tolerate it in intimate settings.",
+        "{b}Masochism{/b}\nYour slave, [all_girls_list[girl_index]['name']], embraces masochism, finding pleasure in pain and submission.",
+        "{b}Pain averse{/b}\nYour slave, [all_girls_list[girl_index]['name']], is extremely pain averse, avoiding even mild discomfort during intimacy.",
+        "{b}Pain sensitive{/b}\nYour slave, [all_girls_list[girl_index]['name']], is highly sensitive to pain and any discomfort greatly distresses her."
     ],
     "exhibitionism": [
         "Null",
-        "{b}Likes Exhibitionism{/b}\nYour slave occasionally enjoys being watched during intimate moments.",
-        "{b}Loves Exhibitionism{/b}\nYour slave loves exhibitionism and thrills at the idea of being seen.",
-        "{b}Hates Exhibitionism{/b}\nYour slave strongly fears or hates exhibitionism, finding it very distressing.",
-        "{b}Dislikes Exhibitionism{/b}\nYour slave is deeply uncomfortable with any form of exposure or being watched."
+        "{b}Likes Exhibitionism{/b}\nYour slave, [all_girls_list[girl_index]['name']], occasionally enjoys being watched during intimate moments.",
+        "{b}Loves Exhibitionism{/b}\nYour slave, [all_girls_list[girl_index]['name']], loves exhibitionism and thrills at the idea of being seen.",
+        "{b}Hates Exhibitionism{/b}\nYour slave, [all_girls_list[girl_index]['name']], strongly fears or hates exhibitionism, finding it very distressing.",
+        "{b}Dislikes Exhibitionism{/b}\nYour slave, [all_girls_list[girl_index]['name']], is deeply uncomfortable with any form of exposure or being watched."
     ],
     "sexual_orientation": [
         "Null",
-        "{b}Bi-curious{/b}\nYour slave is bi-curious, open to exploring her sexuality with different genders.",
-        "{b}Bisexual{/b}\nYour slave identifies as bisexual and embraces attraction to multiple genders.",
-        "{b}Homosexual{/b}\nYour slave is exclusively homosexual, showing strong preference for the same sex.",
-        "{b}Homoflexible{/b}\nYour slave is homoflexible, mostly attracted to one sex but occasionally open."
+        "{b}Bi-curious{/b}\nYour slave, [all_girls_list[girl_index]['name']], is bi-curious, open to exploring her sexuality with different genders.",
+        "{b}Bisexual{/b}\nYour slave, [all_girls_list[girl_index]['name']], identifies as bisexual and embraces attraction to multiple genders.",
+        "{b}Homosexual{/b}\nYour slave, [all_girls_list[girl_index]['name']], is exclusively homosexual, showing strong preference for the same sex.",
+        "{b}Homoflexible{/b}\nYour slave, [all_girls_list[girl_index]['name']], is homoflexible, mostly attracted to one sex but occasionally open."
     ],
     "abuse_attitude": [
         "Null",
-        "{b}Likes Roughness{/b}\nYour slave likes roughness in intimacy, which adds excitement to her experiences.",
-        "{b}Loves Roughness{/b}\nYour slave loves roughness and seeks dominant, forceful encounters.",
-        "{b}Hates Roughness{/b}\nYour slave strongly dislikes roughness and prefers gentle, tender interactions.",
-        "{b}Dislikes Roughness{/b}\nYour slave is deeply averse to any rough or abusive behavior during intimacy."
+        "{b}Likes Roughness{/b}\nYour slave, [all_girls_list[girl_index]['name']], likes roughness in intimacy, which adds excitement to her experiences.",
+        "{b}Loves Roughness{/b}\nYour slave, [all_girls_list[girl_index]['name']], loves roughness and seeks dominant, forceful encounters.",
+        "{b}Hates Roughness{/b}\nYour slave, [all_girls_list[girl_index]['name']], strongly dislikes roughness and prefers gentle, tender interactions.",
+        "{b}Dislikes Roughness{/b}\nYour slave, [all_girls_list[girl_index]['name']], is deeply averse to any rough or abusive behavior during intimacy."
     ],
     "darkness_attitude": [
         "Null",
-        "{b}Likes Darkness{/b}\nYour slave likes the allure of darkness and mystery in her intimate moments.",
-        "{b}Loves Darkness{/b}\nYour slave loves darkness, finding it stimulating and intriguing.",
-        "{b}Hates Darkness{/b}\nYour slave strongly dislikes darkness and prefers well-lit environments.",
-        "{b}Dislikes Darkness{/b}\nYour slave is deeply uncomfortable or fearful of darkness."
+        "{b}Likes Darkness{/b}\nYour slave, [all_girls_list[girl_index]['name']], likes the allure of darkness and mystery in her intimate moments.",
+        "{b}Loves Darkness{/b}\nYour slave, [all_girls_list[girl_index]['name']], loves darkness, finding it stimulating and intriguing.",
+        "{b}Hates Darkness{/b}\nYour slave, [all_girls_list[girl_index]['name']], strongly dislikes darkness and prefers well-lit environments.",
+        "{b}Dislikes Darkness{/b}\nYour slave, [all_girls_list[girl_index]['name']], is deeply uncomfortable or fearful of darkness."
     ],
     "blood_attitude": [
         "Null",
-        "{b}Likes Blood{/b}\nYour slave has a mild fascination with blood in her erotic play.",
-        "{b}Loves Blood{/b}\nYour slave loves incorporating blood into her intimate experiences.",
-        "{b}Hates Blood{/b}\nYour slave strongly dislikes blood and avoids any activity that involves it.",
-        "{b}Dislikes Blood{/b}\nYour slave is disturbed by blood and cannot tolerate it."
+        "{b}Likes Blood{/b}\nYour slave, [all_girls_list[girl_index]['name']], has a mild fascination with blood in her erotic play.",
+        "{b}Loves Blood{/b}\nYour slave, [all_girls_list[girl_index]['name']], loves incorporating blood into her intimate experiences.",
+        "{b}Hates Blood{/b}\nYour slave, [all_girls_list[girl_index]['name']], strongly dislikes blood and avoids any activity that involves it.",
+        "{b}Dislikes Blood{/b}\nYour slave, [all_girls_list[girl_index]['name']], is disturbed by blood and cannot tolerate it."
     ],
     "fire_attitude": [
         "Null",
-        "{b}Likes Fire{/b}\nYour slave enjoys the warmth and thrill that fire brings to intimacy.",
-        "{b}Loves Fire{/b}\nYour slave loves fire play and finds it deeply arousing.",
-        "{b}Hates Fire{/b}\nYour slave strongly fears fire and avoids any related activities.",
-        "{b}Fears Fire{/b}\nYour slave fears fire and refuses any exposure to it."
+        "{b}Likes Fire{/b}\nYour slave, [all_girls_list[girl_index]['name']], enjoys the warmth and thrill that fire brings to intimacy.",
+        "{b}Loves Fire{/b}\nYour slave, [all_girls_list[girl_index]['name']], loves fire play and finds it deeply arousing.",
+        "{b}Hates Fire{/b}\nYour slave, [all_girls_list[girl_index]['name']], strongly fears fire and avoids any related activities.",
+        "{b}Fears Fire{/b}\nYour slave, [all_girls_list[girl_index]['name']], fears fire and refuses any exposure to it."
     ],
     "water_attitude": [
         "Null",
-        "{b}Likes Water{/b}\nYour slave likes water and often enjoys aquatic intimacy.",
-        "{b}Loves Water{/b}\nYour slave loves water play and finds it sensual and refreshing.",
-        "{b}Hates Water{/b}\nYour slave strongly dislikes water and avoids any contact.",
-        "{b}Dislikes Water{/b}\nYour slave is uncomfortable with water and refuses any contact."
+        "{b}Likes Water{/b}\nYour slave, [all_girls_list[girl_index]['name']], likes water and often enjoys aquatic intimacy.",
+        "{b}Loves Water{/b}\nYour slave, [all_girls_list[girl_index]['name']], loves water play and finds it sensual and refreshing.",
+        "{b}Hates Water{/b}\nYour slave, [all_girls_list[girl_index]['name']], strongly dislikes water and avoids any contact.",
+        "{b}Dislikes Water{/b}\nYour slave, [all_girls_list[girl_index]['name']], is uncomfortable with water and refuses any contact."
     ],
     "spider_attitude": [
         "Null",
-        "{b}Likes Spiders{/b}\nYour slave is somewhat curious about spiders and their symbolism.",
-        "{b}Loves Spiders{/b}\nYour slave loves spiders and loves to include them in her fantasy play.",
-        "{b}Hates Spiders{/b}\nYour slave strongly fears or dislikes spiders and panics at the sight of them.",
-        "{b}Terrified of Spiders{/b}\nYour slave is terrified of spiders and avoids them."
+        "{b}Likes Spiders{/b}\nYour slave, [all_girls_list[girl_index]['name']], is somewhat curious about spiders and their symbolism.",
+        "{b}Loves Spiders{/b}\nYour slave, [all_girls_list[girl_index]['name']], loves spiders and loves to include them in her fantasy play.",
+        "{b}Hates Spiders{/b}\nYour slave, [all_girls_list[girl_index]['name']], strongly fears or dislikes spiders and panics at the sight of them.",
+        "{b}Terrified of Spiders{/b}\nYour slave, [all_girls_list[girl_index]['name']], is terrified of spiders and avoids them."
     ],
     "passion_comfort": [
         "Null",
-        "{b}Likes Comfort{/b}\nYour slave likes comfort and values cozy, safe environments.",
-        "{b}Loves Comfort{/b}\nYour slave loves comfort and seeks luxurious relaxation.",
-        "{b}Dislikes Comfort{/b}\nYour slave dislikes comfort, finding it restrictive or dull.",
-        "{b}Rejects Comfort{/b}\nYour slave rejects comfort entirely and prefers harsh conditions."
+        "{b}Likes Comfort{/b}\nYour slave, [all_girls_list[girl_index]['name']], likes comfort and values cozy, safe environments.",
+        "{b}Loves Comfort{/b}\nYour slave, [all_girls_list[girl_index]['name']], loves comfort and seeks luxurious relaxation.",
+        "{b}Dislikes Comfort{/b}\nYour slave, [all_girls_list[girl_index]['name']], dislikes comfort, finding it restrictive or dull.",
+        "{b}Rejects Comfort{/b}\nYour slave, [all_girls_list[girl_index]['name']], rejects comfort entirely and prefers harsh conditions."
     ],
     "passion_fame": [
         "Null",
-        "{b}Likes Fame{/b}\nYour slave likes the idea of fame and recognition.",
-        "{b}Loves Fame{/b}\nYour slave loves being famous and craves public attention.",
-        "{b}Dislikes Fame{/b}\nYour slave strongly dislikes fame and shuns the spotlight.",
-        "{b}Uncomfortable with Fame{/b}\nYour slave is deeply uncomfortable with any form of recognition."
+        "{b}Likes Fame{/b}\nYour slave, [all_girls_list[girl_index]['name']], likes the idea of fame and recognition.",
+        "{b}Loves Fame{/b}\nYour slave, [all_girls_list[girl_index]['name']], loves being famous and craves public attention.",
+        "{b}Dislikes Fame{/b}\nYour slave, [all_girls_list[girl_index]['name']], strongly dislikes fame and shuns the spotlight.",
+        "{b}Uncomfortable with Fame{/b}\nYour slave, [all_girls_list[girl_index]['name']], is deeply uncomfortable with any form of recognition."
     ],
     "passion_luxury": [
         "Null",
-        "{b}Likes Luxury{/b}\nYour slave enjoys luxury and the finer things in life.",
-        "{b}Loves Luxury{/b}\nYour slave loves luxury and indulges in extravagance.",
-        "{b}Dislikes Luxury{/b}\nYour slave strongly dislikes luxury and prefers simplicity.",
-        "{b}Rejects Luxury{/b}\nYour slave rejects luxury completely and avoids indulgence."
+        "{b}Likes Luxury{/b}\nYour slave, [all_girls_list[girl_index]['name']], enjoys luxury and the finer things in life.",
+        "{b}Loves Luxury{/b}\nYour slave, [all_girls_list[girl_index]['name']], loves luxury and indulges in extravagance.",
+        "{b}Dislikes Luxury{/b}\nYour slave, [all_girls_list[girl_index]['name']], strongly dislikes luxury and prefers simplicity.",
+        "{b}Rejects Luxury{/b}\nYour slave, [all_girls_list[girl_index]['name']], rejects luxury completely and avoids indulgence."
     ],
     "passion_sweets": [
         "Null",
-        "{b}Likes Sweets{/b}\nYour slave likes sweets and enjoys occasional treats.",
-        "{b}Loves Sweets{/b}\nYour slave loves sweets and often craves sugary delights.",
-        "{b}Dislikes Sweets{/b}\nYour slave strongly dislikes sweets and avoids sugary foods.",
-        "{b}Aversion to Sweets{/b}\nYour slave has a strong aversion to sweets and refuses them."
+        "{b}Likes Sweets{/b}\nYour slave, [all_girls_list[girl_index]['name']], likes sweets and enjoys occasional treats.",
+        "{b}Loves Sweets{/b}\nYour slave, [all_girls_list[girl_index]['name']], loves sweets and often craves sugary delights.",
+        "{b}Dislikes Sweets{/b}\nYour slave, [all_girls_list[girl_index]['name']], strongly dislikes sweets and avoids sugary foods.",
+        "{b}Aversion to Sweets{/b}\nYour slave, [all_girls_list[girl_index]['name']], has a strong aversion to sweets and refuses them."
     ],
     "fertility": [
         "Null",
-        "{b}Fertile{/b}\nYour slave is fertile and capable of conceiving children.",
-        "{b}Very Fertile{/b}\nYour slave is very fertile and likely to conceive easily.",
-        "{b}Very Infertile{/b}\nYour slave is very infertile and has very little chance to conceive children.",
-        "{b}Infertile{/b}\nYour slave is infertile, with little chance of conception."
+        "{b}Fertile{/b}\nYour slave, [all_girls_list[girl_index]['name']], is fertile and capable of conceiving children.",
+        "{b}Very Fertile{/b}\nYour slave, [all_girls_list[girl_index]['name']], is very fertile and likely to conceive easily.",
+        "{b}Very Infertile{/b}\nYour slave, [all_girls_list[girl_index]['name']], is very infertile and has very little chance to conceive children.",
+        "{b}Infertile{/b}\nYour slave, [all_girls_list[girl_index]['name']], is infertile, with little chance of conception."
     ],
     "deprivation_attitude": [
         "Null",
-        "{b}Likes Deprivation{/b}\nYour slave likes deprivation and enjoys the challenge of being deprived.",
-        "{b}Loves Deprivation{/b}\nYour slave loves deprivation and craves the challenge of being deprived. She has a natural talent for this skill, which will allow her to reach new heights.",
-        "{b}Hates Deprivation{/b}\nYour slave strongly dislikes deprivation and avoids it whenever possible. She lacks talent in this area, which will limit her potential for improvement.",
-        "{b}Dislikes Deprivation{/b}\nYour slave strongly dislikes deprivation and avoids it whenever possible."
+        "{b}Likes Deprivation{/b}\nYour slave, [all_girls_list[girl_index]['name']], likes deprivation and enjoys the challenge of being deprived.",
+        "{b}Loves Deprivation{/b}\nYour slave, [all_girls_list[girl_index]['name']], loves deprivation and craves the challenge of being deprived. She has a natural talent for this skill, which will allow her to reach new heights.",
+        "{b}Hates Deprivation{/b}\nYour slave, [all_girls_list[girl_index]['name']], strongly dislikes deprivation and avoids it whenever possible. She lacks talent in this area, which will limit her potential for improvement.",
+        "{b}Dislikes Deprivation{/b}\nYour slave, [all_girls_list[girl_index]['name']], strongly dislikes deprivation and avoids it whenever possible."
     ]
 }
 define dic_traits_aura = {
@@ -685,52 +685,52 @@ define dic_traits_aura = {
 define dic_traits_aura_description = {
     "feartrait": [
         "Null",
-        "{b}Fearful{/b} \nYour slave shows a healthy level of fear that ensures obedience and respect. She is deeply fearful and compliant, making her extremely easy to control.",
-        "{b}Terrified{/b} \nYour slave shows a healthy level of fear that ensures obedience and respect. She is deeply fearful and compliant, making her extremely easy to control. She has a bright aura with a special intensity, which will allow her to reach new heights.",
-        "{b}Moronic{/b} \nYour slave is brave and unshaken, which may hinder submissive training. She lacks any fear or caution, acting recklessly and challenging authority. She has a dim aura, which will limit her potential for improvement.",
-        "{b}Brave{/b} \nYour slave is brave and unshaken, which may hinder submissive training. She lacks any fear or caution, acting recklessly and challenging authority."
+        "{b}Fearful{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows a healthy level of fear that ensures obedience and respect. She is deeply fearful and compliant, making her extremely easy to control.",
+        "{b}Terrified{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows a healthy level of fear that ensures obedience and respect. She is deeply fearful and compliant, making her extremely easy to control. She has a bright aura with a special intensity, which will allow her to reach new heights.",
+        "{b}Moronic{/b} \nYour slave, [all_girls_list[girl_index]['name']], is brave and unshaken, which may hinder submissive training. She lacks any fear or caution, acting recklessly and challenging authority. She has a dim aura, which will limit her potential for improvement.",
+        "{b}Brave{/b} \nYour slave, [all_girls_list[girl_index]['name']], is brave and unshaken, which may hinder submissive training. She lacks any fear or caution, acting recklessly and challenging authority."
     ],
     "despairtrait": [
         "Null",
-        "{b}Positive{/b} \nYour slave remains optimistic and adapts well to her circumstances. She is exceptionally spirited and unshakably hopeful, even in adversity.",
-        "{b}High-spirited{/b} \nYour slave remains optimistic and adapts well to her circumstances. She is exceptionally spirited and unshakably hopeful, even in adversity. She has a bright aura with a special intensity, which will allow her to reach new heights.",
-        "{b}Crushed Spirit{/b} \nYour slave has become hopeless and emotionally unstable. Her spirit is completely crushed, making it hard for her to recover emotionally. She has a dim aura, which will limit her potential for improvement.",
-        "{b}Hopeless{/b} \nYour slave has become hopeless and emotionally unstable. Her spirit is completely crushed, making it hard for her to recover emotionally."
+        "{b}Positive{/b} \nYour slave, [all_girls_list[girl_index]['name']], remains optimistic and adapts well to her circumstances. She is exceptionally spirited and unshakably hopeful, even in adversity.",
+        "{b}High-spirited{/b} \nYour slave, [all_girls_list[girl_index]['name']], remains optimistic and adapts well to her circumstances. She is exceptionally spirited and unshakably hopeful, even in adversity. She has a bright aura with a special intensity, which will allow her to reach new heights.",
+        "{b}Crushed Spirit{/b} \nYour slave, [all_girls_list[girl_index]['name']], has become hopeless and emotionally unstable. Her spirit is completely crushed, making it hard for her to recover emotionally. She has a dim aura, which will limit her potential for improvement.",
+        "{b}Hopeless{/b} \nYour slave, [all_girls_list[girl_index]['name']], has become hopeless and emotionally unstable. Her spirit is completely crushed, making it hard for her to recover emotionally."
     ],
     "awarenesstrait": [
         "Null",
-        "{b}{/b} \nYour slave is observant and notices small details others may miss. She is highly perceptive and aware of her surroundings and dynamics.",
-        "{b}Highly Perceptive{/b} \nYour slave is observant and notices small details others may miss. She is highly perceptive and aware of her surroundings and dynamics. She has a bright aura with a special intensity, which will allow her to reach new heights.",
-        "{b}Oblivious{/b} \nYour slave is clueless and slow to catch on to changes or instructions. She is oblivious to what's going on, which limits her effectiveness. She has a dim aura, which will limit her potential for improvement.",
-        "{b}Clueless{/b} \nYour slave is clueless and slow to catch on to changes or instructions. She is oblivious to what's going on, which limits her effectiveness."
+        "{b}Observant{/b} \nYour slave, [all_girls_list[girl_index]['name']], is observant and notices small details others may miss. She is highly perceptive and aware of her surroundings and dynamics.",
+        "{b}Highly Perceptive{/b} \nYour slave, [all_girls_list[girl_index]['name']], is observant and notices small details others may miss. She is highly perceptive and aware of her surroundings and dynamics. She has a bright aura with a special intensity, which will allow her to reach new heights.",
+        "{b}Oblivious{/b} \nYour slave, [all_girls_list[girl_index]['name']], is clueless and slow to catch on to changes or instructions. She is oblivious to what's going on, which limits her effectiveness. She has a dim aura, which will limit her potential for improvement.",
+        "{b}Clueless{/b} \nYour slave, [all_girls_list[girl_index]['name']], is clueless and slow to catch on to changes or instructions. She is oblivious to what's going on, which limits her effectiveness."
     ],
     "tamingtrait": [
         "Null",
-        "{b}Easily Tamed{/b} \nYour slave is easily guided and responds well to training. She is naturally submissive and quickly accepts her role.",
-        "{b}Naturally Submissive{/b} \nYour slave is easily guided and responds well to training. She is naturally submissive and quickly accepts her role. She has a bright aura with a special intensity, which will allow her to reach new heights.",
-        "{b}Untamable{/b} \nYour slave is rebellious and resists taming efforts. She is wild and rejects all forms of control or authority. She has a dim aura, which will limit her potential for improvement.",
-        "{b}Rebellious{/b} \nYour slave is rebellious and resists taming efforts. She is wild and rejects all forms of control or authority."
+        "{b}Easily Tamed{/b} \nYour slave, [all_girls_list[girl_index]['name']], is easily guided and responds well to training. She is naturally submissive and quickly accepts her role.",
+        "{b}Naturally Submissive{/b} \nYour slave, [all_girls_list[girl_index]['name']], is easily guided and responds well to training. She is naturally submissive and quickly accepts her role. She has a bright aura with a special intensity, which will allow her to reach new heights.",
+        "{b}Untamable{/b} \nYour slave, [all_girls_list[girl_index]['name']], is rebellious and resists taming efforts. She is wild and rejects all forms of control or authority. She has a dim aura, which will limit her potential for improvement.",
+        "{b}Rebellious{/b} \nYour slave, [all_girls_list[girl_index]['name']], is rebellious and resists taming efforts. She is wild and rejects all forms of control or authority."
     ],
     "habittrait": [
         "Null",
-        "{b}Well-behaved{/b} \nYour slave behaves properly and follows routine with little guidance. She is highly disciplined and consistent in her actions.",
-        "{b}Disciplined{/b} \nYour slave behaves properly and follows routine with little guidance. She is highly disciplined and consistent in her actions. She has a bright aura with a special intensity, which will allow her to reach new heights.",
-        "{b}Undisciplined{/b} \nYour slave is inconsistent and unreliable in her behavior. She struggles with following rules and frequently acts out. She has a dim aura, which will limit her potential for improvement.",
-        "{b}Inconsistent{/b} \nYour slave is inconsistent and unreliable in her behavior. She struggles with following rules and frequently acts out."
+        "{b}Well-behaved{/b} \nYour slave, [all_girls_list[girl_index]['name']], behaves properly and follows routine with little guidance. She is highly disciplined and consistent in her actions.",
+        "{b}Disciplined{/b} \nYour slave, [all_girls_list[girl_index]['name']], behaves properly and follows routine with little guidance. She is highly disciplined and consistent in her actions. She has a bright aura with a special intensity, which will allow her to reach new heights.",
+        "{b}Undisciplined{/b} \nYour slave, [all_girls_list[girl_index]['name']], is inconsistent and unreliable in her behavior. She struggles with following rules and frequently acts out. She has a dim aura, which will limit her potential for improvement.",
+        "{b}Inconsistent{/b} \nYour slave, [all_girls_list[girl_index]['name']], is inconsistent and unreliable in her behavior. She struggles with following rules and frequently acts out."
     ],
     "spoiltrait": [
         "Null",
-        "{b}Self-sufficient{/b} \nYour slave is content with little and rarely demands special treatment. She remains stoic and emotionally resilient, even without luxury.",
-        "{b}Stoic{/b} \nYour slave is content with little and rarely demands special treatment. She remains stoic and emotionally resilient, even without luxury. She has a bright aura with a special intensity, which will allow her to reach new heights.",
-        "{b}Spoiled Rotten{/b} \nYour slave is pampered and expects constant comfort and attention. She is spoiled rotten and throws tantrums if not indulged. She has a dim aura, which will limit her potential for improvement.",
-        "{b}Pampered{/b} \nYour slave is pampered and expects constant comfort and attention. She is spoiled rotten and throws tantrums if not indulged."
+        "{b}Self-sufficient{/b} \nYour slave, [all_girls_list[girl_index]['name']], is content with little and rarely demands special treatment. She remains stoic and emotionally resilient, even without luxury.",
+        "{b}Stoic{/b} \nYour slave, [all_girls_list[girl_index]['name']], is content with little and rarely demands special treatment. She remains stoic and emotionally resilient, even without luxury. She has a bright aura with a special intensity, which will allow her to reach new heights.",
+        "{b}Spoiled Rotten{/b} \nYour slave, [all_girls_list[girl_index]['name']], is pampered and expects constant comfort and attention. She is spoiled rotten and throws tantrums if not indulged. She has a dim aura, which will limit her potential for improvement.",
+        "{b}Pampered{/b} \nYour slave, [all_girls_list[girl_index]['name']], is pampered and expects constant comfort and attention. She is spoiled rotten and throws tantrums if not indulged."
     ],
     "devotiontrait": [
         "Null",
-        "{b}Loyal{/b} \nYour slave is loyal and shows clear dedication to her master. She is fanatically devoted and lives to serve without question.",
-        "{b}Fanatically Devoted{/b} \nYour slave is loyal and shows clear dedication to her master. She is fanatically devoted and lives to serve without question. She has a bright aura with a special intensity, which will allow her to reach new heights.",
-        "{b}Disloyal{/b} \nYour slave is emotionally detached and resists forming bonds. She is disloyal and may turn against her master when challenged. She has a dim aura, which will limit her potential for improvement.",
-        "{b}Detached{/b} \nYour slave is emotionally detached and resists forming bonds. She is disloyal and may turn against her master when challenged."
+        "{b}Loyal{/b} \nYour slave, [all_girls_list[girl_index]['name']], is loyal and shows clear dedication to her master. She is fanatically devoted and lives to serve without question.",
+        "{b}Fanatically Devoted{/b} \nYour slave, [all_girls_list[girl_index]['name']], is loyal and shows clear dedication to her master. She is fanatically devoted and lives to serve without question. She has a bright aura with a special intensity, which will allow her to reach new heights.",
+        "{b}Disloyal{/b} \nYour slave, [all_girls_list[girl_index]['name']], is emotionally detached and resists forming bonds. She is disloyal and may turn against her master when challenged. She has a dim aura, which will limit her potential for improvement.",
+        "{b}Detached{/b} \nYour slave, [all_girls_list[girl_index]['name']], is emotionally detached and resists forming bonds. She is disloyal and may turn against her master when challenged."
     ]
 }
 define dic_traits_attributes = {
@@ -748,73 +748,73 @@ define dic_traits_attributes = {
 define dic_traits_attributes_description = {
     "beautytrait": [
         "None",
-        "{b}Attractive{/b} \nYour slave is attractive and pleasant to look at. She turns heads and draws attention with her charm. She may reach another level of beauty if you train her well.",
-        "{b}Divine beauty{/b} \nYour slave is attractive and pleasant to look at. She turns heads and draws attention with her charm. She may reach another level of beauty if you train her well.",
-        "{b}Hideous{/b} \nYour slave is unattractive and plain. Her appearance doesn't stand out in any positive way. She is hideous to behold, with features that repel rather than attract. Her looks often make others uncomfortable. She has an ungifted attribute, which will limit her potential for improvement.",
-        "{b}Unattractive{/b} \nYour slave is unattractive and plain. Her appearance doesn't stand out in any positive way. She is hideous to behold, with features that repel rather than attract. Her looks often make others uncomfortable."
+        "{b}Attractive{/b} \nYour slave, [all_girls_list[girl_index]['name']], is attractive and pleasant to look at. She turns heads and draws attention with her charm. She may reach another level of beauty if you train her well.",
+        "{b}Divine beauty{/b} \nYour slave, [all_girls_list[girl_index]['name']], is attractive and pleasant to look at. She turns heads and draws attention with her charm. She may reach another level of beauty if you train her well.",
+        "{b}Hideous{/b} \nYour slave, [all_girls_list[girl_index]['name']], is unattractive and plain. Her appearance doesn't stand out in any positive way. She is hideous to behold, with features that repel rather than attract. Her looks often make others uncomfortable. She has an ungifted attribute, which will limit her potential for improvement.",
+        "{b}Unattractive{/b} \nYour slave, [all_girls_list[girl_index]['name']], is unattractive and plain. Her appearance doesn't stand out in any positive way. She is hideous to behold, with features that repel rather than attract. Her looks often make others uncomfortable."
     ],
     "endurancetrait": [
         "None",
-        "{b}Tough{/b} \nYour slave is tough and endures hardship without complaint. She can handle physical strain well. She has an unshakable fortitude that makes her nearly tireless and able to push through even the harshest conditions.",
-        "{b}Fortitude{/b} \nYour slave is tough and endures hardship without complaint. She can handle physical strain well. She has an unshakable fortitude that makes her nearly tireless and able to push through even the harshest conditions. She has a gifted attribute, which will allow her to reach new heights.",
-        "{b}Very Frail{/b} \nYour slave is weak and struggles with even moderate effort. She tires easily and lacks resilience. She is extremely frail and collapses easily under pressure. She has an ungifted attribute, which will limit her potential for improvement.",
-        "{b}Weak{/b} \nYour slave is weak and struggles with even moderate effort. She tires easily and lacks resilience. She is extremely frail and collapses easily under pressure."
+        "{b}Tough{/b} \nYour slave, [all_girls_list[girl_index]['name']], is tough and endures hardship without complaint. She can handle physical strain well. She has an unshakable fortitude that makes her nearly tireless and able to push through even the harshest conditions.",
+        "{b}Fortitude{/b} \nYour slave, [all_girls_list[girl_index]['name']], is tough and endures hardship without complaint. She can handle physical strain well. She has an unshakable fortitude that makes her nearly tireless and able to push through even the harshest conditions. She has a gifted attribute, which will allow her to reach new heights.",
+        "{b}Very Frail{/b} \nYour slave, [all_girls_list[girl_index]['name']], is weak and struggles with even moderate effort. She tires easily and lacks resilience. She is extremely frail and collapses easily under pressure. She has an ungifted attribute, which will limit her potential for improvement.",
+        "{b}Weak{/b} \nYour slave, [all_girls_list[girl_index]['name']], is weak and struggles with even moderate effort. She tires easily and lacks resilience. She is extremely frail and collapses easily under pressure."
     ],
     "empathytrait": [
         "None",
-        "{b}Compassionate{/b} \nYour slave is compassionate and responds to others emotions with care. She connects easily with people. She possesses emotional resonance that lets her deeply understand and soothe others.",
-        "{b}Emotional resonancer{/b} \nYour slave is compassionate and responds to others emotions with care. She connects easily with people. She possesses emotional resonance that lets her deeply understand and soothe others. She has a gifted attribute, which will allow her to reach new heights.",
-        "{b}Cold-hearted{/b} \nYour slave is insensitive and oblivious to others feelings. She struggles with empathy and emotional expression. She is cold-hearted and indifferent to others. She has an ungifted attribute, which will limit her potential for improvement.",
-        "{b}Insensitive{/b} \nYour slave is insensitive and oblivious to others feelings. She struggles with empathy and emotional expression. She is cold-hearted and indifferent to others."
+        "{b}Compassionate{/b} \nYour slave, [all_girls_list[girl_index]['name']], is compassionate and responds to others emotions with care. She connects easily with people. She possesses emotional resonance that lets her deeply understand and soothe others.",
+        "{b}Emotional resonancer{/b} \nYour slave, [all_girls_list[girl_index]['name']], is compassionate and responds to others emotions with care. She connects easily with people. She possesses emotional resonance that lets her deeply understand and soothe others. She has a gifted attribute, which will allow her to reach new heights.",
+        "{b}Cold-hearted{/b} \nYour slave, [all_girls_list[girl_index]['name']], is insensitive and oblivious to others feelings. She struggles with empathy and emotional expression. She is cold-hearted and indifferent to others. She has an ungifted attribute, which will limit her potential for improvement.",
+        "{b}Insensitive{/b} \nYour slave, [all_girls_list[girl_index]['name']], is insensitive and oblivious to others feelings. She struggles with empathy and emotional expression. She is cold-hearted and indifferent to others."
     ],
     "temperamenttrait": [
         "None",
-        "{b}Warm-hearted{/b} \nYour slave is warm-hearted and brings comfort to those around her. Her emotional presence is soothing. She burns with fervent emotion and passion, often inspiring those near her with her intensity.",
-        "{b}Fervent{/b} \nYour slave is warm-hearted and brings comfort to those around her. Her emotional presence is soothing. She burns with fervent emotion and passion, often inspiring those near her with her intensity. She has a gifted attribute, which will allow her to reach new heights.",
-        "{b}Very calm{/b} \nYour slave is calm and composed. She keeps her feelings in check but may seem emotionally distant. She is overly calm, to the point of being detached. She has an ungifted attribute, which will limit her potential for improvement.",
-        "{b}Calm{/b} \nYour slave is calm and composed. She keeps her feelings in check but may seem emotionally distant. She is overly calm, to the point of being detached."
+        "{b}Warm-hearted{/b} \nYour slave, [all_girls_list[girl_index]['name']], is warm-hearted and brings comfort to those around her. Her emotional presence is soothing. She burns with fervent emotion and passion, often inspiring those near her with her intensity.",
+        "{b}Fervent{/b} \nYour slave, [all_girls_list[girl_index]['name']], is warm-hearted and brings comfort to those around her. Her emotional presence is soothing. She burns with fervent emotion and passion, often inspiring those near her with her intensity. She has a gifted attribute, which will allow her to reach new heights.",
+        "{b}Very calm{/b} \nYour slave, [all_girls_list[girl_index]['name']], is calm and composed. She keeps her feelings in check but may seem emotionally distant. She is overly calm, to the point of being detached. She has an ungifted attribute, which will limit her potential for improvement.",
+        "{b}Calm{/b} \nYour slave, [all_girls_list[girl_index]['name']], is calm and composed. She keeps her feelings in check but may seem emotionally distant. She is overly calm, to the point of being detached."
     ],
     "intelligencetrait": [
         "None",
-        "{b}Smart{/b} \nYour slave is smart and quick-witted. She picks up new concepts with ease and adapts quickly. She is a prodigy with exceptional intellect, easily mastering complex tasks beyond normal expectations.",
-        "{b}Prodigy{/b} \nYour slave is smart and quick-witted. She picks up new concepts with ease and adapts quickly. She is a prodigy with exceptional intellect, easily mastering complex tasks beyond normal expectations. She has a gifted attribute, which will allow her to reach new heights.",
-        "{b}Very Dull{/b} \nYour slave is slow and often confused. She learns slowly and needs repeated guidance. She is very dull and struggles to grasp even simple concepts. She has an ungifted attribute, which will limit her potential for improvement.",
-        "{b}Slow{/b} \nYour slave is slow and often confused. She learns slowly and needs repeated guidance. She is very dull and struggles to grasp even simple concepts."
+        "{b}Smart{/b} \nYour slave, [all_girls_list[girl_index]['name']], is smart and quick-witted. She picks up new concepts with ease and adapts quickly. She is a prodigy with exceptional intellect, easily mastering complex tasks beyond normal expectations.",
+        "{b}Prodigy{/b} \nYour slave, [all_girls_list[girl_index]['name']], is smart and quick-witted. She picks up new concepts with ease and adapts quickly. She is a prodigy with exceptional intellect, easily mastering complex tasks beyond normal expectations. She has a gifted attribute, which will allow her to reach new heights.",
+        "{b}Very Dull{/b} \nYour slave, [all_girls_list[girl_index]['name']], is slow and often confused. She learns slowly and needs repeated guidance. She is very dull and struggles to grasp even simple concepts. She has an ungifted attribute, which will limit her potential for improvement.",
+        "{b}Slow{/b} \nYour slave, [all_girls_list[girl_index]['name']], is slow and often confused. She learns slowly and needs repeated guidance. She is very dull and struggles to grasp even simple concepts."
     ],
     "naturetrait": [
         "None",
-        "{b}Tenacious disposition{/b} \nYour slave has a tenacious disposition and rarely gives up. She holds strong even under pressure. Her unbreakable resolve drives her forward through all hardship.",
-        "{b}Unbreakable resolve{/b} \nYour slave has a tenacious disposition and rarely gives up. She holds strong even under pressure. Her unbreakable resolve drives her forward through all hardship. She has a gifted attribute, which will allow her to reach new heights.",
-        "{b}Faint-hearted disposition{/b} \nYour slave has an insecure disposition, doubting herself constantly and often giving in to fear. She is faint-hearted and easily discouraged. She has an ungifted attribute, which will limit her potential for improvement.",
-        "{b}Insecure disposition{/b} \nYour slave has an insecure disposition, doubting herself constantly and often giving in to fear. She is faint-hearted and easily discouraged."
+        "{b}Tenacious disposition{/b} \nYour slave, [all_girls_list[girl_index]['name']], has a tenacious disposition and rarely gives up. She holds strong even under pressure. Her unbreakable resolve drives her forward through all hardship.",
+        "{b}Unbreakable resolve{/b} \nYour slave, [all_girls_list[girl_index]['name']], has a tenacious disposition and rarely gives up. She holds strong even under pressure. Her unbreakable resolve drives her forward through all hardship. She has a gifted attribute, which will allow her to reach new heights.",
+        "{b}Faint-hearted disposition{/b} \nYour slave, [all_girls_list[girl_index]['name']], has an insecure disposition, doubting herself constantly and often giving in to fear. She is faint-hearted and easily discouraged. She has an ungifted attribute, which will limit her potential for improvement.",
+        "{b}Insecure disposition{/b} \nYour slave, [all_girls_list[girl_index]['name']], has an insecure disposition, doubting herself constantly and often giving in to fear. She is faint-hearted and easily discouraged."
     ],
     "pridetrait": [
         "None",
-        "{b}Meekness{/b} \nYour slave displays meekness and knows her place. She acts with humility and rarely challenges authority. She is extremely meek, almost to a fault, making her utterly obedient.",
-        "{b}Very Meekness{/b} \nYour slave displays meekness and knows her place. She acts with humility and rarely challenges authority. She is extremely meek, almost to a fault, making her utterly obedient. She has a gifted attribute, which will allow her to reach new heights.",
-        "{b}Confident{/b} \nYour slave is overbearing and believes herself superior. She resists subservience and expects special treatment. She is confident and bold, often asserting herself. She has an ungifted attribute, which will limit her potential for improvement.",
-        "{b}Overbearing{/b} \nYour slave is overbearing and believes herself superior. She resists subservience and expects special treatment. She is confident and bold, often asserting herself."
+        "{b}Meekness{/b} \nYour slave, [all_girls_list[girl_index]['name']], displays meekness and knows her place. She acts with humility and rarely challenges authority. She is extremely meek, almost to a fault, making her utterly obedient.",
+        "{b}Very Meekness{/b} \nYour slave, [all_girls_list[girl_index]['name']], displays meekness and knows her place. She acts with humility and rarely challenges authority. She is extremely meek, almost to a fault, making her utterly obedient. She has a gifted attribute, which will allow her to reach new heights.",
+        "{b}Confident{/b} \nYour slave, [all_girls_list[girl_index]['name']], is overbearing and believes herself superior. She resists subservience and expects special treatment. She is confident and bold, often asserting herself. She has an ungifted attribute, which will limit her potential for improvement.",
+        "{b}Overbearing{/b} \nYour slave, [all_girls_list[girl_index]['name']], is overbearing and believes herself superior. She resists subservience and expects special treatment. She is confident and bold, often asserting herself."
     ],
     "physicaltrait": [
         "None",
-        "{b}Good metabolism{/b} \nYour slave has a good metabolism, maintaining her health and energy easily. She handles physical labor well. She possesses an excellent metabolism, giving her great physical vitality and stamina.",
-        "{b}Excellent metabolism{/b} \nYour slave has a good metabolism, maintaining her health and energy easily. She handles physical labor well. She possesses an excellent metabolism, giving her great physical vitality and stamina. She has a gifted attribute, which will allow her to reach new heights.",
-        "{b}Very bad metabolism{/b} \nYour slave has a bad metabolism and struggles with energy and body regulation. She tires quickly and lacks fitness. She suffers from a very bad metabolism, gaining weight or losing energy easily. She has an ungifted attribute, which will limit her potential for improvement.",
-        "{b}Bad metabolism{/b} \nYour slave has a bad metabolism and struggles with energy and body regulation. She tires quickly and lacks fitness. She suffers from a very bad metabolism, gaining weight or losing energy easily."
+        "{b}Good metabolism{/b} \nYour slave, [all_girls_list[girl_index]['name']], has a good metabolism, maintaining her health and energy easily. She handles physical labor well. She possesses an excellent metabolism, giving her great physical vitality and stamina.",
+        "{b}Excellent metabolism{/b} \nYour slave, [all_girls_list[girl_index]['name']], has a good metabolism, maintaining her health and energy easily. She handles physical labor well. She possesses an excellent metabolism, giving her great physical vitality and stamina. She has a gifted attribute, which will allow her to reach new heights.",
+        "{b}Very bad metabolism{/b} \nYour slave, [all_girls_list[girl_index]['name']], has a bad metabolism and struggles with energy and body regulation. She tires quickly and lacks fitness. She suffers from a very bad metabolism, gaining weight or losing energy easily. She has an ungifted attribute, which will limit her potential for improvement.",
+        "{b}Bad metabolism{/b} \nYour slave, [all_girls_list[girl_index]['name']], has a bad metabolism and struggles with energy and body regulation. She tires quickly and lacks fitness. She suffers from a very bad metabolism, gaining weight or losing energy easily."
     ],
     "exoticismtrait": [
         "None",
-        "{b}Distinctive{/b} \nYour slave is distinctive and stands out with a unique charm. Her look draws attention and interest. She is strikingly exotic and exudes an allure few can resist.",
-        "{b}Strikingly Exotic{/b} \nYour slave is distinctive and stands out with a unique charm. Her look draws attention and interest. She is strikingly exotic and exudes an allure few can resist. She has a gifted attribute, which will allow her to reach new heights.",
-        "{b}Completely common{/b} \nYour slave is unremarkable, lacking any distinguishing features. Her look fails to attract attention in any way. She is completely common in appearance and blends into the crowd. She has an ungifted attribute, which will limit her potential for improvement.",
-        "{b}Unremarkable{/b} \nYour slave is unremarkable, lacking any distinguishing features. Her look fails to attract attention in any way. She is completely common in appearance and blends into the crowd."
+        "{b}Distinctive{/b} \nYour slave, [all_girls_list[girl_index]['name']], is distinctive and stands out with a unique charm. Her look draws attention and interest. She is strikingly exotic and exudes an allure few can resist.",
+        "{b}Strikingly Exotic{/b} \nYour slave, [all_girls_list[girl_index]['name']], is distinctive and stands out with a unique charm. Her look draws attention and interest. She is strikingly exotic and exudes an allure few can resist. She has a gifted attribute, which will allow her to reach new heights.",
+        "{b}Completely common{/b} \nYour slave, [all_girls_list[girl_index]['name']], is unremarkable, lacking any distinguishing features. Her look fails to attract attention in any way. She is completely common in appearance and blends into the crowd. She has an ungifted attribute, which will limit her potential for improvement.",
+        "{b}Unremarkable{/b} \nYour slave, [all_girls_list[girl_index]['name']], is unremarkable, lacking any distinguishing features. Her look fails to attract attention in any way. She is completely common in appearance and blends into the crowd."
     ],
     "styletrait": [
         "None",
-        "{b}Graceful{/b} \nYour slave is graceful and moves with ease. She exudes a natural elegance and poise, making her movements fluid and graceful.",
-        "{b}Very Graceful{/b} \nYour slave is graceful and moves with ease. She exudes a natural elegance and poise, making her movements fluid and graceful. She has a gifted attribute, which will allow her to reach new heights.",
-        "{b}Clumsy{/b} \nYour slave is clumsy and moves with difficulty. She struggles with balance and coordination, often tripping or bumping into things. She has an ungifted attribute, which will limit her potential for improvement.",
-        "{b}Ungraceful{/b} \nYour slave is clumsy and moves with difficulty. She struggles with balance and coordination, often tripping or bumping into things."
+        "{b}Graceful{/b} \nYour slave, [all_girls_list[girl_index]['name']], is graceful and moves with ease. She exudes a natural elegance and poise, making her movements fluid and graceful.",
+        "{b}Very Graceful{/b} \nYour slave, [all_girls_list[girl_index]['name']], is graceful and moves with ease. She exudes a natural elegance and poise, making her movements fluid and graceful. She has a gifted attribute, which will allow her to reach new heights.",
+        "{b}Clumsy{/b} \nYour slave, [all_girls_list[girl_index]['name']], is clumsy and moves with difficulty. She struggles with balance and coordination, often tripping or bumping into things. She has an ungifted attribute, which will limit her potential for improvement.",
+        "{b}Ungraceful{/b} \nYour slave, [all_girls_list[girl_index]['name']], is clumsy and moves with difficulty. She struggles with balance and coordination, often tripping or bumping into things."
     ]
 }
 define aura_descriptions = {
@@ -2797,7 +2797,7 @@ define dic_auto_tasks = {
         "text": night_rules_fuctions.alarm_text,
         "room": night_rules_fuctions.alarm_room,
         "extra": night_rules_fuctions.alarm_extra,
-    }
+    },
 }
 define dic_slave_rules = {
     "act_as_cook": {

@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/home.rpy", line 969: invalid syntax
-    "Leather Shackles":
-            ^^^^^^^^^^^^^^^^^^
+File "game/fuctions.rpy", line 606: expected ':'
+    if girl["enforce_rules"] and girl["equipment"]["neck"] == "Shock Collar"
+                                                                                ^
 
 Ren'Py Version: Ren'Py 8.4.1.25072401
-Sat Sep 13 13:35:30 2025
+Sat Sep 13 22:09:09 2025

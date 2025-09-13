@@ -106,5 +106,3 @@ init python:
         def enforce_rules_condition(girl):
             return girl["rules"]["enforce_rules"]
 
-
-
