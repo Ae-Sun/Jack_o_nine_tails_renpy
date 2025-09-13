@@ -1,68 +1,30 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/home.rpy", line 686, in script
-    $ handle_menu()
-  File "game/home.rpy", line 686, in <module>
-    $ handle_menu()
-  File "game/fuctions.rpy", line 2353, in handle_menu
-    renpy.call_screen(screens[current_menu])
-  File "game/home.rpy", line 2308, in execute
-    screen slave_rules_menu():
-  File "game/home.rpy", line 2308, in execute
-    screen slave_rules_menu():
-  File "game/home.rpy", line 2313, in execute
-    text dic_slave_conditions[text_slave_conditions_index] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.21,0.82) xmaximum 750
-  File "game/home.rpy", line 2313, in <module>
-    text dic_slave_conditions[text_slave_conditions_index] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.21,0.82) xmaximum 750
-KeyError: 'enforce_rules_rules'
+  File "game/home.rpy", line 447, in script
+    python:
+  File "game/home.rpy", line 493, in <module>
+    slave_menstruation_pregnant_update()
+  File "game/fuctions.rpy", line 1111, in slave_menstruation_pregnant_update
+    if girl["menstruation_cycle"]["day"] >= menstrual_phase:
+KeyError: 'day'
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/home.rpy", line 686, in script
-    $ handle_menu()
+  File "game/home.rpy", line 447, in script
+    python:
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/home.rpy", line 686, in <module>
-    $ handle_menu()
-  File "game/fuctions.rpy", line 2353, in handle_menu
-    renpy.call_screen(screens[current_menu])
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\exports\statementexports.py", line 345, in call_screen
-    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ui.py", line 301, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2218, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in interact_core
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\displayable.py", line 434, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 480, in visit_all
-    callback(self)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\core.py", line 2748, in <lambda>
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 491, in per_interact
-    self.update()
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\display\screen.py", line 700, in update
-    self.screen.function(**self.scope)
-  File "game/home.rpy", line 2308, in execute
-    screen slave_rules_menu():
-  File "game/home.rpy", line 2308, in execute
-    screen slave_rules_menu():
-  File "game/home.rpy", line 2313, in execute
-    text dic_slave_conditions[text_slave_conditions_index] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.21,0.82) xmaximum 750
-  File "game/home.rpy", line 2313, in <module>
-    text dic_slave_conditions[text_slave_conditions_index] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.21,0.82) xmaximum 750
-KeyError: 'enforce_rules_rules'
+  File "game/home.rpy", line 493, in <module>
+    slave_menstruation_pregnant_update()
+  File "game/fuctions.rpy", line 1111, in slave_menstruation_pregnant_update
+    if girl["menstruation_cycle"]["day"] >= menstrual_phase:
+KeyError: 'day'
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.3.7.25031702
 JONT Port by Rec3ks ver. 0.0.55
-Wed Sep 10 21:34:30 2025
+Fri Sep 12 20:43:46 2025
