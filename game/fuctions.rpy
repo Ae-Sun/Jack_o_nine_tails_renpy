@@ -871,16 +871,23 @@ init python:
             parasite_count = 0
             #calculated total food portion, total food portion x portion price = decade slave food bill
             girl["food_portion"] = girl["attributes"]["endurance"] + 1
+            girl["mood_state"]["bad_mood"]["pregnant"]["active"] = False
             if girl["pregnant"]["active"]:
+                girl["attributes"]["endurance"] -= 1
                 girl["food_portion"] += 1
-                if girl["pregnant"]["stage"] >= 1:
-                    girl["food_portion"] += 1
-                    all_girls_list[girl_index]["energy"] -= 1
-                if girl["pregnant"]["stage"] >= 2:
+                if girl["pregnant"]["stage"] == 1:
                     girl["mood_state"]["bad_mood"]["pregnant"]["active"] = True
-                    all_girls_list[girl_index]["energy"] -= 2
-                else:
-                    girl["mood_state"]["bad_mood"]["pregnant"]["active"] = False
+                    girl["food_portion"] += 1
+                    girl["energy"] -= 1
+                elif girl["pregnant"]["stage"] == 2:
+                    girl["mood_state"]["bad_mood"]["pregnant"]["active"] = True
+                    girl["food_portion"] += 1
+                    girl["energy"] -= 2
+                elif girl["pregnant"]["stage"] == 3:
+                    girl["mood_state"]["bad_mood"]["pregnant"]["active"] = True
+                    girl["food_portion"] += 2
+                    girl["energy"] -= 3
+
             if girl["egg_laying"]:
                 farm_food["egg_layer"]["portion"] += 1
             if girl["lactation"]["active"]:
@@ -1064,7 +1071,7 @@ init python:
 
 
     def slave_menstruation_pregnant_update():
-        global medic_value_15, debt_with_administration
+        global medic_value_15, debt_with_administration, sparks_37
         girl = all_girls_list[girl_index]
         if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["value"] != 0:
             if medic_value_15 > 2: # Need at least B+ medic to notice if slave is fertile
@@ -1121,6 +1128,18 @@ init python:
                     girl["energy"] += 2
                     girl["mood"] += 3
                     girl["menstruation_cycle"]["stage"] = 2
+                    if girl["semen_in_the_womb"] > 0:
+                        girl["semen_in_the_womb"] -= 1
+                        if not girl["egg_laying"]:
+                            roll = random.randint(0,9)
+                            if roll < 3:
+                                girl["pregnant"]["active"] = True
+                                girl["pregnant"]["days"] = 0
+                                girl["pregnant"]["stage"] = 0
+                        else:
+                            girl["pregnant"]["active"] = True
+                            girl["pregnant"]["days"] = 0
+                            girl["pregnant"]["stage"] = 0
                 elif girl["menstruation_cycle"]["day"] >= a
                     girl["mood_state"]["bad_mood"]["menstruation"]["active"] = False
                     girl["energy"] -= 1
@@ -1139,17 +1158,18 @@ init python:
         else:
             if not girl["egg_laying"]:
                 if girl["pregnant"]["days"] < 12*7
-                    girl["pregnant"]["state"] = 0
+                    girl["pregnant"]["stage"] = 0
                 elif girl["pregnant"]["days"] < 26*7
                     if girl["pregnant"]["days"] == 12*7:
                         msg("You notice your slave [all_girls_list[girl_index]['name']] is pregnant")
-                    girl["pregnant"]["state"] = 1
+                    girl["pregnant"]["stage"] = 1
                 elif girl["pregnant"]["days"] < 38*7
                     if girl["pregnant"]["days"] == 26*7:
                         msg("You notice your slave [all_girls_list[girl_index]['name']] has enter the middle fase of pregnacy, as a cultured citizen you know given born is HIGLY PROHIBITED in this land, you should abort before VATICAN take away what is yours")
-                    girl["pregnant"]["state"] = 2
+                    girl["pregnant"]["stage"] = 2
                 else:
-                    if girl["pregnant"]["days"] < 38*7
+                    girl["pregnant"]["stage"] = 3
+                    if girl["pregnant"]["days"] < 38*7:
                         msg("You notice your slave [all_girls_list[girl_index]['name']] has enter the final fase of pregnacy, you must abort immediately, There's no change your slave give born before she is taken away.")
                     roll = random.randint(1,30)
                     if roll + (girl["pregnant"]["days"] - 38*7) > 30:
@@ -1158,7 +1178,44 @@ init python:
                         msg("Oh no, VATICAN has taken away your slave. They left nothing behind except a fine of 500 Sparks.")
                         debt_with_administration += 500
                 girl["pregnant"]["days"] += 1
-            #TODO LACK EGG LAYING CODE
+            else:
+                # eggs are produce in batch
+                for i in range(3):
+                    if girl["pregnant"]["days"] <= i*3 + 3:
+                        girl["pregnant"]["days"] += 1
+                        girl["pregnant"]["stage"] = i
+                        girl["egg_laying_eggs"] += girl["mood"] / 2
+                        break
+
+                if girl["pregnant"]["days"] == 10:
+                    age_factor = 0
+                    if girl["age"] == 0: # Young slave are more fertile
+                        age_factor = 1
+                    if girl["age"] == 1: # lolis are debatable
+                        age_factor = 0
+                    if girl["age"] == 2: # Mature slave are less fertile
+                        age_factor = -3
+
+
+                    addictional_factor = girl["attributes"]["endurance"] + girl["skills"]["pet"] + age_factor + girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["value"]*3
+                    girl["egg_laying_eggs"] += addictional_factor
+                    girl["egg_laying_eggs"] = int(girl["egg_laying_eggs"])
+                    girl["egg_laying_eggs"] = max(girl["egg_laying_eggs"], 3)
+                    msg("You notice your slave [all_girls_list[girl_index]['name']] is laying [str(girl["egg_laying_eggs"])] eggs")
+                    for i in range(girl["egg_laying_eggs"]):
+                        if home_estate["kitchen"]["storage_capacity"] > home_estate["kitchen"]["storage_ingredients"]:
+                            storage["ingredients"]["Eggs"] += 1
+                            cryo_amount_calculation()
+                            girl["egg_laying_eggs"] -= 1
+                    girl["egg_laying_eggs"]
+                    spark += girl["egg_laying_eggs"] * 3
+                    msg("You notice your slave [all_girls_list[girl_index]['name']] is laying [str(girl["egg_laying_eggs"])] eggs, you sell the extras for [str(girl["egg_laying_eggs"] * 3)] Sparks")
+                    girl["pregnant"]["active"] = False 
+
+
+
+
+
 
 
             
@@ -1430,129 +1487,130 @@ init python:
         a = max(girl["attributes"]["beauty"], girl["attributes"]["fame"])
         rating = girl["rating"]
         girl["rating_help_text"] = ""
-        if rating == 0:
-            if a < 0.0:
-                girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
-            if girl["obedience"] < 1:
-                girl["rating_help_text"] += f"- {girl['name']} needs to learn obedience\n"
-            if girl["skills_sum"] < 5:
-                girl["rating_help_text"] += "- Teach this slave some common skills\n"
-            if girl["attributes_sum"] < 6:
-                girl["rating_help_text"] += "- Develop this slave’s basic attributes\n"
-            if girl["attributes"]["endurance"] < 2:
-                girl["rating_help_text"] += f"- {girl['name']} has low stamina and cannot rank higher or be sold to many customers\n"
+        match rating:
+            case 0:
+                if a < 0.0:
+                    girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
+                if girl["obedience"] < 1:
+                    girl["rating_help_text"] += f"- {girl['name']} needs to learn obedience\n"
+                if girl["skills_sum"] < 5:
+                    girl["rating_help_text"] += "- Teach this slave some common skills\n"
+                if girl["attributes_sum"] < 6:
+                    girl["rating_help_text"] += "- Develop this slave’s basic attributes\n"
+                if girl["attributes"]["endurance"] < 2:
+                    girl["rating_help_text"] += f"- {girl['name']} has low stamina and cannot rank higher or be sold to many customers\n"
 
-        elif rating == 1:
-            if a < 0.5:
-                girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
-            if girl["obedience"] < 5:
-                girl["rating_help_text"] += f"- {girl['name']} needs to be more obedient\n"
-            if girl["skills_sum"] < 10:
-                girl["rating_help_text"] += "- Teach this slave some common skills\n"
-            if girl["attributes_sum"] < 8:
-                girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+            case 1:
+                if a < 0.5:
+                    girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
+                if girl["obedience"] < 5:
+                    girl["rating_help_text"] += f"- {girl['name']} needs to be more obedient\n"
+                if girl["skills_sum"] < 10:
+                    girl["rating_help_text"] += "- Teach this slave some common skills\n"
+                if girl["attributes_sum"] < 8:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
 
-        elif rating == 2:
-            if a < 1.0:
-                girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
-            if girl["obedience"] < 6:
-                girl["rating_help_text"] += f"- {girl['name']} needs to be more obedient\n"
-            if girl["sex_skills_sum"] < 2:
-                girl["rating_help_text"] += "- Improve this slave’s sexual skills\n"
-            if girl["skills_sum"] < 15:
-                girl["rating_help_text"] += "- Improve this slave’s common skills\n"
-            if girl["attributes_sum"] < 10:
-                girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+            case 2:
+                if a < 1.0:
+                    girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
+                if girl["obedience"] < 6:
+                    girl["rating_help_text"] += f"- {girl['name']} needs to be more obedient\n"
+                if girl["sex_skills_sum"] < 2:
+                    girl["rating_help_text"] += "- Improve this slave’s sexual skills\n"
+                if girl["skills_sum"] < 15:
+                    girl["rating_help_text"] += "- Improve this slave’s common skills\n"
+                if girl["attributes_sum"] < 10:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
 
-        elif rating == 3:
-            if girl["attributes"]["endurance"] < 3:
-                girl["rating_help_text"] += f"- {girl['name']} has low stamina and cannot rank higher or be sold to many customers\n"
-            if girl["sex_skills_sum"] < 4:
-                girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
-            if girl["skills_sum"] < 18:
-                girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
-            if girl["attributes_sum"] < 12:
-                girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
-            if girl["aura"]["devotion"] < 1:
-                girl["rating_help_text"] += "- Encourage a strong sense of loyalty in this slave\n"
+            case 3:
+                if girl["attributes"]["endurance"] < 3:
+                    girl["rating_help_text"] += f"- {girl['name']} has low stamina and cannot rank higher or be sold to many customers\n"
+                if girl["sex_skills_sum"] < 4:
+                    girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
+                if girl["skills_sum"] < 18:
+                    girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
+                if girl["attributes_sum"] < 12:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+                if girl["aura"]["devotion"] < 1:
+                    girl["rating_help_text"] += "- Encourage a strong sense of loyalty in this slave\n"
 
-        elif rating == 4:
-            if a < 2.0:
-                girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
-            if girl["sex_skills_sum"] < 8:
-                girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
-            if girl["skills_sum"] < 20:
-                girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
-            if girl["attributes_sum"] < 13:
-                girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
-            if girl["aura"]["devotion"] < 2:
-                girl["rating_help_text"] += "- Encourage a stronger sense of loyalty in this slave\n"
-            if girl["skills_max"] < 2:
-                girl["rating_help_text"] += f"- {girl['name']} should master a total of 2 common skills\n"
-            if girl["sex_skill_max"] < 1:
-                girl["rating_help_text"] += f"- {girl['name']} should master 1 sexual skill\n"
+            case 4:
+                if a < 2.0:
+                    girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
+                if girl["sex_skills_sum"] < 8:
+                    girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
+                if girl["skills_sum"] < 20:
+                    girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
+                if girl["attributes_sum"] < 13:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+                if girl["aura"]["devotion"] < 2:
+                    girl["rating_help_text"] += "- Encourage a stronger sense of loyalty in this slave\n"
+                if girl["skills_max"] < 2:
+                    girl["rating_help_text"] += f"- {girl['name']} should master a total of 2 common skills\n"
+                if girl["sex_skill_max"] < 1:
+                    girl["rating_help_text"] += f"- {girl['name']} should master 1 sexual skill\n"
 
-        elif rating == 5:
-            if girl["sex_skills_sum"] < 10:
-                girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
-            if girl["skills_sum"] < 22:
-                girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
-            if girl["attributes_sum"] < 14:
-                girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
-            if girl["aura"]["devotion"] < 3:
-                girl["rating_help_text"] += "- Encourage a stronger sense of loyalty in this slave\n"
+            case 5:
+                if girl["sex_skills_sum"] < 10:
+                    girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
+                if girl["skills_sum"] < 22:
+                    girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
+                if girl["attributes_sum"] < 14:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+                if girl["aura"]["devotion"] < 3:
+                    girl["rating_help_text"] += "- Encourage a stronger sense of loyalty in this slave\n"
 
-        elif rating == 6:
-            if a < 3.0:
-                girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
-            if girl["sex_skills_sum"] < 15:
-                girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
-            if girl["skills_sum"] < 24:
-                girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
-            if girl["attributes_sum"] < 15:
-                girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
-            if girl["aura"]["devotion"] < 4:
-                girl["rating_help_text"] += "- Encourage a stronger sense of loyalty in this slave\n"
-            if girl["skills_max"] < 3:
-                girl["rating_help_text"] += f"- {girl['name']} should master a total of 3 common skills\n"
-            if girl["sex_skill_max"] < 2:
-                girl["rating_help_text"] += f"- {girl['name']} should master a total of 2 sexual skills\n"
+            case 6:
+                if a < 3.0:
+                    girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
+                if girl["sex_skills_sum"] < 15:
+                    girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
+                if girl["skills_sum"] < 24:
+                    girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
+                if girl["attributes_sum"] < 15:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+                if girl["aura"]["devotion"] < 4:
+                    girl["rating_help_text"] += "- Encourage a stronger sense of loyalty in this slave\n"
+                if girl["skills_max"] < 3:
+                    girl["rating_help_text"] += f"- {girl['name']} should master a total of 3 common skills\n"
+                if girl["sex_skill_max"] < 2:
+                    girl["rating_help_text"] += f"- {girl['name']} should master a total of 2 sexual skills\n"
 
-        elif rating == 7:
-            if girl["attributes_sum"] < 16:
-                girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
-            if girl["sex_skills_sum"] < 18:
-                girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
-            if girl["skills_sum"] < 26:
-                girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
+            case 7:
+                if girl["attributes_sum"] < 16:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+                if girl["sex_skills_sum"] < 18:
+                    girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
+                if girl["skills_sum"] < 26:
+                    girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
 
-        elif rating == 8:
-            if a < 4.0:
-                girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
-            if girl["sex_skills_sum"] < 20:
-                girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
-            if girl["skills_sum"] < 28:
-                girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
-            if girl["attributes_sum"] < 18:
-                girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
-            if girl["aura"]["devotion"] < 5:
-                girl["rating_help_text"] += "- Develop absolute loyalty in this slave\n"
-            if girl["skills_max"] < 4:
-                girl["rating_help_text"] += f"- {girl['name']} should master a total of 4 common skills\n"
-            if girl["sex_skill_max"] < 3:
-                girl["rating_help_text"] += f"- {girl['name']} should master a total of 3 sexual skills\n"
+            case 8:
+                if a < 4.0:
+                    girl["rating_help_text"] += f"- {girl['name']} is either not beautiful enough or famous enough to rank higher\n"
+                if girl["sex_skills_sum"] < 20:
+                    girl["rating_help_text"] += "- Further improve this slave’s sexual skills\n"
+                if girl["skills_sum"] < 28:
+                    girl["rating_help_text"] += "- Further improve this slave’s common skills\n"
+                if girl["attributes_sum"] < 18:
+                    girl["rating_help_text"] += "- Further develop this slave’s basic attributes\n"
+                if girl["aura"]["devotion"] < 5:
+                    girl["rating_help_text"] += "- Develop absolute loyalty in this slave\n"
+                if girl["skills_max"] < 4:
+                    girl["rating_help_text"] += f"- {girl['name']} should master a total of 4 common skills\n"
+                if girl["sex_skill_max"] < 3:
+                    girl["rating_help_text"] += f"- {girl['name']} should master a total of 3 sexual skills\n"
 
-        elif rating == 9:
-            if girl["sex_skills_sum"] < 25:
-                girl["rating_help_text"] += "- Perfect this slave’s sexual skills\n"
-            if girl["skills_sum"] < 30:
-                girl["rating_help_text"] += "- Perfect this slave’s common skills\n"
-            if girl["attributes_sum"] < 20:
-                girl["rating_help_text"] += "- Fully develop this slave’s basic attributes\n"
-            if girl["skills_max"] < 5:
-                girl["rating_help_text"] += f"- {girl['name']} should master a total of 5 common skills\n"
-            if girl["sex_skill_max"] < 4:
-                girl["rating_help_text"] += f"- {girl['name']} should master a total of 4 sexual skills\n"
+            case 9:
+                if girl["sex_skills_sum"] < 25:
+                    girl["rating_help_text"] += "- Perfect this slave’s sexual skills\n"
+                if girl["skills_sum"] < 30:
+                    girl["rating_help_text"] += "- Perfect this slave’s common skills\n"
+                if girl["attributes_sum"] < 20:
+                    girl["rating_help_text"] += "- Fully develop this slave’s basic attributes\n"
+                if girl["skills_max"] < 5:
+                    girl["rating_help_text"] += f"- {girl['name']} should master a total of 5 common skills\n"
+                if girl["sex_skill_max"] < 4:
+                    girl["rating_help_text"] += f"- {girl['name']} should master a total of 4 sexual skills\n"
         girl["rating_text_display"] = dic_rating_colored[all_girls_list[girl_index]["rating"]]
     def slave_specialization_check():
         global girl_index, client_slave_requierement_tier
@@ -1697,8 +1755,9 @@ init python:
             "max_capacity": 20,
             "current_capacity": 0,
         })
-
+        all_girls_list[girl_index].setdefault("semen_in_the_womb",0)
         all_girls_list[girl_index].setdefault("egg_laying",False)
+        all_girls_list[girl_index].setdefault("egg_laying_eggs",0)
         all_girls_list[girl_index].setdefault("attributes_sum",0)
         all_girls_list[girl_index].setdefault("skills_sum",0)
         all_girls_list[girl_index].setdefault("skills_max",0)
@@ -2892,7 +2951,6 @@ init python:
                         master_mood_state["bad_mood"][key]["active"] = False
                         master_mood_state["bad_mood"][key]["duration"] = master_mood_state["bad_mood"][key]["default_duration"]
                         break # only 1 moodlet can be lost per day
-
     def achievements_gain(): #all virtue and sin gain combined and reformulated
         global guilt_potencial, merit_potencial, target_skill
         global slave_diligence, interaction_willingness, interaction_repulse_difficulty
