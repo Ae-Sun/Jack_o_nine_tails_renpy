@@ -1141,7 +1141,11 @@ init python:
                             girl["pregnant"]["active"] = True
                             girl["pregnant"]["days"] = 0
                             girl["pregnant"]["stage"] = 0
+<<<<<<< HEAD
                 elif girl["menstruation_cycle"]["days"] >= a:
+=======
+                elif girl["menstruation_cycle"]["day"] >= a
+>>>>>>> main
                     girl["mood_state"]["bad_mood"]["menstruation"]["active"] = False
                     girl["energy"] -= 1
                     girl["mood"] -= 1
