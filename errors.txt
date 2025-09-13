@@ -2,8 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/fuctions.rpy", line 1141: invalid syntax
-                if girl["pregnant"]["days"] < 12*7
+File "game/home.rpy", line 969: invalid syntax
+    "Leather Shackles":
+            ^^^^^^^^^^^^^^^^^^
 
-Ren'Py Version: Ren'Py 8.3.7.25031702
-Fri Sep 12 20:39:00 2025
+Ren'Py Version: Ren'Py 8.4.1.25072401
+Sat Sep 13 13:35:30 2025

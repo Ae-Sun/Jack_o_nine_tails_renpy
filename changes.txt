@@ -48,3 +48,4 @@
 - diligence calculation no longer max cap to 5 (I believe this make the game a lot less grid)
 - Slave can only have guilt or merit, not both (simplified the code)
 - rework slave calories calculation
+- rework menstruation and pregnancy cycle

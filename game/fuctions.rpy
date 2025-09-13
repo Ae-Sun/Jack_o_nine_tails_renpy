@@ -779,7 +779,7 @@ init python:
     def diet_update():
         girl = all_girls_list[girl_index]
         def calories_check():
-            global medic_value_15, supplements_portion
+            global medic_value_15, supplements_portion, medical_calculation_assistant_fee
             if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"] != 0:
                 if not girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["revealed"]:
                     girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["revealed"] = True
@@ -789,16 +789,16 @@ init python:
                     girl["calories"] += girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"]
                 if girl["calories"] > 0:
                     girl["calories"] -= girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"]
-            if girl["portion_size"] == 4:
+            if girl["portion_size"] == 3:
                 girl["calories"] = 0
                 if medic_value_15 < 5: #TODO NEED ASSISTANT CODE 
                     medical_calculation_assistant_fee += 1
             if girl["calories"] < -1:
-                girl["experience"]["attributes"]["physical"] -= girl["calories"] + 1 # physical goes from Chubby to Bony. Calories goes negative, physical increase
+                girl["experience"]["attributes"]["physical"] += girl["calories"] + 1 
                 girl["experience"]["attributes"]["endurance"] += girl["calories"] + 1
                 girl["experience"]["aura"]["awareness"] += 1
             elif girl["calories"] > 1:
-                girl["experience"]["attributes"]["physical"] -= girl["calories"] + 1 # physical goes from Chubby to Bony. Calories goes positive, physical decrease
+                girl["experience"]["attributes"]["physical"] += girl["calories"] - 1 
             if girl["supplements"]:
                 if girl["attributes"]["endurance"] < 3:
                     girl["experience"]["attributes"]["endurance"] += 3
@@ -1115,16 +1115,18 @@ init python:
                             else:
                                 menstrual_phase -= 1
 
-                if girl["menstruation_cycle"]["days"] >= menstrual_phase:
+                if girl["menstruation_cycle"]["days"] <= menstrual_phase:
+                    if girl["menstruation_cycle"]["days"] == 0:
+                        girl["display_menstruation"] = True
                     girl["mood_state"]["bad_mood"]["menstruation"]["active"] = True
                     girl["energy"] -= 2
                     girl["menstruation_cycle"]["stage"] = 0
-                elif girl["menstruation_cycle"]["days"] >= menstrual_phase + follicular_phase:
+                elif girl["menstruation_cycle"]["days"] <= menstrual_phase + follicular_phase:
                     girl["mood_state"]["bad_mood"]["menstruation"]["active"] = False
                     girl["energy"] += 1
                     girl["mood"] += 1
                     girl["menstruation_cycle"]["stage"] = 1
-                elif girl["menstruation_cycle"]["days"] >= menstrual_phase + follicular_phase + ovulation:
+                elif girl["menstruation_cycle"]["days"] <= menstrual_phase + follicular_phase + ovulation:
                     girl["mood_state"]["bad_mood"]["menstruation"]["active"] = False # the cicle is reset when turning into a egg_layer so this is necessary
                     girl["energy"] += 2
                     girl["mood"] += 3
@@ -1141,18 +1143,14 @@ init python:
                             girl["pregnant"]["active"] = True
                             girl["pregnant"]["days"] = 0
                             girl["pregnant"]["stage"] = 0
-<<<<<<< HEAD
-                elif girl["menstruation_cycle"]["days"] >= a:
-=======
-                elif girl["menstruation_cycle"]["day"] >= a
->>>>>>> main
+                elif girl["menstruation_cycle"]["days"] <= a:
                     girl["mood_state"]["bad_mood"]["menstruation"]["active"] = False
                     girl["energy"] -= 1
                     girl["mood"] -= 1
                     girl["menstruation_cycle"]["stage"] = 3
                 #avance the day
                 girl["menstruation_cycle"]["days"] += 1
-                if girl["menstruation_cycle"]["days"] == a:
+                if girl["menstruation_cycle"]["days"] >= a:
                     girl["menstruation_cycle"]["days"] = 0
                     # fertile women have generally more consistent cicle 
                     if not girl["egg_laying"]:
@@ -1165,6 +1163,7 @@ init python:
                 if girl["pregnant"]["days"] < 12*7:
                     girl["pregnant"]["stage"] = 0
                 elif girl["pregnant"]["days"] < 26*7:
+                    if girl["pregnant"]["days"] == 12*7:
                         msg("You notice your slave [all_girls_list[girl_index]['name']] is pregnant")
                     girl["pregnant"]["state"] = 1
                 elif girl["pregnant"]["days"] < 38*7:
@@ -1173,7 +1172,7 @@ init python:
                     girl["pregnant"]["state"] = 2
                 else:
                     girl["pregnant"]["stage"] = 3
-                    if girl["pregnant"]["days"] < 38*7:
+                    if girl["pregnant"]["days"] == 38*7:
                         msg("You notice your slave [all_girls_list[girl_index]['name']] has enter the final fase of pregnacy, you must abort immediately, There's no change your slave give born before she is taken away.")
                     roll = random.randint(1,30)
                     if roll + (girl["pregnant"]["days"] - 38*7) > 30:
@@ -1205,7 +1204,7 @@ init python:
                     girl["egg_laying_eggs"] += addictional_factor
                     girl["egg_laying_eggs"] = int(girl["egg_laying_eggs"])
                     girl["egg_laying_eggs"] = max(girl["egg_laying_eggs"], 3)
-                    msg("You notice your slave [all_girls_list[girl_index]['name']] is laying [str(girl["egg_laying_eggs"])] eggs")
+                    msg(f"You notice your slave {all_girls_list[girl_index]['name']} is laying {str(all_girls_list[girl_index]['egg_laying_eggs'])} eggs")
                     for i in range(girl["egg_laying_eggs"]):
                         if home_estate["kitchen"]["storage_capacity"] > home_estate["kitchen"]["storage_ingredients"]:
                             storage["ingredients"]["Eggs"] += 1
@@ -1213,7 +1212,7 @@ init python:
                             girl["egg_laying_eggs"] -= 1
                     girl["egg_laying_eggs"]
                     spark += girl["egg_laying_eggs"] * 3
-                    msg("You notice your slave [all_girls_list[girl_index]['name']] is laying [str(girl["egg_laying_eggs"])] eggs, you sell the extras for [str(girl["egg_laying_eggs"] * 3)] Sparks")
+                    msg(f"You notice your slave {all_girls_list[girl_index]['name']} is laying {str(girl['egg_laying_eggs'])} eggs, you sell the extras for {str(girl['egg_laying_eggs'] * 3)} Sparks")
                     girl["pregnant"]["active"] = False 
 
 
@@ -1890,6 +1889,7 @@ init python:
         all_girls_list[girl_index].setdefault("slave_auto_bath_folder",False)
         all_girls_list[girl_index].setdefault("slave_auto_bath_self_folder",False)
         all_girls_list[girl_index].setdefault("slave_auto_alarm_folder",False)
+        all_girls_list[girl_index].setdefault("display_menstruation",False)
         #all_girls_list[girl_index].setdefault("max_daily_reward_level",0)
         #all_girls_list[girl_index].setdefault("max_daily_punishment_level",0)
         all_girls_list[girl_index]["day_bought"] = day_tracker

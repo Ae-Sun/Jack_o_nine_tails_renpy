@@ -548,7 +548,19 @@ label Next_day_event:
                     next_day_event_screen_text = b["text"](girl)
                     room_name = b["room"](girl)
                     girl[a] = False
-                    renpy.call_screen("next_day_event_screen")            
+                    renpy.call_screen("next_day_event_screen")
+            if girl["display_menstruation"]:
+                roll = random.randint(1,4)
+                if roll != 1:
+                    a = str(roll)
+                    pic_displayed = "scene/menstruation_" + a + ".webp"
+                else:
+                    pic_displayed = "scene/menstruation.webp"
+                next_day_event_screen_text = "You notice your slave have started the menstruation"
+                room_name = "Hall"
+                girl["display_menstruation"] = False
+                renpy.call_screen("next_day_event_screen")
+
         if master_auto["clean"]:
             pic_displayed = "scene/master_clean.webp"
             next_day_event_screen_text = dic_master_clean[stewardship_value_13]
@@ -966,7 +978,7 @@ label equipment_check:
                             girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["revealed"] = True
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"] <= 0:
                         girl["mood_state"]["bad_mood"]["clothes"]["active"] = True
-                "Leather Shackles":
+                case "Leather Shackles":
                     girl["worn_mood"] += girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] * 3
                     girl["daily_bonus"]["arousal"] += girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"]
                     girl["learning_bonus"]["sex"] +=1

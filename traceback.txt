@@ -3,28 +3,40 @@
 While running game code:
   File "game/home.rpy", line 447, in script
     python:
-  File "game/home.rpy", line 493, in <module>
-    slave_menstruation_pregnant_update()
-  File "game/fuctions.rpy", line 1111, in slave_menstruation_pregnant_update
-    if girl["menstruation_cycle"]["day"] >= menstrual_phase:
-KeyError: 'day'
+  File "game/home.rpy", line 501, in <module>
+    diet_update()
+    ~~~~~~~~~~~^^
+  File "game/fuctions.rpy", line 920, in diet_update
+    calories_check()
+    ~~~~~~~~~~~~~~^^
+  File "game/fuctions.rpy", line 795, in calories_check
+    medical_calculation_assistant_fee += 1
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^     
+UnboundLocalError: cannot access local variable 'medical_calculation_assistant_fee' where it is not associated with a value
 
 -- Full Traceback ------------------------------------------------------------
 
-Full traceback:
+Traceback (most recent call last):
   File "game/home.rpy", line 447, in script
     python:
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\ast.py", line 834, in execute
+  File "renpy/ast.py", line 1187, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\User\Downloads\renpy-8.3.7-sdk\renpy\python.py", line 1187, in py_exec_bytecode
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/python.py", line 1260, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/home.rpy", line 493, in <module>
-    slave_menstruation_pregnant_update()
-  File "game/fuctions.rpy", line 1111, in slave_menstruation_pregnant_update
-    if girl["menstruation_cycle"]["day"] >= menstrual_phase:
-KeyError: 'day'
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "game/home.rpy", line 501, in <module>
+    diet_update()
+    ~~~~~~~~~~~^^
+  File "game/fuctions.rpy", line 920, in diet_update
+    calories_check()
+    ~~~~~~~~~~~~~~^^
+  File "game/fuctions.rpy", line 795, in calories_check
+    medical_calculation_assistant_fee += 1
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^     
+UnboundLocalError: cannot access local variable 'medical_calculation_assistant_fee' where it is not associated with a value
 
-Windows-10-10.0.26100 AMD64
-Ren'Py 8.3.7.25031702
+Windows-11-10.0.26100-SP0 AMD64
+Ren'Py 8.4.1.25072401
 JONT Port by Rec3ks ver. 0.0.55
-Fri Sep 12 20:43:46 2025
+Sat Sep 13 14:08:23 2025
