@@ -121,6 +121,7 @@ default tentacle = {
     "type": ""
 }
 default target_skill = ""
+default target_skill_sexual = ["",""]
 default slave_diligence = 0
 default motivation_repulse = 0
 default interaction_willingness = 0
@@ -358,10 +359,8 @@ default storage = {
         "sex_items":{
             "Vibrator": 0,
             "V-balls": 0,
-            "Anal Pear": 0,
             "Reliable Gag": 0,
             "Chastity Belt": 0,
-            "Deprivation Suit": 0,
             "Urinal Rack": 0,
             "Toilet Seat": 0,
             "Stethoscope": 0
@@ -479,12 +478,8 @@ label next_day_labellabel:
                 slave_attack_escape_update()                
                 rules_reset_update() # must go before rules
                 # Rules
-                auto_cook_meal()
-                auto_maid()
-                auto_bath_slave_help_master()
-                slave_bath_selfwash_auto()
-                auto_alarm()
-
+                for rules in night_rules_fuctions.auto_list:
+                    night_rules_fuctions.rules()
                 energy_and_sleep_update() 
                 moodlet_new_day_slave_update()
                 assistant_passive_stats_update()

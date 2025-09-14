@@ -187,7 +187,7 @@ screen choose_inicial_girl_screen():
 
                 textbutton label_text:
                     style style_used
-                    action SetVariable("attribute_track_index", key), SetVariable("dictionary_track_index", val), SetVariable("dictionary_name", dic_traits_sexual_description), SetVariable("customboxcheck", True), Jump("choose_inicial_girl")
+                    action SetVariable("attribute_track_index", key), SetVariable("dictionary_track_index", val), SetVariable("dictionary_name", dic_traits_sexual_descriptions), SetVariable("customboxcheck", True), Jump("choose_inicial_girl")
         for key, values in dic_traits_miscellaneous.items():
 
             $ skill_info = traits_miscellaneous[key]

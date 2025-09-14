@@ -136,6 +136,7 @@ init python:
         global attribute_track_index, dictionary_track_index, dictionary_name
         global dic_traits_skills_descriptions, target_skill, interaction_willingness
         global domini_dictum_active, interaction_sex_acceptance, interaction_repulse_difficulty
+        global target_skill_sexual
         sex_acceptance_check()
         interaction_willingness = all_girls_list[girl_index]["obedience"] + interaction_sex_acceptance + interaction_repulse_difficulty
         if target_skill != "":
@@ -148,9 +149,16 @@ init python:
                     all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] = True
                     renpy.show_screen("tutorial_attribute")
                 interaction_willingness += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] * 3
-
-        if interaction_willingness > 0:
-            all_girls_list[girl_index]["daring"] = max(all_girls_list[girl_index]["daring"], interaction_repulse_difficulty)
+            else:
+                all_girls_list[girl_index]["daring"] = max(all_girls_list[girl_index]["daring"], interaction_repulse_difficulty)
+                target_skill_sexual2 = target_skill_sexual[0] + "trait"
+                if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["revealed"] and not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["value"] == 0: 
+                    attribute_track_index = target_skill_sexual2
+                    dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["value"] 
+                    dictionary_name = dic_traits_sexual_descriptions
+                    all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["revealed"] = True
+                    renpy.show_screen("tutorial_attribute")
+                interaction_willingness += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["value"] * 3
         if domini_dictum_active and interaction_willingness < 0:
             interaction_willingness = 0 
         achievements_gain()
@@ -173,7 +181,8 @@ init python:
         if all_girls_list[girl_index]["aura"]["awareness"] > motivation_repulse:
             slave_diligence += 1
         slave_diligence += (all_girls_list[girl_index]["aura"]["awareness"] + all_girls_list[girl_index]["aura"]["taming"] - 4) // 3
-        slave_diligence += all_girls_list[girl_index]["learning_bonus"][target_skill]
+        if target_skill != "" and target_skill != "sex":
+            slave_diligence += all_girls_list[girl_index]["learning_bonus"][target_skill]
         #TODO I Will ignore phobias for now WIP #rec3ks    
         slave_diligence += all_girls_list[girl_index]["daily_count"]["punishments"]
         if all_girls_list[girl_index]["energy"] < 0:
@@ -215,18 +224,9 @@ init python:
     def girl_skills_rise_checkcheck():
         global skill_adv_mul, target_skill, slave_diligence, tutor_modifier
         global attribute_track_index, dictionary_track_index, dictionary_name
-        target_skill2 = target_skill + "trait"
-        if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] and not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] == 0: 
-            attribute_track_index = target_skill2
-            dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 
-            dictionary_name = dic_traits_skills_descriptions
-            all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] = True
-            renpy.show_screen("tutorial_attribute")
-        if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] > 0:
-            all_girls_list[girl_index]["mood_state"]["good_mood"]["job"]["active"] = True
-        else:
-            all_girls_list[girl_index]["mood_state"]["bad_mood"]["job"]["active"] = True
-        #MAY HAVE SOME PROBLEMS IF MORE THAN ONE TRAIT IS REVEALED AT THE SAME TIME, but for now is good enough -rec3ks
+        global target_skill_sexual
+        if target_skill == "":
+            return
         #tutor modifier
         if all_girls_list[girl_index]["attributes"]["intelligence"] >= 5:
             tutor_modifier += 2
@@ -238,9 +238,31 @@ init python:
             tutor_modifier -= 1
         else:
             tutor_modifier -= 2
+        target_skill2 = target_skill + "trait"
+        if target_skill != "sex":
+            if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] and not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] == 0: 
+                attribute_track_index = target_skill2
+                dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 
+                dictionary_name = dic_traits_skills_descriptions
+                all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] = True
+                renpy.show_screen("tutorial_attribute")
+            if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] > 0:
+                all_girls_list[girl_index]["mood_state"]["good_mood"]["job"]["active"] = True
+            else:
+                all_girls_list[girl_index]["mood_state"]["bad_mood"]["job"]["active"] = True
+        else:
+            target_skill_sexual2 = target_skill_sexual[0] + "trait"
+            if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["revealed"] and not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["value"] == 0: 
+                attribute_track_index = target_skill_sexual2
+                dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["value"] 
+                dictionary_name = dic_traits_sexual_descriptions
+                all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["revealed"] = True
+                renpy.show_screen("tutorial_attribute")
+            if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["value"] > 0:
+                all_girls_list[girl_index]["mood_state"]["good_mood"]["job"]["active"] = True
+            else:
+                all_girls_list[girl_index]["mood_state"]["bad_mood"]["job"]["active"] = True
         skill_rise = ((max(1,tutor_modifier)) * slave_diligence) / 4   
-        if target_skill == "":
-            return
         if target_skill == "athletics":
             skill_rise = skill_rise / 2
             if skill_rise > 3:
@@ -258,7 +280,10 @@ init python:
             if skill_rise < 1: 
                 skill_rise = 1
             skill_rise = skill_rise // 1 #this is to avoid floating point numbers
-            all_girls_list[girl_index]["experience"]["skills"][target_skill] += skill_rise * skill_adv_mul
+            if target_skill != "sex":
+                all_girls_list[girl_index]["experience"]["skills"][target_skill] += skill_rise * skill_adv_mul
+            else:
+                all_girls_list[girl_index]["experience"]["sex_experience"][target_skill_sexual[0]][target_skill_sexual[1]] += skill_rise * skill_adv_mul
         target_skill = ""
     def cryo_ingredients_loss_calculation():
      
@@ -375,99 +400,6 @@ init python:
         girl_index = save_girl_index
         # Update master hygiene
         hygiene_value_9 = calculate_hygiene(hygiene_experience_value_9)
-    def auto_cook_meal():
-        global already_prepared, already_ate, food_meat_info, home_mess_value
-        global all_girls_list, dic_foods_list, storage, dic_hygiene_value_rate
-        global girl_index, target_skill, tutor_modifier
-        all_girls_list[girl_index]["slave_auto_cook"] = False
-        if home_estate["kitchen"]["storage_capacity"] <= 0:
-            return
-        
-        girl = all_girls_list[girl_index]
-        target_skill = "cooking"
-        required_obedience = (
-            -6 
-            - girl["attributes"]["pride"] // 2 + 2
-            + girl["attributes"]["nature"] // 3 
-            + girl["attributes"]["intelligence"] // 3
-        )
-
-        if (not already_prepared
-            and girl["rules"]["act_as_cook"]
-            and girl["energy"] > 0
-            and girl["obedience"] >= required_obedience):
-
-            if not already_ate or food_actions["eat_best_food"]:
-                girl["slave_auto_cook"] = True
-                tutor_modifier = 0
-                # Cooking skill level
-                slave_skill = min(
-                    girl["skills"]["cooking"],
-                    max(1, girl["mood"] // 1),
-                    5
-                )
-
-                keys_list = ["D- quality", "C- quality", "B+ quality", "A+ quality", "S+ quality"]
-                n = slave_skill - 1
-                food_not_found = True
-                roll = random.randint(0, 1000000)
-
-                # Try recipes from highest to lowest skill tier
-                while n >= 0 and food_not_found:
-                    for i, entry in enumerate(dic_foods_list[keys_list[n]]):
-                        i = (i + roll) % len(dic_foods_list[keys_list[n]])
-                        missing = 0
-
-                        # Check if ingredients are available
-                        for slot in range(4):
-                            ingredient = dic_foods_list[keys_list[n]][i][1][slot]
-                            if ingredient != "none" and storage["ingredients"][ingredient] == 0:
-                                missing += 1
-
-                        if missing == 0:
-                            #dont cook if cooking doesn't improve the quality
-                            if food_meat_info["quality"] < n + 1:
-                                #don't cook if kitchen isn't good enough. this actually CAP the cooking quality
-                                if dic_improvement_rooms["kitchen"][home_estate["kitchen"]["type"]]["modifier"] >= n + 1:
-                                    already_prepared = True
-                                    food_not_found = False
-
-                                    # Deduct ingredients
-                                    for slot in range(4):
-                                        ingredient = dic_foods_list[keys_list[n]][i][1][slot]
-                                        if ingredient != "none":
-                                            storage["ingredients"][ingredient] -= 1
-
-                                    already_ate = True
-                                    food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
-                                    food_meat_info["quality"] = n + 1
-
-                                    # Check sub-par diligence
-                                    if food_meat_info["quality"] < slave_skill: 
-                                        tutor_modifier -= 5
-                            else:
-                                return
-                    n -= 1
-
-                # Default to canned food
-                if food_not_found and food_meat_info["quality"] == 0:
-                    already_ate = True
-                    already_prepared = True
-                    food_meat_info["quality"] = 0
-                    food_meat_info["name"] = "Canned food"
-
-                # Hygiene and energy changes
-                home_mess_value += dic_hygiene_value_rate["cook"]
-                girl["hygiene_rate"] += dic_hygiene_value_rate["cook"]
-
-                slave_energy_drop_calculation()
-                interaction_willingness_check()
-                diligence333_check333()
-                girl_skills_rise_checkcheck()
-                target_skill = ""
-                girl["already_done"]["Servant"] += 1 #must go last
-        else:
-            girl["rules_broken"]["slave_auto_cook"] = True
     def master_cook_meal():
         global already_prepared, already_ate, food_meat_info, home_mess_value
         global dic_foods_list, storage, dic_hygiene_value_rate
@@ -541,48 +473,6 @@ init python:
             home_mess_value += dic_hygiene_value_rate["cook"]
             hygiene_experience_value_9 += dic_hygiene_value_rate["cook"]
             master_energy_drop_calculation()
-    def auto_maid():
-        global home_hygiene_value, home_mess_value, target_skill
-        if home_hygiene_value >= 4:
-            return
-        girl = all_girls_list[girl_index]
-        target_skill = "maid"
-        required_obedience = (
-            -5 
-            + girl["attributes"]["endurance"] // 2 - 1
-            + girl["attributes"]["intelligence"] // 2 - 1
-            - girl["attributes"]["pride"] // 2 + 2
-            + girl["attributes"]["nature"] // 3
-            + girl["attributes"]["intelligence"] // 2 - 1
-        )
-
-        if (girl["rules"]["act_as_maid"]
-            and girl["energy"] > 0
-            and girl["obedience"] >= required_obedience):
-            girl["slave_auto_maid"] = True
-            tutor_modifier = 0
-
-            slave_skill = min(
-                girl["skills"]["maid"],
-                girl["mood"] + 2 // 1
-            )
-            slave_skill = max(slave_skill, 0)
-            girl["maid_slave_skill_performance"] = int(slave_skill)
-
-            home_mess_value -= max(8, slave_skill*16)
-            home_mess_value = max(0, home_mess_value)
-            if slave_skill < 3 and home_mess_value == 0: 
-                home_mess_value = 10
-            slave_energy_drop_calculation()
-            girl["hygiene_rate"] += dic_hygiene_value_rate["maid"] - home_hygiene_value + 5
-            interaction_willingness_check()
-            diligence333_check333()
-            girl_skills_rise_checkcheck()
-            target_skill = ""
-            girl["already_done"]["Servant"] += 1 #must go last
-        else:
-            target_skill = ""
-            girl["rules_broken"]["slave_auto_maid"] = True 
     def master_clean():
         global home_hygiene_value, home_mess_value, energy_value , stewardship_experience_value_13
         global skill_adv_mul, personality_value_2, hygiene_experience_value_9
@@ -597,34 +487,7 @@ init python:
         hygiene_experience_value_9 += dic_hygiene_value_rate["maid"] - home_hygiene_value + 5
         home_mess_value -= max(8,stewardship_value_13*16)
         home_mess_value = max(0, home_mess_value)
-    def auto_slave_humility():
-        global girl_index
-        girl = all_girls_list[girl_index]
-        if not girl["rules"]["behave_humility"]:
-            return
-        if girl["obedience"] < 1 + dic_girl_psy_status[girl["psy_status"]] - girl["fear"]:
-            if girl["enforce_rules"] and girl["equipment"]["neck"] == "Shock Collar":
-                girl["mood_state"]["bad_mood"]["rules"]["active"] = True
-                girl["rules"]["num_rules_wanttobreak"] += 1
-                girl["rules_explain"]["behave_humility"] += f"{all_girls_list[girl_index]['name']} calls you 'Master' as her collar inexorably enforces."
-            else:
-                girl["rules_broken"]["behave_humility"] = True
-                girl["rules_explain"]["behave_humility"] += f"{all_girls_list[girl_index]['name']} refuses to call you 'Master'."
-        if not girl["rules_broken"]["behave_humility"]:
-            a = girl["attributes"]["nature"] + girl["attributes"]["pride"] - girl["aura"]["devotion"]
-            girl["mood"] -= a
-            if a > 0 :
-                girl["rules_explain"]["behave_humility"] += " But she is clearly too willful or proud to enjoy it."
-            else:
-                girl["rules_explain"]["behave_humility"] += " And she seems to derive some satisfaction from it."
-    def auto_slave_pet():
-        global girl_index
-        girl = all_girls_list[girl_index]
-        if girl["obedience"] < 0 - 5*girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"]:
-            if (girl["enforce_rules"] and girl["equipment"]["clothes"] == "Petsuit"
-            or girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"] > 0 
-            or girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] > 0):
-                #TODO next thing to do  
+    
     def moodlet_new_day_slave_update(): # this function update moodlet that are not related to specific function
         global girl_index
         girl = all_girls_list[girl_index]
@@ -1242,27 +1105,6 @@ init python:
                     spark += girl["egg_laying_eggs"] * 3
                     msg(f"You notice your slave {all_girls_list[girl_index]['name']} is laying {str(girl['egg_laying_eggs'])} eggs, you sell the extras for {str(girl['egg_laying_eggs'] * 3)} Sparks")
                     girl["pregnant"]["active"] = False 
-
-
-
-
-
-
-
-            
-
-            
-            
-                
-
-
-        
-            
-            
-
-
-
-
     def style_daring_energised_drop_update():
         all_girls_list[girl_index]["exertion"] = 0
         all_girls_list[girl_index]["epilation"] = max(all_girls_list[girl_index]["epilation"]-1,0)
@@ -1305,37 +1147,7 @@ init python:
         if strength_value_1 < 3:
             strength_experience_value_1 += 1 * skill_adv_mul
 
-    def auto_bath_slave_help_master():
-        global hygiene_value_9, shameful, interaction_repulse_difficulty
-        global interaction_willingness, libido_value_4, hygiene_experience_value_9
-        global girl_index, mood_value_10, home_mess_value, already_bath
-        global did_bath_yesterday, target_skill
-        target_skill = "sex"
-        if home_estate["bathroom"]["type"] == "":
-            return
-        if hygiene_value_9 > 4 or already_bath:
-            return
-
-        girl = all_girls_list[girl_index]
-        if girl["rules"]["bath_slave"] and girl["energy"] > -1:
-            if girl["aura"]["devotion"] == 0:
-                shameful = True
-            interaction_repulse_difficulty = 0
-            interaction_willingness_check()
-            target_skill = ""
-            if interaction_willingness < 0:
-                girl["rules_broken"]["bath_slave"] = True
-            else:
-                girl["arousal_rate"] -= libido_value_4
-                did_bath_yesterday = True
-                master_mood_state["good_mood"]["pos_self_clean"]["active"] = True
-                mood_value_10 += (min(girl["sex_experience"]["petting"]["petting"], girl["sex_experience"]["oral_pleasure"]["oral_pleasure"])) / 10 
-                slave_bath_alone()
-                home_mess_value += 3
-                girl["slave_auto_bath"] = True
-                already_bath = True
-                hygiene_value_9 = 5 #this is necessary since hygiene update check is made only on home screen 
-                hygiene_experience_value_9 = 0 
+  
     def beauty_style_exoticism_slave_calculation():
         global girl_index
         girl = all_girls_list[girl_index]
@@ -1663,32 +1475,6 @@ init python:
                     missing = 1
             if missing == 0:
                 girl["specialization"][key] = True
-    def slave_bath_alone():
-        global girl_index, home_mess_value
-        if home_estate["bathroom"]["type"] == "":
-            return
-        girl = all_girls_list[girl_index]
-        girl["mood"] += (5 - girl["hygiene"]) / 5 # up to 1 mood, 2 is too op
-        girl["did_bath_yesterday"] = True
-        girl["mood_state"]["good_mood"]["slave_clean"]["active"] = True
-        girl["mood_state"]["good_mood"]["slave_clean"]["weight"] = 0 #too op
-        girl["make_up"] = 0
-        girl["perfume"] = 0
-        home_mess_value += 1
-        girl["energy"] -= 1
-        girl["already_bath"] = True
-        girl["hygiene"] = 5
-        girl["hygiene_rate"] = 0
-    def slave_bath_selfwash_auto():
-        global girl_index, home_mess_value
-        girl = all_girls_list[girl_index]
-        if home_estate["bathroom"]["type"] == "":
-            return
-        if girl["energy"] < 0 or girl["hygiene"] > 2 or girl["already_bath"]:
-            return
-        home_mess_value += 3
-        slave_bath_alone()
-        girl["slave_auto_bath_self"] = True
     def slave_bath_selfwash_ask():
         global girl_index, home_mess_value
         girl = all_girls_list[girl_index]
@@ -1909,6 +1695,7 @@ init python:
         all_girls_list[girl_index].setdefault("slave_auto_alarm",False)
         all_girls_list[girl_index].setdefault("did_bath_yesterday",False)
         all_girls_list[girl_index].setdefault("already_bath",False)
+        all_girls_list[girl_index].setdefault("slave_auto_masturbation",False)
         # variables need for screen logic
         all_girls_list[girl_index].setdefault("maid_slave_skill_performance",0)
         # custom images
@@ -1918,6 +1705,7 @@ init python:
         all_girls_list[girl_index].setdefault("slave_auto_bath_folder",False)
         all_girls_list[girl_index].setdefault("slave_auto_bath_self_folder",False)
         all_girls_list[girl_index].setdefault("slave_auto_alarm_folder",False)
+        all_girls_list[girl_index].setdefault("slave_auto_masturbation_folder",False)
         all_girls_list[girl_index].setdefault("display_menstruation",False)
         #all_girls_list[girl_index].setdefault("max_daily_reward_level",0)
         #all_girls_list[girl_index].setdefault("max_daily_punishment_level",0)
@@ -2886,59 +2674,6 @@ init python:
             if excitement_experience_value >= i[1]:
                 excitement_value = i[0]
         excitement_textvalue = dic_master_excitement_colored[excitement_value]
-    def auto_alarm():
-        global girl_index, stimulating, interaction_willingness
-        global damage, brusing, excitement_value, penetration_value_23
-        girl = all_girls_list[girl_index]
-        if not girl["rules"]["behave_alarm"]:
-            return
-        stimulating = True
-        interaction_repulse_difficulty = 6
-        interaction_willingness_check()
-        if interaction_willingness < 0:
-            # if girl["rules"]["enforce_rules"]: #and assistant TODO
-            #     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
-            #     girl["rules"]["num_rules_wanttobreak"] += 1
-            #     # lack assistant code
-            #     girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["assistant_pass"]
-            #     damage = 3
-            #     brusing = 1
-            #     slave_damage_calculation()
-            #     girl["experience"]["aura"]["despair"] += girl["attributes"]["empathy"]*2
-            # else:
-            #     girl["rules_broken"]["behave_alarm"] = True
-            #     #lack assistant code 
-            #     girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["assistant_fail"]
-            girl["rules_broken"]["behave_alarm"] = True
-            return
-        else:
-            girl["rules_explain"]["behave_alarm"] += "[all_girls_list[girl_index]['name']] enters your room in the morning and wakes you up with a blowjob."
-        if not girl["rules_broken"]["behave_alarm"]:
-            girl["slave_auto_alarm"] = True
-            a = (20
-            + girl["attributes"]["temperament"] 
-            + (5 - girl["attributes"]["pride"])
-            + girl["attributes"]["nature"]
-            + girl["aura"]["despair"]
-            - girl["aura"]["devotion"] * 4
-            - girl["sex_experience"]["oral_pleasure"]["blowjob"] * 2
-            - girl["aura"]["taming"]
-            - girl["aura"]["habit"]
-            - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]*3
-            - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"]*3)/10 # TODO I didn't add meekness, I not sure if add submissive/dominant as trait
-            girl["mood"] -= a # look alot but this is taking in considerantion the 80 - 90% new day mood reduction. (Tested with the original game, pretty close)
-            b = max(0, min(excitement_value + 1, girl["sex_experience"]["oral_pleasure"]["blowjob"] - penetration_value_23 // 2))
-            if interaction_willingness < 0 or a > 0: #slave who is not willing but actually like it , will do it anyways
-                if b < 1:
-                    girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["poor_job"]
-                else:
-                    girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["disgust"]
-            elif b > 0:
-                girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["good_job"]
-            elif excitement_value < -2:
-                girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["not_enough_excitement"]
-            else:
-                girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["almost_enough_excitement"]
     def slave_damage_calculation():
         if damage > girl["attributes"]["endurance"]:
             girl["injuries_rate"] += damage

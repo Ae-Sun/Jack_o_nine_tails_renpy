@@ -480,7 +480,7 @@ define dic_traits_sexual = {
     "xenophily":         ["None", "Likes Xenophily", "Loves Xenophily", "Hates Xenophily", "Dislikes Xenophily"]
 }
 
-define dic_traits_sexual_description = {
+define dic_traits_sexual_descriptions = {
     "pettingtrait": [
         "Null",
         "{b}Likes Petting{/b} \nYour slave, [all_girls_list[girl_index]['name']], absolutely loves being petted and craves physical closeness. This will greatly enhance her sensuality!",
@@ -2768,35 +2768,35 @@ define dic_girl_rules_special_text = {
 define dic_auto_tasks = {
     "slave_auto_sleep": {
         "condition": "slave_auto_sleep",
-        "text": night_rules_fuctions.sleep_text,
-        "room": night_rules_fuctions.sleep_room,
+        "text": night_rules_mini_fuctions.sleep_text,
+        "room": night_rules_mini_fuctions.sleep_room,
     },
     "slave_auto_cook": {
         "condition": "slave_auto_cook",
-        "text": night_rules_fuctions.cook_text,
-        "room": night_rules_fuctions.cook_room,
-        "extra": night_rules_fuctions.cook_extra,
+        "text": night_rules_mini_fuctions.cook_text,
+        "room": night_rules_mini_fuctions.cook_room,
+        "extra": night_rules_mini_fuctions.cook_extra,
     },
     "slave_auto_maid": {
         "condition": "slave_auto_maid",
-        "text": night_rules_fuctions.maid_text,
-        "room": night_rules_fuctions.maid_room,
+        "text": night_rules_mini_fuctions.maid_text,
+        "room": night_rules_mini_fuctions.maid_room,
     },
     "slave_auto_bath": {
         "condition": "slave_auto_bath",
-        "text": night_rules_fuctions.bath_text,
-        "room": night_rules_fuctions.bath_room,
+        "text": night_rules_mini_fuctions.bath_text,
+        "room": night_rules_mini_fuctions.bath_room,
     },
     "slave_auto_bath_self": {
         "condition": "slave_auto_bath_self",
-        "text": night_rules_fuctions.bath_self_text,
-        "room": night_rules_fuctions.bath_self_room,
+        "text": night_rules_mini_fuctions.bath_self_text,
+        "room": night_rules_mini_fuctions.bath_self_room,
     },
     "slave_auto_alarm": {
         "condition":"slave_auto_alarm",
-        "text": night_rules_fuctions.alarm_text,
-        "room": night_rules_fuctions.alarm_room,
-        "extra": night_rules_fuctions.alarm_extra,
+        "text": night_rules_mini_fuctions.alarm_text,
+        "room": night_rules_mini_fuctions.alarm_room,
+        "extra": night_rules_mini_fuctions.alarm_extra,
     },
 }
 define dic_slave_rules = {
