@@ -39,6 +39,8 @@ label slave_bathing_label():
 
 screen interaction_screen():
     add bgstyle2 xsize 1280 ysize 720 
+    if home_decoration_mini_show:
+        add home_decoration_mini xsize 795 ysize 535
     add pic_displayed xsize 795 ysize 535
     
 screen interaction_textdisplay_screen():

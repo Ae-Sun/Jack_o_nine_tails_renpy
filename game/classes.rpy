@@ -28,6 +28,19 @@ init python:
             return "Master bedroom"
         def alarm_extra():
             return {"sex_picture": True}
+        def masturbation_text(girl):
+            return girl["rules_explain"]["no_masturbation"]
+        def masturbation_extra():
+            return {"sex_picture": True}
+        def masturbation_room(girl):
+            return "Slave bedroom"
+        def deny_orgasm_text(girl):
+            return girl["rules_explain"]["deny_orgasm"]
+        def deny_orgasm_extra():
+            return {"sex_picture": True}
+        def deny_orgasm_room(girl):
+            return "Slave bedroom"
+
 
     class rules_fuctions():
         # ACT AS COOK
@@ -96,11 +109,12 @@ init python:
 
         # NO MASTURBATION
         def no_masturbation_condition(girl):
-            return girl["rules"]["no_masturbation"]
+            return girl["rules"]["no_masturbation"] 
 
         # USE VAGINAL BEADS
         def use_vaginal_beads_condition(girl):
             return girl["rules"]["use_vaginal_beads"]
+
 
 
         # ENFORCE RULES
@@ -199,7 +213,8 @@ init python:
                     target_skill = ""
                     girl["already_done"]["Servant"] += 1 #must go last
             else:
-                girl["rules_broken"]["slave_auto_cook"] = True
+                girl["rules_broken"]["act_as_cook"] = True
+                girl["rules_explain"]["act_as_cook"] = f"{girl["name"]} is disobedient and doesn't want to cook."
         def auto_slave_maid():  
             global home_hygiene_value, home_mess_value, target_skill
             if home_hygiene_value >= 4:
@@ -241,13 +256,16 @@ init python:
                 girl["already_done"]["Servant"] += 1 #must go last
             else:
                 target_skill = ""
-                girl["rules_broken"]["slave_auto_maid"] = True 
+                girl["rules_broken"]["act_as_maid"] = True 
+                girl["rules_explain"]["act_as_maid"] = f"{girl["name"]} is disobedient and doesn't want to clean."
         def auto_bath_slave_help_master():
             global hygiene_value_9, shameful, interaction_repulse_difficulty
             global interaction_willingness, libido_value_4, hygiene_experience_value_9
             global girl_index, mood_value_10, home_mess_value, already_bath
-            global did_bath_yesterday, target_skill
+            global did_bath_yesterday, target_skill, target_skill_sexual
             target_skill = "sex"
+            target_skill_sexual = ["petting","rubbing"]
+
             if home_estate["bathroom"]["type"] == "":
                 return
             if hygiene_value_9 > 4 or already_bath:
@@ -262,12 +280,13 @@ init python:
                 target_skill = ""
                 if interaction_willingness < 0:
                     girl["rules_broken"]["bath_slave"] = True
+                    girl["rules_explain"]["bath_slave"] = f"{girl["name"]} is disobedient and doesn't want to bath master."
                 else:
                     girl["arousal_rate"] -= libido_value_4
                     did_bath_yesterday = True
                     master_mood_state["good_mood"]["pos_self_clean"]["active"] = True
                     mood_value_10 += (min(girl["sex_experience"]["petting"]["petting"], girl["sex_experience"]["oral_pleasure"]["oral_pleasure"])) / 10 
-                    slave_bath_alone()
+                    night_rules_fuctions.slave_bath_alone()
                     home_mess_value += 3
                     girl["slave_auto_bath"] = True
                     already_bath = True
@@ -323,6 +342,7 @@ init python:
                 #     #lack assistant code 
                 #     girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["assistant_fail"]P
                 girl["rules_broken"]["behave_alarm"] = True
+                girl["rules_explain"]["behave_alarm"] += "[all_girls_list[girl_index]['name']] doesn't enters your room in the morning."
                 return
             else:
                 girl["rules_explain"]["behave_alarm"] += "[all_girls_list[girl_index]['name']] enters your room in the morning and wakes you up with a blowjob."
@@ -357,8 +377,8 @@ init python:
             girl = all_girls_list[girl_index]
             if not girl["rules"]["behave_humility"]:
                 return
-            if girl["obedience"] < 1 + dic_girl_psy_status[girl["psy_status"]] - girl["fear"]:
-                if girl["enforce_rules"] and girl["equipment"]["neck"] == "Shock Collar":
+            if girl["obedience"] < 1 + dic_girl_psy_status[girl["psy_status"]] - girl["aura"]["fear"]:
+                if girl["rules"]["enforce_rules"] and girl["equipment"]["neck"] == "Shock Collar":
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                     girl["rules"]["num_rules_wanttobreak"] += 1
                     girl["rules_explain"]["behave_humility"] += f"{all_girls_list[girl_index]['name']} calls you 'Master' as her collar inexorably enforces."
@@ -380,7 +400,7 @@ init python:
             if not girl["rules"]["behave_pet"]:
                 return
             if girl["obedience"] < 0 - 5*girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] + dic_girl_psy_status[girl["psy_status"]]:
-                if girl["enforce_rules"] and girl["equipment"]["clothes"] == "Petsuit":
+                if girl["rules"]["enforce_rules"] and girl["equipment"]["clothes"] == "Petsuit":
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                     girl["rules"]["num_rules_wanttobreak"] += 1
                     girl["rules_explain"]["behave_pet"] += f"{all_girls_list[girl_index]['name']} cannot break out of her pet suit, maintaining her on all fours all day long. "
@@ -402,7 +422,7 @@ init python:
             if not girl["rules"]["behave_silence"]:
                 return
             if girl["obedience"] < girl["attributes"]["temperament"] + dic_girl_psy_status[girl["psy_status"]]:
-                if girl["enforce_rules"] and storage["house"]["sex_items"]["Reliable Gag"] > 0:
+                if girl["rules"]["enforce_rules"] and storage["house"]["sex_items"]["Reliable Gag"] > 0:
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                     girl["rules"]["num_rules_wanttobreak"] += 1
                     girl["rules_explain"]["behave_silence"] += f"{all_girls_list[girl_index]['name']} regulary moans behind her gag. "
@@ -429,11 +449,11 @@ init python:
             interaction_repulse_difficulty = 26
             interaction_willingness_check()
             if interaction_willingness < 0:
-                if girl["enforce_rules"] and storage["house"]["sex_items"]["Toilet Seat"] > 0:
+                if girl["rules"]["enforce_rules"] and storage["house"]["sex_items"]["Toilet Seat"] > 0:
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                     girl["rules"]["num_rules_wanttobreak"] += 1
                     girl["rules_explain"]["behave_toilet"] += f"{all_girls_list[girl_index]['name']} would keep her mouth sealed or run away if not for the gag that force-spreads her lips and the toilet rack to which she is steadily tied."
-                    girl["aura"]["despair"] -= interaction_willingness
+                    girl["experience"]["aura"]["despair"] -= interaction_willingness
                 else:
                     girl["rules_broken"]["behave_toilet"] = True
                     girl["rules_explain"]["behave_toilet"] += f"{all_girls_list[girl_index]['name']} refuses to take your shit. Using a special toilet seat could solve the problem."
@@ -457,11 +477,11 @@ init python:
             interaction_repulse_difficulty = 18
             interaction_willingness_check()
             if interaction_willingness < 0:
-                if girl["enforce_rules"] and storage["house"]["sex_items"]["Urinal Rack"] > 0:
+                if girl["rules"]["enforce_rules"] and storage["house"]["sex_items"]["Urinal Rack"] > 0:
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                     girl["rules"]["num_rules_wanttobreak"] += 1
                     girl["rules_explain"]["behave_toilet"] += f"{all_girls_list[girl_index]['name']} rwould flee if not restrained on the urinal rack."
-                    girl["aura"]["despair"] -= interaction_willingness
+                    girl["experience"]["aura"]["despair"] -= interaction_willingness
                 else:
                     girl["rules_broken"]["behave_toilet"] = True
                     girl["rules_explain"]["behave_toilet"] += f"{all_girls_list[girl_index]['name']} refuses to take your urine. Tying her with a urinal rack could solve the problem."
@@ -474,16 +494,39 @@ init python:
                     girl["rules_explain"]["behave_toilet"] += " Being befouled with your urine seems to upset her."
                 else:
                     girl["rules_explain"]["behave_toilet"] += " She seems happy to receive your urine."
+        def auto_slave_masturbation():
+            global girl_index
+            girl = all_girls_list[girl_index]
+            if (girl["arousal"] > girl["attributes"]["pride"] 
+            and girl["arousal"] > 2 
+            and girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"] >= 0):
+                if girl["rules"]["no_masturbation"]:
+                    if girl["rules"]["enforce_rules"] and storage["house"]["sex_items"]["Chastity Belt"] > 0:
+                        girl["mood_state"]["bad_mood"]["rules"]["active"] = True
+                        girl["rules"]["num_rules_wanttobreak"] += 1
+                        girl["rules_explain"]["no_masturbation"] += f"{all_girls_list[girl_index]['name']} often tugs and paws at her chastity belt when she thinks you are not paying attention. It seems she desperately wants to touch what no longer belongs to her. "
+                        girl["slave_auto_masturbation"] = False
+                    elif girl["aura"]["taming"] > girl["arousal"] or girl["obedience"] > girl["arousal"]*3 or girl["aura"]["devotion"] >= girl["arousal"]:
+                        girl["experience"]["aura"]["taming"] += 1
+                        girl["slave_auto_masturbation"] = False
+                    else:
+                        girl["slave_auto_masturbation"] = True
+                        girl["rules_broken"]["no_masturbation"] = True
+                        girl["rules_explain"]["no_masturbation"] += f"{all_girls_list[girl_index]['name']} masturbates when she thinks you are not paying attention."
+                else:
+                    girl["slave_auto_masturbation"] = True
+
         def auto_slave_deny_orgasm():
             global girl_index, target_skill, target_skill_sexual
             girl = all_girls_list[girl_index]
-            auto_slave_masturbation()
+            night_rules_fuctions.auto_slave_masturbation()
             if girl["slave_auto_masturbation"]:
                 target_skill = "sex"
                 target_skill_sexual = ["demostration","masturbation"]
                 interaction_willingness_check()
                 diligence333_check333()
                 girl_skills_rise_checkcheck()
+                girl["slave_deny_orgasm"] = True 
                 if not girl["rules"]["deny_orgasm"]:
                     girl["rules_explain"]["deny_orgasm"] += f" You caught your slave during masturbation, but she does not stop it. Looking into your eyes, {all_girls_list[girl_index]['name']} fingers more fiercely, her movements sharp and jittery, and then she throws her head back and writhes in the orgasmic throes, uttering moans of pleasure."
                     girl["mood"] += girl["arousal"]
@@ -493,6 +536,7 @@ init python:
                 else:
                     if girl["arousal"] > girl["obedience"]:
                         girl["rules_explain"]["deny_orgasm"] += f" You caught your slave during masturbation, but she does not stop it. You let her continue, recalling however, that she cannot cum. Nevertheless, {all_girls_list[girl_index]['name']} can't or doesn't want to stop in time, and she can not hide her moan of orgasm. Well, you have to punish her now…"
+                        girl["rules_broken"]["deny_orgasm"] = True
                         girl["arousal_rate"] -= (girl["sex_experience"]["demostration"]["masturbation"] + girl["arousal"])*3
                         girl["mood_state"]["good_mood"]["orgasm"]["active"] = True
                         girl["mood_state"]["good_mood"]["orgasm"]["duration"] = 2
@@ -506,7 +550,7 @@ init python:
             if not girl["rules"]["deny_toileting"]:
                 return
             if girl["obedience"] < girl["attributes"]["nature"] + girl["attributes"]["pride"]//2 - (master_supermacy- girl["supermacy"])  + dic_girl_psy_status[girl["psy_status"]]:
-                if girl["enforce_rules"] and girl["equipment"]["anus"] == "Anal Pear":
+                if girl["rules"]["enforce_rules"] and girl["equipment"]["anus"] == "Anal Pear":
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                     girl["rules"]["num_rules_wanttobreak"] += 1
                     girl["rules_explain"]["deny_toileting"] += f"{all_girls_list[girl_index]['name']} regularly tries to remove her anal plug, unsuccessfully. "
@@ -523,34 +567,13 @@ init python:
                 else:
                     girl["rules_explain"]["deny_toileting"] += " She seems pleased to have more time with you."
         #def auto_slave_tentacle(): #TODO CODE SKIPPED 
-        def auto_slave_masturbation():
-            global girl_index
-            girl = all_girls_list[girl_index]
-            if (girl["arousal"] > girl["attributes"]["pride"] 
-            and girl["arousal"] > 2 
-            and girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"] >= 0):
-                if girl["rules"]["no_masturbation"]:
-                    if girl["enforce_rules"] and storage["house"]["sex_items"]["Chastity Belt"] > 0:
-                        girl["mood_state"]["bad_mood"]["rules"]["active"] = True
-                        girl["rules"]["num_rules_wanttobreak"] += 1
-                        girl["rules_explain"]["no_masturbation"] += f"{all_girls_list[girl_index]['name']} often tugs and paws at her chastity belt when she thinks you are not paying attention. It seems she desperately wants to touch what no longer belongs to her. "
-                        girl["slave_auto_masturbation"] = False
-                    elif girl["aura"]["taming"] > girl["arousal"] or girl["obedience"] > girl["arousal"]*3 or girl["aura"]["devotion"] >= girl["arousal"]:
-                        girl["experience"]["aura"]["taming"] += 1
-                        girl["slave_auto_masturbation"] = False
-                    else:
-                        girl["slave_auto_masturbation"] = True
-                        girl["rules_broken"]["no_masturbation"] = True
-                        girl["rules_explain"]["no_masturbation"] += f"{all_girls_list[girl_index]['name']} masturbates when she thinks you are not paying attention."
-                else:
-                    girl["slave_auto_masturbation"] = True
         def auto_slave_use_vaginal_beads():
             global girl_index
             girl = all_girls_list[girl_index]
             if not girl["rules"]["use_vaginal_beads"]:
                 return
             if girl["obedience"] < 2 + girl["attributes"]["pride"] + girl["attributes"]["nature"] - girl["sex_experience"]["penetration"]["vaginal_sex"] - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]*3 - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"]*2 + dic_girl_psy_status[girl["psy_status"]]:
-                if girl["enforce_rules"] and storage["house"]["sex_items"]["V-balls"] > 0 and storage["house"]["sex_items"]["Chastity Belt"] > 0:
+                if girl["rules"]["enforce_rules"] and storage["house"]["sex_items"]["V-balls"] > 0 and storage["house"]["sex_items"]["Chastity Belt"] > 0:
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                     girl["rules"]["num_rules_wanttobreak"] += 1
                     girl["rules_explain"]["use_vaginal_beads"] += f"{all_girls_list[girl_index]['name']} only uses the vaginal beads because the chastity belt prevents her from removing them. "
@@ -577,18 +600,18 @@ init python:
 
 
 
-        auto_list = [   night_rules_fuctions.auto_slave_cook_meal, 
-                        night_rules_fuctions.auto_slave_maid, 
-                        night_rules_fuctions.auto_bath_slave_help_master,
-                        night_rules_fuctions.slave_bath_alone,
-                        night_rules_fuctions.slave_bath_selfwash_auto,
-                        night_rules_fuctions.auto_alarm,
-                        night_rules_fuctions.auto_slave_humility, 
-                        night_rules_fuctions.auto_slave_pet, 
-                        night_rules_fuctions.auto_slave_silence, 
-                        night_rules_fuctions.auto_slave_behave_toilet, 
-                        night_rules_fuctions.auto_slave_behave_urinal,
-                        night_rules_fuctions.auto_slave_deny_orgasm,
-                        night_rules_fuctions.auto_slave_deny_toileting,
-                        night_rules_fuctions.auto_slave_masturbation,
-                        night_rules_fuctions.auto_slave_use_vaginal_beads   ]    
+    auto_list = [   night_rules_fuctions.auto_slave_cook_meal, 
+                    night_rules_fuctions.auto_slave_maid, 
+                    night_rules_fuctions.auto_bath_slave_help_master,
+                    night_rules_fuctions.slave_bath_alone,
+                    night_rules_fuctions.slave_bath_selfwash_auto,
+                    night_rules_fuctions.auto_alarm,
+                    night_rules_fuctions.auto_slave_humility, 
+                    night_rules_fuctions.auto_slave_pet, 
+                    night_rules_fuctions.auto_slave_silence, 
+                    night_rules_fuctions.auto_slave_behave_toilet, 
+                    night_rules_fuctions.auto_slave_behave_urinal,
+                    night_rules_fuctions.auto_slave_deny_orgasm,
+                    night_rules_fuctions.auto_slave_deny_toileting,
+                    night_rules_fuctions.auto_slave_masturbation,
+                    night_rules_fuctions.auto_slave_use_vaginal_beads   ]    

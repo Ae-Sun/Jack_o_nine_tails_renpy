@@ -78,6 +78,7 @@ default boobs4 =" round tits"
 default boobs5 =" firm melons"
 default boobs6 =" shapely balloons"
 default debt_with_administration = 0
+default home_decoration_mini_show = False
 default room_name = ""
 default dic_overnight_rules_count_index = 1
 default slave_rebellion_fight = False
@@ -478,8 +479,8 @@ label next_day_labellabel:
                 slave_attack_escape_update()                
                 rules_reset_update() # must go before rules
                 # Rules
-                for rules in night_rules_fuctions.auto_list:
-                    night_rules_fuctions.rules()
+                for rules in auto_list:
+                    rules()
                 energy_and_sleep_update() 
                 moodlet_new_day_slave_update()
                 assistant_passive_stats_update()
@@ -544,6 +545,18 @@ label Next_day_event:
                     room_name = b["room"](girl)
                     girl[a] = False
                     renpy.call_screen("next_day_event_screen")
+            for rules_broken in girl["rules_broken"]:
+                if rules_broken not in ["no_masturbation", "deny_orgasm"]: #this 2 go apart
+                    if girl["rules_broken"][rules_broken]:
+                        home_decoration_mini_show = True
+                        pic_displayed = girl["fullimage"] + ".webp"
+                        room_name = "Hall"
+                        next_day_event_screen_text = girl["rules_explain"][rules_broken]
+                        girl["rules_broken"][rules_broken] = False
+                        renpy.call_screen("next_day_event_screen")
+            home_decoration_mini_show = False
+                    
+                    
             if girl["display_menstruation"]:
                 roll = random.randint(1,4)
                 if roll != 1:
@@ -3022,13 +3035,13 @@ screen homehome_attributes_menu():
             style "home_condition_style" + str(home_hygiene_value)
             action SetVariable("all_hygiene_multidic",dic_home_condition), Show("all_hygiene_attributes")
         text "Cannned food" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
-    add "black" pos(0.84572,0.36361) xysize(27,20)
-    textbutton all_girls_list[girl_index]["rating_text_display"] pos(0.8465,0.365):
-        style "rating_button"
-        action Show("msg",msg_text=all_girls_list[girl_index]["rating_help_text"])
-        hovered SetDict(all_girls_list[girl_index], "rating_text_display",dic_rating[all_girls_list[girl_index]["rating"]])
-        unhovered SetDict(all_girls_list[girl_index], "rating_text_display",dic_rating_colored[all_girls_list[girl_index]["rating"]])
-
+    if len(all_girls_list) > 0:
+        add "black" pos(0.84572,0.36361) xysize(27,20)
+        textbutton all_girls_list[girl_index]["rating_text_display"] pos(0.8465,0.365):
+            style "rating_button"
+            action Show("msg",msg_text=all_girls_list[girl_index]["rating_help_text"])
+            hovered SetDict(all_girls_list[girl_index], "rating_text_display",dic_rating[all_girls_list[girl_index]["rating"]])
+            unhovered SetDict(all_girls_list[girl_index], "rating_text_display",dic_rating_colored[all_girls_list[girl_index]["rating"]])
 
     vbox:
         pos(0.97,0.335)

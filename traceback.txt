@@ -1,23 +1,20 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/home.rpy", line 447, in script
+  File "game/home.rpy", line 446, in script
     python:
-  File "game/home.rpy", line 501, in <module>
-    diet_update()
-    ~~~~~~~~~~~^^
-  File "game/fuctions.rpy", line 920, in diet_update
-    calories_check()
-    ~~~~~~~~~~~~~~^^
-  File "game/fuctions.rpy", line 795, in calories_check
-    medical_calculation_assistant_fee += 1
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^     
-UnboundLocalError: cannot access local variable 'medical_calculation_assistant_fee' where it is not associated with a value
+  File "game/home.rpy", line 482, in <module>
+    rules()
+    ~~~~~^^
+  File "game/classes.rpy", line 456, in auto_slave_behave_toilet
+    girl["experience"]["aura"]["despair"] -= interaction_willingness
+    ~~~~^^^^^^^^^^^^^^^                                              
+KeyError: 'experiences'
 
 -- Full Traceback ------------------------------------------------------------
 
 Traceback (most recent call last):
-  File "game/home.rpy", line 447, in script
+  File "game/home.rpy", line 446, in script
     python:
   File "renpy/ast.py", line 1187, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
@@ -25,18 +22,15 @@ Traceback (most recent call last):
   File "renpy/python.py", line 1260, in py_exec_bytecode
     exec(bytecode, globals, locals)
     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "game/home.rpy", line 501, in <module>
-    diet_update()
-    ~~~~~~~~~~~^^
-  File "game/fuctions.rpy", line 920, in diet_update
-    calories_check()
-    ~~~~~~~~~~~~~~^^
-  File "game/fuctions.rpy", line 795, in calories_check
-    medical_calculation_assistant_fee += 1
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^     
-UnboundLocalError: cannot access local variable 'medical_calculation_assistant_fee' where it is not associated with a value
+  File "game/home.rpy", line 482, in <module>
+    rules()
+    ~~~~~^^
+  File "game/classes.rpy", line 456, in auto_slave_behave_toilet
+    girl["experience"]["aura"]["despair"] -= interaction_willingness
+    ~~~~^^^^^^^^^^^^^^^                                              
+KeyError: 'experiences'
 
 Windows-11-10.0.26100-SP0 AMD64
 Ren'Py 8.4.1.25072401
-JONT Port by Rec3ks ver. 0.0.55
-Sat Sep 13 14:08:23 2025
+JONT Port by Rec3ks ver. 0.0.67
+Mon Sep 15 16:31:51 2025

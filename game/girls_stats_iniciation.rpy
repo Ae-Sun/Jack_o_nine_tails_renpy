@@ -27,7 +27,9 @@ define dic_girl_choosing_image_condition_short = {
     "slave_auto_maid":"clean",
     "slave_auto_bath":"wash",
     "slave_auto_bath_self":"bath",
-    "slave_auto_alarm":"bj"
+    "slave_auto_alarm":"bj",
+    "slave_auto_masturbation":"masturbation",
+    "slave_deny_orgasm":"masturbation"
 }
 define dic_slave_attributes_description_keys = {
     "beauty": "Beauty",
@@ -2798,6 +2800,18 @@ define dic_auto_tasks = {
         "room": night_rules_mini_fuctions.alarm_room,
         "extra": night_rules_mini_fuctions.alarm_extra,
     },
+    "slave_auto_masturbation":{
+        "condition":"slave_auto_masturbation",
+        "text": night_rules_mini_fuctions.masturbation_text,
+        "room": night_rules_mini_fuctions.masturbation_room,
+        "extra": night_rules_mini_fuctions.masturbation_extra,
+    },
+    "slave_deny_orgasm":{
+        "condition":"slave_deny_orgasm",
+        "text": night_rules_mini_fuctions.deny_orgasm_text,
+        "room": night_rules_mini_fuctions.deny_orgasm_room,
+        "extra": night_rules_mini_fuctions.deny_orgasm_extra,
+    }
 }
 define dic_slave_rules = {
     "act_as_cook": {

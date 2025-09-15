@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/fuctions.rpy", line 606: expected ':'
-    if girl["enforce_rules"] and girl["equipment"]["neck"] == "Shock Collar"
-                                                                                ^
+File "game/home.rpy", line 550: invalid syntax
+    pic_displayed = girl["fullimage"]:
+                                             ^
 
 Ren'Py Version: Ren'Py 8.4.1.25072401
-Sat Sep 13 22:09:09 2025
+Mon Sep 15 15:52:57 2025

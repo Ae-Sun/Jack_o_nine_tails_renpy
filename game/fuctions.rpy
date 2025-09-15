@@ -550,13 +550,20 @@ init python:
                             if all_girls_list[girl_index]["assistant"]:
                                 n += all_girls_list[girl_index]["attributes"]["intelligence"] + all_girls_list[girl_index]["aura"]["devotion"]
                     ### need assistant supervision code  - TODO
+                    n = int(n)
                     roll = random.randint(1, n)
                     if roll == 1:
                         if all_girls_list[girl_index]["aura"]["despair"] > 0:
-                            if all_girls_list[girl_index]["attributes"]["gladiatrix"] > 0 and all_girls_list[girl_index]["aura"]["despair"] > max(0, (master_supermacy - all_girls_list[girl_index]["supermacy"]) - 5 + allure_value_3): 
+                            if all_girls_list[girl_index]["skills"]["gladiatrix"] > 0 and all_girls_list[girl_index]["aura"]["despair"] > max(0, (master_supermacy - all_girls_list[girl_index]["supermacy"]) - 5 + allure_value_3): 
                                 slave_rebellion_fight = True
                                 slave_rebellion_attack = True
-                        elif dic_girl_equipment_neck_mod[all_girls_list[girl_index]["equipment"]["neck"]]["escape"]:
+                        elif all_girls_list[girl_index]["equipment"]["neck"] != "":
+                            if dic_girl_equipment_neck_mod[all_girls_list[girl_index]["equipment"]["neck"]]["escape"]:
+                                if all_girls_list[girl_index]["brand"] == 5:
+                                    slave_escape_type = 2
+                                else: 
+                                    slave_escape_type = 1
+                        elif all_girls_list[girl_index]["equipment"]["neck"] == "":
                             if all_girls_list[girl_index]["brand"] == 5:
                                 slave_escape_type = 2
                             else: 
@@ -1696,6 +1703,7 @@ init python:
         all_girls_list[girl_index].setdefault("did_bath_yesterday",False)
         all_girls_list[girl_index].setdefault("already_bath",False)
         all_girls_list[girl_index].setdefault("slave_auto_masturbation",False)
+        all_girls_list[girl_index].setdefault("slave_deny_orgasm",False)
         # variables need for screen logic
         all_girls_list[girl_index].setdefault("maid_slave_skill_performance",0)
         # custom images
@@ -1706,6 +1714,7 @@ init python:
         all_girls_list[girl_index].setdefault("slave_auto_bath_self_folder",False)
         all_girls_list[girl_index].setdefault("slave_auto_alarm_folder",False)
         all_girls_list[girl_index].setdefault("slave_auto_masturbation_folder",False)
+        all_girls_list[girl_index].setdefault("slave_deny_orgasm_folder",False)
         all_girls_list[girl_index].setdefault("display_menstruation",False)
         #all_girls_list[girl_index].setdefault("max_daily_reward_level",0)
         #all_girls_list[girl_index].setdefault("max_daily_punishment_level",0)
@@ -2270,6 +2279,7 @@ init python:
                 all_girls_list[girl_index]["experience"]["aura"][aura] = -10
             if all_girls_list[girl_index]["aura"][aura] == 5 and all_girls_list[girl_index]["experience"]["aura"][aura] > 10:
                 all_girls_list[girl_index]["experience"]["aura"][aura] = 10
+            all_girls_list[girl_index]["aura"][aura] = int(all_girls_list[girl_index]["aura"][aura])
         # Cap attributes values
         for attributes in ["endurance","nature","temperament","exoticism","style","fame","intelligence"]:
             if all_girls_list[girl_index]["attributes"][attributes] == 0 and all_girls_list[girl_index]["experience"]["attributes"][attributes] < -10:
@@ -2362,7 +2372,7 @@ init python:
         + all_girls_list[girl_index]["aura"]["habit"] 
         - all_girls_list[girl_index]["aura"]["spoil"]*2 
         - int(slave_difficulty/2) 
-        - slave_nature + 100)
+        - slave_nature)
         # set obedience to 100 if broken
         if all_girls_list[girl_index]["psy_status"] == "broken":
             all_girls_list[girl_index]["obedience"] = 100
