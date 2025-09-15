@@ -107,10 +107,6 @@ init python:
         def enforce_rules_condition(girl):
             return girl["rules"]["enforce_rules"]
     class night_rules_fuctions():
-
-        
-        
-        
         
         def auto_slave_cook_meal():
             global already_prepared, already_ate, food_meat_info, home_mess_value
@@ -548,6 +544,38 @@ init python:
                         girl["rules_explain"]["no_masturbation"] += f"{all_girls_list[girl_index]['name']} masturbates when she thinks you are not paying attention."
                 else:
                     girl["slave_auto_masturbation"] = True
+        def auto_slave_use_vaginal_beads():
+            global girl_index
+            girl = all_girls_list[girl_index]
+            if not girl["rules"]["use_vaginal_beads"]:
+                return
+            if girl["obedience"] < 2 + girl["attributes"]["pride"] + girl["attributes"]["nature"] - girl["sex_experience"]["penetration"]["vaginal_sex"] - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]*3 - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"]*2 + dic_girl_psy_status[girl["psy_status"]]:
+                if girl["enforce_rules"] and storage["house"]["sex_items"]["V-balls"] > 0 and storage["house"]["sex_items"]["Chastity Belt"] > 0:
+                    girl["mood_state"]["bad_mood"]["rules"]["active"] = True
+                    girl["rules"]["num_rules_wanttobreak"] += 1
+                    girl["rules_explain"]["use_vaginal_beads"] += f"{all_girls_list[girl_index]['name']} only uses the vaginal beads because the chastity belt prevents her from removing them. "
+                else:
+                    girl["rules_broken"]["use_vaginal_beads"] = True
+                    girl["rules_explain"]["use_vaginal_beads"] += f"{all_girls_list[girl_index]['name']} refuses to use the vaginal beads."
+            else:
+                girl["rules_explain"]["use_vaginal_beads"] += f"{all_girls_list[girl_index]['name']} uses the vaginal beads all day long without you having to remind her."
+            if not girl["rules_broken"]["use_vaginal_beads"]:
+                a = 4 + girl["attributes"]["pride"] + girl["attributes"]["nature"] - girl["aura"]["devotion"] - girl["sex_experience"]["penetration"]["vaginal_sex"] 
+                girl["mood"] -= a
+                if a > 0:
+                    girl["rules_explain"]["use_vaginal_beads"] += " Too much self-esteem or a lack of experience makes this painful to her."
+                else:
+                    girl["rules_explain"]["use_vaginal_beads"] += " She seems to enjoy the sensations."
+
+
+
+
+
+
+
+
+
+
 
         auto_list = [   night_rules_fuctions.auto_slave_cook_meal, 
                         night_rules_fuctions.auto_slave_maid, 
@@ -562,4 +590,5 @@ init python:
                         night_rules_fuctions.auto_slave_behave_urinal,
                         night_rules_fuctions.auto_slave_deny_orgasm,
                         night_rules_fuctions.auto_slave_deny_toileting,
-                        night_rules_fuctions.auto_slave_masturbation    ]    
+                        night_rules_fuctions.auto_slave_masturbation,
+                        night_rules_fuctions.auto_slave_use_vaginal_beads   ]    
