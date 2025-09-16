@@ -87,6 +87,7 @@ init python:
         if stimulating or orgastic:
             interaction_sex_acceptance = (allure_value_3 -5) + girl["mood"] + girl["aura"]["devotion"] + girl["arousal"]*2 - (10 - girl["attributes"]["pride"]*2)
             # initial value ranges from +20 (alluring master, ecstatic, max devotion, max arousal, no pride) to -20 (repulsive master, depressed, no devotion, no arousal, max pride)
+            testvariable2 = interaction_sex_acceptance
             if girl["psy_status"] in ["frightened", "docile"]:
                 interaction_sex_acceptance += girl["aura"]["fear"]
             elif girl["psy_status"] == "horny":
@@ -110,17 +111,18 @@ init python:
                 interaction_sex_acceptance += girl["arousal"] * girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]
             if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"] < 0:
                 interaction_sex_acceptance -= girl["attributes"]["empathy"] * girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]
-            sum_of_sex_skill_slave_value += (girl["sex_experience"]["petting"]["petting"] 
+            sum_of_sex_skill_slave_value = (girl["sex_experience"]["petting"]["petting"] 
                                             + girl["sex_experience"]["oral_pleasure"]["oral_pleasure"] 
                                             + girl["sex_experience"]["penetration"]["penetration"]  
                                             + girl["sex_experience"]["group_sex"]["group_sex"] 
                                             + girl["sex_experience"]["demostration"]["demostration"]
                                             + girl["sex_experience"]["fetishism"]["fetishism"]
                                             + girl["sex_experience"]["xenophily"]["xenophily"])
+            testvariable3 = interaction_sex_acceptance
             interaction_sex_acceptance += sum_of_sex_skill_slave_value // 2
             if shameful:
                 interaction_sex_acceptance += girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"] * 4
-            if painful:
+            if painful: 
                 interaction_sex_acceptance += girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["masochism"]["value"] * 4
             if disgusting:
                 interaction_sex_acceptance += girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] * 4
@@ -136,9 +138,10 @@ init python:
         global attribute_track_index, dictionary_track_index, dictionary_name
         global dic_traits_skills_descriptions, target_skill, interaction_willingness
         global domini_dictum_active, interaction_sex_acceptance, interaction_repulse_difficulty
-        global target_skill_sexual
+        global target_skill_sexual, testvariable1
         sex_acceptance_check()
-        interaction_willingness = all_girls_list[girl_index]["obedience"] + interaction_sex_acceptance + interaction_repulse_difficulty
+        interaction_willingness = all_girls_list[girl_index]["obedience"] + interaction_sex_acceptance - interaction_repulse_difficulty
+        testvariable1 = interaction_repulse_difficulty
         if target_skill != "":
             if target_skill != "sex":
                 target_skill2 = target_skill + "trait"
@@ -1123,11 +1126,13 @@ init python:
         if all_girls_list[girl_index]["energised"] > 5:
             all_girls_list[girl_index]["energised"] = max(all_girls_list[girl_index]["energised"]- random.randint(0, 7),0)
     def rules_reset_update():
-        all_girls_list[girl_index]["rules"]["num_rules_wanttobreak"] = 0
+        all_girls_list[girl_index]["num_rules_wanttobreak"] = 0
         for i in all_girls_list[girl_index]["rules_broken"]:
             all_girls_list[girl_index]["rules_broken"][i] = False
         for i in all_girls_list[girl_index]["rules_explain"]:
             all_girls_list[girl_index]["rules_explain"][i] = ""
+        all_girls_list[girl_index]["rules_broken_log"] = ""
+
     def assistant_passive_stats_update():
         if all_girls_list[girl_index]["assistant"]:
             if all_girls_list[girl_index]["attributes"]["nature"] < 3:
@@ -1799,7 +1804,7 @@ init python:
         all_girls_list[girl_index]["rules"].setdefault("no_masturbation",False)   
         all_girls_list[girl_index]["rules"].setdefault("use_vaginal_beads",False)
         all_girls_list[girl_index]["rules"].setdefault("enforce_rules",False)
-        all_girls_list[girl_index]["rules"].setdefault("num_rules_wanttobreak",0)
+        all_girls_list[girl_index].setdefault("num_rules_wanttobreak",0)
         ###########################################
     
         all_girls_list[girl_index].setdefault("rules_explain", {})
@@ -1808,6 +1813,7 @@ init python:
         all_girls_list[girl_index].setdefault("rules_broken", {})
         for rules in all_girls_list[girl_index]["rules"]:
             all_girls_list[girl_index]["rules_broken"].setdefault(rules,False)
+        all_girls_list[girl_index].setdefault("rules_broken_log", "")
 
         traits_skills = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]
         traits_sexual = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"]

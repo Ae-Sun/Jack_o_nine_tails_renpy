@@ -126,10 +126,12 @@ init python:
             global already_prepared, already_ate, food_meat_info, home_mess_value
             global all_girls_list, dic_foods_list, storage, dic_hygiene_value_rate
             global girl_index, target_skill, tutor_modifier
+            girl = all_girls_list[girl_index]
             if home_estate["kitchen"]["storage_capacity"] <= 0:
                 return
+            if not girl["rules"]["act_as_cook"]:
+                return
             
-            girl = all_girls_list[girl_index]
             target_skill = "cooking"
             required_obedience = (
                 -6 
@@ -139,7 +141,6 @@ init python:
             )
 
             if (not already_prepared
-                and girl["rules"]["act_as_cook"]
                 and girl["energy"] > 0
                 and girl["obedience"] >= required_obedience):
 
@@ -217,9 +218,11 @@ init python:
                 girl["rules_explain"]["act_as_cook"] = f"{girl["name"]} is disobedient and doesn't want to cook."
         def auto_slave_maid():  
             global home_hygiene_value, home_mess_value, target_skill
+            girl = all_girls_list[girl_index]
             if home_hygiene_value >= 4:
                 return
-            girl = all_girls_list[girl_index]
+            if not girl["rules"]["act_as_maid"]:
+                return
             target_skill = "maid"
             required_obedience = (
                 -5 
@@ -230,8 +233,7 @@ init python:
                 + girl["attributes"]["intelligence"] // 2 - 1
             )
 
-            if (girl["rules"]["act_as_maid"]
-                and girl["energy"] > 0
+            if (girl["energy"] > 0
                 and girl["obedience"] >= required_obedience):
                 girl["slave_auto_maid"] = True
                 tutor_modifier = 0
@@ -321,16 +323,20 @@ init python:
         def auto_alarm():
             global girl_index, stimulating, interaction_willingness
             global damage, brusing, excitement_value, penetration_value_23
+            global target_skill, target_skill_sexual, interaction_repulse_difficulty
             girl = all_girls_list[girl_index]
             if not girl["rules"]["behave_alarm"]:
                 return
-            stimulating = True
             interaction_repulse_difficulty = 6
+            target_skill = "sex"
+            target_skill_sexual = ["oral_pleasure","blowjob"]
+
+            stimulating = True
             interaction_willingness_check()
             if interaction_willingness < 0:
                 # if girl["rules"]["enforce_rules"]: #and assistant TODO
                 #     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
-                #     girl["rules"]["num_rules_wanttobreak"] += 1
+                #     girl["num_rules_wanttobreak"] += 1
                 #     # lack assistant code
                 #     girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["assistant_pass"]
                 #     damage = 3
@@ -347,6 +353,9 @@ init python:
             else:
                 girl["rules_explain"]["behave_alarm"] += "[all_girls_list[girl_index]['name']] enters your room in the morning and wakes you up with a blowjob."
             if not girl["rules_broken"]["behave_alarm"]:
+                diligence333_check333()
+                girl_skills_rise_checkcheck()
+                
                 girl["slave_auto_alarm"] = True
                 a = (20
                 + girl["attributes"]["temperament"] 
@@ -380,7 +389,7 @@ init python:
             if girl["obedience"] < 1 + dic_girl_psy_status[girl["psy_status"]] - girl["aura"]["fear"]:
                 if girl["rules"]["enforce_rules"] and girl["equipment"]["neck"] == "Shock Collar":
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
-                    girl["rules"]["num_rules_wanttobreak"] += 1
+                    girl["num_rules_wanttobreak"] += 1
                     girl["rules_explain"]["behave_humility"] += f"{all_girls_list[girl_index]['name']} calls you 'Master' as her collar inexorably enforces."
                 else:
                     girl["rules_broken"]["behave_humility"] = True
@@ -402,7 +411,7 @@ init python:
             if girl["obedience"] < 0 - 5*girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] + dic_girl_psy_status[girl["psy_status"]]:
                 if girl["rules"]["enforce_rules"] and girl["equipment"]["clothes"] == "Petsuit":
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
-                    girl["rules"]["num_rules_wanttobreak"] += 1
+                    girl["num_rules_wanttobreak"] += 1
                     girl["rules_explain"]["behave_pet"] += f"{all_girls_list[girl_index]['name']} cannot break out of her pet suit, maintaining her on all fours all day long. "
                 else:
                     girl["rules_broken"]["behave_pet"] = True
@@ -424,7 +433,7 @@ init python:
             if girl["obedience"] < girl["attributes"]["temperament"] + dic_girl_psy_status[girl["psy_status"]]:
                 if girl["rules"]["enforce_rules"] and storage["house"]["sex_items"]["Reliable Gag"] > 0:
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
-                    girl["rules"]["num_rules_wanttobreak"] += 1
+                    girl["num_rules_wanttobreak"] += 1
                     girl["rules_explain"]["behave_silence"] += f"{all_girls_list[girl_index]['name']} regulary moans behind her gag. "
                 else:
                     girl["rules_broken"]["behave_silence"] = True
@@ -451,7 +460,7 @@ init python:
             if interaction_willingness < 0:
                 if girl["rules"]["enforce_rules"] and storage["house"]["sex_items"]["Toilet Seat"] > 0:
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
-                    girl["rules"]["num_rules_wanttobreak"] += 1
+                    girl["num_rules_wanttobreak"] += 1
                     girl["rules_explain"]["behave_toilet"] += f"{all_girls_list[girl_index]['name']} would keep her mouth sealed or run away if not for the gag that force-spreads her lips and the toilet rack to which she is steadily tied."
                     girl["experience"]["aura"]["despair"] -= interaction_willingness
                 else:
@@ -460,7 +469,7 @@ init python:
             else:
                 girl["rules_explain"]["behave_toilet"] += f"{all_girls_list[girl_index]['name']} lies down and opens her mouth whenever you mention your need."
             if girl["rules_broken"]["behave_toilet"]:
-                a = 6 + girl["attributes"]["nature"] + girl["aura"]["pride"] - girl["aura"]["devotion"] - girl["sex_experience"]["fetishism"]["scat"]
+                a = 6 + girl["attributes"]["nature"] + girl["attributes"]["pride"] - girl["aura"]["devotion"] - girl["sex_experience"]["fetishism"]["scat"]
                 girl["mood"] -= a
                 if a > 0 :
                     girl["rules_explain"]["behave_toilet"] += " Being befouled with your waste seems to upset her"
@@ -479,7 +488,7 @@ init python:
             if interaction_willingness < 0:
                 if girl["rules"]["enforce_rules"] and storage["house"]["sex_items"]["Urinal Rack"] > 0:
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
-                    girl["rules"]["num_rules_wanttobreak"] += 1
+                    girl["num_rules_wanttobreak"] += 1
                     girl["rules_explain"]["behave_toilet"] += f"{all_girls_list[girl_index]['name']} rwould flee if not restrained on the urinal rack."
                     girl["experience"]["aura"]["despair"] -= interaction_willingness
                 else:
@@ -503,7 +512,7 @@ init python:
                 if girl["rules"]["no_masturbation"]:
                     if girl["rules"]["enforce_rules"] and storage["house"]["sex_items"]["Chastity Belt"] > 0:
                         girl["mood_state"]["bad_mood"]["rules"]["active"] = True
-                        girl["rules"]["num_rules_wanttobreak"] += 1
+                        girl["num_rules_wanttobreak"] += 1
                         girl["rules_explain"]["no_masturbation"] += f"{all_girls_list[girl_index]['name']} often tugs and paws at her chastity belt when she thinks you are not paying attention. It seems she desperately wants to touch what no longer belongs to her. "
                         girl["slave_auto_masturbation"] = False
                     elif girl["aura"]["taming"] > girl["arousal"] or girl["obedience"] > girl["arousal"]*3 or girl["aura"]["devotion"] >= girl["arousal"]:
@@ -552,7 +561,7 @@ init python:
             if girl["obedience"] < girl["attributes"]["nature"] + girl["attributes"]["pride"]//2 - (master_supermacy- girl["supermacy"])  + dic_girl_psy_status[girl["psy_status"]]:
                 if girl["rules"]["enforce_rules"] and girl["equipment"]["anus"] == "Anal Pear":
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
-                    girl["rules"]["num_rules_wanttobreak"] += 1
+                    girl["num_rules_wanttobreak"] += 1
                     girl["rules_explain"]["deny_toileting"] += f"{all_girls_list[girl_index]['name']} regularly tries to remove her anal plug, unsuccessfully. "
                 else:
                     girl["rules_broken"]["deny_toileting"] = True
@@ -575,7 +584,7 @@ init python:
             if girl["obedience"] < 2 + girl["attributes"]["pride"] + girl["attributes"]["nature"] - girl["sex_experience"]["penetration"]["vaginal_sex"] - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]*3 - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"]*2 + dic_girl_psy_status[girl["psy_status"]]:
                 if girl["rules"]["enforce_rules"] and storage["house"]["sex_items"]["V-balls"] > 0 and storage["house"]["sex_items"]["Chastity Belt"] > 0:
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
-                    girl["rules"]["num_rules_wanttobreak"] += 1
+                    girl["num_rules_wanttobreak"] += 1
                     girl["rules_explain"]["use_vaginal_beads"] += f"{all_girls_list[girl_index]['name']} only uses the vaginal beads because the chastity belt prevents her from removing them. "
                 else:
                     girl["rules_broken"]["use_vaginal_beads"] = True

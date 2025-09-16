@@ -23,6 +23,7 @@ default farm_food = {
     "egg_layer": {"portion": 0, "price":12},
     "cow": {"portion": 0, "price":20}
 }
+default end_day_final = True
 default supplements_portion = 0
 default medical_calculation_assistant_fee = 0
 default rape = False
@@ -43,6 +44,7 @@ default bgstyle3 = "bg_stat_old.webp"
 default kitchen_image = "bg/interiors/basic_kitchen.webp"
 default home_decoration = "bg/interiors/slum_study_large.webp"
 default home_decoration_mini = "bg/interiors/slum_study.webp"
+default home_master_bedroom = "bg/interiors/comfy_bed.webp"
 default home_menu_image1 = "ui overhaul/activity.webp"
 default home_menu_image2 = "ui overhaul/slave_assignments.webp"
 default home_menu_image3 = "ui overhaul/domestic_issues.webp"
@@ -551,7 +553,10 @@ label Next_day_event:
                         home_decoration_mini_show = True
                         pic_displayed = girl["fullimage"] + ".webp"
                         room_name = "Hall"
-                        next_day_event_screen_text = girl["rules_explain"][rules_broken]
+                        next_day_event_screen_text = ""
+                        next_day_event_screen_text += "{u}Rules broken:{/u} " + dic_slave_rules_capital[rules_broken] + "\n"
+                        next_day_event_screen_text += girl["rules_explain"][rules_broken]
+                        girl["rules_broken_log"] += next_day_event_screen_text + "\n"
                         girl["rules_broken"][rules_broken] = False
                         renpy.call_screen("next_day_event_screen")
             home_decoration_mini_show = False
@@ -588,6 +593,13 @@ label Next_day_event:
             display_meat_alfa = True
             display_meat = False
             renpy.call_screen("next_day_event_screen")
+        display_meat_alfa = False
+        if end_day_final:
+            pic_displayed = home_master_bedroom
+            room_name = "Master Bedroom"
+            next_day_event_screen_text = "There is nothing more interesting today. Everyone goes to bed."
+            end_day_final = False
+            renpy.call_screen("next_day_event_screen")
 
 
 
@@ -600,8 +612,8 @@ label Next_day_event:
         girl_index = save_girl_index
     python:
         food_meat_info["quality"] = 0
-        display_meat_alfa = False
         already_bath = False
+        end_day_final = True
         if did_bath_yesterday: #this is necesary because we expect if bath overnight doesn't start next day with mess
             did_bath_yesterday = False
             hygiene_experience_value_9 = 0
@@ -612,6 +624,8 @@ label Next_day_event:
                 all_girls_list[girl_index]["did_bath_yesterday"] = False
             all_girls_list[girl_index]["already_bath"] = False
         girl_index = save_girl_index
+
+        
         
         msg("New day [day_tracker]")
     
@@ -680,6 +694,7 @@ label Home:
                 girl_already_done_check()
                 for skill in all_girls_list[girl_index]["skills"]: # Check skill increase
                     increase_check("skills",skill)
+
                 slave_fainted()
                 dead_slave_check()
                 broken_slave_check()
@@ -1622,6 +1637,8 @@ screen home_menu():
             textbutton "change girl":   
                 style "home_button"
                 action SetVariable("girl_index", (girl_index + 1) % len(all_girls_list)), Jump("Home")
+        text str(testvariable1)
+
 screen slave_activities_menu():
     key "K_SPACE" action SetVariable("current_menu", 0),Jump("Home")
     imagebutton pos(0.02,0.4):
@@ -2527,7 +2544,7 @@ screen slave_rules_menu():
                     imagebutton:
                         idle "buttons/unactive_button.webp"
                         hover "buttons/unactive_button_hover.webp"
-                        action NullAction()
+                        action Show("msg", msg_text=b["extra_text"])
                     continue
             if b["count"]:
                 if b["condition"](all_girls_list[girl_index]):
@@ -2551,6 +2568,12 @@ screen slave_rules_menu():
                         idle "buttons/unsel_button.webp"
                         hover "buttons/unsel_button_hover.webp"
                         action SetDict(all_girls_list[girl_index]["rules"],a, True), SetVariable("text_slave_conditions_index", b["active"]), Jump("Home")
+        if all_girls_list[girl_index]["rules_broken_log"] != "":
+            imagebutton:
+                idle "buttons/info_0.webp"
+                hover "buttons/info_0_hover.webp"
+                action Show("msg", msg_text=all_girls_list[girl_index]["rules_broken_log"]) 
+                
     vbox:
         pos(0.65,0.09)
         anchor (0.0,0.0)
@@ -2559,7 +2582,7 @@ screen slave_rules_menu():
                 if b["extra"]():
                     textbutton dic_slave_rules_capital[a] xalign 1.0: 
                         style "slave_screen_order_button"
-                        action NullAction()
+                        action Show("msg", msg_text=b["extra_text"])
                     continue
             if b["count"]:
                 if b["condition"](all_girls_list[girl_index]):
@@ -2579,6 +2602,11 @@ screen slave_rules_menu():
                     textbutton dic_slave_rules_capital[a] xalign 1.0: 
                         style "slave_screen_order_button"
                         action SetDict(all_girls_list[girl_index]["rules"],a, True), SetVariable("text_slave_conditions_index", b["active"]), Jump("Home")
+        if all_girls_list[girl_index]["rules_broken_log"] != "":
+            textbutton "Breaks rules" xalign 1.0: 
+                style "slave_screen_order_button2"
+                action Show("msg", msg_text=all_girls_list[girl_index]["rules_broken_log"]) 
+
 screen screen_attributes_skills_sexual_slave():
     key "K_TAB" action SetVariable("girl_index", (girl_index + 1) % len(all_girls_list)), Jump("Home")
     add bgstyle3 xsize 1280 ysize 720
@@ -3110,17 +3138,25 @@ screen bg_home():
     add bgstyle xsize 1280 ysize 720
     add home_decoration xsize 1000 ysize 675 pos (0.002,0.057)
 screen msg(msg_text):
+    python:
+        dinamic_size = 14
+        if msg_text.count("\n") > 8:
+            dinamic_size = 12
+        if msg_text.count("\n") > 10:
+            dinamic_size = 10
+        if msg_text.count("\n") > 12:
+            dinamic_size = 8
     zorder 50
     add "gui/confirm_frame.png" at truecenter
     text msg_text xmaximum  445:
         pos (0.33, 0.28)
         color "#191970"
-        size 14
+        size dinamic_size
         font "fonts/Segoe Print.ttf"
     text " Press space to close this window.":
         pos (0.33, 0.65)
         color "#191970"
-        size 14
+        size dinamic_size
         font "fonts/Segoe Print.ttf"
     imagebutton:
         idle "buttons/ok-icon.webp" pos (0.5, 0.7)

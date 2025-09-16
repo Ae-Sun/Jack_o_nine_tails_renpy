@@ -113,6 +113,12 @@ style slave_screen_order_button_text:
     font "fonts/Segoe Print.ttf"
     size 16
     hover_color "#ffff00"
+style slave_screen_order_button2 is default
+style slave_screen_order_button2_text:
+    color "#D80000"
+    font "fonts/Segoe Print.ttf"
+    size 16
+    hover_color "#FF0000"
 
 
 style attribute_button_custom0 is default

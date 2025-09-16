@@ -2817,6 +2817,7 @@ define dic_slave_rules = {
     "act_as_cook": {
         "condition": rules_fuctions.act_as_cook_condition,
         "extra": rules_fuctions.act_as_cook_extra,
+        "extra_text": "You don't have a kitchen.",
         "active": "cook_rules",
         "disable": "cook_rules_abort",
         "count": True
@@ -2830,6 +2831,7 @@ define dic_slave_rules = {
     "bath_slave": {
         "condition": rules_fuctions.bath_slave_condition,
         "extra": rules_fuctions.bath_slave_extra,
+        "extra_text": "You don't have a bathroom",
         "active": "bath_slave_rules",
         "disable": "bath_slave_rules_abort",
         "count": True
@@ -2885,6 +2887,7 @@ define dic_slave_rules = {
     "milk_the_fiend": {
         "condition": rules_fuctions.milk_the_fiend_condition,
         "extra": rules_fuctions.milk_the_fiend_extra,
+        "extra_text": "You don't have a field",
         "active": "slave_tentacle_rules",
         "disable": "slave_tentacle_rules_abort",
         "count": True
