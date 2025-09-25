@@ -770,4 +770,5 @@ init python:
                     night_rules_functions.auto_slave_deny_orgasm,
                     night_rules_functions.auto_slave_deny_toileting,
                     night_rules_functions.auto_slave_masturbation,
-                    night_rules_functions.auto_slave_use_vaginal_beads   ]    
+                    night_rules_functions.auto_slave_use_vaginal_beads   
+                    night_rules_functions.rules_followed                ]    
