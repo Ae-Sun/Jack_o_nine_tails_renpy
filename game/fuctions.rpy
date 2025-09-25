@@ -224,7 +224,7 @@ init python:
                 target_skill2 = target_skill + "trait"
                 slave_diligence += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] * 5
         slave_diligence = max(slave_diligence, 1) # i think 0 is too heavy for the game -rec3ks
-    def girl_skills_rise_checkcheck():
+    def girl_skills_rise_update():
         global skill_adv_mul, target_skill, slave_diligence, tutor_modifier
         global attribute_track_index, dictionary_track_index, dictionary_name
         global target_skill_sexual
@@ -476,7 +476,7 @@ init python:
             home_mess_value += dic_hygiene_value_rate["cook"]
             hygiene_experience_value_9 += dic_hygiene_value_rate["cook"]
             master_energy_drop_calculation()
-    def master_clean():
+    def master_clean()
         global home_hygiene_value, home_mess_value, energy_value , stewardship_experience_value_13
         global skill_adv_mul, personality_value_2, hygiene_experience_value_9
         if energy_value < 0 or home_hygiene_value >= 2 : 
@@ -2680,7 +2680,7 @@ init python:
         girl["experience"]["attributes"]["empathy"] += girl["daily_bonus"]["empathy"]
         girl["experience"]["attributes"]["temperament"] += girl["daily_bonus"]["temperament"]
         girl["experience"]["attributes"]["nature"] += girl["daily_bonus"]["nature"]
-        girl["experience"]["attributes"]["pride"] += girl["daily_bonus"]["pride"]
+        girl["experience"]["attributes"]["pride"] -= girl["daily_bonus"]["pride"]
     def master_excitement_check():
         global excitement_value, excitement_experience_value, excitement_textvalue
         excitement_experience_value = max(-160,excitement_experience_value)
@@ -2756,6 +2756,10 @@ init python:
                 merit_count += 1
             else:
                 guilt_count += 1
+        if girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["value"] != 0:
+            if not girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["revealed"]:
+                girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["revealed"] = True
+                msg(dic_traits_aura_description["awarenesstrait"][girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["value"]])
         max_achievements = min(merit_potencial, girl["attributes"]["temperament"] + 1) + c
         min_achievements = (min(guilt_potencial, girl["aura"]["fear"] + 1) + c) * -1
         for i in range(6): 
@@ -2763,6 +2767,12 @@ init python:
                 merit_count += 1
             else:
                 break
+        for i in range(6):
+            if slave_diligence < (girl["rating"] / 1.5 - 5) * i :
+                guilt_count += 1
+            else:
+                break
+
         if interaction_willingness < 0:
             guilt_count += 1
             guilt_count += girl["aura"]["awareness"] // 2 
@@ -2803,7 +2813,7 @@ init python:
                 if girl["already_done"][type_of_already_done] == 0:
                     girl["experience"]["aura"]["taming"] -= (1 + (5 - girl["attributes"]["pride"])) // 2
                     girl["experience"]["aura"]["despair"] -= 2
-                    girl["experience"]["attributes"]["pride"] -= 2
+                    girl["experience"]["attributes"]["pride"] += 2
             tem_variable3214 = girl["achievements"] * -1
 
         if a > 0:
@@ -2819,6 +2829,29 @@ init python:
             if not girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["revealed"]:
                 girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["revealed"] = True   
                 msg(dic_traits_aura_description["awarenesstrait"][girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["value"]])
+    def master_ejaculate():
+        global excitement_value, mood_value_10, ejaculation_intensity
+        global excitement_experience_value
+        if excitement_value >= 0:
+            mood_value_10 += (ejaculation_intensity*excitement_value)/10
+            mood_state["good_mood"]["pos_satisfied"]["active"] = True
+            mood_state["good_mood"]["pos_satisfied"]["duration"] = 2
+            excitement_experience_value -= ejaculation_intensity*10
+            master_excitement_check()
+    def reveal_check_hidden_traits(a,b,c):
+        global girl_index
+        girl = all_girls_list[girl_index]
+        if girl["traits"]["traits_hidden"][a][b]["value"] != 0:
+            if not girl["traits"]["traits_hidden"][a][b]["revealed"]:
+                girl["traits"]["traits_hidden"][a][b]["revealed"] = True
+                msg(c[b][girl["traits"]["traits_hidden"][a][b]["value"]])
+
+
+
+
+
+
+
 
       
 

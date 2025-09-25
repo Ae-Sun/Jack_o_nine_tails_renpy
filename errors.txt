@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/fuctions.rpy", line 142: invalid syntax
-    global target_skill_sexual,
-                                   ^
+File "game/fuctions.rpy", line 479: expected ':'
+    def master_clean()
+                          ^
 
 Ren'Py Version: Ren'Py 8.4.1.25072401
-Tue Sep 16 15:27:39 2025
+Wed Sep 17 12:40:09 2025

@@ -119,6 +119,7 @@ default natural_exoticism_color = "000000"
 default house_items = 0
 default alone_count = 0
 default girls_count = 0
+default ejaculation_intensity = 0
 default tentacle = {
     "active": False,
     "type": ""
@@ -694,7 +695,7 @@ label Home:
                 girl_already_done_check()
                 for skill in all_girls_list[girl_index]["skills"]: # Check skill increase
                     increase_check("skills",skill)
-
+                night_rules_functions.rules_broken_update()
                 slave_fainted()
                 dead_slave_check()
                 broken_slave_check()
