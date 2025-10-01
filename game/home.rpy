@@ -14,6 +14,7 @@ default testvariable10 = 0
 
 
 ####
+default flag = True # variable ensure not duplication
 default selected_json_data = None  # This will hold the content of the selected JSON
 default all_hygiene_multidic = {} #  not important variable need to make screen logic 
 default home_condition = dic_home_condition[5] #  not important variable need to make screen logic 
@@ -53,7 +54,6 @@ default home_menu_image5 = "ui overhaul/assistant_assignments.webp"
 default home_menu_image6 = "ui overhaul/end_day.webp"
 default energy_image1 = "ui overhaul/energy/energy_green.webp"
 default energy_image2 = "ui overhaul/energy/energy_green_half.webp"
-default tem_variable3214 = 0
 default dic_spellbook_info_index = "default"
 default mc_image = ""
 default mc_image2 = ""
@@ -388,6 +388,7 @@ label iniciation_label:
         energy_value = 10
         injuries_value_11 = 5
         hygiene_value_9 = 5
+        renpy.block_rollback()
     if is_tutorial:
         python:
             mc_image = "master/master_noble.webp"
@@ -448,64 +449,61 @@ label next_day_labellabel:
     if home_estate["kitchen"]["storage_ingredients"] > home_estate["kitchen"]["storage_capacity"]:
         $ cryo_ingredients_loss_calculation()
     python:
-        is_auspex_active = False
-        is_slave_nearly_fainted = False
-        domini_dictum_active = False
-        slave_nearly_fainted = False
-        already_prepared = False
-        already_ate = False
+        if flag:
+            flag = False
+            is_auspex_active = False
+            is_slave_nearly_fainted = False
+            domini_dictum_active = False
+            slave_nearly_fainted = False
+            already_prepared = False
+            already_ate = False
 
-        energy_value += strength_value_1 *2 + 2 - yesterday_exhaustion
-        energy_value = min(10, energy_value)
-        yesterday_exhaustion = 0
-        day_tracker += 1
-        after_sex_effects -= 1
-        pos_show_counter -= 1
+            energy_value += strength_value_1 *2 + 2 - yesterday_exhaustion
+            energy_value = min(10, energy_value)
+            yesterday_exhaustion = 0
+            day_tracker += 1
+            after_sex_effects -= 1
+            pos_show_counter -= 1
 
-        master_libido_update()
-        master_moodlet_update()
-        all_rise_excitement_update()
-        if debt_tracker > 0:
-            debt_tracker -= 1
-            if debt_tracker == 0 and debt > 0:
-                msg("As in any other city, in the Eternal Rome it is reckless to forget to repay money you have borrowed. You died a disgraceful death at the hand of the moneylender's henchmen…")
-                gameover = True
-        girls_count = 0
-        save_girl_index = girl_index
-        girls_keys = list(all_girls_list.keys())
-        for i in range(len(girls_keys)):
-            idx = (save_girl_index + i) % len(girls_keys)
-            girl_index = girls_keys[idx]
-            if all_girls_list[girl_index]["conscience"]:
-                girls_count += 1
-                slave_dead_for_low_endurance_update()
-                slave_attack_escape_update()                
-                rules_reset_update() # must go before rules
-                # Rules
-                for rules in auto_list:
-                    rules()
-                energy_and_sleep_update() 
-                moodlet_new_day_slave_update()
-                assistant_passive_stats_update()
-                style_daring_energised_drop_update()
-                slave_healing_and_dependence_update()
-                slave_menstruation_pregnant_update()
-                slave_daily_bonus_update()
-                girl_already_done_update()
-                #TODO if not all_girls_list[girl_index]["assistant"]: # WIP assistent cooking code skipped
-                #TODO NEXT THING TO DO 
+            master_libido_update()
+            master_moodlet_update()
+            all_rise_excitement_update()
+            if debt_tracker > 0:
+                debt_tracker -= 1
+                if debt_tracker == 0 and debt > 0:
+                    msg("As in any other city, in the Eternal Rome it is reckless to forget to repay money you have borrowed. You died a disgraceful death at the hand of the moneylender's henchmen…")
+                    gameover = True
+            girls_count = 0
+            save_girl_index = girl_index
+            girls_keys = list(all_girls_list.keys())
+            for i in range(len(girls_keys)):
+                idx = (save_girl_index + i) % len(girls_keys)
+                girl_index = girls_keys[idx]
+                if all_girls_list[girl_index]["conscience"]:
 
-                well_rest_bonus_update()
-                brand_effect_activation()
-                diet_update()
-                spoiling_update()
-            # save pass mood slave
-            all_girls_list[girl_index]["past_mood"] = all_girls_list[girl_index]["mood"]
-            all_girls_list[girl_index]["hygiene_rate"] += dic_hygiene_value_rate["idle"]
-            # reset temporal mood slave
-            all_girls_list[girl_index]["mood_temporal"] = 0
-            all_girls_list[girl_index]["yesterday_exhaustion"] = 0
+                    girls_count += 1
+                    slave_dead_for_low_endurance_update()
+                    slave_attack_escape_update()                
+                    rules_reset_update() # must go before rules
+                    # Rules
+                    for rules in auto_list:
+                        rules()
+                    energy_and_sleep_update() 
+                    moodlet_new_day_slave_update()
+                    assistant_passive_stats_update()
+                    style_daring_energised_drop_update()
+                    slave_healing_and_dependence_update()
+                    slave_menstruation_pregnant_update()
+                    slave_daily_bonus_update()
+                    girl_already_done_update()
+                    #TODO if not all_girls_list[girl_index]["assistant"]: # WIP assistent cooking code skipped
+                    #TODO NEXT THING TO DO 
 
+                    well_rest_bonus_update()
+                    brand_effect_activation()
+                    diet_update()
+                    spoiling_update()
+                minor_update() # half disable because there's a bug that i dont know how to fix TODO - the hygiene rate is increase when going rollback 
 
         # save master pass mood
         master_past_mood = mood_value_10
@@ -673,6 +671,7 @@ label Home:
     hide screen information_for_consideration_screen
 
     python:
+        flag = True 
         infobox_jump = "Home"
         all_hygiene_calculation()
         cryo_amount_calculation() 
@@ -3044,8 +3043,8 @@ screen homehome_attributes_menu():
                     style "achievements_style" + str(all_girls_list[girl_index]["achievements"])
                     action Show("msg",msg_text="{b}No achievements{/b}\n Your slave doesn't have feel any guilt or merit")
             else:
-                textbutton "Guilty [[" + str(tem_variable3214) + "]" anchor (0.5,0.5):
-                    style "something_guilty_style" + str(tem_variable3214) 
+                textbutton "Guilty [[" + str(abs(all_girls_list[girl_index]["achievements"])) + "]" anchor (0.5,0.5):
+                    style "something_guilty_style" + str(abs(all_girls_list[girl_index]["achievements"])) 
                     action Show("msg",msg_text="{b}Guilty{/b}\n potential guilty is capped by fear + 1, main factor: fear, oft-repeated tasks give more guilt,  awared slave feel more guilt, and slaves who were already punished in the same day expect MORE subsequent punishments")
 
 

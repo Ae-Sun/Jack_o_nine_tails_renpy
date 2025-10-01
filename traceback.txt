@@ -1,20 +1,20 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/home.rpy", line 449, in script
+  File "game/home2.rpy", line 29, in script
     python:
-  File "game/home.rpy", line 485, in <module>
-    rules()
-    ~~~~~^^
-  File "game/classes.rpy", line 327, in auto_alarm
-    if not girl["rules"]["behave_alarm"]:
-           ^^^^                          
-UnboundLocalError: cannot access local variable 'girl' where it is not associated with a value
+  File "game/home2.rpy", line 33, in <module>
+    slave_bath_selfwash_ask()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "game/fuctions.rpy", line 1496, in slave_bath_selfwash_ask
+    slave_bath_alone()
+    ^^^^^^^^^^^^^^^^  
+NameError: name 'slave_bath_alone' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Traceback (most recent call last):
-  File "game/home.rpy", line 449, in script
+  File "game/home2.rpy", line 29, in script
     python:
   File "renpy/ast.py", line 1187, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
@@ -22,15 +22,15 @@ Traceback (most recent call last):
   File "renpy/python.py", line 1260, in py_exec_bytecode
     exec(bytecode, globals, locals)
     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "game/home.rpy", line 485, in <module>
-    rules()
-    ~~~~~^^
-  File "game/classes.rpy", line 327, in auto_alarm
-    if not girl["rules"]["behave_alarm"]:
-           ^^^^                          
-UnboundLocalError: cannot access local variable 'girl' where it is not associated with a value
+  File "game/home2.rpy", line 33, in <module>
+    slave_bath_selfwash_ask()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "game/fuctions.rpy", line 1496, in slave_bath_selfwash_ask
+    slave_bath_alone()
+    ^^^^^^^^^^^^^^^^  
+NameError: name 'slave_bath_alone' is not defined
 
 Windows-11-10.0.26100-SP0 AMD64
 Ren'Py 8.4.1.25072401
 JONT Port by Rec3ks ver. 0.0.67
-Tue Sep 16 15:56:53 2025
+Wed Oct  1 02:54:15 2025

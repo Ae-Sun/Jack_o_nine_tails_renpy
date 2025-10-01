@@ -424,12 +424,12 @@ init python:
             )
             keys_list = ["D- quality", "C- quality", "B+ quality", "A+ quality", "S+ quality"]
             n = master_skill - 1
-            n = n // 1
             food_not_found = True
             roll = random.randint(0, 1000000)
 
             # Try recipes from highest to lowest skill tier
             while n >= 0 and food_not_found:
+                n = int(n)
                 for i, entry in enumerate(dic_foods_list[keys_list[n]]):
                     i = (i + roll) % len(dic_foods_list[keys_list[n]])
                     missing = 0
@@ -476,7 +476,7 @@ init python:
             home_mess_value += dic_hygiene_value_rate["cook"]
             hygiene_experience_value_9 += dic_hygiene_value_rate["cook"]
             master_energy_drop_calculation()
-    def master_clean()
+    def master_clean():
         global home_hygiene_value, home_mess_value, energy_value , stewardship_experience_value_13
         global skill_adv_mul, personality_value_2, hygiene_experience_value_9
         if energy_value < 0 or home_hygiene_value >= 2 : 
@@ -1493,7 +1493,7 @@ init python:
         if home_estate["bathroom"]["type"] == "":
             return
         home_mess_value += 3
-        slave_bath_alone()
+        night_rules_functions.slave_bath_alone()
     def setup_interaction_screen():
         # Hide the screens
         renpy.hide_screen("homehome_attributes_menu")
@@ -2738,7 +2738,7 @@ init python:
     def achievements_gain(): #all virtue and sin gain combined and reformulated
         global guilt_potencial, merit_potencial, target_skill
         global slave_diligence, interaction_willingness, interaction_repulse_difficulty
-        global is_sententia_veritas_active, tem_variable3214
+        global is_sententia_veritas_active
         global mood_value_10
         girl = all_girls_list[girl_index]
         type_of_already_done = ""
@@ -2814,7 +2814,6 @@ init python:
                     girl["experience"]["aura"]["taming"] -= (1 + (5 - girl["attributes"]["pride"])) // 2
                     girl["experience"]["aura"]["despair"] -= 2
                     girl["experience"]["attributes"]["pride"] += 2
-            tem_variable3214 = girl["achievements"] * -1
 
         if a > 0:
             mood_value_10 += a/10
@@ -2845,6 +2844,16 @@ init python:
             if not girl["traits"]["traits_hidden"][a][b]["revealed"]:
                 girl["traits"]["traits_hidden"][a][b]["revealed"] = True
                 msg(c[b][girl["traits"]["traits_hidden"][a][b]["value"]])
+    def minor_update():
+        global girl_index
+        # save pass mood slave
+        all_girls_list[girl_index]["past_mood"] = all_girls_list[girl_index]["mood"]
+        # all_girls_list[girl_index]["hygiene_rate"] += dic_hygiene_value_rate["idle"] - disable because idk how to fix a bug
+        
+
+        # reset temporal mood slave
+        all_girls_list[girl_index]["mood_temporal"] = 0
+        all_girls_list[girl_index]["yesterday_exhaustion"] = 0
 
 
 

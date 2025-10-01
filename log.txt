@@ -1,24 +1,34 @@
-2025-09-17 10:37:29 UTC
+2025-10-01 01:08:11 UTC
 Windows-11-10.0.26100-SP0
 Ren'Py 8.4.1.25072401
 
-Early init took 158 ms
-Loading error handling took 157 ms
-Loading script took 3453 ms
-Loading save slot metadata took 473 ms
+Early init took 154 ms
+Loading error handling took 64 ms
+Loading script took 3501 ms
+Loading save slot metadata took 31 ms
 Loading persistent took 0 ms
-
-File "game/home.rpy", line 26: expected '=' not found.
-    default end_day_final: bool = True
-                         ^
-
-File "game/home.rpy", line 27: expected '=' not found.
-    default supplements_portion: str = 0
-                               ^
+Running init code took 300 ms
+Loading analysis data took 14 ms
+Analyze and compile ATL took 1 ms
+Reloading save slot metadata took 11 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 53 ms
+Cleaning cache took 0 ms
+Making clean stores took 1 ms
+Initial gc took 116 ms
 DPI scale factor: 2.500000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Interface start took 653 ms
+Creating interface object took 370 ms
+Init translation took 6 ms
+Cleaning stores took 0 ms
+Load screen analysis took 0 ms
+Analyze screens took 34 ms
+Save screen analysis took 36 ms
+Save pyanalysis took 0 ms
+Save bytecode took 55 ms
+Running _start took 1 ms
+Interface start took 815 ms
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 3840, 2400)
@@ -31,19 +41,951 @@ Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 25
 Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
 Maximum texture size: 4096x4096
 Resetting cache.
-Early init took 134 ms
-Loading error handling took 42 ms
-Loading script took 462 ms
-Loading save slot metadata took 30 ms
-Loading persistent took 1 ms
-
-File "game/fuctions.rpy", line 479: expected ':'
-    def master_clean()
-                          ^
+Early init took 95 ms
+Loading error handling took 50 ms
+Loading script took 255 ms
+Loading save slot metadata took 21 ms
+Loading persistent took 0 ms
+Running init code took 274 ms
+Loading analysis data took 18 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 12 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 55 ms
+Cleaning cache took 0 ms
+Making clean stores took 0 ms
+Initial gc took 292 ms
 DPI scale factor: 2.500000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Interface start took 1011 ms
+Creating interface object took 1 ms
+Init translation took 4 ms
+Cleaning stores took 0 ms
+Load screen analysis took 0 ms
+Analyze screens took 36 ms
+Save screen analysis took 47 ms
+Save pyanalysis took 0 ms
+Save bytecode took 2 ms
+Running _start took 2 ms
+Interface start took 840 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Cleaning stores took 0 ms
+Load screen analysis took 64 ms
+Analyze screens took 1 ms
+Running _start took 3 ms
+Guilty [[0]
+something_guilty_style0
+-1
+0
+Resetting cache.
+Early init took 110 ms
+Loading error handling took 32 ms
+Loading script took 429 ms
+Loading save slot metadata took 22 ms
+Loading persistent took 0 ms
+
+File "game/fuctions.rpy", line 2741: invalid syntax
+    global is_sententia_veritas_active,
+                                            ^
+DPI scale factor: 2.500000
+Interface start took 326 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 98 ms
+Loading error handling took 30 ms
+Loading script took 1001 ms
+Loading save slot metadata took 18 ms
+Loading persistent took 0 ms
+
+File "game/fuctions.rpy", line 2741: invalid syntax
+    global is_sententia_veritas_active,
+                                            ^
+DPI scale factor: 2.500000
+Interface start took 180 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 105 ms
+Loading error handling took 31 ms
+Loading script took 710 ms
+Loading save slot metadata took 22 ms
+Loading persistent took 0 ms
+
+File "game/fuctions.rpy", line 2741: invalid syntax
+    global is_sententia_veritas_active,
+                                            ^
+DPI scale factor: 2.500000
+Interface start took 197 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 113 ms
+Loading error handling took 29 ms
+Loading script took 680 ms
+Loading save slot metadata took 17 ms
+Loading persistent took 0 ms
+
+File "game/fuctions.rpy", line 2741: invalid syntax
+    global is_sententia_veritas_active,
+                                            ^
+DPI scale factor: 2.500000
+Interface start took 185 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 100 ms
+Loading error handling took 31 ms
+Loading script took 1308 ms
+Loading save slot metadata took 19 ms
+Loading persistent took 0 ms
+Running init code took 307 ms
+Loading analysis data took 11 ms
+Analyze and compile ATL took 1 ms
+Reloading save slot metadata took 12 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 58 ms
+Cleaning cache took 0 ms
+Making clean stores took 0 ms
+Initial gc took 85 ms
+DPI scale factor: 2.500000
+Creating interface object took 0 ms
+Init translation took 6 ms
+Cleaning stores took 0 ms
+Load screen analysis took 1 ms
+Analyze screens took 76 ms
+Save screen analysis took 36 ms
+Save pyanalysis took 12 ms
+Save bytecode took 5 ms
+Running _start took 1 ms
+Interface start took 802 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 106 ms
+Loading error handling took 38 ms
+Loading script took 229 ms
+Loading save slot metadata took 19 ms
+Loading persistent took 0 ms
+Running init code took 262 ms
+Loading analysis data took 11 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 12 ms
+Dump and make backups took 57 ms
+Cleaning cache took 0 ms
+Making clean stores took 0 ms
+Initial gc took 134 ms
+DPI scale factor: 2.500000
+Creating interface object took 0 ms
+Init translation took 6 ms
+Cleaning stores took 1 ms
+Load screen analysis took 64 ms
+Analyze screens took 3 ms
+Save screen analysis took 0 ms
+Save pyanalysis took 0 ms
+Save bytecode took 0 ms
+Running _start took 1 ms
+Interface start took 831 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+65
+Can't find a place to rollback to. Not rolling back.
+Resetting cache.
+Early init took 99 ms
+Loading error handling took 35 ms
+Loading script took 1294 ms
+Loading save slot metadata took 19 ms
+Loading persistent took 0 ms
+Running init code took 263 ms
+Loading analysis data took 12 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 10 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 54 ms
+Cleaning cache took 0 ms
+Making clean stores took 1 ms
+Initial gc took 136 ms
+DPI scale factor: 2.500000
+Creating interface object took 1 ms
+Init translation took 7 ms
+Cleaning stores took 0 ms
+Load screen analysis took 0 ms
+Analyze screens took 63 ms
+Save screen analysis took 37 ms
+Save pyanalysis took 12 ms
+Save bytecode took 7 ms
+Running _start took 1 ms
+Interface start took 802 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 95 ms
+Loading error handling took 32 ms
+Loading script took 465 ms
+Loading save slot metadata took 18 ms
+Loading persistent took 0 ms
+Running init code took 255 ms
+Loading analysis data took 11 ms
+Analyze and compile ATL took 1 ms
+Reloading save slot metadata took 12 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 56 ms
+Cleaning cache took 0 ms
+Making clean stores took 1 ms
+Initial gc took 121 ms
+DPI scale factor: 2.500000
+Creating interface object took 0 ms
+Init translation took 8 ms
+Cleaning stores took 0 ms
+Load screen analysis took 1 ms
+Analyze screens took 37 ms
+Save screen analysis took 39 ms
+Save pyanalysis took 0 ms
+Save bytecode took 4 ms
+Running _start took 1 ms
+Interface start took 882 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 98 ms
+Loading error handling took 32 ms
+Loading script took 181 ms
+Loading save slot metadata took 18 ms
+Loading persistent took 0 ms
+Running init code took 254 ms
+Loading analysis data took 11 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 10 ms
+Dump and make backups took 52 ms
+Cleaning cache took 0 ms
+Making clean stores took 1 ms
+Initial gc took 127 ms
+DPI scale factor: 2.500000
+Creating interface object took 0 ms
+Init translation took 7 ms
+Cleaning stores took 0 ms
+Load screen analysis took 65 ms
+Analyze screens took 2 ms
+Save screen analysis took 0 ms
+Save pyanalysis took 0 ms
+Save bytecode took 0 ms
+Running _start took 1 ms
+Interface start took 811 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 110 ms
+Loading error handling took 35 ms
+Loading script took 1400 ms
+Loading save slot metadata took 29 ms
+Loading persistent took 1 ms
+ - Init at renpy/common/00images.rpy:72 took 281 ms.
+Running init code took 399 ms
+Loading analysis data took 17 ms
+Analyze and compile ATL took 4 ms
+Reloading save slot metadata took 17 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 97 ms
+Cleaning cache took 0 ms
+Making clean stores took 1 ms
+Initial gc took 265 ms
+DPI scale factor: 2.500000
+Creating interface object took 1 ms
+Init translation took 11 ms
+Cleaning stores took 0 ms
+Load screen analysis took 1 ms
+Analyze screens took 61 ms
+Save screen analysis took 65 ms
+Save pyanalysis took 0 ms
+Save bytecode took 2 ms
+Running _start took 2 ms
+Interface start took 1298 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 127 ms
+Loading error handling took 38 ms
+Loading script took 239 ms
+Loading save slot metadata took 23 ms
+Loading persistent took 0 ms
+Running init code took 337 ms
+Loading analysis data took 16 ms
+Analyze and compile ATL took 3 ms
+Reloading save slot metadata took 15 ms
+Dump and make backups took 70 ms
+Cleaning cache took 0 ms
+Making clean stores took 1 ms
+Initial gc took 198 ms
+DPI scale factor: 2.500000
+Creating interface object took 1 ms
+Init translation took 8 ms
+Cleaning stores took 0 ms
+Load screen analysis took 86 ms
+Analyze screens took 3 ms
+Save screen analysis took 0 ms
+Save pyanalysis took 0 ms
+Save bytecode took 0 ms
+Running _start took 2 ms
+Interface start took 1067 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 101 ms
+Loading error handling took 33 ms
+Loading script took 1017 ms
+Loading save slot metadata took 20 ms
+Loading persistent took 0 ms
+Running init code took 291 ms
+Loading analysis data took 14 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 14 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 62 ms
+Cleaning cache took 0 ms
+Making clean stores took 1 ms
+Initial gc took 244 ms
+DPI scale factor: 2.500000
+Creating interface object took 1 ms
+Init translation took 11 ms
+Cleaning stores took 0 ms
+Load screen analysis took 0 ms
+Analyze screens took 49 ms
+Save screen analysis took 58 ms
+Save pyanalysis took 0 ms
+Save bytecode took 1 ms
+Running _start took 2 ms
+Interface start took 1237 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 143 ms
+Loading error handling took 44 ms
+Loading script took 251 ms
+Loading save slot metadata took 26 ms
+Loading persistent took 0 ms
+Running init code took 340 ms
+Loading analysis data took 14 ms
+Analyze and compile ATL took 3 ms
+Reloading save slot metadata took 14 ms
+Dump and make backups took 68 ms
+Cleaning cache took 0 ms
+Making clean stores took 1 ms
+Initial gc took 180 ms
+DPI scale factor: 2.500000
+Creating interface object took 0 ms
+Init translation took 8 ms
+Cleaning stores took 1 ms
+Load screen analysis took 118 ms
+Analyze screens took 4 ms
+Save screen analysis took 0 ms
+Save pyanalysis took 0 ms
+Save bytecode took 0 ms
+Running _start took 3 ms
+Interface start took 1360 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 103 ms
+Loading error handling took 31 ms
+Loading script took 222 ms
+Loading save slot metadata took 19 ms
+Loading persistent took 0 ms
+Running init code took 265 ms
+Loading analysis data took 14 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 13 ms
+Dump and make backups took 51 ms
+Cleaning cache took 0 ms
+Making clean stores took 0 ms
+Initial gc took 162 ms
+DPI scale factor: 2.500000
+Creating interface object took 0 ms
+Init translation took 7 ms
+Cleaning stores took 0 ms
+Load screen analysis took 67 ms
+Analyze screens took 3 ms
+Save screen analysis took 0 ms
+Save pyanalysis took 0 ms
+Save bytecode took 0 ms
+Running _start took 1 ms
+Interface start took 864 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 99 ms
+Loading error handling took 29 ms
+Loading script took 471 ms
+Loading save slot metadata took 18 ms
+Loading persistent took 0 ms
+Running init code took 257 ms
+Loading analysis data took 11 ms
+Analyze and compile ATL took 1 ms
+Reloading save slot metadata took 12 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 58 ms
+Cleaning cache took 0 ms
+Making clean stores took 0 ms
+Initial gc took 152 ms
+DPI scale factor: 2.500000
+Creating interface object took 1 ms
+Init translation took 5 ms
+Cleaning stores took 0 ms
+Load screen analysis took 2 ms
+Analyze screens took 34 ms
+Save screen analysis took 39 ms
+Save pyanalysis took 0 ms
+Save bytecode took 4 ms
+Running _start took 1 ms
+Interface start took 855 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 109 ms
+Loading error handling took 32 ms
+Loading script took 1101 ms
+Loading save slot metadata took 18 ms
+Loading persistent took 0 ms
+Running init code took 260 ms
+Loading analysis data took 11 ms
+Analyze and compile ATL took 3 ms
+Reloading save slot metadata took 13 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 57 ms
+Cleaning cache took 0 ms
+Making clean stores took 1 ms
+Initial gc took 183 ms
+DPI scale factor: 2.500000
+Creating interface object took 0 ms
+Init translation took 11 ms
+Cleaning stores took 0 ms
+Load screen analysis took 0 ms
+Analyze screens took 34 ms
+Save screen analysis took 50 ms
+Save pyanalysis took 0 ms
+Save bytecode took 1 ms
+Running _start took 2 ms
+Interface start took 900 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 106 ms
+Loading error handling took 32 ms
+Loading script took 1087 ms
+Loading save slot metadata took 20 ms
+Loading persistent took 0 ms
+Running init code took 269 ms
+Loading analysis data took 11 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 11 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 54 ms
+Cleaning cache took 0 ms
+Making clean stores took 1 ms
+Initial gc took 172 ms
+DPI scale factor: 2.500000
+Creating interface object took 1 ms
+Init translation took 6 ms
+Cleaning stores took 1 ms
+Load screen analysis took 0 ms
+Analyze screens took 33 ms
+Save screen analysis took 39 ms
+Save pyanalysis took 0 ms
+Save bytecode took 1 ms
+Running _start took 1 ms
+Interface start took 938 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 135 ms
+Loading error handling took 42 ms
+Loading script took 201 ms
+Loading save slot metadata took 19 ms
+Loading persistent took 0 ms
+Running init code took 314 ms
+Loading analysis data took 11 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 11 ms
+Dump and make backups took 51 ms
+Cleaning cache took 0 ms
+Making clean stores took 1 ms
+Initial gc took 154 ms
+DPI scale factor: 2.500000
+Creating interface object took 1 ms
+Init translation took 7 ms
+Cleaning stores took 0 ms
+Load screen analysis took 79 ms
+Analyze screens took 2 ms
+Save screen analysis took 0 ms
+Save pyanalysis took 2 ms
+Save bytecode took 0 ms
+Running _start took 0 ms
+Interface start took 900 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 110 ms
+Loading error handling took 30 ms
+Loading script took 492 ms
+Loading save slot metadata took 19 ms
+Loading persistent took 0 ms
+Running init code took 314 ms
+Loading analysis data took 14 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 15 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 69 ms
+Cleaning cache took 0 ms
+Making clean stores took 0 ms
+Initial gc took 225 ms
+DPI scale factor: 2.500000
+Creating interface object took 1 ms
+Init translation took 6 ms
+Cleaning stores took 0 ms
+Load screen analysis took 1 ms
+Analyze screens took 35 ms
+Save screen analysis took 46 ms
+Save pyanalysis took 0 ms
+Save bytecode took 5 ms
+Running _start took 1 ms
+Interface start took 920 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Cleaning stores took 1 ms
+Load screen analysis took 66 ms
+Analyze screens took 0 ms
+Running _start took 1 ms
+25
+30
+35
+Resetting cache.
+Early init took 117 ms
+Loading error handling took 32 ms
+Loading script took 1361 ms
+Loading save slot metadata took 20 ms
+Loading persistent took 0 ms
+Running init code took 272 ms
+Loading analysis data took 12 ms
+Analyze and compile ATL took 1 ms
+Reloading save slot metadata took 12 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 56 ms
+Cleaning cache took 0 ms
+Making clean stores took 0 ms
+Initial gc took 176 ms
+DPI scale factor: 2.500000
+Creating interface object took 0 ms
+Init translation took 6 ms
+Cleaning stores took 0 ms
+Load screen analysis took 1 ms
+Analyze screens took 62 ms
+Save screen analysis took 36 ms
+Save pyanalysis took 12 ms
+Save bytecode took 7 ms
+Running _start took 2 ms
+Interface start took 852 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 107 ms
+Loading error handling took 35 ms
+Loading script took 218 ms
+Loading save slot metadata took 20 ms
+Loading persistent took 0 ms
+Running init code took 278 ms
+Loading analysis data took 18 ms
+Analyze and compile ATL took 1 ms
+Reloading save slot metadata took 13 ms
+Dump and make backups took 57 ms
+Cleaning cache took 0 ms
+Making clean stores took 0 ms
+Initial gc took 201 ms
+DPI scale factor: 2.500000
+Creating interface object took 1 ms
+Init translation took 6 ms
+Cleaning stores took 0 ms
+Load screen analysis took 65 ms
+Analyze screens took 2 ms
+Save screen analysis took 0 ms
+Save pyanalysis took 0 ms
+Save bytecode took 0 ms
+Running _start took 2 ms
+Interface start took 943 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Cleaning stores took 1 ms
+Load screen analysis took 50 ms
+Analyze screens took 0 ms
+Running _start took 1 ms
+Resetting cache.
+Early init took 102 ms
+Loading error handling took 35 ms
+Loading script took 516 ms
+Loading save slot metadata took 20 ms
+Loading persistent took 0 ms
+Running init code took 260 ms
+Loading analysis data took 11 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 12 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 56 ms
+Cleaning cache took 0 ms
+Making clean stores took 0 ms
+Initial gc took 213 ms
+DPI scale factor: 2.500000
+Creating interface object took 1 ms
+Init translation took 6 ms
+Cleaning stores took 0 ms
+Load screen analysis took 1 ms
+Analyze screens took 33 ms
+Save screen analysis took 40 ms
+Save pyanalysis took 0 ms
+Save bytecode took 5 ms
+Running _start took 1 ms
+Interface start took 874 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 112 ms
+Loading error handling took 43 ms
+Loading script took 539 ms
+Loading save slot metadata took 31 ms
+Loading persistent took 0 ms
+Running init code took 351 ms
+Loading analysis data took 17 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 13 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 59 ms
+Cleaning cache took 0 ms
+Making clean stores took 2 ms
+Initial gc took 257 ms
+DPI scale factor: 2.500000
+Creating interface object took 0 ms
+Init translation took 8 ms
+Cleaning stores took 1 ms
+Load screen analysis took 0 ms
+Analyze screens took 35 ms
+Save screen analysis took 46 ms
+Save pyanalysis took 0 ms
+Save bytecode took 6 ms
+Running _start took 2 ms
+Interface start took 961 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 117 ms
+Loading error handling took 45 ms
+Loading script took 230 ms
+Loading save slot metadata took 19 ms
+Loading persistent took 1 ms
+Running init code took 261 ms
+Loading analysis data took 13 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 12 ms
+Dump and make backups took 53 ms
+Cleaning cache took 0 ms
+Making clean stores took 1 ms
+Initial gc took 226 ms
+DPI scale factor: 2.500000
+Creating interface object took 1 ms
+Init translation took 11 ms
+Cleaning stores took 1 ms
+Load screen analysis took 74 ms
+Analyze screens took 5 ms
+Save screen analysis took 0 ms
+Save pyanalysis took 0 ms
+Save bytecode took 0 ms
+Running _start took 1 ms
+Interface start took 938 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 99 ms
+Loading error handling took 32 ms
+Loading script took 495 ms
+Loading save slot metadata took 24 ms
+Loading persistent took 0 ms
+ - Init at renpy/common/00images.rpy:72 took 250 ms.
+Running init code took 330 ms
+Loading analysis data took 11 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 10 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 55 ms
+Cleaning cache took 0 ms
+Making clean stores took 0 ms
+Initial gc took 171 ms
+DPI scale factor: 2.500000
+Creating interface object took 1 ms
+Init translation took 7 ms
+Cleaning stores took 0 ms
+Load screen analysis took 1 ms
+Analyze screens took 33 ms
+Save screen analysis took 39 ms
+Save pyanalysis took 0 ms
+Save bytecode took 3 ms
+Running _start took 2 ms
+Interface start took 1057 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 117 ms
+Loading error handling took 37 ms
+Loading script took 204 ms
+Loading save slot metadata took 19 ms
+Loading persistent took 0 ms
+Running init code took 273 ms
+Loading analysis data took 11 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 12 ms
+Dump and make backups took 53 ms
+Cleaning cache took 0 ms
+Making clean stores took 1 ms
+Initial gc took 253 ms
+DPI scale factor: 2.500000
+Creating interface object took 1 ms
+Init translation took 13 ms
+Cleaning stores took 1 ms
+Load screen analysis took 82 ms
+Analyze screens took 3 ms
+Save screen analysis took 0 ms
+Save pyanalysis took 0 ms
+Save bytecode took 0 ms
+Running _start took 1 ms
+Interface start took 939 ms
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 3840, 2400)

@@ -318,7 +318,7 @@ init python:
             if girl["energy"] < 0 or girl["hygiene"] > 2 or girl["already_bath"]:
                 return
             home_mess_value += 3
-            slave_bath_alone()
+            night_rules_functions.slave_bath_alone()
             girl["slave_auto_bath_self"] = True
         def auto_alarm():
             global girl_index, stimulating, interaction_willingness
@@ -632,8 +632,9 @@ init python:
         def rules_followed():
             global artistry_value_14, master_supermacy, personality_value_2
             global ejaculation_intensity, excitement_value, penetration_value_23
+            global mood_value_10, master_ill
             girl = all_girls_list[girl_index]
-            if girl["rules"]["behave_silence"]: and not girl["rules_broken"]["behave_silence"]:
+            if girl["rules"]["behave_silence"] and not girl["rules_broken"]["behave_silence"]:
                 girl["experience"]["aura"]["habit"] += 1
                 girl["experience"]["attributes"]["empathy"] += 1
                 girl["experience"]["attributes"]["temperament"] -= 1
@@ -641,15 +642,15 @@ init python:
                     girl["experience"]["attributes"]["pride"] -= 1
                 if girl["experience"]["skills"]["elocution"] < artistry_value_14:
                     girl["experience"]["skills"]["elocution"] += 1
-            if girl["rules"]["behave_humility"]: and not girl["rules_broken"]["behave_humility"]:
+            if girl["rules"]["behave_humility"] and not girl["rules_broken"]["behave_humility"]:
                 girl["experience"]["aura"]["taming"] += max(1, min(girl["attributes"]["pride"], (master_supermacy - girl["supermacy"])/2))
                 girl["experience"]["aura"]["awareness"] += max(1, min(girl["attributes"]["intelligence"], (master_supermacy - girl["supermacy"])/2))
                 if girl["experience"]["attributes"]["pride"] < 4:
                     girl["experience"]["attributes"]["pride"] -= 1
-            if girl["rules"]["deny_toileting"]: and not girl["rules_broken"]["deny_toileting"]:
+            if girl["rules"]["deny_toileting"] and not girl["rules_broken"]["deny_toileting"]:
                 girl["experience"]["aura"]["habit"] += 2
                 girl["experience"]["attributes"]["pride"] -= 2
-            if girl["rules"]["behave_pet"]: and not girl["rules_broken"]["behave_pet"]:
+            if girl["rules"]["behave_pet"] and not girl["rules_broken"]["behave_pet"]:
                 girl["experience"]["aura"]["habit"] += 1
                 girl["experience"]["attributes"]["pride"] -= 1
                 girl["experience"]["attributes"]["endurance"] += 1
@@ -673,17 +674,17 @@ init python:
                     girl["hygiene_rate"] += 5
 
             if girl["rules"]["behave_urinal"] and not girl["rules_broken"]["behave_urinal"]:
-                master_mood_rate += girl["sex_experience"]["fetishism"]["golden_shower"] - 3
+                mood_value_10 += girl["sex_experience"]["fetishism"]["golden_shower"] - 3
                 girl["experience"]["traits_miscellaneous"]["sexual_openness"] += 1
-                girl["mood_rate"] -= max(0, 4 - girl["sex_experience"]["fetishism"]["golden_shower"] - girl["traits"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] - girl["aura"]["devotion"])
+                girl["mood"] -= max(0, 4 - girl["sex_experience"]["fetishism"]["golden_shower"] - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] - girl["aura"]["devotion"])
                 if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] != 0:
-                    reveal_check_hidden_traits("traits_miscellaneous(1/12)", "sexual_openness", dic_traits_miscellaneous)
+                    reveal_check_hidden_traits("traits_miscellaneous(1/12)", "sexual_openness", dic_traits_miscellaneous_description)
                 if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] < 1:
                     girl["mood_state"]["bad_mood"]["disgust"]["active"] = True
                 if girl["sex_experience"]["fetishism"]["golden_shower"] > 2:
                     master_mood_state["good_mood"]["pos_toilet"]["active"] = True
-                if girl["sex_experience"]["fetishism"]["golden_shower"] < 4 and girl["traits"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] < 1:
-                    girl["mood_state"]["bad_mood"]["neg_rules"]["active"] = True
+                if girl["sex_experience"]["fetishism"]["golden_shower"] < 4 and girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] < 1:
+                    girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                 girl["experience"]["aura"]["habit"] += 2
                 girl["experience"]["attributes"]["pride"] -= 3
                 girl["hygiene_rate"] += 15
@@ -692,7 +693,7 @@ init python:
                     +   girl["attributes"]["nature"] 
                     +   girl["attributes"]["temperament"]) 
                     - 
-                    (   girl["traits"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] 
+                    (   girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] 
                     +   girl["sex_experience"]["fetishism"]["golden_shower"]
                     +   girl["aura"]["devotion"] 
                     +   girl["aura"]["taming"])
@@ -700,16 +701,16 @@ init python:
                 
             if girl["rules"]["behave_toilet"] and not girl["rules_broken"]["behave_toilet"]:
                 girl["experience"]["traits_miscellaneous"]["sexual_openness"] += 1
-                master_mood_rate += girl["sex_experience"]["fetishism"]["scat"] - 3
-                girl["mood_rate"] -= max(0, 4 - girl["sex_experience"]["fetishism"]["scat"] - girl["aura"]["devotion"] - girl["traits"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"])
+                mood_value_10 += girl["sex_experience"]["fetishism"]["scat"] - 3
+                girl["mood"] -= max(0, 4 - girl["sex_experience"]["fetishism"]["scat"] - girl["aura"]["devotion"] - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"])
                 if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] < 2:
                     girl["mood_state"]["bad_mood"]["disgust"]["active"] = True
                     girl["mood_state"]["bad_mood"]["disgust"]["duration"] = 4
                     girl["mood_state"]["bad_mood"]["disgust"]["weight"] = 1.5
                 if girl["sex_experience"]["fetishism"]["scat"] > 3:
                     master_mood_state["good_mood"]["pos_toilet"]["count"] += 1
-                if girl["sex_experience"]["fetishism"]["scat"] < 4 and girl["traits"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] < 2:
-                    girl["mood_state"]["bad_mood"]["neg_rules"]["active"] = True
+                if girl["sex_experience"]["fetishism"]["scat"] < 4 and girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] < 2:
+                    girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                 girl["experience"]["aura"]["habit"] += 3
                 girl["experience"]["attributes"]["pride"] -= 4
                 girl["hygiene_rate"] += 40
@@ -719,13 +720,13 @@ init python:
                     +   girl["attributes"]["nature"] 
                     +   girl["attributes"]["temperament"]) 
                     - 
-                    (   girl["traits"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] 
+                    (   girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] 
                     +   girl["sex_experience"]["fetishism"]["scat"]
                     +   girl["aura"]["devotion"] 
                     +   girl["aura"]["taming"])
                 )
 
-                if master_illness > 0 and random.randint(1,5) == 1:
+                if master_ill > 0 and random.randint(1,5) == 1:
                     girl["ill"] += 1  # added 20% chance to become ill (consuming faeces bacteria orally represents a vector of infection)
 
             if girl["rules"]["use_vaginal_beads"] and not girl["rules_broken"]["use_vaginal_beads"]:
@@ -759,7 +760,6 @@ init python:
     auto_list = [   night_rules_functions.auto_slave_cook_meal, 
                     night_rules_functions.auto_slave_maid, 
                     night_rules_functions.auto_bath_slave_help_master,
-                    night_rules_functions.slave_bath_alone,
                     night_rules_functions.slave_bath_selfwash_auto,
                     night_rules_functions.auto_alarm,
                     night_rules_functions.auto_slave_humility, 
@@ -770,5 +770,5 @@ init python:
                     night_rules_functions.auto_slave_deny_orgasm,
                     night_rules_functions.auto_slave_deny_toileting,
                     night_rules_functions.auto_slave_masturbation,
-                    night_rules_functions.auto_slave_use_vaginal_beads   
+                    night_rules_functions.auto_slave_use_vaginal_beads,   
                     night_rules_functions.rules_followed                ]    
