@@ -611,7 +611,6 @@ init python:
             if (all_girls_list[girl_index]["aura"]["devotion"] <= 2 
                 and all_girls_list[girl_index]["aura"]["fear"] == 0 
                 and all_girls_list[girl_index]["days_without_food"] == 0 
-                and all_girls_list[girl_index]["days_without_sleep"] == 0 
                 and all_girls_list[girl_index]["rules"]["rules_count"] < dic_overnight_rules_count[dic_overnight_rules_count_index]):
 
                 all_girls_list[girl_index]["experience"]["aura"]["spoil"] += 5 - all_girls_list[girl_index]["attributes"]["pride"] + all_girls_list[girl_index]["attributes"]["nature"] + all_girls_list[girl_index]["attributes"]["temperament"]
@@ -629,20 +628,20 @@ init python:
                 all_girls_list[girl_index]["neg_spoil"] = True
             all_girls_list[girl_index]["daily_count"]["rewards"] == 0
         def spoiling_reduce():
-            if all_girls_list[girl_index]["aura"]["spoil"] > 0 or all_girls_list[girl_index]["experience"]["aura"]["spoil"] > 0 and dic_overnight_rules_count[dic_overnight_rules_count_index] <= all_girls_list[girl_index]["rules"]["rules_count"] or all_girls_list[girl_index]["days_without_food"] != 0 or all_girls_list[girl_index]["days_without_sleep"] != 0 or all_girls_list[girl_index]["aura"]["fear"] > all_girls_list[girl_index]["aura"]["devotion"]:
-                all_girls_list[girl_index]["experience"]["aura"]["spoil"] -= 1 + all_girls_list[girl_index]["aura"]["devotion"] + all_girls_list[girl_index]["aura"]["fear"] + all_girls_list[girl_index]["aura"]["despair"]*2 + max(0, all_girls_list[girl_index]["days_without_food"])*3 + max(0, all_girls_list[girl_index]["days_without_sleep"])*3
+            if all_girls_list[girl_index]["aura"]["spoil"] > 0 or all_girls_list[girl_index]["experience"]["aura"]["spoil"] > 0 and dic_overnight_rules_count[dic_overnight_rules_count_index] <= all_girls_list[girl_index]["rules"]["rules_count"] or all_girls_list[girl_index]["days_without_food"] != 0 or all_girls_list[girl_index]["aura"]["fear"] > all_girls_list[girl_index]["aura"]["devotion"]:
+                all_girls_list[girl_index]["experience"]["aura"]["spoil"] -= 1 + all_girls_list[girl_index]["aura"]["devotion"] + all_girls_list[girl_index]["aura"]["fear"] + all_girls_list[girl_index]["aura"]["despair"]*2 + max(0, all_girls_list[girl_index]["days_without_food"])*3 
             if all_girls_list[girl_index]["mood"] < 0:
                 all_girls_list[girl_index]["experience"]["aura"]["spoil"] -= all_girls_list[girl_index]["attributes"]["empathy"]
             reduce_check( "aura","spoil")
         spoiling_increase()
         spoiling_reduce()
-    def energy_and_sleep_update():
+    def energy_and_sleep_update(): #TODO NEED TO FIX
         def negative_energy_endurance_reduction_update():
             if all_girls_list[girl_index]["energy"] < 0:
                 all_girls_list[girl_index]["experience"]["attributes"]["endurance"] += all_girls_list[girl_index]["energy"]*3
                 reduce_check("attributes","endurance")
         def energy_update():
-            if all_girls_list[girl_index]["sleep"] != 4:
+            if all_girls_list[girl_index]["sleep"] != 4: # need to fix
 
                 all_girls_list[girl_index]["energy"] = (
                     all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2 
@@ -653,11 +652,9 @@ init python:
                 if medic_value_15 >= 5:
                     all_girls_list[girl_index]["energy"] += 2
                 all_girls_list[girl_index]["stored_yesterday_energy"] = 0
-                all_girls_list[girl_index]["days_without_sleep"] = 0
                 all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["active"] = False
             else:
                 all_girls_list[girl_index]["energy"] = min(10, (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2) // 2 ) - all_girls_list[girl_index]["yesterday_exhaustion"] + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"]
-                all_girls_list[girl_index]["days_without_sleep"] += 1
                 if medic_value_15 >= 5:
                     all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *2
                 else:
@@ -2846,14 +2843,20 @@ init python:
                 msg(c[b][girl["traits"]["traits_hidden"][a][b]["value"]])
     def minor_update():
         global girl_index
+        girl = all_girls_list[girl_index]
         # save pass mood slave
-        all_girls_list[girl_index]["past_mood"] = all_girls_list[girl_index]["mood"]
-        # all_girls_list[girl_index]["hygiene_rate"] += dic_hygiene_value_rate["idle"] - disable because idk how to fix a bug
+        girl["past_mood"] = girl["mood"]
+        #girl["hygiene_rate"] += dic_hygiene_value_rate["idle"] # - disable because idk how to fix a bug TODO
         
 
         # reset temporal mood slave
-        all_girls_list[girl_index]["mood_temporal"] = 0
-        all_girls_list[girl_index]["yesterday_exhaustion"] = 0
+        girl["mood_temporal"] = 0
+        girl["yesterday_exhaustion"] = 0
+    def sleeping_effects_update():
+        global girl_index
+        girl = all_girls_list[girl_index]
+        pass
+        #if girl["sleep"] = 
 
 
 

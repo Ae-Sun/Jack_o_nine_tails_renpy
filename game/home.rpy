@@ -2451,9 +2451,9 @@ screen slave_rules_menu():
         textbutton "- In my bed": 
             style "slave_screen_order_button"
             action SetDict(all_girls_list[girl_index], "sleep", 3),SetVariable("text_slave_conditions_index","In_my_bed"), Jump("Home")
-        textbutton "- Do not sleep": 
+        textbutton "- In the boudoir": 
             style "slave_screen_order_button"
-            action SetDict(all_girls_list[girl_index], "sleep", 4),SetVariable("text_slave_conditions_index","Do_not_sleep"), Jump("Home")
+            action SetDict(all_girls_list[girl_index], "sleep", 4),SetVariable("text_slave_conditions_index","in_the_boudoir"), Jump("Home")
         add "spacer" size(0,25)
         if all_girls_list[girl_index]["diet"] == 0:
             textbutton "- Dehydrated food": 

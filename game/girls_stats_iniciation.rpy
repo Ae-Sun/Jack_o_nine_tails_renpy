@@ -1039,7 +1039,7 @@ define dic_slave_conditions = {
     "On_the_floor": "  You took away the bedroll from your slave to show her that comfort should be earned. A night on the cold hard floor is neither good for resting, nor for her health, but [all_girls_list[girl_index]['name']] certainly will be a little more compliant. (TODO: But if she does not feel guilty, it may drive her into depression.)",
     "On_a_bedroll": "  It is a common thing for slaves to sleep on a hard bedroll right on the floor. A small warm blanket and cushion filled with rice husks will keep her warm at night and enable her to sleep well, although it's not comfortable at all.",
     "In_my_bed": "  As a special encouragement, your slave can be allowed to sleep with her master on his bed. This will let her sleep deeper and more comfortably. Sleeping with her owner is a great source of happiness for an obedient and devoted slave, but a poorly trained or moody girl will not be pleased at all.",
-    "Do_not_sleep": "  Order her to not sleep at all. This will be a great punishment for a slave, but also greatly damage her health.",
+    "In_the_boudoir": "  Sleeping in her own soft bed - the best luxury for any slave. This bed is very soft and comfortable. This living arrangement will let her sleep deeper and should considerably improve her mood. It may also allow her to feel more independent. This should be used as a reward for excellent obedience and moderate devotion, otherwise you risk spoiling your slave. (Limited 1)",
     "No_food": "  In the Eternal Rome there are almost no opportunities to grow your own food. All food is brought from the worlds that lie beyond the Fog and because of that it costs fair amount of money. By depriving your slave of food you will kill two birds with one stone - it will teach her to be more obedient and you will save money. Of course, it is not good for her health.",
     "Dehydrated_food": "  Dzhulbars Jumas' dehydrated pet food is the choice of leading slave traders. It is delivered in ten-liter cellophane bags, and due to its low weight it is cheap to transport through the Fogs. Contains all the nutrients and fiber a female slave needs, but it tastes disgusting.",
     "Canned_food": "  Canned food for pets. It perfectly matches the composition of nutrients for female slaves and it tastes better than dry food or fiend cum. Unfortunately, it is rather expensive - fresh food weighs a lot, and it is necessary to import it from other worlds. This should be used as a reward for excellent obedience and moderate devotion, otherwise you risk spoiling your slave.",
@@ -1088,7 +1088,7 @@ define dic_slave_conditions_sleep ={
     1:"On_the_floor",
     2:"On_a_bedroll",
     3:"In_my_bed",
-    4:"Do_not_sleep" 
+    4:"In_the_boudoir" 
 }
 define dic_slave_conditions_food ={
     0:"Dehydrated_food",
