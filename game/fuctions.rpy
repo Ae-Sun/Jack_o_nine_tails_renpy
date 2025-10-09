@@ -2855,8 +2855,68 @@ init python:
     def sleeping_effects_update():
         global girl_index
         girl = all_girls_list[girl_index]
-        pass
-        #if girl["sleep"] = 
+        match girl["sleep"]:
+            case 0:
+                girl["energy"] -= 2
+                girl["mood_state"]["bad_mood"]["spoil"]["active"] = False
+                if girl["attributes"]["endurance"] > 2:
+                    girl["experience"]["attributes"]["endurance"] -= 1
+                if girl["attributes"]["empathy"] > 1:
+                    girl["mood_state"]["bad_mood"]["bad_sleep"]["active"] = True
+                girl["mood"] -= girl["attributes"]["empathy"]
+                girl["aura"]["taming"] += max(1, min(2, master_supermacy -girl["supermacy"]))
+                girl["experience"]["aura"]["despair"] += girl["aura"]["spoil"]
+            case 1:
+                girl["experience"]["aura"]["habit"] += 1
+                if girl["aura"]["empathy"] > 3:
+                    girl["mood_state"]["bad_mood"]["bad_sleep"]["active"] = True
+            case 2:
+                girl["mood"] -= girl["aura"]["despair"] += (5 - girl["attributes"]["pride"])
+                if girl["aura"]["devotion"] == 0:
+                    girl["experience"]["aura"]["despair"] += girl["attributes"]["empathy"]
+                elif: 
+                    girl["experience"]["aura"]["spoil"] += girl["attributes"]["temperament"]
+                    girl["experience"]["attributes"]["pride"] += girl["attributes"]["nature"]
+                if master_supermacy > girl["supermacy"]:
+                    girl["experience"]["aura"]["taming"] += 1
+                if (girl["attributes"]["pride"] > 2 
+                and girl["aura"]["despair"] == 0 
+                and girl["aura"]["devotion"] >= 3):
+                    girl["stored_yesterday_energy"] += 1
+                    girl["experience"]["aura"]["devotion"] += 1
+                    girl["mood_state"]["good_mood"]["slept_with_master"]["active"] = True
+                    girl["mood_state"]["bad_mood"]["slept_with_master"]["active"] = False
+                else:
+                    girl["mood_state"]["bad_mood"]["slept_with_master"]["active"] = True
+                    girl["mood_state"]["good_mood"]["slept_with_master"]["active"] = False
+                    girl["stored_yesterday_energy"] -= 1
+                    girl["experience"]["aura"]["devotion"] -= 1
+            case 3:
+                girl["stored_yesterday_energy"] += 3
+                girl["experience"]["aura"]["habit"] += 1
+                if girl["aura"]["devotion"] == 0:
+                    girl["experience"]["aura"]["spoil"] += girl["attributes"]["temperament"]
+                elif girl["aura"]["devotion"] > 0 and girl["aura"]["devotion"] < 4:
+                    girl["experience"]["aura"]["spoil"] += 1
+                if girl["attributes"]["empathy"] > 0:
+                    girl["mood_state"]["good_mood"]["sleep"]["active"] = True
+                if girl["aura"]["despair"] < 3:
+                    girl["mood"] += girl["attributes"]["empathy"]
+                if girl["attributes"]["empathy"] < 3:
+                    girl["experience"]["attributes"]["empathy"] += 1
+                if girl["attributes"]["nature"] < 3:
+                    girl["experience"]["attributes"]["nature"] += 1
+                
+
+
+
+                
+                
+
+                
+
+
+
 
 
 
