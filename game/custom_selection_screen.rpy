@@ -20,30 +20,30 @@ label Custom_Start:
         $ mc_name_save = mc
         $ mc ="Jack"
         $ reputation_value_1 = 0
-        $ strength_value_1 = dic_mc_inicial_stats[mc][1]
-        $ personality_value_2 = dic_mc_inicial_stats[mc][2]
-        $ allure_value_3 = dic_mc_inicial_stats[mc][3]
-        $ libido_value_4 = dic_mc_inicial_stats[mc][4]
-        $ dominance_value_5 = dic_mc_inicial_stats[mc][5]
-        $ brand_reputation_value_6 = dic_mc_inicial_stats[mc][6]
-        $ guild_reputation_value_7 = dic_mc_inicial_stats[mc][7]
-        $ standard_of_living_value_8 = dic_mc_inicial_stats[mc][8]
-        $ hygiene_value_9 = dic_mc_inicial_stats[mc][9]
-        $ mood_value_10 = dic_mc_inicial_stats[mc][10]
-        $ injuries_value_11 = dic_mc_inicial_stats[mc][11]
-        $ teaching_value_12 = dic_mc_inicial_stats[mc][12]
-        $ stewardship_value_13 = dic_mc_inicial_stats[mc][13]
-        $ artistry_value_14 = dic_mc_inicial_stats[mc][14]
-        $ medic_value_15 = dic_mc_inicial_stats[mc][15]
-        $ fighter_value_16 = dic_mc_inicial_stats[mc][16]
-        $ magic_value_17 = dic_mc_inicial_stats[mc][17]
-        $ flagellation_value_18 = dic_mc_inicial_stats[mc][18]
-        $ torture_value_19 = dic_mc_inicial_stats[mc][19]
-        $ binding_value_20 = dic_mc_inicial_stats[mc][20]
-        $ petting_value_21 = dic_mc_inicial_stats[mc][21]
-        $ oral_sex_value_22 = dic_mc_inicial_stats[mc][22]
-        $ penetration_value_23 = dic_mc_inicial_stats[mc][23]
-        $ fetishism_value_24 = dic_mc_inicial_stats[mc][24]
+        $ strength_value_1 = DIC_MC_INICIAL_STATS[mc][1]
+        $ personality_value_2 = DIC_MC_INICIAL_STATS[mc][2]
+        $ allure_value_3 = DIC_MC_INICIAL_STATS[mc][3]
+        $ libido_value_4 = DIC_MC_INICIAL_STATS[mc][4]
+        $ dominance_value_5 = DIC_MC_INICIAL_STATS[mc][5]
+        $ brand_reputation_value_6 = DIC_MC_INICIAL_STATS[mc][6]
+        $ guild_reputation_value_7 = DIC_MC_INICIAL_STATS[mc][7]
+        $ standard_of_living_value_8 = DIC_MC_INICIAL_STATS[mc][8]
+        $ hygiene_value_9 = DIC_MC_INICIAL_STATS[mc][9]
+        $ mood_value_10 = DIC_MC_INICIAL_STATS[mc][10]
+        $ injuries_value_11 = DIC_MC_INICIAL_STATS[mc][11]
+        $ teaching_value_12 = DIC_MC_INICIAL_STATS[mc][12]
+        $ stewardship_value_13 = DIC_MC_INICIAL_STATS[mc][13]
+        $ artistry_value_14 = DIC_MC_INICIAL_STATS[mc][14]
+        $ medic_value_15 = DIC_MC_INICIAL_STATS[mc][15]
+        $ fighter_value_16 = DIC_MC_INICIAL_STATS[mc][16]
+        $ magic_value_17 = DIC_MC_INICIAL_STATS[mc][17]
+        $ flagellation_value_18 = DIC_MC_INICIAL_STATS[mc][18]
+        $ torture_value_19 = DIC_MC_INICIAL_STATS[mc][19]
+        $ binding_value_20 = DIC_MC_INICIAL_STATS[mc][20]
+        $ petting_value_21 = DIC_MC_INICIAL_STATS[mc][21]
+        $ oral_sex_value_22 = DIC_MC_INICIAL_STATS[mc][22]
+        $ penetration_value_23 = DIC_MC_INICIAL_STATS[mc][23]
+        $ fetishism_value_24 = DIC_MC_INICIAL_STATS[mc][24]
         $ mc = mc_name_save
         $ customcheck = False
         # creating new temporal values
@@ -79,7 +79,7 @@ label Custom_Start:
         $ sparks_37                  = 999999
         $ alltier_s                  = False
     if difficult_sparks_mantain:
-        $ sparks_37 = dic_custom_start_difficulty_selection[dic_custom_start_difficulty_selection_index[dic_custom_start_difficulty_selection_index_index]][1]
+        $ sparks_37 = DIC_CUSTOM_START_DIFFICULTY_SELECTION[DIC_CUSTOM_START_DIFFICULTY_SELECTION_INDEX[dic_custom_start_difficulty_selection_index_index]][1]
         $ difficult_sparks_mantain = False
     # creating new temporal values
     $ reputationstyle= 2
@@ -94,33 +94,33 @@ label Custom_Start:
         $ buttonimage_hover = "buttons/sel_button_hover.webp"
         $ follow_story = False
     #####################################
-    $ strength_textvalue_1 = dic_mc_attribute["STRENGTH"][strength_value_1]
-    $ personality_textvalue_2 = dic_mc_attribute["PERSONALITY"][personality_value_2]
-    $ allure_textvalue_3 = dic_mc_attribute["ALLURE"][allure_value_3]
-    $ libido_textvalue_4 = dic_mc_attribute["LIBIDO"][libido_value_4]
-    $ dominance_textvalue_5 = dic_mc_attribute["DOMINANCE"][dominance_value_5]
-    $ brand_reputation_textvalue_6 = dic_mc_attribute["BRAND REPUTATION"][brand_reputation_value_6]
-    $ guild_reputation_textvalue_7 = dic_mc_attribute["GUILD REPUTATION"][guild_reputation_value_7]
-    $ standard_of_living_textvalue_8 = dic_mc_attribute["STANDARD OF LIVING"][standard_of_living_value_8]
-    $ hygiene_textvalue_9 = dic_mc_attribute["HYGIENE"][hygiene_value_9]
-    $ mood_textvalue_10 = dic_mc_attribute["MOOD"][mood_value_10]
-    $ injuries_textvalue_11 = dic_mc_attribute["INJURIES"][injuries_value_11]
-    $ teaching_textvalue_12 = dic_mc_attribute["TEACHING"][teaching_value_12]
-    $ stewardship_textvalue_13 = dic_mc_attribute["STEWARDSHIP"][stewardship_value_13]
-    $ artistry_textvalue_14 = dic_mc_attribute["ARTISTRY"][artistry_value_14]
-    $ medic_textvalue_15 = dic_mc_attribute["MEDIC"][medic_value_15]
-    $ fighter_textvalue_16 = dic_mc_attribute["FIGHTER"][fighter_value_16]
-    $ magic_textvalue_17 = dic_mc_attribute["MAGIC"][magic_value_17]
-    $ flagellation_textvalue_18 = dic_mc_attribute["FLAGELLATION"][flagellation_value_18]
-    $ torture_textvalue_19 = dic_mc_attribute["TORTURE"][torture_value_19]
-    $ binding_textvalue_20 = dic_mc_attribute["BINDING"][binding_value_20]
-    $ petting_textvalue_21 = dic_mc_attribute["PETTING"][petting_value_21]
-    $ oral_sex_textvalue_22 = dic_mc_attribute["ORAL SEX"][oral_sex_value_22]
-    $ penetration_textvalue_23 = dic_mc_attribute["PENETRATION"][penetration_value_23]
-    $ fetishism_textvalue_24 = dic_mc_attribute["FETISHISM"][fetishism_value_24]
-    $ reputation_textvalue_1 = dic_mc_attribute["REPUTATION"][reputation_value_1]
-    $ custom_difficulty_textvalue = dic_custom_start_difficulty_selection[dic_custom_start_difficulty_selection_index[dic_custom_start_difficulty_selection_index_index]][0]
-    $ custom_points = dic_custom_start_difficulty_selection[dic_custom_start_difficulty_selection_index[dic_custom_start_difficulty_selection_index_index]][2]
+    $ strength_textvalue_1 = DIC_MC_ATTRIBUTE["STRENGTH"][strength_value_1]
+    $ personality_textvalue_2 = DIC_MC_ATTRIBUTE["PERSONALITY"][personality_value_2]
+    $ allure_textvalue_3 = DIC_MC_ATTRIBUTE["ALLURE"][allure_value_3]
+    $ libido_textvalue_4 = DIC_MC_ATTRIBUTE["LIBIDO"][libido_value_4]
+    $ dominance_textvalue_5 = DIC_MC_ATTRIBUTE["DOMINANCE"][dominance_value_5]
+    $ brand_reputation_textvalue_6 = DIC_MC_ATTRIBUTE["BRAND REPUTATION"][brand_reputation_value_6]
+    $ guild_reputation_textvalue_7 = DIC_MC_ATTRIBUTE["GUILD REPUTATION"][guild_reputation_value_7]
+    $ standard_of_living_textvalue_8 = DIC_MC_ATTRIBUTE["STANDARD OF LIVING"][standard_of_living_value_8]
+    $ hygiene_textvalue_9 = DIC_MC_ATTRIBUTE["HYGIENE"][hygiene_value_9]
+    $ mood_textvalue_10 = DIC_MC_ATTRIBUTE["MOOD"][mood_value_10]
+    $ injuries_textvalue_11 = DIC_MC_ATTRIBUTE["INJURIES"][injuries_value_11]
+    $ teaching_textvalue_12 = DIC_MC_ATTRIBUTE["TEACHING"][teaching_value_12]
+    $ stewardship_textvalue_13 = DIC_MC_ATTRIBUTE["STEWARDSHIP"][stewardship_value_13]
+    $ artistry_textvalue_14 = DIC_MC_ATTRIBUTE["ARTISTRY"][artistry_value_14]
+    $ medic_textvalue_15 = DIC_MC_ATTRIBUTE["MEDIC"][medic_value_15]
+    $ fighter_textvalue_16 = DIC_MC_ATTRIBUTE["FIGHTER"][fighter_value_16]
+    $ magic_textvalue_17 = DIC_MC_ATTRIBUTE["MAGIC"][magic_value_17]
+    $ flagellation_textvalue_18 = DIC_MC_ATTRIBUTE["FLAGELLATION"][flagellation_value_18]
+    $ torture_textvalue_19 = DIC_MC_ATTRIBUTE["TORTURE"][torture_value_19]
+    $ binding_textvalue_20 = DIC_MC_ATTRIBUTE["BINDING"][binding_value_20]
+    $ petting_textvalue_21 = DIC_MC_ATTRIBUTE["PETTING"][petting_value_21]
+    $ oral_sex_textvalue_22 = DIC_MC_ATTRIBUTE["ORAL SEX"][oral_sex_value_22]
+    $ penetration_textvalue_23 = DIC_MC_ATTRIBUTE["PENETRATION"][penetration_value_23]
+    $ fetishism_textvalue_24 = DIC_MC_ATTRIBUTE["FETISHISM"][fetishism_value_24]
+    $ reputation_textvalue_1 = DIC_MC_ATTRIBUTE["REPUTATION"][reputation_value_1]
+    $ custom_difficulty_textvalue = DIC_CUSTOM_START_DIFFICULTY_SELECTION[DIC_CUSTOM_START_DIFFICULTY_SELECTION_INDEX[dic_custom_start_difficulty_selection_index_index]][0]
+    $ custom_points = DIC_CUSTOM_START_DIFFICULTY_SELECTION[DIC_CUSTOM_START_DIFFICULTY_SELECTION_INDEX[dic_custom_start_difficulty_selection_index_index]][2]
     $ characterOnlyNameIndex = pre_characterOnlyNameIndex % 12
     show screen points_tier_text2
     if namechange == True:
@@ -143,10 +143,10 @@ label Custom_Start:
         show screen points_tier_text
         if reputation_value_1 > 4:
             $ reputation_value_1 = 4
-            $ reputation_textvalue_1 = dic_mc_attribute["REPUTATION"][reputation_value_1]
+            $ reputation_textvalue_1 = DIC_MC_ATTRIBUTE["REPUTATION"][reputation_value_1]
             $ dic_mc_normal_selection_textdescription_value = "WHITE TOWN"
             show screen custom_value_information2
-    $ custom_points = custom_points - custom_skill_cost_value[strength_value_1] - custom_skill_cost_value[personality_value_2] - custom_skill_cost_value[allure_value_3] - custom_skill_cost_value[libido_value_4] - custom_skill_cost_value[dominance_value_5] - custom_skill_cost_value[brand_reputation_value_6] - custom_skill_cost_value[guild_reputation_value_7] - custom_skill_cost_value[standard_of_living_value_8] - custom_skill_cost_value[hygiene_value_9] - custom_skill_cost_value[mood_value_10] - custom_skill_cost_value[injuries_value_11] - custom_skill_cost_value[teaching_value_12] - custom_skill_cost_value[stewardship_value_13] - custom_skill_cost_value[artistry_value_14] - custom_skill_cost_value[medic_value_15] - custom_skill_cost_value[fighter_value_16] - custom_skill_cost_value[magic_value_17] - custom_skill_cost_value[flagellation_value_18] - custom_skill_cost_value[torture_value_19] - custom_skill_cost_value[binding_value_20] - custom_skill_cost_value[petting_value_21] - custom_skill_cost_value[oral_sex_value_22] - custom_skill_cost_value[penetration_value_23] - custom_skill_cost_value[fetishism_value_24] - custom_skill_cost_value[reputation_value_1] - int((sparks_37 - dic_custom_start_difficulty_selection[dic_custom_start_difficulty_selection_index[dic_custom_start_difficulty_selection_index_index]][1])/10)
+    $ custom_points = custom_points - CUSTOM_SKILL_COST_VALUE[strength_value_1] - CUSTOM_SKILL_COST_VALUE[personality_value_2] - CUSTOM_SKILL_COST_VALUE[allure_value_3] - CUSTOM_SKILL_COST_VALUE[libido_value_4] - CUSTOM_SKILL_COST_VALUE[dominance_value_5] - CUSTOM_SKILL_COST_VALUE[brand_reputation_value_6] - CUSTOM_SKILL_COST_VALUE[guild_reputation_value_7] - CUSTOM_SKILL_COST_VALUE[standard_of_living_value_8] - CUSTOM_SKILL_COST_VALUE[hygiene_value_9] - CUSTOM_SKILL_COST_VALUE[mood_value_10] - CUSTOM_SKILL_COST_VALUE[injuries_value_11] - CUSTOM_SKILL_COST_VALUE[teaching_value_12] - CUSTOM_SKILL_COST_VALUE[stewardship_value_13] - CUSTOM_SKILL_COST_VALUE[artistry_value_14] - CUSTOM_SKILL_COST_VALUE[medic_value_15] - CUSTOM_SKILL_COST_VALUE[fighter_value_16] - CUSTOM_SKILL_COST_VALUE[magic_value_17] - CUSTOM_SKILL_COST_VALUE[flagellation_value_18] - CUSTOM_SKILL_COST_VALUE[torture_value_19] - CUSTOM_SKILL_COST_VALUE[binding_value_20] - CUSTOM_SKILL_COST_VALUE[petting_value_21] - CUSTOM_SKILL_COST_VALUE[oral_sex_value_22] - CUSTOM_SKILL_COST_VALUE[penetration_value_23] - CUSTOM_SKILL_COST_VALUE[fetishism_value_24] - CUSTOM_SKILL_COST_VALUE[reputation_value_1] - int((sparks_37 - DIC_CUSTOM_START_DIFFICULTY_SELECTION[DIC_CUSTOM_START_DIFFICULTY_SELECTION_INDEX[dic_custom_start_difficulty_selection_index_index]][1])/10)
     
     if custom_points < 0:
         $ green_or_red = "#CD0000"
@@ -181,12 +181,12 @@ screen custom_value_information():
             font "fonts/Segoe Print.ttf"
         if dic_mc_normal_selection_textdescription_value != "INJURIES":
             for values in range(6):
-                textbutton dic_mc_attribute.get(dic_mc_normal_selection_textdescription_value, [""]*6)[values] anchor (0.5,0.5):
+                textbutton DIC_MC_ATTRIBUTE.get(dic_mc_normal_selection_textdescription_value, [""]*6)[values] anchor (0.5,0.5):
                     style "attribute_check_slave" + str(values)
                     action  NullAction()
         else:
             for values in range(6):
-                textbutton dic_mc_attribute.get(dic_mc_normal_selection_textdescription_value, [""]*6)[values] anchor (0.5,0.5):
+                textbutton DIC_MC_ATTRIBUTE.get(dic_mc_normal_selection_textdescription_value, [""]*6)[values] anchor (0.5,0.5):
                     style "attribute_check_injuries" + str(values)
                     action  NullAction()
 
@@ -207,7 +207,7 @@ screen custom_value_information2():
     zorder 5
     add "gui/confirm_frame.png" at truecenter
 
-    text dic_mc_normal_selection_textdescription[dic_mc_normal_selection_textdescription_value][dic_mc_normal_selection_textdescription_value_index] xmaximum 445:
+    text DIC_MC_NORMAL_SELECTION_TEXTDESCRIPTION[dic_mc_normal_selection_textdescription_value][dic_mc_normal_selection_textdescription_value_index] xmaximum 445:
         pos (0.33, 0.28)
         color "#191970"
         size 14
@@ -265,7 +265,7 @@ screen points_tier_text2():
             yalign 0.5
             xalign 0.5
         add "spacer" size (0, 5)
-        add dic_custom_character_selection[dic_charactersOnlyName[characterOnlyNameIndex]][0] at truecenter          
+        add DIC_CUSTOM_CHARACTER_SELECTION[DIC_CHARACTERSONLYNAME[characterOnlyNameIndex]][0] at truecenter          
         add "spacer" size (0, 5)
         text "{u}Ignore story:{u}":
             size 17
@@ -401,7 +401,7 @@ screen custom_selection():
         imagebutton:
             idle "buttons/Plus.webp"
             hover "buttons/Plus_hover.webp"
-            action SetVariable("sparks_37",min(sparks_37+100,custom_selection_max_cap_sparks[dic_custom_start_difficulty_selection_index_index])), Jump("Custom_Start")
+            action SetVariable("sparks_37",min(sparks_37+100,CUSTOM_SELECTION_MAX_CAP_SPARKS[dic_custom_start_difficulty_selection_index_index])), Jump("Custom_Start")
             yalign 0.5
     textbutton "Start" pos (0.5, 0.945) anchor (0.5, 0.5):
         style "start_button"

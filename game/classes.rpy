@@ -1,9 +1,9 @@
 init python:
     class night_rules_mini_fuctions:
         def sleep_text(girl):
-            return girl["name"] + " " + dic_idle[random.randint(0, 4)]
+            return girl["name"] + " " + DIC_IDLE[random.randint(0, 4)]
         def sleep_room(girl):
-            return dic_slave_room_to_text[girl["sleep_room"]]
+            return DIC_SLAVE_ROOM_TO_TEXT[girl["sleep_room"]]
         def cook_text(girl):
             return dic_cook[food_meat_info["quality"]]
         def cook_room(girl):
@@ -11,15 +11,15 @@ init python:
         def cook_extra():
             return {"display_meat": True}
         def maid_text(girl):
-            return dic_maid[girl["maid_slave_skill_performance"]]
+            return DIC_MAID[girl["maid_slave_skill_performance"]]
         def maid_room(girl):
             return "Hall"
         def bath_text(girl):
-            return dic_bath_master[2]
+            return DIC_BATH_MASTER[2]
         def bath_room(girl):
             return "Bath"
         def bath_self_text(girl):
-            return bathing_slave_alone[girl["psy_status"]]
+            return BATHING_SLAVE_ALONE[girl["psy_status"]]
         def bath_self_room(girl):
             return "Bath"
         def alarm_text(girl):
@@ -124,7 +124,7 @@ init python:
         
         def auto_slave_cook_meal():
             global already_prepared, already_ate, food_meat_info, home_mess_value
-            global all_girls_list, dic_foods_list, storage, dic_hygiene_value_rate
+            global all_girls_list, DIC_FOODS_LIST, storage, DIC_HYGIENE_VALUE_RATE
             global girl_index, target_skill, tutor_modifier
             girl = all_girls_list[girl_index]
             if home_estate["kitchen"]["storage_capacity"] <= 0:
@@ -161,13 +161,13 @@ init python:
 
                     # Try recipes from highest to lowest skill tier
                     while n >= 0 and food_not_found:
-                        for i, entry in enumerate(dic_foods_list[keys_list[n]]):
-                            i = (i + roll) % len(dic_foods_list[keys_list[n]])
+                        for i, entry in enumerate(DIC_FOODS_LIST[keys_list[n]]):
+                            i = (i + roll) % len(DIC_FOODS_LIST[keys_list[n]])
                             missing = 0
 
                             # Check if ingredients are available
                             for slot in range(4):
-                                ingredient = dic_foods_list[keys_list[n]][i][1][slot]
+                                ingredient = DIC_FOODS_LIST[keys_list[n]][i][1][slot]
                                 if ingredient != "none" and storage["ingredients"][ingredient] == 0:
                                     missing += 1
 
@@ -175,18 +175,18 @@ init python:
                                 #dont cook if cooking doesn't improve the quality
                                 if food_meat_info["quality"] < n + 1:
                                     #don't cook if kitchen isn't good enough. this actually CAP the cooking quality
-                                    if dic_improvement_rooms["kitchen"][home_estate["kitchen"]["type"]]["modifier"] >= n + 1:
+                                    if DIC_IMPROVEMENT_ROOMS["kitchen"][home_estate["kitchen"]["type"]]["modifier"] >= n + 1:
                                         already_prepared = True
                                         food_not_found = False
 
                                         # Deduct ingredients
                                         for slot in range(4):
-                                            ingredient = dic_foods_list[keys_list[n]][i][1][slot]
+                                            ingredient = DIC_FOODS_LIST[keys_list[n]][i][1][slot]
                                             if ingredient != "none":
                                                 storage["ingredients"][ingredient] -= 1
 
                                         already_ate = True
-                                        food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
+                                        food_meat_info["name"] = DIC_FOODS_LIST[keys_list[n]][i][0]
                                         food_meat_info["quality"] = n + 1
 
                                         # Check sub-par diligence
@@ -204,8 +204,8 @@ init python:
                         food_meat_info["name"] = "Canned food"
 
                     # Hygiene and energy changes
-                    home_mess_value += dic_hygiene_value_rate["cook"]
-                    girl["hygiene_rate"] += dic_hygiene_value_rate["cook"]
+                    home_mess_value += DIC_HYGIENE_VALUE_RATE["cook"]
+                    girl["hygiene_rate"] += DIC_HYGIENE_VALUE_RATE["cook"]
 
                     slave_energy_drop_calculation()
                     interaction_willingness_check()
@@ -250,7 +250,7 @@ init python:
                 if slave_skill < 3 and home_mess_value == 0: 
                     home_mess_value = 10
                 slave_energy_drop_calculation()
-                girl["hygiene_rate"] += dic_hygiene_value_rate["maid"] - home_hygiene_value + 5
+                girl["hygiene_rate"] += DIC_HYGIENE_VALUE_RATE["maid"] - home_hygiene_value + 5
                 interaction_willingness_check()
                 diligence333_check333()
                 girl_skills_rise_update()
@@ -338,7 +338,7 @@ init python:
                 #     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                 #     girl["num_rules_wanttobreak"] += 1
                 #     # lack assistant code
-                #     girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["assistant_pass"]
+                #     girl["rules_explain"]["behave_alarm"] += DIC_GIRL_RULES_SPECIAL_TEXT["behave_alarm"]["assistant_pass"]
                 #     damage = 3
                 #     brusing = 1
                 #     slave_damage_calculation()
@@ -346,7 +346,7 @@ init python:
                 # else:
                 #     girl["rules_broken"]["behave_alarm"] = True
                 #     #lack assistant code 
-                #     girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["assistant_fail"]P
+                #     girl["rules_explain"]["behave_alarm"] += DIC_GIRL_RULES_SPECIAL_TEXT["behave_alarm"]["assistant_fail"]P
                 girl["rules_broken"]["behave_alarm"] = True
                 girl["rules_explain"]["behave_alarm"] += "[all_girls_list[girl_index]['name']] doesn't enters your room in the morning."
                 return
@@ -372,21 +372,21 @@ init python:
                 b = max(0, min(excitement_value + 1, girl["sex_experience"]["oral_pleasure"]["blowjob"] - penetration_value_23 // 2))
                 if interaction_willingness < 0 or a > 0: #slave who is not willing but actually like it , will do it anyways
                     if b < 1:
-                        girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["poor_job"]
+                        girl["rules_explain"]["behave_alarm"] += DIC_GIRL_RULES_SPECIAL_TEXT["behave_alarm"]["poor_job"]
                     else:
-                        girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["disgust"]
+                        girl["rules_explain"]["behave_alarm"] += DIC_GIRL_RULES_SPECIAL_TEXT["behave_alarm"]["disgust"]
                 elif b > 0:
-                    girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["good_job"]
+                    girl["rules_explain"]["behave_alarm"] += DIC_GIRL_RULES_SPECIAL_TEXT["behave_alarm"]["good_job"]
                 elif excitement_value < -2:
-                    girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["not_enough_excitement"]
+                    girl["rules_explain"]["behave_alarm"] += DIC_GIRL_RULES_SPECIAL_TEXT["behave_alarm"]["not_enough_excitement"]
                 else:
-                    girl["rules_explain"]["behave_alarm"] += dic_girl_rules_special_text["behave_alarm"]["almost_enough_excitement"]
+                    girl["rules_explain"]["behave_alarm"] += DIC_GIRL_RULES_SPECIAL_TEXT["behave_alarm"]["almost_enough_excitement"]
         def auto_slave_humility():
             global girl_index
             girl = all_girls_list[girl_index]
             if not girl["rules"]["behave_humility"]:
                 return
-            if girl["obedience"] < 1 + dic_girl_psy_status[girl["psy_status"]] - girl["aura"]["fear"]:
+            if girl["obedience"] < 1 + DIC_GIRL_PSY_STATUS[girl["psy_status"]] - girl["aura"]["fear"]:
                 if girl["rules"]["enforce_rules"] and girl["equipment"]["neck"] == "Shock Collar":
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                     girl["num_rules_wanttobreak"] += 1
@@ -408,7 +408,7 @@ init python:
             girl = all_girls_list[girl_index]
             if not girl["rules"]["behave_pet"]:
                 return
-            if girl["obedience"] < 0 - 5*girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] + dic_girl_psy_status[girl["psy_status"]]:
+            if girl["obedience"] < 0 - 5*girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] + DIC_GIRL_PSY_STATUS[girl["psy_status"]]:
                 if girl["rules"]["enforce_rules"] and girl["equipment"]["clothes"] == "Petsuit":
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                     girl["num_rules_wanttobreak"] += 1
@@ -430,7 +430,7 @@ init python:
             girl = all_girls_list[girl_index]
             if not girl["rules"]["behave_silence"]:
                 return
-            if girl["obedience"] < girl["attributes"]["temperament"] + dic_girl_psy_status[girl["psy_status"]]:
+            if girl["obedience"] < girl["attributes"]["temperament"] + DIC_GIRL_PSY_STATUS[girl["psy_status"]]:
                 if girl["rules"]["enforce_rules"] and storage["house"]["sex_items"]["Reliable Gag"] > 0:
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                     girl["num_rules_wanttobreak"] += 1
@@ -565,7 +565,7 @@ init python:
             girl = all_girls_list[girl_index]
             if not girl["rules"]["deny_toileting"]:
                 return
-            if girl["obedience"] < girl["attributes"]["nature"] + girl["attributes"]["pride"]//2 - (master_supermacy- girl["supermacy"])  + dic_girl_psy_status[girl["psy_status"]]:
+            if girl["obedience"] < girl["attributes"]["nature"] + girl["attributes"]["pride"]//2 - (master_supermacy- girl["supermacy"])  + DIC_GIRL_PSY_STATUS[girl["psy_status"]]:
                 if girl["rules"]["enforce_rules"] and girl["equipment"]["anus"] == "Anal Pear":
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                     girl["num_rules_wanttobreak"] += 1
@@ -588,7 +588,7 @@ init python:
             girl = all_girls_list[girl_index]
             if not girl["rules"]["use_vaginal_beads"]:
                 return
-            if girl["obedience"] < 2 + girl["attributes"]["pride"] + girl["attributes"]["nature"] - girl["sex_experience"]["penetration"]["vaginal_sex"] - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]*3 - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"]*2 + dic_girl_psy_status[girl["psy_status"]]:
+            if girl["obedience"] < 2 + girl["attributes"]["pride"] + girl["attributes"]["nature"] - girl["sex_experience"]["penetration"]["vaginal_sex"] - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["lust_driver"]["value"]*3 - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"]*2 + DIC_GIRL_PSY_STATUS[girl["psy_status"]]:
                 if girl["rules"]["enforce_rules"] and storage["house"]["sex_items"]["V-balls"] > 0 and storage["house"]["sex_items"]["Chastity Belt"] > 0:
                     girl["mood_state"]["bad_mood"]["rules"]["active"] = True
                     girl["num_rules_wanttobreak"] += 1
@@ -678,7 +678,7 @@ init python:
                 girl["experience"]["traits_miscellaneous"]["sexual_openness"] += 1
                 girl["mood"] -= max(0, 4 - girl["sex_experience"]["fetishism"]["golden_shower"] - girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] - girl["aura"]["devotion"])
                 if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] != 0:
-                    reveal_check_hidden_traits("traits_miscellaneous(1/12)", "sexual_openness", dic_traits_miscellaneous_description)
+                    reveal_check_hidden_traits("traits_miscellaneous(1/12)", "sexual_openness", DIC_TRAITS_MISCELLANEOUS_DESCRIPTION)
                 if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["sexual_openness"]["value"] < 1:
                     girl["mood_state"]["bad_mood"]["disgust"]["active"] = True
                 if girl["sex_experience"]["fetishism"]["golden_shower"] > 2:

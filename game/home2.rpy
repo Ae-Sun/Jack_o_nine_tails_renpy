@@ -11,7 +11,7 @@ screen master_diary_menu():
         text "{u}GOOD MOOD MOODLETS:{/u}" size 16 color "#0000D8" font "fonts/Segoe Print.ttf"
         for values in master_mood_state["good_mood"]:
             if master_mood_state["good_mood"][values]["active"]:
-                text dic_master_mood["good_mood"][values] size 16 color "#0000D8" font "fonts/Segoe Print.ttf" xmaximum 700
+                text DIC_MASTER_MOOD["good_mood"][values] size 16 color "#0000D8" font "fonts/Segoe Print.ttf" xmaximum 700
                 python:
                     n += 1
         if n == 0:
@@ -20,7 +20,7 @@ screen master_diary_menu():
         text "{u}BAD MOOD MOODLETS:{/u}" size 16 color "#0000D8" font "fonts/Segoe Print.ttf"
         for values in master_mood_state["bad_mood"]:
             if master_mood_state["bad_mood"][values]["active"]:
-                text dic_master_mood["bad_mood"][values] size 16 color "#0000D8" font "fonts/Segoe Print.ttf" xmaximum 700
+                text DIC_MASTER_MOOD["bad_mood"][values] size 16 color "#0000D8" font "fonts/Segoe Print.ttf" xmaximum 700
                 python:
                     m += 1
         if m == 0:
@@ -32,7 +32,7 @@ label slave_bathing_label():
         room_name = "Bath"
         slave_bath_selfwash_ask()
         setup_interaction_screen()
-        interaction_textdisplay_screen_text = bathing_slave_alone[all_girls_list[girl_index]["psy_status"]]
+        interaction_textdisplay_screen_text = BATHING_SLAVE_ALONE[all_girls_list[girl_index]["psy_status"]]
     call screen interaction_textdisplay_screen()
 
 
@@ -55,7 +55,7 @@ screen interaction_textdisplay_screen():
             action Jump("Home")
 label master_bathing_label():
     python:
-        interaction_textdisplay_screen_text = dic_bath_master[0]
+        interaction_textdisplay_screen_text = DIC_BATH_MASTER[0]
         master_bath()
         setup_interaction_screen()
     call screen interaction_textdisplay_screen()
@@ -71,8 +71,8 @@ screen excitement_screen():
             size 14
             font "fonts/Segoe Print.ttf"
         add "spacer" size(0,12)
-        for a in dic_master_excitement_colored:
-            textbutton dic_master_excitement_colored[a] anchor (0.5,0.5): 
+        for a in DIC_MASTER_EXCITEMENT_COLORED:
+            textbutton DIC_MASTER_EXCITEMENT_COLORED[a] anchor (0.5,0.5): 
                 style "attribute_mood"
                 action NullAction()
     text " Press space to close this window.":

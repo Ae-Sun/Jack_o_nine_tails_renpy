@@ -34,12 +34,12 @@ init python:
             renpy.log(f"Failed to load {filename}: {e}")
             return None
     def reduce_check(x,a):
-        if all_girls_list[girl_index]["experience"][x][a] <= attributes_min_threshold[all_girls_list[girl_index][x][a]] and all_girls_list[girl_index][x][a] > 0:
-            all_girls_list[girl_index]["experience"][x][a] -= attributes_min_threshold[all_girls_list[girl_index][x][a]]
+        if all_girls_list[girl_index]["experience"][x][a] <= ATTRIBUTES_MIN_THRESHOLD[all_girls_list[girl_index][x][a]] and all_girls_list[girl_index][x][a] > 0:
+            all_girls_list[girl_index]["experience"][x][a] -= ATTRIBUTES_MIN_THRESHOLD[all_girls_list[girl_index][x][a]]
             all_girls_list[girl_index][x][a] = all_girls_list[girl_index][x][a] - 1
     def increase_check(x,a):
-        if all_girls_list[girl_index]["experience"][x][a] >= attributes_max_threshold[all_girls_list[girl_index][x][a]] and all_girls_list[girl_index][x][a] < 5:
-            all_girls_list[girl_index]["experience"][x][a] -= attributes_max_threshold[all_girls_list[girl_index][x][a]]
+        if all_girls_list[girl_index]["experience"][x][a] >= ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index][x][a]] and all_girls_list[girl_index][x][a] < 5:
+            all_girls_list[girl_index]["experience"][x][a] -= ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index][x][a]]
             all_girls_list[girl_index][x][a] = all_girls_list[girl_index][x][a] + 1
     def msg(x):
         renpy.show_screen("msg", msg_text=x)
@@ -136,7 +136,7 @@ init python:
         orgastic = False
     def interaction_willingness_check(): # A.K.A $dyn_repulse_check
         global attribute_track_index, dictionary_track_index, dictionary_name
-        global dic_traits_skills_descriptions, target_skill, interaction_willingness
+        global DIC_TRAITS_SKILLS_DESCRIPTIONS, target_skill, interaction_willingness
         global domini_dictum_active, interaction_sex_acceptance, interaction_repulse_difficulty
         global target_skill_sexual, testvariable1
         sex_acceptance_check()
@@ -148,7 +148,7 @@ init python:
                 if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] and not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] == 0:
                     attribute_track_index = target_skill2
                     dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 
-                    dictionary_name = dic_traits_skills_descriptions
+                    dictionary_name = DIC_TRAITS_SKILLS_DESCRIPTIONS
                     all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] = True
                     renpy.show_screen("tutorial_attribute")
                 interaction_willingness += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] * 3
@@ -158,7 +158,7 @@ init python:
                 if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["revealed"] and not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["value"] == 0: 
                     attribute_track_index = target_skill_sexual2
                     dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["value"] 
-                    dictionary_name = dic_traits_sexual_descriptions
+                    dictionary_name = DIC_TRAITS_SEXUAL_DESCRIPTIONS
                     all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["revealed"] = True
                     renpy.show_screen("tutorial_attribute")
                 interaction_willingness += all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["value"] * 3
@@ -191,10 +191,10 @@ init python:
         if all_girls_list[girl_index]["energy"] < 0:
             slave_diligence += all_girls_list[girl_index]["energy"]*4
         slave_diligence -= 5 - all_girls_list[girl_index]["attributes"]["pride"] - max(0,all_girls_list[girl_index]["arousal"] -3 )
-        if dic_girl_psy_status[all_girls_list[girl_index]["psy_status"]] < 0:
-            slave_diligence += dic_girl_psy_status[all_girls_list[girl_index]["psy_status"]]
+        if DIC_GIRL_PSY_STATUS[all_girls_list[girl_index]["psy_status"]] < 0:
+            slave_diligence += DIC_GIRL_PSY_STATUS[all_girls_list[girl_index]["psy_status"]]
         else:
-            slave_diligence -= dic_girl_psy_status[all_girls_list[girl_index]["psy_status"]]
+            slave_diligence -= DIC_GIRL_PSY_STATUS[all_girls_list[girl_index]["psy_status"]]
         if interaction_willingness < 0:
             slave_diligence += interaction_willingness // 2
         # BONUSES FOR TEACHING ABILITY
@@ -246,7 +246,7 @@ init python:
             if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] and not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] == 0: 
                 attribute_track_index = target_skill2
                 dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] 
-                dictionary_name = dic_traits_skills_descriptions
+                dictionary_name = DIC_TRAITS_SKILLS_DESCRIPTIONS
                 all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["revealed"] = True
                 renpy.show_screen("tutorial_attribute")
             if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"][target_skill2]["value"] > 0:
@@ -258,7 +258,7 @@ init python:
             if not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["revealed"] and not all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["value"] == 0: 
                 attribute_track_index = target_skill_sexual2
                 dictionary_track_index = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["value"] 
-                dictionary_name = dic_traits_sexual_descriptions
+                dictionary_name = DIC_TRAITS_SEXUAL_DESCRIPTIONS
                 all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["revealed"] = True
                 renpy.show_screen("tutorial_attribute")
             if all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_sexual(1/10)"][target_skill_sexual2]["value"] > 0:
@@ -344,7 +344,7 @@ init python:
 
         x = all_girls_list[girl_index]["haircolor"]
         y = all_girls_list[girl_index]["hairlength"]
-        z = dic_girl_age_text2[all_girls_list[girl_index]["age"]]
+        z = DIC_GIRL_AGE_TEXT2[all_girls_list[girl_index]["age"]]
         def choose_image():
             global sex_picture
             choosing_image_condition2 = choosing_image_condition + "_folder"
@@ -360,8 +360,8 @@ init python:
                     path = os.path.join(config.gamedir, "images", "girls", "sex_scenes")
                     all_pictures = [
                         f for f in os.listdir(path)
-                        if (f.startswith(dic_girl_choosing_image_condition_short[choosing_image_condition] + "_" + x + "_" + y + "_" + z)
-                        or f.startswith(dic_girl_choosing_image_condition_short[choosing_image_condition] + "_" + "general" + "_" + z)
+                        if (f.startswith(DIC_GIRL_CHOOSING_IMAGE_CONDITION_SHORT[choosing_image_condition] + "_" + x + "_" + y + "_" + z)
+                        or f.startswith(DIC_GIRL_CHOOSING_IMAGE_CONDITION_SHORT[choosing_image_condition] + "_" + "general" + "_" + z)
                         )
                     ]
                     sex_picture = False
@@ -370,8 +370,8 @@ init python:
                     path = os.path.join(config.gamedir, "images", "girls", "normal_scenes")
                     all_pictures = [
                         f for f in os.listdir(path)
-                        if (f.startswith(dic_girl_choosing_image_condition_short[choosing_image_condition] + "_" + x + "_" + y + "_" + z)
-                        or f.startswith(dic_girl_choosing_image_condition_short[choosing_image_condition] + "_" + "general" + "_" + z)
+                        if (f.startswith(DIC_GIRL_CHOOSING_IMAGE_CONDITION_SHORT[choosing_image_condition] + "_" + x + "_" + y + "_" + z)
+                        or f.startswith(DIC_GIRL_CHOOSING_IMAGE_CONDITION_SHORT[choosing_image_condition] + "_" + "general" + "_" + z)
                         )
                     ]
                     return "girls/normal_scenes/" + random.choice(all_pictures)
@@ -393,7 +393,7 @@ init python:
         # Update home hygiene
         home_hygiene_value = calculate_hygiene(home_mess_value)
         # Update home condition
-        home_condition = dic_home_condition[home_hygiene_value]
+        home_condition = DIC_HOME_CONDITION[home_hygiene_value]
         
         # Update each girl's hygiene
         save_girl_index = girl_index
@@ -405,7 +405,7 @@ init python:
         hygiene_value_9 = calculate_hygiene(hygiene_experience_value_9)
     def master_cook_meal():
         global already_prepared, already_ate, food_meat_info, home_mess_value
-        global dic_foods_list, storage, dic_hygiene_value_rate
+        global DIC_FOODS_LIST, storage, DIC_HYGIENE_VALUE_RATE
         global hygiene_experience_value_9, energy_value
         global personality_value_2, stewardship_value_13, stewardship_experience_value_13
         global skill_adv_mul
@@ -430,13 +430,13 @@ init python:
             # Try recipes from highest to lowest skill tier
             while n >= 0 and food_not_found:
                 n = int(n)
-                for i, entry in enumerate(dic_foods_list[keys_list[n]]):
-                    i = (i + roll) % len(dic_foods_list[keys_list[n]])
+                for i, entry in enumerate(DIC_FOODS_LIST[keys_list[n]]):
+                    i = (i + roll) % len(DIC_FOODS_LIST[keys_list[n]])
                     missing = 0
 
                     # Check if ingredients are available
                     for slot in range(4):
-                        ingredient = dic_foods_list[keys_list[n]][i][1][slot]
+                        ingredient = DIC_FOODS_LIST[keys_list[n]][i][1][slot]
                         if ingredient != "none" and storage["ingredients"][ingredient] == 0:
                             missing += 1
 
@@ -444,17 +444,17 @@ init python:
                         #dont cook if cooking doesn't improve the quality
                         if food_meat_info["quality"] < n + 1:
                             #don't cook if kitchen isn't good enough. this actually CAP the cooking quality
-                            if dic_improvement_rooms["kitchen"][home_estate["kitchen"]["type"]]["modifier"] >= n + 1:
+                            if DIC_IMPROVEMENT_ROOMS["kitchen"][home_estate["kitchen"]["type"]]["modifier"] >= n + 1:
                                 already_prepared = True
                                 food_not_found = False
 
                                 # Deduct ingredients
                                 for slot in range(4):
-                                    ingredient = dic_foods_list[keys_list[n]][i][1][slot]
+                                    ingredient = DIC_FOODS_LIST[keys_list[n]][i][1][slot]
                                     if ingredient != "none":
                                         storage["ingredients"][ingredient] -= 1
                                 already_ate = True
-                                food_meat_info["name"] = dic_foods_list[keys_list[n]][i][0]
+                                food_meat_info["name"] = DIC_FOODS_LIST[keys_list[n]][i][0]
                                 food_meat_info["quality"] = n + 1
                                 stewardship_experience_value_13 += 1* skill_adv_mul
                 n -= 1
@@ -473,8 +473,8 @@ init python:
 
 
             # Hygiene and energy changes
-            home_mess_value += dic_hygiene_value_rate["cook"]
-            hygiene_experience_value_9 += dic_hygiene_value_rate["cook"]
+            home_mess_value += DIC_HYGIENE_VALUE_RATE["cook"]
+            hygiene_experience_value_9 += DIC_HYGIENE_VALUE_RATE["cook"]
             master_energy_drop_calculation()
     def master_clean():
         global home_hygiene_value, home_mess_value, energy_value , stewardship_experience_value_13
@@ -487,14 +487,14 @@ init python:
         master_mood_state["bad_mood"]["neg_cleaning"]["duration"] = 1 + personality_value_2 
         master_mood_state["bad_mood"]["neg_cleaning"]["active"] = True
         master_energy_drop_calculation()
-        hygiene_experience_value_9 += dic_hygiene_value_rate["maid"] - home_hygiene_value + 5
+        hygiene_experience_value_9 += DIC_HYGIENE_VALUE_RATE["maid"] - home_hygiene_value + 5
         home_mess_value -= max(8,stewardship_value_13*16)
         home_mess_value = max(0, home_mess_value)
     
     def moodlet_new_day_slave_update(): # this function update moodlet that are not related to specific function
         global girl_index
         girl = all_girls_list[girl_index]
-        for key in dic_slave_mood["good_mood"]:
+        for key in DIC_SLAVE_MOOD["good_mood"]:
             if girl["mood_state"]["good_mood"][key]["active"]:
                 girl["mood_state"]["good_mood"][key]["accustomed_value"] = max(-10, girl["mood_state"]["good_mood"][key]["accustomed_value"] - 1)
                 if girl["mood_state"]["good_mood"][key]["accustomed_value"] <= 0:
@@ -509,7 +509,7 @@ init python:
                         break # only 1 moodlet can be lost per day
             else:
                 girl["mood_state"]["good_mood"][key]["accustomed_value"] = min(5, girl["mood_state"]["good_mood"][key]["accustomed_value"] + 1)
-        for key in dic_slave_mood["bad_mood"]:
+        for key in DIC_SLAVE_MOOD["bad_mood"]:
             if girl["mood_state"]["bad_mood"][key]["active"]:
                 # girl["mood_state"]["bad_mood"][key]["accustomed_value"] = max(-10, girl["mood_state"]["bad_mood"][key]["accustomed_value"] - 1)
                 # if girl["mood_state"]["bad_mood"][key]["accustomed_value"] <= 0:
@@ -561,7 +561,7 @@ init python:
                                 slave_rebellion_fight = True
                                 slave_rebellion_attack = True
                         elif all_girls_list[girl_index]["equipment"]["neck"] != "":
-                            if dic_girl_equipment_neck_mod[all_girls_list[girl_index]["equipment"]["neck"]]["escape"]:
+                            if DIC_GIRL_EQUIPMENT_NECK_MOD[all_girls_list[girl_index]["equipment"]["neck"]]["escape"]:
                                 if all_girls_list[girl_index]["brand"] == 5:
                                     slave_escape_type = 2
                                 else: 
@@ -611,7 +611,7 @@ init python:
             if (all_girls_list[girl_index]["aura"]["devotion"] <= 2 
                 and all_girls_list[girl_index]["aura"]["fear"] == 0 
                 and all_girls_list[girl_index]["days_without_food"] == 0 
-                and all_girls_list[girl_index]["rules"]["rules_count"] < dic_overnight_rules_count[dic_overnight_rules_count_index]):
+                and all_girls_list[girl_index]["rules"]["rules_count"] < DIC_OVERNIGHT_RULES_COUNT[dic_overnight_rules_count_index]):
 
                 all_girls_list[girl_index]["experience"]["aura"]["spoil"] += 5 - all_girls_list[girl_index]["attributes"]["pride"] + all_girls_list[girl_index]["attributes"]["nature"] + all_girls_list[girl_index]["attributes"]["temperament"]
             increase_check("aura","spoil")
@@ -628,52 +628,14 @@ init python:
                 all_girls_list[girl_index]["neg_spoil"] = True
             all_girls_list[girl_index]["daily_count"]["rewards"] == 0
         def spoiling_reduce():
-            if all_girls_list[girl_index]["aura"]["spoil"] > 0 or all_girls_list[girl_index]["experience"]["aura"]["spoil"] > 0 and dic_overnight_rules_count[dic_overnight_rules_count_index] <= all_girls_list[girl_index]["rules"]["rules_count"] or all_girls_list[girl_index]["days_without_food"] != 0 or all_girls_list[girl_index]["aura"]["fear"] > all_girls_list[girl_index]["aura"]["devotion"]:
+            if all_girls_list[girl_index]["aura"]["spoil"] > 0 or all_girls_list[girl_index]["experience"]["aura"]["spoil"] > 0 and DIC_OVERNIGHT_RULES_COUNT[dic_overnight_rules_count_index] <= all_girls_list[girl_index]["rules"]["rules_count"] or all_girls_list[girl_index]["days_without_food"] != 0 or all_girls_list[girl_index]["aura"]["fear"] > all_girls_list[girl_index]["aura"]["devotion"]:
                 all_girls_list[girl_index]["experience"]["aura"]["spoil"] -= 1 + all_girls_list[girl_index]["aura"]["devotion"] + all_girls_list[girl_index]["aura"]["fear"] + all_girls_list[girl_index]["aura"]["despair"]*2 + max(0, all_girls_list[girl_index]["days_without_food"])*3 
             if all_girls_list[girl_index]["mood"] < 0:
                 all_girls_list[girl_index]["experience"]["aura"]["spoil"] -= all_girls_list[girl_index]["attributes"]["empathy"]
             reduce_check( "aura","spoil")
         spoiling_increase()
         spoiling_reduce()
-    def energy_and_sleep_update(): #TODO NEED TO FIX
-        def negative_energy_endurance_reduction_update():
-            if all_girls_list[girl_index]["energy"] < 0:
-                all_girls_list[girl_index]["experience"]["attributes"]["endurance"] += all_girls_list[girl_index]["energy"]*3
-                reduce_check("attributes","endurance")
-        def energy_update():
-            if all_girls_list[girl_index]["sleep"] != 4: # need to fix
-
-                all_girls_list[girl_index]["energy"] = (
-                    all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2 
-                    - all_girls_list[girl_index]["yesterday_exhaustion"] 
-                    + all_girls_list[girl_index]["stored_yesterday_energy"] 
-                    + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"])
-
-                if medic_value_15 >= 5:
-                    all_girls_list[girl_index]["energy"] += 2
-                all_girls_list[girl_index]["stored_yesterday_energy"] = 0
-                all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["active"] = False
-            else:
-                all_girls_list[girl_index]["energy"] = min(10, (all_girls_list[girl_index]["attributes"]["endurance"] * 2 + 2) // 2 ) - all_girls_list[girl_index]["yesterday_exhaustion"] + dic_improvement_rooms["slaves_rooms"][all_girls_list[girl_index]["sleep_room"]]["modifier"]
-                if medic_value_15 >= 5:
-                    all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *2
-                else:
-                    all_girls_list[girl_index]["experience"]["attributes"]["endurance"] -= all_girls_list[girl_index]["days_without_sleep"] *3
-                all_girls_list[girl_index]["experience"]["aura"]["fear"] += all_girls_list[girl_index]["days_without_sleep"]*3
-                all_girls_list[girl_index]["experience"]["aura"]["taming"] += all_girls_list[girl_index]["days_without_sleep"]*2
-                all_girls_list[girl_index]["experience"]["aura"]["despair"] += all_girls_list[girl_index]["days_without_sleep"]
-                all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["active"] = True
-                all_girls_list[girl_index]["mood_state"]["bad_mood"]["exhausted"]["weight"] = 1 + all_girls_list[girl_index]["days_without_sleep"]*0.4
-                reduce_check("attributes","endurance")
-                increase_check("aura","taming")
-                increase_check("aura","fear")
-                increase_check("aura","despair")
-                all_girls_list[girl_index]["stored_yesterday_energy"] = 0
-        # def sleep_condition_mood_update():
-        #     if all_girls_list[girl_index]["sleep"] == 0:
-
-        negative_energy_endurance_reduction_update()
-        energy_update()
+    
     def diet_update():
         girl = all_girls_list[girl_index]
         def calories_check():
@@ -681,7 +643,7 @@ init python:
             if girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"] != 0:
                 if not girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["revealed"]:
                     girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["revealed"] = True
-                    msg(dic_traits_attributes_description["physicaltrait"][girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"]])
+                    msg(DIC_TRAITS_ATTRIBUTES_DESCRIPTION["physicaltrait"][girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"]])
                 # the trait make eazier to mantein body fat when positive and harder when negative
                 if girl["calories"] < 0:
                     girl["calories"] += girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["physicaltrait"]["value"]
@@ -976,7 +938,7 @@ init python:
             if medic_value_15 > 2: # Need at least B+ medic to notice if slave is fertile
                 if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["revealed"]:
                     girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["revealed"] = True
-                    msg(dic_traits_miscellaneous_description["fertility"][girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["value"]])
+                    msg(DIC_TRAITS_MISCELLANEOUS_DESCRIPTION["fertility"][girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["fertility"]["value"]])
         
         if not girl["pregnant"]["active"]:
             if girl["menstruation_cycle"]["active"]:
@@ -1186,7 +1148,7 @@ init python:
                         girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["revealed"] = True
                         attribute_track_index = "beautytrait"
                         dictionary_track_index = girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["beautytrait"]["value"] 
-                        dictionary_name = dic_traits_attributes_description
+                        dictionary_name = DIC_TRAITS_ATTRIBUTES_DESCRIPTION
                         customboxcheck = True
         def update_slave_style():
             global natural_grace_color
@@ -1219,7 +1181,7 @@ init python:
                     girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["revealed"] = True
                     attribute_track_index = "styletrait"
                     dictionary_track_index = girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["styletrait"]["value"] 
-                    dictionary_name = dic_traits_attributes_description
+                    dictionary_name = DIC_TRAITS_ATTRIBUTES_DESCRIPTION
                     customboxcheck = True
         def update_slave_exoticism():
             global natural_exoticism_color
@@ -1255,7 +1217,7 @@ init python:
                     girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["exoticismtrait"]["revealed"] = True
                     attribute_track_index = "exoticismtrait"
                     dictionary_track_index = girl["traits"]["traits_hidden"]["traits_attributes(1/20)"]["exoticismtrait"]["value"] 
-                    dictionary_name = dic_traits_attributes_description
+                    dictionary_name = DIC_TRAITS_ATTRIBUTES_DESCRIPTION
                     customboxcheck = True
         if girl["age"] == 1:
             girl["epilation"] = 100
@@ -1464,20 +1426,20 @@ init python:
                     girl["rating_help_text"] += f"- {girl['name']} should master a total of 5 common skills\n"
                 if girl["sex_skill_max"] < 4:
                     girl["rating_help_text"] += f"- {girl['name']} should master a total of 4 sexual skills\n"
-        girl["rating_text_display"] = dic_rating_colored[all_girls_list[girl_index]["rating"]]
+        girl["rating_text_display"] = DIC_RATING_COLORED[all_girls_list[girl_index]["rating"]]
     def slave_specialization_check():
         global girl_index, client_slave_requierement_tier
         girl = all_girls_list[girl_index]
         for key in girl["specialization"]:
-            n = len(dic_specializations[key])
+            n = len(DIC_SPECIALIZATIONS[key])
             missing = 0
             if key != "Concubine":
                 for i in range(n):
                     try:
-                        if girl["skills"][dic_specializations[key][i]] < max(client_slave_requierement_tier,3):
+                        if girl["skills"][DIC_SPECIALIZATIONS[key][i]] < max(client_slave_requierement_tier,3):
                             missing += 1
                     except KeyError:
-                        if girl["attributes"][dic_specializations[key][i]] < max(client_slave_requierement_tier,3):
+                        if girl["attributes"][DIC_SPECIALIZATIONS[key][i]] < max(client_slave_requierement_tier,3):
                             missing += 1
             else:                            
                 if girl["sex_skills_sum"] < 15:
@@ -1652,12 +1614,12 @@ init python:
         all_girls_list[girl_index]["mood_state"].setdefault("good_mood",{})
         all_girls_list[girl_index]["mood_state"].setdefault("bad_mood",{})
         
-        for key in dic_slave_mood["good_mood"]:
+        for key in DIC_SLAVE_MOOD["good_mood"]:
             all_girls_list[girl_index]["mood_state"]["good_mood"].setdefault(key, {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1})
-        for key in dic_slave_mood["bad_mood"]:
+        for key in DIC_SLAVE_MOOD["bad_mood"]:
             all_girls_list[girl_index]["mood_state"]["bad_mood"].setdefault(key, {"permanent": False , "accustomed": False, "accustomed_value": 5, "active": False, "weight": 1, "duration": 1, "default_duration": 1})
         all_girls_list[girl_index].setdefault("already_done",{})
-        for key in dic_specializations:
+        for key in DIC_SPECIALIZATIONS:
             all_girls_list[girl_index]["already_done"].setdefault(key, 0)
         all_girls_list[girl_index]["already_done"].setdefault("sex", 0)
         all_girls_list[girl_index]["experience"].setdefault("aura", {})
@@ -1742,15 +1704,15 @@ init python:
         all_girls_list[girl_index]["equipment"].setdefault("navel",{"pierced":False,"type":""})
         all_girls_list[girl_index]["equipment"].setdefault("anus","")
         all_girls_list[girl_index]["equipment"].setdefault("aura_bound",{})
-        for key in dic_girl_clothing_full:
+        for key in DIC_GIRL_CLOTHING_FULL:
             all_girls_list[girl_index]["equipment"]["aura_bound"].setdefault(key, False)
         all_girls_list[girl_index].setdefault("learning_bonus",{})
-        for key in dic_slave_skills:
+        for key in DIC_SLAVE_SKILLS:
             all_girls_list[girl_index]["learning_bonus"].setdefault(key,0)
         all_girls_list[girl_index]["learning_bonus"].setdefault("sex",0)
         all_girls_list[girl_index]["learning_bonus"].setdefault("academy",0)
         all_girls_list[girl_index].setdefault("specialization",{})
-        for key in dic_specializations:
+        for key in DIC_SPECIALIZATIONS:
             all_girls_list[girl_index]["specialization"].setdefault(key,False)
         all_girls_list[girl_index].setdefault("daily_bonus",{})
         all_girls_list[girl_index]["daily_bonus"].setdefault("devotion",0)
@@ -1818,7 +1780,7 @@ init python:
         traits_aura = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_aura(1/16)"]
         traits_attributes = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_attributes(1/20)"]
 
-        for key, values in dic_slave_skills.items():
+        for key, values in DIC_SLAVE_SKILLS.items():
             all_girls_list[girl_index]["experience"]["skills"].setdefault(key,0)
             if key not in all_girls_list[girl_index]["skills"]:
                 roll = random.randint(1, 3)
@@ -1828,7 +1790,7 @@ init python:
                 else:
                     val = 0
                 all_girls_list[girl_index]["skills"][key] = val
-        for key, values in dic_traits_skills.items():
+        for key, values in DIC_TRAITS_SKILLS.items():
             all_girls_list[girl_index]["experience"]["traits_skills"].setdefault(key,0)
             if key not in traits_skills:
                 roll = random.randint(1, 16)
@@ -1841,7 +1803,7 @@ init python:
                 else:
                     val = 0
                 traits_skills[key] = {"value": val, "revealed": False}    
-        for key, values in dic_traits_sexual.items():
+        for key, values in DIC_TRAITS_SEXUAL.items():
             all_girls_list[girl_index]["experience"]["traits_sexual"].setdefault(key,0)
             if key not in traits_sexual:
                 roll = random.randint(1, 20)
@@ -1854,7 +1816,7 @@ init python:
                 else:
                     val = 0
                 traits_sexual[key] = {"value": val, "revealed": False}
-        for key, values in dic_traits_miscellaneous.items():
+        for key, values in DIC_TRAITS_MISCELLANEOUS.items():
             all_girls_list[girl_index]["experience"]["traits_miscellaneous"].setdefault(key,0)
             if key not in traits_miscellaneous:
                 roll = random.randint(1, 24)
@@ -1867,7 +1829,7 @@ init python:
                 else:
                     val = 0
                 traits_miscellaneous[key] = {"value": val, "revealed": False}
-        for key, values in dic_traits_aura.items():
+        for key, values in DIC_TRAITS_AURA.items():
             all_girls_list[girl_index]["experience"]["traits_aura"].setdefault(key,0)
             if key not in traits_aura:
                 roll = random.randint(1, 32)
@@ -1880,7 +1842,7 @@ init python:
                 else:
                     val = 0
                 traits_aura[key] = {"value": val, "revealed": False}
-        for key, values in dic_traits_attributes.items():
+        for key, values in DIC_TRAITS_ATTRIBUTES.items():
             all_girls_list[girl_index]["experience"]["traits_attributes"].setdefault(key,0)
             if key not in traits_attributes:
                 roll = random.randint(1, 40)
@@ -1893,9 +1855,9 @@ init python:
                 else:
                     val = 0
                 traits_attributes[key] = {"value": val, "revealed": False}
-        for key, values in dic_sex_experience.items():
+        for key, values in DIC_SEX_EXPERIENCE.items():
             all_girls_list[girl_index]["experience"]["sex_experience"].setdefault(key, {})
-            for key2, values2 in dic_sex_experience[key].items():
+            for key2, values2 in DIC_SEX_EXPERIENCE[key].items():
                 if key2 not in all_girls_list[girl_index]["sex_experience"][key]:
                     roll = random.randint(1, 3)
                     if roll == 1:
@@ -1905,7 +1867,7 @@ init python:
                         val = 0
                     all_girls_list[girl_index]["sex_experience"][key][key2] = val
                 all_girls_list[girl_index]["experience"]["sex_experience"][key].setdefault(key2,0)
-        for key, values in dic_slave_attributes.items():
+        for key, values in DIC_SLAVE_ATTRIBUTES.items():
             all_girls_list[girl_index]["experience"]["attributes"].setdefault(key,0)
             if key not in all_girls_list[girl_index]["attributes"]:
                 if key == "beauty":
@@ -1918,8 +1880,8 @@ init python:
         if not "world_description" in all_girls_list[girl_index]:
             roll = random.randint(0,13)
             all_girls_list[girl_index]["world"] = world[roll][name]
-            roll = random.randint(0, len(shared_families[all_girls_list[girl_index]["world"]])-1)
-            all_girls_list[girl_index]["family"] = shared_families[all_girls_list[girl_index]["world"]][roll]
+            roll = random.randint(0, len(SHARED_FAMILIES[all_girls_list[girl_index]["world"]])-1)
+            all_girls_list[girl_index]["family"] = SHARED_FAMILIES[all_girls_list[girl_index]["world"]][roll]
             roll = random.randint(0, len(occupation[all_girls_list[girl_index]["family"]])-1)
             all_girls_list[girl_index]["ocupation"] = ocupation[all_girls_list[girl_index]["family"]][roll]
             if all_girls_list[girl_index]["world"] == "prehistoric":
@@ -2116,7 +2078,7 @@ init python:
         estate_quality += home_estate["slaves_rooms"]["cramped_room"]*2
         estate_quality += home_estate["slaves_rooms"]["comfortable_room"]*3
         estate_quality += home_estate["slaves_rooms"]["luxurios_room"]*4
-        estate_quality += dic_home_state2[master_house_reputation["home_estate"]]["prestige"]*20
+        estate_quality += DIC_HOME_STATE2[master_house_reputation["home_estate"]]["prestige"]*20
         estate_quality_modifier = (estate_quality //20) - brand_reputation_value_6
         if estate_quality_modifier > personality_value_2 - home_hygiene_value + 5: 
             master_mood_state["good_mood"]["pos_housing"]["active"] = True
@@ -2214,36 +2176,36 @@ init python:
             mood_value_10 += master_past_mood/10
         else:
             mood_value_10 += master_past_mood/4
-        for key in dic_master_mood["good_mood"]:
+        for key in DIC_MASTER_MOOD["good_mood"]:
             if master_mood_state["good_mood"][key]["active"]:
                 mood_value_10 += master_mood_state["good_mood"][key]["weight"]
-        for key in dic_master_mood["bad_mood"]:
+        for key in DIC_MASTER_MOOD["bad_mood"]:
             if master_mood_state["bad_mood"][key]["active"]:
                 mood_value_10 -= master_mood_state["bad_mood"][key]["weight"]
         if mood_value_10 <= -5:
-            mood_textvalue_10 = dic_slave_moodlevel[0]
+            mood_textvalue_10 = DIC_SLAVE_MOODLEVEL[0]
         elif mood_value_10 <= -4:
-            mood_textvalue_10 = dic_slave_moodlevel[1]
+            mood_textvalue_10 = DIC_SLAVE_MOODLEVEL[1]
         elif mood_value_10 <= -3:
-            mood_textvalue_10 = dic_slave_moodlevel[2]
+            mood_textvalue_10 = DIC_SLAVE_MOODLEVEL[2]
         elif mood_value_10 <= -2:
-            mood_textvalue_10 = dic_slave_moodlevel[3]
+            mood_textvalue_10 = DIC_SLAVE_MOODLEVEL[3]
         elif mood_value_10 <= -1:
-            mood_textvalue_10 = dic_slave_moodlevel[4]
+            mood_textvalue_10 = DIC_SLAVE_MOODLEVEL[4]
         elif mood_value_10 < 1:
-            mood_textvalue_10 = dic_slave_moodlevel[5]
+            mood_textvalue_10 = DIC_SLAVE_MOODLEVEL[5]
         elif mood_value_10 < 2:
-            mood_textvalue_10 = dic_slave_moodlevel[6]
+            mood_textvalue_10 = DIC_SLAVE_MOODLEVEL[6]
         elif mood_value_10 < 3:
-            mood_textvalue_10 = dic_slave_moodlevel[7]
+            mood_textvalue_10 = DIC_SLAVE_MOODLEVEL[7]
         elif mood_value_10 < 4:
-            mood_textvalue_10 = dic_slave_moodlevel[8]
+            mood_textvalue_10 = DIC_SLAVE_MOODLEVEL[8]
         elif mood_value_10 < 5:
-            mood_textvalue_10 = dic_slave_moodlevel[9]
+            mood_textvalue_10 = DIC_SLAVE_MOODLEVEL[9]
         elif mood_value_10 >= 5:
-            mood_textvalue_10 = dic_slave_moodlevel[10]
+            mood_textvalue_10 = DIC_SLAVE_MOODLEVEL[10]
         if mood_value_10 >= 5 and reputation_value_1 >= 5:
-            mood_textvalue_10 = dic_slave_moodlevel[11]
+            mood_textvalue_10 = DIC_SLAVE_MOODLEVEL[11]
     def obedience_difficulty_adjustment():
         global slave_difficulty, slave_obedience_bonus, dic_overnight_rules_count_index
         global dic_custom_start_difficulty_selection_index_index
@@ -2444,10 +2406,10 @@ init python:
                 all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/10 # this number is arbitrary and can be balance change
             else:
                 all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["past_mood"]/4 # this number is arbitrary and can be balance change
-            for key in dic_slave_mood["good_mood"]:
+            for key in DIC_SLAVE_MOOD["good_mood"]:
                 if all_girls_list[girl_index]["mood_state"]["good_mood"][key]["active"]:
                     all_girls_list[girl_index]["mood"] += all_girls_list[girl_index]["mood_state"]["good_mood"][key]["weight"]
-            for key in dic_slave_mood["bad_mood"]:
+            for key in DIC_SLAVE_MOOD["bad_mood"]:
                 if all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["active"]:
                     all_girls_list[girl_index]["mood"] -= all_girls_list[girl_index]["mood_state"]["bad_mood"][key]["weight"]           
             all_girls_list[girl_index]["mood"] +=  (all_girls_list[girl_index]["aura"]["devotion"] + all_girls_list[girl_index]["attributes"]["endurance"] - 3 - all_girls_list[girl_index]["aura"]["fear"] - all_girls_list[girl_index]["aura"]["spoil"] - all_girls_list[girl_index]["aura"]["despair"]*2 + all_girls_list[girl_index]["hygiene"] - 5 + (home_hygiene_value - 4))/5 
@@ -2473,29 +2435,29 @@ init python:
         def slave_mood_apply():
             global girl_index, all_girls_list
             if all_girls_list[girl_index]["mood"] <= -5:
-                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[0]
+                all_girls_list[girl_index]["mood_label"] = DIC_SLAVE_MOODLEVEL[0]
             elif all_girls_list[girl_index]["mood"] <= -4:
-                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[1]
+                all_girls_list[girl_index]["mood_label"] = DIC_SLAVE_MOODLEVEL[1]
             elif all_girls_list[girl_index]["mood"] <= -3:
-                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[2]
+                all_girls_list[girl_index]["mood_label"] = DIC_SLAVE_MOODLEVEL[2]
             elif all_girls_list[girl_index]["mood"] <= -2:
-                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[3]
+                all_girls_list[girl_index]["mood_label"] = DIC_SLAVE_MOODLEVEL[3]
             elif all_girls_list[girl_index]["mood"] <= -1:
-                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[4]
+                all_girls_list[girl_index]["mood_label"] = DIC_SLAVE_MOODLEVEL[4]
             elif all_girls_list[girl_index]["mood"] < 1:
-                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[5]
+                all_girls_list[girl_index]["mood_label"] = DIC_SLAVE_MOODLEVEL[5]
             elif all_girls_list[girl_index]["mood"] < 2:
-                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[6]
+                all_girls_list[girl_index]["mood_label"] = DIC_SLAVE_MOODLEVEL[6]
             elif all_girls_list[girl_index]["mood"] < 3:
-                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[7]
+                all_girls_list[girl_index]["mood_label"] = DIC_SLAVE_MOODLEVEL[7]
             elif all_girls_list[girl_index]["mood"] < 4:
-                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[8]
+                all_girls_list[girl_index]["mood_label"] = DIC_SLAVE_MOODLEVEL[8]
             elif all_girls_list[girl_index]["mood"] < 5:
-                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[9]
+                all_girls_list[girl_index]["mood_label"] = DIC_SLAVE_MOODLEVEL[9]
             elif all_girls_list[girl_index]["mood"] >= 5:
-                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[10]
+                all_girls_list[girl_index]["mood_label"] = DIC_SLAVE_MOODLEVEL[10]
             if all_girls_list[girl_index]["mood"] >= 5 and all_girls_list[girl_index]["aura"]["devotion"] >= 5:
-                all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[11]
+                all_girls_list[girl_index]["mood_label"] = DIC_SLAVE_MOODLEVEL[11]
         if all_girls_list[girl_index]["psy_status"] != "broken": # only calculated if not broken
             slave_moodlet_check()
             slave_mood_calculation()                                       
@@ -2503,7 +2465,7 @@ init python:
             slave_mood_apply()              
         else:
             all_girls_list[girl_index]["mood"] = 0
-            all_girls_list[girl_index]["mood_label"] = dic_slave_moodlevel[0]
+            all_girls_list[girl_index]["mood_label"] = DIC_SLAVE_MOODLEVEL[0]
     def slave_psy_status_calculation():
         global maxmotivation, slave_difficulty, slave_obedience_bonus, slave_psy_hardness
         if all_girls_list[girl_index]["psy_status"] != "broken":
@@ -2686,7 +2648,7 @@ init python:
         for i in a:
             if excitement_experience_value >= i[1]:
                 excitement_value = i[0]
-        excitement_textvalue = dic_master_excitement_colored[excitement_value]
+        excitement_textvalue = DIC_MASTER_EXCITEMENT_COLORED[excitement_value]
     def slave_damage_calculation():
         if damage > girl["attributes"]["endurance"]:
             girl["injuries_rate"] += damage
@@ -2704,7 +2666,7 @@ init python:
             girl["scars_rate"] += damage
         damage = 0
     def master_moodlet_update():
-        for key in dic_master_mood["good_mood"]:
+        for key in DIC_MASTER_MOOD["good_mood"]:
             if master_mood_state["good_mood"][key]["active"]:
                 master_mood_state["good_mood"][key]["accustomed_value"] = max(-10, master_mood_state["good_mood"][key]["accustomed_value"] - 1)
                 if master_mood_state["good_mood"][key]["accustomed_value"] <= 0:
@@ -2719,7 +2681,7 @@ init python:
                         break # only 1 moodlet can be lost per day
             else:
                 master_mood_state["good_mood"][key]["accustomed_value"] = min(5, master_mood_state["good_mood"][key]["accustomed_value"] + 1)
-        for key in dic_master_mood["bad_mood"]:
+        for key in DIC_MASTER_MOOD["bad_mood"]:
             if master_mood_state["bad_mood"][key]["active"]:
                 # master_mood_state["bad_mood"][key]["accustomed_value"] = max(-10, master_mood_state["bad_mood"][key]["accustomed_value"] - 1)
                 # if master_mood_state["bad_mood"][key]["accustomed_value"] <= 0:
@@ -2744,7 +2706,7 @@ init python:
         if target_skill == "":
             c = girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["value"]
         else:
-            for spec, skills in dic_specializations.items():
+            for spec, skills in DIC_SPECIALIZATIONS.items():
                 if target_skill in skills:
                     type_of_already_done = spec
                     break
@@ -2756,7 +2718,7 @@ init python:
         if girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["value"] != 0:
             if not girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["revealed"]:
                 girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["revealed"] = True
-                msg(dic_traits_aura_description["awarenesstrait"][girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["value"]])
+                msg(DIC_TRAITS_AURA_DESCRIPTION["awarenesstrait"][girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["value"]])
         max_achievements = min(merit_potencial, girl["attributes"]["temperament"] + 1) + c
         min_achievements = (min(guilt_potencial, girl["aura"]["fear"] + 1) + c) * -1
         for i in range(6): 
@@ -2824,7 +2786,7 @@ init python:
         if girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["value"] != 0:
             if not girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["revealed"]:
                 girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["revealed"] = True   
-                msg(dic_traits_aura_description["awarenesstrait"][girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["value"]])
+                msg(DIC_TRAITS_AURA_DESCRIPTION["awarenesstrait"][girl["traits"]["traits_hidden"]["traits_aura(1/16)"]["awarenesstrait"]["value"]])
     def master_ejaculate():
         global excitement_value, mood_value_10, ejaculation_intensity
         global excitement_experience_value
@@ -2846,18 +2808,22 @@ init python:
         girl = all_girls_list[girl_index]
         # save pass mood slave
         girl["past_mood"] = girl["mood"]
-        #girl["hygiene_rate"] += dic_hygiene_value_rate["idle"] # - disable because idk how to fix a bug TODO
+        #girl["hygiene_rate"] += DIC_HYGIENE_VALUE_RATE["idle"] # - disable because idk how to fix a bug TODO
         
 
         # reset temporal mood slave
         girl["mood_temporal"] = 0
         girl["yesterday_exhaustion"] = 0
+
+
     def sleeping_effects_update():
         global girl_index
         girl = all_girls_list[girl_index]
         match girl["sleep"]:
             case 0:
-                girl["energy"] -= 2
+                # Energy penalty
+                girl["yesterday_exhaustion"] += 3
+
                 girl["mood_state"]["bad_mood"]["spoil"]["active"] = False
                 if girl["attributes"]["endurance"] > 2:
                     girl["experience"]["attributes"]["endurance"] -= 1
@@ -2866,15 +2832,77 @@ init python:
                 girl["mood"] -= girl["attributes"]["empathy"]
                 girl["aura"]["taming"] += max(1, min(2, master_supermacy -girl["supermacy"]))
                 girl["experience"]["aura"]["despair"] += girl["aura"]["spoil"]
+
+                # Endurance/stamina trend down if not already minimal
+                if girl["attributes"]["endurance"] > 1:
+                    girl["experience"]["attributes"]["endurance"] -= 2
+                    reduce_check("attributes", "endurance")
+
+                # Bad sleep moodlet and suppress spoil bonus in prison
+                if girl["attributes"]["empathy"] > 0:
+                    girl["mood_state"]["bad_mood"]["bad_sleep"]["active"] = True
+                girl["mood_state"]["bad_mood"]["spoil"]["active"] = False
+
+                # Fear and mood changes typical of deprivation
+                if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation"]["value"] != 0:
+                    reveal_check_hidden_traits("traits_miscellaneous(1/12)", "deprivation", DIC_TRAITS_MISCELLANEOUS_DESCRIPTION)
+                if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation"]["value"] != 2:
+                    girl["mood"] -= 5
+                    girl["mood_state"]["bad_mood"]["prisoner"]["active"] = True
+                    girl["mood_state"]["bad_mood"]["prisoner"]["duration"] = 3
+                    girl["mood_state"]["bad_mood"]["prisoner"]["weight"] = girl["attributes"]["empathy"]/3
+                    girl["experience"]["taming"] += 3
+
+                match girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation"]["value"]:
+                    case -2:
+                        if girl["achievements"] < -3:
+                            girl["experience"]["aura"]["despair"] += girl["attributes"]["empathy"]*4
+                        if girl["achievements"] > 0:
+                            girl["experience"]["aura"]["awareness"] += girl["attributes"]["intelligence"]
+                        girl["experience"]["aura"]["fear"] += 20
+                        girl["mood"] -= girl["attributes"]["empathy"]*3
+                    case -1:
+                        if girl["achievements"] < -3:
+                            girl["experience"]["aura"]["despair"] += girl["attributes"]["empathy"]*3
+                        if girl["achievements"] > 0:
+                            girl["experience"]["aura"]["awareness"] += girl["attributes"]["intelligence"]
+                        girl["experience"]["aura"]["fear"] += 10
+                        girl["mood"] -= girl["attributes"]["empathy"]*2
+                    case 0:
+                        if girl["achievements"] < -3:
+                            girl["experience"]["aura"]["despair"] += girl["attributes"]["empathy"]*2
+                        if girl["achievements"] > 0:
+                            girl["experience"]["aura"]["awareness"] += girl["attributes"]["intelligence"]
+                        girl["experience"]["aura"]["fear"] += 5
+                        girl["mood"] -= girl["attributes"]["empathy"]
+                    case 1:
+                        if girl["achievements"] < 1:
+                            girl["experience"]["aura"]["despair"] += girl["attributes"]["empathy"]
+                        if girl["achievements"] > 0:
+                            girl["experience"]["aura"]["awareness"] += girl["attributes"]["intelligence"]
+                        if girl["aura"]["fear"] > 1:
+                            girl["experience"]["aura"]["fear"] += 1
+                    case 2:
+                        if girl["attributes"]["fear"] > 0:
+                            girl["experience"]["aura"]["fear"] -= 1
+                        girl["mood"] += girl["aura"]["temperament"]
+                
+                increase_check("aura", "despair")
+                increase_check("aura", "awareness")
+                increase_check("aura", "fear")
+            
+
+                # Track deprivation exposure if the key exists or initialize it
+                girl["experience"]["traits_miscellaneous(1/12)"]["deprivation"] += 1
             case 1:
                 girl["experience"]["aura"]["habit"] += 1
                 if girl["aura"]["empathy"] > 3:
                     girl["mood_state"]["bad_mood"]["bad_sleep"]["active"] = True
             case 2:
-                girl["mood"] -= girl["aura"]["despair"] += (5 - girl["attributes"]["pride"])
+                girl["mood"] -= girl["aura"]["despair"] + (5 - girl["attributes"]["pride"])
                 if girl["aura"]["devotion"] == 0:
                     girl["experience"]["aura"]["despair"] += girl["attributes"]["empathy"]
-                elif: 
+                elif girl["aura"]["devotion"] == 1: 
                     girl["experience"]["aura"]["spoil"] += girl["attributes"]["temperament"]
                     girl["experience"]["attributes"]["pride"] += girl["attributes"]["nature"]
                 if master_supermacy > girl["supermacy"]:
@@ -2906,7 +2934,32 @@ init python:
                     girl["experience"]["attributes"]["empathy"] += 1
                 if girl["attributes"]["nature"] < 3:
                     girl["experience"]["attributes"]["nature"] += 1
-                
+    def new_day_energy_update():
+        global girl_index, medic_value_15
+        girl = all_girls_list[girl_index]
+        girl["energy"] += girl["stored_yesterday_energy"] - girl["yesterday_exhaustion"]
+        girl["energy"] = girl["energy"] // 2
+        if girl["energy"] < 0:
+            girl["experience"]["attributes"]["endurance"] += 4*girl["energy"]
+        girl["energy"] += (girl["attributes"]["endurance"] - girl["injuries"])*2
+        if medic_value_15 >= 5:
+            girl["energy"] += 2
+            girl["stored_yesterday_energy"] = 0
+            girl["mood_state"]["bad_mood"]["exhausted"]["active"] = False
+        girl["stored_yesterday_energy"] = 0
+        girl["yesterday_exhaustion"] = 0
+    def master_new_day_energy_update():
+        global stored_yesterday_energy, yesterday_exhaustion, energy_value, strength_experience_value_1, injuries_value_11
+        global strength_value_1
+        energy_value += stored_yesterday_energy - yesterday_exhaustion
+        if energy_value < 0:
+            strength_experience_value_1 += energy_value*3
+        energy_value += (strength_value_1 - injuries_value_11)*2
+        stored_yesterday_energy = 0
+        yesterday_exhaustion = 0
+
+
+
 
 
 

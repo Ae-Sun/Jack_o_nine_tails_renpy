@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/fuctions.rpy", line 2741: invalid syntax
-    global is_sententia_veritas_active,
-                                            ^
+File "game/fuctions.rpy", line 2941: invalid syntax
+    girl["energy"] // = 2
+                          ^
 
 Ren'Py Version: Ren'Py 8.4.1.25072401
-Wed Oct  1 03:25:09 2025
+Fri Oct 17 12:44:45 2025

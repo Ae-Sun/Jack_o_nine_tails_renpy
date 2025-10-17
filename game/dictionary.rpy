@@ -1,11 +1,11 @@
-define angelika_speech_text = [
+define ANGELIKA_SPEECH_TEXT = [
 "{color=#8B0A50}- Gaudete! I am Mistress Angelika. The council of Guild Masters has given me the honor to train and certify beginners. What is your name?{/color}",
 "{color=#191970}- My name is {b}[mc]{/b}. I have long dreamed about this moment.{/color}",
 "{color=#000000}Mistress Angelika checks the list and nods.{/color}\n{color=#8B0A50}- It indicates here that you have already fully paid the entry fee, {b}[mc]{/b}. Good. But consider this: we will not tolerate black sheep in our guild, no matter how much they pay. The honor of our organization is paramount.{/color}",
 "{color=#8B0A50}- In order to become a full member of the Slavers Guild you'll have to pass the exam in conditions close to practice. We also provide training for beginners. I will tell you everything I know a hundred times if need be.{/color}",
 ""
 ]
-define attitude_text = {
+define ATTITUDE_TEXT = {
     "cold":         ["   Attitude: cold"],
     "haughty":      ["   Attitude: haughty"],
     "polite":       ["   Attitude: polite"],
@@ -16,7 +16,7 @@ define attitude_text = {
     "protective":   ["   Attitude: protective"],
     "obsequious":   ["   Attitude: obsequious"]
 }
-define tutorial_lectureGIGA ={
+define TUTORIAL_LECTUREGIGA ={
     "tutorial_lecture1": [
     "Slave rating is affected by various factors. Firstly, it is the sum of her skills. The ability to keep the house, entertain her master and sexual techniques - all increase her rating.",
     "Another important factor is her obedience. A perfect slave should thoroughly fulfill all the rules and obey any request of her master without hesitation and delay. Most valued is the sincere desire to please and serve.",
@@ -110,19 +110,19 @@ define tutorial_lectureGIGA ={
     ""
     ]
 }
-define demo_girl_text = ["Former housewife who was sold into slavery by the bank, for the debts of her husband. She served as a «specialist in entertainment» for the managers of a corporation, so she has some required experience. But she is not specially trained.\n{color=#009900}Difficulty: minimal{/color}",
+define DEMO_GIRL_TEXT = ["Former housewife who was sold into slavery by the bank, for the debts of her husband. She served as a «specialist in entertainment» for the managers of a corporation, so she has some required experience. But she is not specially trained.\n{color=#009900}Difficulty: minimal{/color}",
                         "Lesbian amazon from the savage space tribe. She has great makings, but do not forget that this girl has great physical strength, fighting skills, and she despises men.\n{color=#6B0084}Difficulty: normal{/color}",
                         "Little princess of a small kingdom of a highly-magical world. The combination of poor health, vulnerability and prohibitive defiance will make her training especially challenging. But her beauty is worth it.\n{color=#cd0000}Difficulty: high{/color}"
 ]
-define dic_custom_start_difficulty_selection = {
+define DIC_CUSTOM_START_DIFFICULTY_SELECTION = {
     "Free mode": ["Free mode",10000,999999],
     "Normal":    ["Normal"   ,6000 ,590   ],
     "Maximun":   ["Maximun"  ,400  ,340   ]
 }
-define dic_custom_start_difficulty_selection_index = ["Free mode","Normal","Maximun"]
-define custom_skill_cost_value = [0,5,15,35,75,155,315]
-define custom_selection_max_cap_sparks = [999999,8000,400]
-define dic_spellbook_info = { 
+define DIC_CUSTOM_START_DIFFICULTY_SELECTION_INDEX = ["Free mode","Normal","Maximun"]
+define CUSTOM_SKILL_COST_VALUE = [0,5,15,35,75,155,315]
+define CUSTOM_SELECTION_MAX_CAP_SPARKS = [999999,8000,400]
+define DIC_SPELLBOOK_INFO = { 
     "default":"You open an old worn book with a picture of a spark on the cover. It seems you can learn here more about the effects of magic. It would be nice to do it before you start to conjure.",
     "basics": "Each spell requires sparks to cast. Some spells can be applied only once per day. Active effects will be listed on the main panel. Some spells negatively affect the target's mood. The success or failure of a spell depends on the caster's magical skill and the willpower of the target.",
     "auspex": "Allows you to see what is hidden from view, mostly aura. By reading a person's aura, you can learn many interesting things about them.",
@@ -135,14 +135,14 @@ define dic_spellbook_info = {
     "adverto": "Imposes magic indelibly as a seal on the victim's body. This seal will banish any foreign lifeforms from the body and restore her energy at the time of casting, and will help find the target if she runs away."
 }
 # dic_home_state cause errors, idk why cause error -rec3ks
-define dic_slave_room_to_text = {
+define DIC_SLAVE_ROOM_TO_TEXT = {
     "squalid_room": "Ragged Bed",
     "cramped_room": "Bedroom",
     "comfortable_room": "Bedroom",
     "luxurios_boudoir": "Bedroom"
 }
 
-define dic_home_state2 = {
+define DIC_HOME_STATE2 = {
     "poor_house": {
         "prestige": 0,
         "slaves_rooms":{
@@ -240,7 +240,7 @@ define dic_home_state2 = {
         }
     }
 }
-define dic_improvement_rooms ={
+define DIC_IMPROVEMENT_ROOMS ={
     "kitchen": {
         "Deplorable kitchen": {
             "cost": 150,
@@ -373,7 +373,7 @@ define dic_improvement_rooms ={
 
     }
 }
-define dic_improvement_code = {
+define DIC_IMPROVEMENT_CODE = {
     "kitchen_levels" : {
         0: "None",
         1: "Deplorable kitchen",
@@ -397,7 +397,7 @@ define dic_improvement_code = {
     }
 }
 
-define dic_equipment_armor = {
+define DIC_EQUIPMENT_ARMOR = {
     "Light Armor": {
         "Without armour": {
             "description": "Without armour",
@@ -612,7 +612,7 @@ define dic_equipment_armor = {
         }
     }
 }
-define dic_equipment_armor_full = {
+define DIC_EQUIPMENT_ARMOR_FULL = {
     "Without armour": {
         "description": "Without armour",
         "price": 0,
@@ -821,7 +821,7 @@ define dic_equipment_armor_full = {
         "status_pain_protection": 10
     }
 }
-define dic_equipment_weapon = {
+define DIC_EQUIPMENT_WEAPON = {
     "One-Handed Weapon":{
         "Fist":{
             "description":"  This is a fist, it's the most basic weapon, it's good for close combat and for training, but it's not very effective in combat.",
@@ -849,7 +849,7 @@ define dic_equipment_weapon = {
             "weapon_durability":100,
         },
         "Baton":{
-            "description":"  This is a baton made of tough polymer, similar to rubber, but more resistant to frost. Police from technologically advanced worlds use these.",
+            "description":"  This is a baton made of tough polymer, similar to rubber, but more resistant to frost. Police from technologically advanced WORLDS use these.",
             "price":25,
             "attack":{
                 "quick_jab":{                
@@ -1253,7 +1253,7 @@ define dic_equipment_weapon = {
         }
     },
 }
-define dic_equipment_amulet ={
+define DIC_EQUIPMENT_AMULET ={
     "amulet":{
         "magic_protection":{
             "description":"  +1 magic protection",
@@ -1287,7 +1287,7 @@ define dic_equipment_amulet ={
             }
         }
 }
-define dic_equipment_rings = {
+define DIC_EQUIPMENT_RINGS = {
     "bleeding_ring":{
         "description":"  attacks cause bleeding +5",
         "price":50,
@@ -1319,7 +1319,7 @@ define dic_equipment_rings = {
         "pain":5
     },
 }
-define dic_health_points ={
+define DIC_HEALTH_POINTS ={
     0:20,
     1:40,
     2:60,
@@ -1358,7 +1358,7 @@ define dic_health_points ={
 # status pain, deal 5 fix willpower damage per turn. Can Stack
 # making girl go to battle will cause despair if devotion are not high enoght 
 # 16 17 and 18 have a higher increase beacause is a lot harder to reach
-define dic_willpower_mitigation ={
+define DIC_WILLPOWER_MITIGATION ={
     0:3,
     1:6,
     2:9,
@@ -1379,7 +1379,7 @@ define dic_willpower_mitigation ={
     17:70,
     18:100,
 }
-define dic_status_protection ={
+define DIC_STATUS_PROTECTION ={
     0:1, # cannot divide by 0
     1:10,
     2:20,
@@ -1398,7 +1398,7 @@ define dic_status_protection ={
     15:150,
     16:200,
 }
-define dic_damage_reductionA ={
+define DIC_DAMAGE_REDUCTIONA ={
     0:0,
     1:1,
     2:2,
@@ -1412,7 +1412,7 @@ define dic_damage_reductionA ={
     10:10,
     11:11,
 }
-define dic_damage_reductionB ={
+define DIC_DAMAGE_REDUCTIONB ={
     0:0.00,
     1:0.08,
     2:0.16,
@@ -1426,7 +1426,7 @@ define dic_damage_reductionB ={
     10:0.80,
     11:0.88,
 }
-define dic_willpower ={
+define DIC_WILLPOWER ={
     0:5,
     1:10,
     2:15,
@@ -1447,7 +1447,7 @@ define dic_willpower ={
     17:115,
     18:150,
 }
-define dic_stamina ={
+define DIC_STAMINA ={
     0:10,
     1:20,
     2:30,
@@ -1470,7 +1470,7 @@ define dic_stamina ={
     19:240,
     20:300,
 }
-define weight_penalty ={
+define WEIGHT_PENALTY ={
     0:2,
     1:4,
     2:6,
@@ -1482,21 +1482,21 @@ define weight_penalty ={
 }
 # lose that extra amount of stamina for every action
 
-define dic_combat_move_up = {
+define DIC_COMBAT_MOVE_UP = {
     "armour":0,
     "weapon":1,
     "weapon2":2,
     "amulet":3,
     "ring":4,
 }
-define dic_combat_move_down = {
+define DIC_COMBAT_MOVE_DOWN = {
     0:"armour",
     1:"weapon",
     2:"weapon2",
     3:"amulet",
     4:"ring",
 }
-define dic_home_condition = {
+define DIC_HOME_CONDITION = {
     0: "Squalid",
     1: "Grimy",
     2: "Messy",
@@ -1504,7 +1504,7 @@ define dic_home_condition = {
     4: "Neat",
     5: "Immaculate"
 }
-define dic_hygiene_condition = {
+define DIC_HYGIENE_CONDITION = {
     0: "Filthy",
     1: "Dirty",
     2: "Unclean",
@@ -1512,12 +1512,12 @@ define dic_hygiene_condition = {
     4: "Clean",
     5: "Pristine"
 }
-define dic_hygiene_value_rate = {
+define DIC_HYGIENE_VALUE_RATE = {
     "idle": 5,
     "cook": 5,
     "maid": 2
 }
-define dic_combat_full = {
+define DIC_COMBAT_FULL = {
     "Without armour": "Without armour",
     "Aramid Suit": "Aramid Suit",
     "Leather Armor": "Leather Armor",
@@ -1564,7 +1564,7 @@ define dic_combat_full = {
     "sleep_ring": "Sleep Ring",
     "pain_ring": "Pain Ring"
 }
-define dic_combat_full_inv = {
+define DIC_COMBAT_FULL_INV = {
     "Without armour": "Without armour",
     "Aramid Suit": "Aramid Suit",
     "Leather Armor": "Leather Armor",
@@ -1611,7 +1611,7 @@ define dic_combat_full_inv = {
     "Sleep Ring": "sleep_ring",
     "Pain Ring": "pain_ring"
 }
-define spells_books_description = {
+define SPELLS_BOOKS_DESCRIPTION = {
     "Auspex": {
         "cast": "You call the Flame of Creation sleeping in your heart and send its light to your brow chakra. Immediately you begin to see things as they really are, as if scales fell from your eyes. Now you can easily read any unprotected aura.",
         "fail": "You call the Flame of Creation sleeping in your heart and send its light to your brow chakra. Immediately you begin to see things as they really are, as if scales fell from your eyes. But in the next moment, you blink, and your vision returns to normal. You need more practice or something to enhance your ability.",
@@ -1638,7 +1638,7 @@ define spells_books_description = {
         "cast": "You direct the force of Sparks in your hand, and on the palm of your hand begins to brightly shine the symbol of your personal brand. One touch to the slave's thigh and the symbol appears on her delicate skin, staying there forever.",
     }
 }
-define dic_contract_time_normal =  [
+define DIC_CONTRACT_TIME_NORMAL =  [
     0,    # 0 - F-
     40,   # 1 - D-
     45,   # 2 - D+
@@ -1651,7 +1651,7 @@ define dic_contract_time_normal =  [
     100,  # 9 - S-
     120   # 10 - S+
 ]
-define dic_contract_time_hard =  [
+define DIC_CONTRACT_TIME_HARD =  [
     0,   # 0 - F-
     20,  # 1 - D-
     22,  # 2 - D+
@@ -1665,7 +1665,7 @@ define dic_contract_time_hard =  [
     60   # 10 - S+
 ]
 
-define cooked_food_label = [
+define COOKED_FOOD_LABEL = [
     "Canned food",
     "Poor meal",
     "Simple meal",
@@ -1674,7 +1674,7 @@ define cooked_food_label = [
     "Gourmet meal",
     "Gourmet meal +"
 ]
-define dic_foods_list = {
+define DIC_FOODS_LIST = {
     "D- quality": [
         [ "Crispy salty cracklings",                          [ "Chopped Meat"       , "none"              , "none"              , "none" ] ],
         [ "Boiled jasmine rice",                              [ "Flour and Grains"   , "none"              , "none"              , "none" ] ],
@@ -1764,7 +1764,7 @@ define dic_foods_list = {
         [ "Virgin soup with dumplings",                       [ "Herbs and Spices"   , "Flour and Grains"  , "Eggs"              , "Virgin Meat" ] ],
     ],
 }
-define tips = {
+define TIPS = {
     1: "You can navigate up and down in the clothing equipment menu using the 1 and 2 keys.",
     2: "The first and second Devotion points each grant extra +2 Obedience on maximum difficulty.",
     3: "The first Fear point gives bonus Obedience based on the slave's nature (up to +5).",
@@ -1792,7 +1792,7 @@ define tips = {
     
 
 }
-define dic_dificulty_traits_avance = {
+define DIC_DIFICULTY_TRAITS_AVANCE = {
     -2 : 75,
     -1 : 35,
     0 : 35,

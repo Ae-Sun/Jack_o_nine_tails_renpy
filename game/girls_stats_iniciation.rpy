@@ -1,9 +1,9 @@
-define inicial_girls = [
+define INICIAL_GIRLS = [
     ("demo/choose_princess.webp", 0),
     ("demo/choose_amazon.webp", 265),
     ("demo/choose_slave.webp", 530),
 ]
-define dic_slave_attributes_keys = {
+define DIC_SLAVE_ATTRIBUTES_KEYS = {
     "beauty":       "BEAUTY",
     "endurance":    "ENDURANCE",
     "empathy":      "EMPATHY",
@@ -16,12 +16,12 @@ define dic_slave_attributes_keys = {
     "style":        "STYLE",
     "fame":         "FAME",
 }
-define dic_girl_age_text2 = [
+define DIC_GIRL_AGE_TEXT2 = [
     "young","loli","milf"    
 ]
 
 
-define dic_girl_choosing_image_condition_short = {
+define DIC_GIRL_CHOOSING_IMAGE_CONDITION_SHORT = {
     "slave_auto_sleep":"rest",
     "slave_auto_cook":"cook",
     "slave_auto_maid":"clean",
@@ -31,7 +31,7 @@ define dic_girl_choosing_image_condition_short = {
     "slave_auto_masturbation":"masturbation",
     "slave_deny_orgasm":"masturbation"
 }
-define dic_slave_attributes_description_keys = {
+define DIC_SLAVE_ATTRIBUTES_DESCRIPTION_KEYS = {
     "beauty": "Beauty",
     "endurance": "Endurance",
     "empathy": "Empathy",
@@ -66,7 +66,7 @@ define dic_slave_attributes_description_keys = {
     "fetishism":"Fetishism",
     "xenophily":"Xenophily",
 }
-define dic_slave_tier_classification = {
+define DIC_SLAVE_TIER_CLASSIFICATION = {
     0: "F-",
     1: "D-",
     2: "C-",
@@ -75,7 +75,7 @@ define dic_slave_tier_classification = {
     5: "S+",
     6: "S++",
 }
-define dic_slave_tier_classification_physical = {
+define DIC_SLAVE_TIER_CLASSIFICATION_PHYSICAL = {
     0: "F-",
     1: "D-",
     2: "B+",
@@ -84,7 +84,7 @@ define dic_slave_tier_classification_physical = {
     5: "F-",
     6: "S++",
 }
-define dic_rating = {
+define DIC_RATING = {
     0: "F-",
     1: "D-",
     2: "D+",
@@ -98,7 +98,7 @@ define dic_rating = {
     10: "S+",
     11: "S++",
 }
-define dic_rating_colored = {
+define DIC_RATING_COLORED = {
     0: "{color=#CD0000}F-{/color}",
     1: "{color=#EA0190}D-{/color}",
     2: "{color=#FF4FBB}D+{/color}",
@@ -112,7 +112,7 @@ define dic_rating_colored = {
     10: "{color=#003000}S+{/color}",
     11: "{color=#996515}S++{/color}"
 }
-define dic_slave_tier_classification_colored = {
+define DIC_SLAVE_TIER_CLASSIFICATION_COLORED = {
     0: "{color=#CD0000}F-{/color}",
     1: "{color=#EA0090}D-{/color}",
     2: "{color=#6B0084}C-{/color}",
@@ -121,7 +121,7 @@ define dic_slave_tier_classification_colored = {
     5: "{color=#009900}S+{/color}"
 }
 
-define dic_slave_attributes = {
+define DIC_SLAVE_ATTRIBUTES = {
     "beauty":        ["Ugly"            ,"Plain"          ,"Cute"          ,"Pretty   "    ,"Beautiful"    ,"Exquisite"      ,"Goddess"     ,"{b}BEAUTY:{/b}\n  Natural beauty very strongly influences her market price. Your slave's rank will never rise higher than her beauty or fame (whichever is higher). At auctions, beautiful slaves are sold for higher prices.","   ll your efforts to improve the appearance of the slave will influence style, not beauty. Stylishness is important too, but the value of natural beauty is huge. You can increase beauty only by neoplasty surgery in the Technosphere medical center and only once for each slave. Try to buy beautiful slaves if you intend to train them to high ranks. Beauty is decreased while a slave has scars or bruises until they are removed or healed."],
     "endurance":     ["Dyinng"          ,"Feeble"         ,"Weakened"      ,"Healthy"      ,"Tough"        ,"Enduring"       ,"Iron"        ,"{b}ENDURANCE:{/b}\n  Hardy slaves have more energy, can work better and are more attractive for clients. Critical decrease of endurance can kill your slave.","   If your slave is weak, feed her well; it's desirable to prescribe supplements and not let her become exhausted (receive red energy stars), nor over-exercise (when she has purple energy stars, intensive exercise is harmful), nor gain weight if she is overweight, nor end the day with negative calories. Build endurance with gymnastics, athletics, dance, racing, martial arts, pet play or vigorous sex. Heal injuries (a nurse assistant and your own skill helps) and sicknesses, and use drugs sparingly."],
     "empathy":       ["Heartless"       ,"Callous"        ,"Insensitive"   ,"Sensitive"    ,"Caring"       ,"Nurturing"      ,"Nurturing+"  ,"{b}EMPATHY:{/b}\n  On one hand the gentle slave is easier affected by stress and stung by punishments. On the other hand she is turned on much faster and is more lively, which makes her attractive for customers.","   Callousness develops quickly with mistreatment. Severe punishments are especially harmful. While a less sensitive slave is hardened against depression and endures suffering, she is also less valuable. There are no reliable ways to increase a slave's empathy, but refined petting and pleasures may help."],
@@ -134,14 +134,14 @@ define dic_slave_attributes = {
     "style":         ["Unfashionable"   ,"Unremarkable"   ,"Common"        ,"Stylish"      ,"Refined"      ,"Elegant"        ,"Elegant+"    ,"{b}STYLE:{/b}\n  A slave's appearance is extremely important during the sale. Customers will like well-groomed and well-dressed slaves, and an unappealing slave can be turned down even if she fits the requirements.","   Style depends little on natural abilities and skills, though it is influenced by the ability to communicate (elocution) and presence (dancing). Style suffers from dirt and sloppiness. Hairstyle, make-up, perfume, beautiful clothes and jewelry - all of these improve style and make the slave more attractive to customers. It is not necessary to constantly maintain style - it plays a role only when it is time to show the girl to the customer."],
     "fame":          ["Unknown"         ,"Rumored"        ,"Recognized"    ,"Celebrity"    ,"Famous"       ,"Legendary"      ,"Legendary+"  ,"{b}FAME:{/b}\n  Famous slaves are much more valuable. Your slave's rank can reach the level of her fame, even if she lacks other attributes, beauty included.","   Fame is not the most important parameter for a slave. You can train wonderful product unconcerned about this. Fame will grow with victories in the arena and colosseum.","   Fame is not the most important parameter for a slave. You can train wonderful product unconcerned about this. Fame will grow with victories in the arena and colosseum."]
     }
-define dic_slave_misc ={
+define DIC_SLAVE_MISC ={
     "charm_moral": ["No Devotion", "Wavering", "Dutiful", "Loyal", "Devoted", "Zealous","Zealous+"],
     "charm_angst": ["No Despair", "Despondent", "Demoralized", "Disheartened", "Despairing", "Hopeless","No Despair+"],
     "charm_spoil": ["Not Spoiled", "Balky", "Unruly", "Restive", "Entitled", "Contumacious","Not Spoiled+"],
     "hair_style": ["Tangled Hair", "Combed Hair", "Orderly Hair", "Orderly Hair", "Orderly Hair", "Neat Hair", "Neat Hair", "Stylish Hair"],
     "slave_tattoo": ["No Tattoos", "Small Tattoo", "Tattoo Outline", "Colorful Tattoo", "Traced Body", "Adorned Body"]
 }
-define dic_slave_mood ={
+define DIC_SLAVE_MOOD ={
     "good_mood": {
         "slave_winner"           : "[all_girls_list[girl_index][name]]\n- Hooray, we won! That was amazing. I feel much more confident.",
         "multiple_orgasm"        : "[all_girls_list[girl_index][name]]\n- Ohh, it was great sex! Such a heavenly pleasure… I would like to experience this once again.",
@@ -223,7 +223,7 @@ define dic_slave_mood ={
         "boring"             : "[all_girls_list[girl_index][name]]\n- Doing the same thing everyday is really boring."
     }
 }
-define dic_slave_skills = {
+define DIC_SLAVE_SKILLS = {
     "maid": ["Not a Maid F-", "Drudge D-", "Skivvy C-", "Maid B+", "Handmaid A+", "Housekeeper S+", "Mistress of the Manor S++"],
     "cooking": ["Not a Cook F-", "Scullery Trainee D-", "Kitchener C-", "Cook B+", "Chef A+", "Culinary Artist S+", "Gastronomic Legend S++"],
     "secretary": ["Not a Secretary F-", "Paper Shuffler D-", "Novice Clerk C-", "Secretary B+", "Comptroller A+", "Procurator S+", "Chancellor of Ledgers S++"],
@@ -240,7 +240,7 @@ define dic_slave_skills = {
     "pony": ["Not a Pony F-", "Nag D-", "Hackney C-", "Pony B+", "Trotter A+", "Racehorse S+", "Champion Steed S++"],
     "cow": ["Not a Cow F-", "Barely Bovine D-", "Learning to Moo C-", "Cow B+", "Heifer A+", "Queen of Kine S+", "Divine Bovine S++"],
 }
-define dic_slave_skills_sexual = {
+define DIC_SLAVE_SKILLS_SEXUAL = {
     "petting": ["Petting F-", "Petting D-", "Petting C-", "Petting B+", "Petting A+", "Petting S+", "Petting S++"],
     "oral_pleasure": ["Oral Pleasure F-", "Oral Pleasure D-", "Oral Pleasure C-", "Oral Pleasure B+", "Oral Pleasure A+", "Oral Pleasure S+", "Oral Pleasure S++"],
     "penetration": ["Penetration F-", "Penetration D-", "Penetration C-", "Penetration B+", "Penetration A+", "Penetration S+", "Penetration S++"],
@@ -249,7 +249,7 @@ define dic_slave_skills_sexual = {
     "fetishism": ["Fetishism F-", "Fetishism D-", "Fetishism C-", "Fetishism B+", "Fetishism A+", "Fetishism S+", "Fetishism S++"],
     "xenophily": ["Xenophily F-", "Xenophily D-", "Xenophily C-", "Xenophily B+", "Xenophily A+", "Xenophily S+", "Xenophily S++"]
 }
-define dic_sex_experience = {
+define DIC_SEX_EXPERIENCE = {
         "petting":{
             "handjob":0,
             "footjob":0,
@@ -300,7 +300,7 @@ define dic_sex_experience = {
         }
 
     }
-define attributes_min_threshold = {
+define ATTRIBUTES_MIN_THRESHOLD = {
     0: -10,
     1: -10,
     2: -10,
@@ -308,7 +308,7 @@ define attributes_min_threshold = {
     4: -40,
     5: -80,
 }
-define attributes_max_threshold = {
+define ATTRIBUTES_MAX_THRESHOLD = {
     0: 10,
     1: 20,
     2: 40,
@@ -316,7 +316,7 @@ define attributes_max_threshold = {
     4: 160,
     5: 10,
 }
-define attributes_max_threshold_inverse = {
+define ATTRIBUTES_MAX_THRESHOLD_INVERSE = {
     0: 10,
     1: 160,
     2: 80,
@@ -324,7 +324,7 @@ define attributes_max_threshold_inverse = {
     4: 20,
     5: 10,
 }
-define attributes_min_threshold_inverse = {
+define ATTRIBUTES_MIN_THRESHOLD_INVERSE = {
     0: -80,
     1: -40,
     2: -20,
@@ -332,7 +332,7 @@ define attributes_min_threshold_inverse = {
     4: -10,
     5: -10,
 }
-define dic_traits_skills = {
+define DIC_TRAITS_SKILLS = {
     "cookingtrait":      ["Average", "Good Cook", "Excellent Cook", "Disastrous Cook", "Bad Cook"],
     "maidtrait":         ["Average", "Good Maid", "Excellent Maid", "Disastrous Maid", "Bad Maid"],
     "secretarytrait":    ["Average", "Good Secretary", "Excellent Secretary", "Disastrous Secretary", "Bad Secretary"],
@@ -349,7 +349,7 @@ define dic_traits_skills = {
     "ponytrait":         ["Average", "Good Pony", "Excellent Pony", "Disastrous Pony", "Bad Pony"],
     "cowtrait":          ["Average", "Good Cow", "Excellent Cow", "Disastrous Cow", "Bad Cow"]
 }
-define dic_slave_mood_show = {
+define DIC_SLAVE_MOOD_SHOW = {
     "mood":[
     "{color=#cd0000}Depressed{/color}",
     "{color=#be0000}Dysphoric{/color}",
@@ -365,7 +365,7 @@ define dic_slave_mood_show = {
     "{color=#009900}Ecstatic+{/color}"
     ]
 }
-define dic_traits_skills_descriptions = {
+define DIC_TRAITS_SKILLS_DESCRIPTIONS = {
     "cookingtrait": [
         "Null",
         "{b}Good Cook{/b} \nYour slave, [all_girls_list[girl_index]['name']] enjoys cooking. This will allow her to become an excellent cook!",
@@ -472,7 +472,7 @@ define dic_traits_skills_descriptions = {
         "{b}Bad Cow{/b} \nYour slave, [all_girls_list[girl_index]['name']] shows little interest in the cow lifestyle. Becoming a good cow slave may prove difficult for her."
     ]
 }
-define dic_traits_sexual = {
+define DIC_TRAITS_SEXUAL = {
     "pettingtrait":      ["None", "Likes Petting", "Loves Petting", "Hates Petting", "Dislikes Petting"],
     "oral_pleasuretrait":["None", "Likes Oral Pleasure", "Loves Oral Pleasure", "Hates Oral Pleasure", "Dislikes Oral Pleasure"],
     "penetrationtrait":  ["None", "Likes Penetration", "Loves Penetration", "Hates Penetration", "Dislikes Penetration"],
@@ -482,7 +482,7 @@ define dic_traits_sexual = {
     "xenophily":         ["None", "Likes Xenophily", "Loves Xenophily", "Hates Xenophily", "Dislikes Xenophily"]
 }
 
-define dic_traits_sexual_descriptions = {
+define DIC_TRAITS_SEXUAL_DESCRIPTIONS = {
     "pettingtrait": [
         "Null",
         "{b}Likes Petting{/b} \nYour slave, [all_girls_list[girl_index]['name']], absolutely loves being petted and craves physical closeness. This will greatly enhance her sensuality!",
@@ -533,7 +533,7 @@ define dic_traits_sexual_descriptions = {
         "{b}Dislikes Xenophily{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows little interest in unfamiliar partners or new experiences."
     ]
 }
-define dic_traits_miscellaneous = {
+define DIC_TRAITS_MISCELLANEOUS = {
     "lust_driver":       ["None", "High lust", "Nymphomanic", "Asexual", "frigid"],
     "sexual_openness":   ["None", "Open", "Pervert", "Puritanical", "Prudish"],
     "masochism":         ["None", "Accustomed to pain", "Masochism", "Pain averse", "Pain sensitive"],
@@ -553,7 +553,7 @@ define dic_traits_miscellaneous = {
     "deprivation_attitude":["None", "Likes Deprivation", "Loves Deprivation", "Hates Deprivation", "Dislikes Deprivation"]
 }
 
-define dic_traits_miscellaneous_description = {
+define DIC_TRAITS_MISCELLANEOUS_DESCRIPTION = {
     "lust_driver": [
         "Null",
         "{b}High lust{/b}\nYour slave, [all_girls_list[girl_index]['name']], shows a noticeable sexual drive, which influences her desires and responsiveness.",
@@ -674,7 +674,7 @@ define dic_traits_miscellaneous_description = {
         "{b}Dislikes Deprivation{/b}\nYour slave, [all_girls_list[girl_index]['name']], strongly dislikes deprivation and avoids it whenever possible."
     ]
 }
-define dic_traits_aura = {
+define DIC_TRAITS_AURA = {
     "feartrait":       ["Null", "Fearful", "Terrified", "Moronic", "Brave"],
     "despairtrait":    ["Null", "Positive", "High-spirited", "Crushed Spirit", "Hopeless"],
     "awarenesstrait":  ["Null", "Observant", "Highly Perceptive", "Oblivious", "Clueless"],
@@ -684,7 +684,7 @@ define dic_traits_aura = {
     "devotiontrait":   ["Null", "Loyal", "Fanatically Devoted", "Disloyal", "Detached"]
 }
 
-define dic_traits_aura_description = {
+define DIC_TRAITS_AURA_DESCRIPTION = {
     "feartrait": [
         "Null",
         "{b}Fearful{/b} \nYour slave, [all_girls_list[girl_index]['name']], shows a healthy level of fear that ensures obedience and respect. She is deeply fearful and compliant, making her extremely easy to control.",
@@ -735,7 +735,7 @@ define dic_traits_aura_description = {
         "{b}Detached{/b} \nYour slave, [all_girls_list[girl_index]['name']], is emotionally detached and resists forming bonds. She is disloyal and may turn against her master when challenged."
     ]
 }
-define dic_traits_attributes = {
+define DIC_TRAITS_ATTRIBUTES = {
     "beautytrait":       ["Null", "Attractive", "Divine beauty", "Null", "Null"],
     "endurancetrait":    ["Null", "Tough", "Fortitude", "Very Frail", "Weak"],
     "empathytrait":      ["Null", "Compassionate", "Emotional resonancer", "Cold-hearted", "Insensitive"],
@@ -747,7 +747,7 @@ define dic_traits_attributes = {
     "exoticismtrait":   ["Null", "Distinctive", "Strikingly Exotic", "Completely common", "Unremarkable"],
     "styletrait":        ["Null", "Graceful", "Very Graceful", "Clumsy", "Ungraceful"]
 }
-define dic_traits_attributes_description = {
+define DIC_TRAITS_ATTRIBUTES_DESCRIPTION = {
     "beautytrait": [
         "None",
         "{b}Attractive{/b} \nYour slave, [all_girls_list[girl_index]['name']], is attractive and pleasant to look at. She turns heads and draws attention with her charm. She may reach another level of beauty if you train her well.",
@@ -819,7 +819,7 @@ define dic_traits_attributes_description = {
         "{b}Ungraceful{/b} \nYour slave, [all_girls_list[girl_index]['name']], is clumsy and moves with difficulty. She struggles with balance and coordination, often tripping or bumping into things."
     ]
 }
-define aura_descriptions = {
+define AURA_DESCRIPTIONS = {
     "obedience": [
         "You try to find signs of obedience, but stable structures cannot form. There are no spikes of rebellion, alas there are no buds of obedience as well.",
         "You concentrate on the signs of obedience, but you can only see {color=#009900}one open bud of obedience{/color}.",
@@ -852,7 +852,7 @@ define aura_descriptions = {
         "{color=#009900}The aura of your slave is considerably fainter than yours{/color}."
     ]
 }
-define aura_descriptions_no_color = {
+define AURA_DESCRIPTIONS_NO_COLOR = {
     "obedience": [
         "You try to find signs of obedience, but stable structures cannot form. There are no spikes of rebellion, alas there are no buds of obedience as well.",
         "You concentrate on the signs of obedience, but you can only see one open bud of obedience.",
@@ -887,7 +887,7 @@ define aura_descriptions_no_color = {
 }
 
 
-define aura_descriptions2 = {
+define AURA_DESCRIPTIONS2 = {
     "arousal": [
         "{color=#000000}The aura moves slowly and smoothly, almost without pulsation. You don't notice any signs of sexual desire.{/color}",
         "{color=#000000}Light twitching of the aura suggests to you that there is slight sexual desire present.{/color}",
@@ -961,7 +961,7 @@ define aura_descriptions2 = {
         "{color=#00a86b}Emerald glow of devotion{/color} dominates the aura of your slave, dotting it with {color=#009900}myriads{/color} of bright and clear stars."
     ]
 }
-define aura_descriptions2_no_color = {
+define AURA_DESCRIPTIONS2_NO_COLOR = {
     "arousal": [
         "The aura moves slowly and smoothly, almost without pulsation. You don't notice any signs of sexual desire.",
         "Light twitching of the aura suggests to you that there is slight sexual desire present.",
@@ -1034,15 +1034,15 @@ define aura_descriptions2_no_color = {
         "Emerald glow of devotion dominates the aura of your slave, dotting it with myriads of bright and clear stars."
     ]
 }
-define dic_slave_conditions = {
+define DIC_SLAVE_CONDITIONS = {
     "in_the_cells": "  Prison - a tiny dark room. It is impossible to lie down or completely stretch out. A night in this cell is able to break the will to resist, but it can also damage health, not to mention the bad dreams. Has an especially strong effect on people with claustrophobia.",
     "On_the_floor": "  You took away the bedroll from your slave to show her that comfort should be earned. A night on the cold hard floor is neither good for resting, nor for her health, but [all_girls_list[girl_index]['name']] certainly will be a little more compliant. (TODO: But if she does not feel guilty, it may drive her into depression.)",
     "On_a_bedroll": "  It is a common thing for slaves to sleep on a hard bedroll right on the floor. A small warm blanket and cushion filled with rice husks will keep her warm at night and enable her to sleep well, although it's not comfortable at all.",
     "In_my_bed": "  As a special encouragement, your slave can be allowed to sleep with her master on his bed. This will let her sleep deeper and more comfortably. Sleeping with her owner is a great source of happiness for an obedient and devoted slave, but a poorly trained or moody girl will not be pleased at all.",
     "In_the_boudoir": "  Sleeping in her own soft bed - the best luxury for any slave. This bed is very soft and comfortable. This living arrangement will let her sleep deeper and should considerably improve her mood. It may also allow her to feel more independent. This should be used as a reward for excellent obedience and moderate devotion, otherwise you risk spoiling your slave. (Limited 1)",
-    "No_food": "  In the Eternal Rome there are almost no opportunities to grow your own food. All food is brought from the worlds that lie beyond the Fog and because of that it costs fair amount of money. By depriving your slave of food you will kill two birds with one stone - it will teach her to be more obedient and you will save money. Of course, it is not good for her health.",
+    "No_food": "  In the Eternal Rome there are almost no opportunities to grow your own food. All food is brought from the WORLDS that lie beyond the Fog and because of that it costs fair amount of money. By depriving your slave of food you will kill two birds with one stone - it will teach her to be more obedient and you will save money. Of course, it is not good for her health.",
     "Dehydrated_food": "  Dzhulbars Jumas' dehydrated pet food is the choice of leading slave traders. It is delivered in ten-liter cellophane bags, and due to its low weight it is cheap to transport through the Fogs. Contains all the nutrients and fiber a female slave needs, but it tastes disgusting.",
-    "Canned_food": "  Canned food for pets. It perfectly matches the composition of nutrients for female slaves and it tastes better than dry food or fiend cum. Unfortunately, it is rather expensive - fresh food weighs a lot, and it is necessary to import it from other worlds. This should be used as a reward for excellent obedience and moderate devotion, otherwise you risk spoiling your slave.",
+    "Canned_food": "  Canned food for pets. It perfectly matches the composition of nutrients for female slaves and it tastes better than dry food or fiend cum. Unfortunately, it is rather expensive - fresh food weighs a lot, and it is necessary to import it from other WORLDS. This should be used as a reward for excellent obedience and moderate devotion, otherwise you risk spoiling your slave.",
     "Fiend_cum": "  Fiends are the scourge and blessing of Rome. They are dangerous, but they can produce huge masses of nasty but nutritious sperm. It is not easy to milk these creatures so the seed is not cheap. However, if you have your own fiend and a good milker, feeding your slave becomes a lot easier. Only if you are able to make her eat it of course…",
     "No_leftovers": "  Not every slave deserves to eat scraps from her master's table. This honor must be earned. Also, do not forget about the slave's shape.\n\n  If you are fattening a woman up in a barn you could feed her the scraps, instead.",
     "Eats_leftovers": "  Your slave may eat your left-overs. Table scraps are more delicious than ordinary slave food although usually not enough to be sated. You can consider this dessert, a nice addition to the staple food. This should be used as a reward for excellent obedience and moderate devotion, otherwise you risk spoiling your slave.",
@@ -1083,32 +1083,32 @@ define dic_slave_conditions = {
     "enforce_rules_abort": "  You tell the slave that henceforth she should obediently follow all her rules without the help of your special tools and additional supervision. Of course, this does not mean that ignoring orders will leave her unpunished…",    
     "default":""
 }
-define dic_slave_conditions_sleep ={
+define DIC_SLAVE_CONDITIONS_SLEEP ={
     0:"in_the_cells",
     1:"On_the_floor",
     2:"On_a_bedroll",
     3:"In_my_bed",
     4:"In_the_boudoir" 
 }
-define dic_slave_conditions_food ={
+define DIC_SLAVE_CONDITIONS_FOOD ={
     0:"Dehydrated_food",
     1:"Canned_food",
     2:"Fiend_cum",
     3:"No_food"
 }
-define dic_slave_conditions_portion ={
+define DIC_SLAVE_CONDITIONS_PORTION ={
     0:"Restricted",
     1:"Moderate",
     2:"Generous",
     3:"Calculated"
 }
-define dic_girl_age_text ={
+define DIC_GIRL_AGE_TEXT ={
     0: "Young",
     1: "Loli",
     2: "Madure"
 }
 
-define dic_girl_boobs_text ={
+define DIC_GIRL_BOOBS_TEXT ={
     "young": [
         "Flat chested",
         "Small perky boobs",
@@ -1134,19 +1134,19 @@ define dic_girl_boobs_text ={
         "Colossal [boobs6]",
     ],
 }
-define dic_girl_breast_modification ={
+define DIC_GIRL_BREAST_MODIFICATION ={
     0:"No Breast Modifications",
     1:"Breast Size Modified",
     2:"Vagina Breasts",
     3:"Nipple-Mouths",
 }
-define dic_girl_vaginal_tightness ={
+define DIC_GIRL_VAGINAL_TIGHTNESS ={
     0:"Virgin",
     1:"Restored Hymen",
     2:"Firm Vagina",
     3:"Relaxed Vagina",
 }
-define dic_girl_anal_tightness ={
+define DIC_GIRL_ANAL_TIGHTNESS ={
     0:"Tight Anus",
     1:"Stiff Anus",
     2:"Firm Anus",
@@ -1154,14 +1154,14 @@ define dic_girl_anal_tightness ={
     4:"Relaxed Anus",
     5:"Loose Anus",
 }
-define dic_girl_vagina_modification ={
+define DIC_GIRL_VAGINA_MODIFICATION ={
     0:"No Vaginal Modifications",
     1:"Vaginal Ball Implants",
     2:"Lubricative Glands+",
     3:"Vagina Tongue",
     4:"Egg Birthing",
 }
-define dic_girl_brand ={
+define DIC_GIRL_BRAND ={
     0:"No Brand",
     1:"Tattoo brand",
     2:"Someone else's brand",
@@ -1170,7 +1170,7 @@ define dic_girl_brand ={
     5:"Magical brand",
     6:"Special quest (cannot brand)",
 }
-define dic_color_level ={
+define DIC_COLOR_LEVEL ={
     0:"CD0000",
     1:"EA0090",
     2:"6B0084",
@@ -1179,7 +1179,7 @@ define dic_color_level ={
     5:"009900",
     6:"996515",
 }
-define learn_bonus ={
+define LEARN_BONUS ={
     "sex":0,
     "endurance":0,
     "taming":0,
@@ -1192,9 +1192,9 @@ define learn_bonus ={
     "enchanter":0,
     "stamina":0,
 }
-define dic_overnight_rules_count =[0,2,4]
+define DIC_OVERNIGHT_RULES_COUNT =[0,2,4]
 
-define dic_girl_clothing_dress = {
+define DIC_GIRL_CLOTHING_DRESS = {
     "naked": {
         "name": "Naked",
         "price": 0,
@@ -1298,7 +1298,7 @@ define dic_girl_clothing_dress = {
     }
 }
 
-define dic_girl_clothing_hand ={
+define DIC_GIRL_CLOTHING_HAND ={
     "rubber_gloves": {
         "name": "Rubber Gloves",
         "desc": "Although rubber gloves do not complement any costume and will not decorate the hands of your slave, they have a lot of applications. These gloves will protect the delicate skin of the slave while cleaning and washing dishes. It also comes in handy for some medical procedures.",
@@ -1330,7 +1330,7 @@ define dic_girl_clothing_hand ={
         "price": 5
     }
 }
-define dic_girl_clothing_feet ={
+define DIC_GIRL_CLOTHING_FEET ={
     "tabi": {
         "name": "Tabi Socks",
         "desc": "This type of thick socks is cut with a separate thumb. Classic footwear for martial arts and silent movement. These socks will last through any sort of training.",
@@ -1368,7 +1368,7 @@ define dic_girl_clothing_feet ={
         "price": 20
     }
 }
-define dic_girl_clothing_jewelry ={
+define DIC_GIRL_CLOTHING_JEWELRY ={
     "plain_ring": {
         "name": "Elegant Ring",
         "desc": "A well crafted and beautiful ring made out of precious metals.",
@@ -1382,7 +1382,7 @@ define dic_girl_clothing_jewelry ={
         "price": 5
     },
 }
-define dic_girl_clothing_piercing ={
+define DIC_GIRL_CLOTHING_PIERCING ={
     "plain_earrings": {
         "name": "Small Hoop",
         "desc": "These elegant little hoops are perfectly suited for all pierced areas of the body.",
@@ -1414,7 +1414,7 @@ define dic_girl_clothing_piercing ={
         "price": 30
     }
 }
-define dic_girl_clothing_head ={
+define DIC_GIRL_CLOTHING_HEAD ={
     "plain_headband": {
         "name": "Headband",
         "desc": "This accessory is designed not only as an accessory, but for everyday use. The lightweight and flexible headband allows to neatly tuck away hair so that it does not conceal the face or fall into the pot.",
@@ -1470,7 +1470,7 @@ define dic_girl_clothing_head ={
         "price": 20
     }
 }
-define dic_girl_clothing_neck = {
+define DIC_GIRL_CLOTHING_NECK = {
     "plain_pendant": {
         "name": "Chain with Pendant",
         "desc": "A chain from precious metal with a shaped pendant perfectly accentuates the style and elegance of your slave.",
@@ -1530,7 +1530,7 @@ define dic_girl_clothing_neck = {
 }
 
 
-define dic_girl_clothing_hand_or_feet = {
+define DIC_GIRL_CLOTHING_HAND_OR_FEET = {
     "leather_straps": {
         "name": "Leather Shackles",
         "desc": "A pair of sturdy leather bracelets with steel rings for fixing chains. This accessory will make sure that the slave will not forget that you are her master and she has to obey. Can be worn on the hands or feet, and successfully used in any bondage. Very practical!",
@@ -1538,7 +1538,7 @@ define dic_girl_clothing_hand_or_feet = {
         "price": 5
     }
 }
-define dic_girl_clothing_pony = {
+define DIC_GIRL_CLOTHING_PONY = {
     "anal_tail":{
         "name": "Anal tail",
         "desc":"This device consists of two parts - a large plastic phallus with an extension that provides a secure fit in the ass, and a set of removable tails. Well suited for animal play and increases the arousal of your slave.",
@@ -1582,7 +1582,7 @@ define dic_girl_clothing_pony = {
         "price": 50
     }
 }
-define dic_girl_clothing_enforce = {
+define DIC_GIRL_CLOTHING_ENFORCE = {
     "vaginal_balls": {
         "name": "Vaginal Beads",
         "desc": "A pair of beads on a string with a ring designed for extended wear in the vagina. They are excellent to help build arousal and develop muscles.",
@@ -1621,7 +1621,7 @@ define dic_girl_clothing_enforce = {
     }
 }
 
-define dic_girl_clothing_gift = {
+define DIC_GIRL_CLOTHING_GIFT = {
     "bouqet": {
         "name": "Bouquet of Flowers ($2)",
         "desc": "A small but very beautiful bouquet of flowers. This is a special ripening variety, grown hydroponically in the technosphere - only blooms for one day, but quite affordable.",
@@ -1653,7 +1653,7 @@ define dic_girl_clothing_gift = {
         "price": 50
     }
 }
-define dic_girl_clothing_full ={
+define DIC_GIRL_CLOTHING_FULL ={
     "naked": {
         "name": "Naked",
         "price": 0,
@@ -2095,7 +2095,7 @@ define dic_girl_clothing_full ={
         "price": 0
     }
 }
-define dic_girl_psy_status = {
+define DIC_GIRL_PSY_STATUS = {
     "arrogant": 2,
     "broken": -100,
     "depresive": -1,
@@ -2120,7 +2120,7 @@ default dic_cook = [
     "[all_girls_list[girl_index]['name']] starts cooking as a living food processor. She so expertly wielded knives, pans, ingredients, and seasonings that the food is cooked very well. Pleasant aromas from the kitchen are so enticing that you hardly wait for an invitation to dinner. Yummy!",
     "In the kitchen [all_girls_list[girl_index]['name']] literally transformed the meal into something spectacular. The process of cooking looks like a real show. Even with the most simple meals she is able to create something so magnificent that it is a delight to the senses. Having her is the dream of every gourmet!"
 ]
-define inventory_type = {
+define INVENTORY_TYPE = {
     "armour": [
         "Without armour", "Aramid Suit", "Leather Armor", "Adaptive Suit",
         "Phantom Aegis Suit", "Elven Chainmail", "Combined Armor", "Adaptive armor",
@@ -2190,7 +2190,7 @@ define inventory_type = {
         "remove", "anal_plug", "anal_tail"
     ]
 }
-define dic_inventory_move_up = {
+define DIC_INVENTORY_MOVE_UP = {
     'clothes': 0,
     'headgear': 1,
     'neck': 2,
@@ -2205,7 +2205,7 @@ define dic_inventory_move_up = {
     'clitoris': 11,
     'anus': 12
 }
-define dic_inventory_move_down = {
+define DIC_INVENTORY_MOVE_DOWN = {
     0: 'clothes',
     1: 'headgear',
     2: 'neck',
@@ -2220,11 +2220,11 @@ define dic_inventory_move_down = {
     11: 'clitoris',
     12: 'anus'
 }
-define dic_slave_aura_conditions = {
+define DIC_SLAVE_AURA_CONDITIONS = {
     "nocast": "  Without spells reinforcing auspex, the aura of your slave is seen as pale and indistinct shadow. You can not determine the color, strength or direction of her spiritual field.",
     "casted": "  Auspex allows you to distinguish between colors, direction and strength of the spiritual field of your slave. After analyzing them, you get detailed information."
 }
-define shared_families = {
+define SHARED_FAMILIES = {
         "prehistoric": ["tribe", "amazon"],
         "barbarian": ["amazon", "nomad", "pesant", "hunter", "fisher", "viking", "barbarian_king"],
         "sns": ["amazon", "nomad", "pesant", "hunter", "fisher", "viking", "barbarian_king"],
@@ -2240,10 +2240,10 @@ define shared_families = {
         "space": ["freetrader", "astrofarm", "asteroid", "astrogator", "admiral", "nanofarmacist", "gendesigner"]
 }
 
-define worlds = {
+define WORLDS = {
     1: {
         "name": "prehistoric",
-        "families": shared_families["prehistoric"],
+        "families": SHARED_FAMILIES["prehistoric"],
         "descriptions": [
             "In my world, as far as the eye can see, wild forests stretch everywhere. Sweet air. Good hunting. You can go many days, but only trees will be around. There's a lot of prey, but the forests are inhabited by terrible beasts: saber-toothed tigers, cave bears and swamp lizards.",
             "In my country everything is covered with snow and ice, from horizon to horizon. People wrap themselves in the skins of large animals and make a fire in caves to keep warm. Often many days there is no food, but when the hunters manage to get the mammoth, the whole tribe rejoices and we all eat our fill.",
@@ -2252,7 +2252,7 @@ define worlds = {
     },
     2: {
         "name": "barbarian",
-        "families": shared_families["barbarian"],
+        "families": SHARED_FAMILIES["barbarian"],
         "descriptions": [
             "In my homelands steppes stretches without end. There, a herd of mustangs cleaves the waves of golden feather grass, sky greener than emeralds and three beautiful moons shine brightly in the sky at night. People often at war, because the richer great leaders are, if the more loot they take in the war.",
             "In my country a lot of forests, rivers and hills. In the woods there are countless fur animals, and lakes teem with fish. In the hills and valleys - good pasture for sheep. Some people settle in cities, behind high walls, while others wander from place to place, driving huge herds.",
@@ -2261,7 +2261,7 @@ define worlds = {
     },
     3: {
         "name": "sns",
-        "families": shared_families["sns"],
+        "families": SHARED_FAMILIES["sns"],
         "descriptions": [
             "In my world lives a lot of different nations, and they constantly fight for a place under the sun. Innumerable hordes of nomads besiege rich cities, surrounded by high walls. Wild tribes inhabit the forests and swamps, earning a living from caravans robbery. Great kings rule huge empires.",
             "My world is great and immense. I know that at the east lies the endless sea. The far south is inhabited by wild people with skin as black as the night itself. In the north is impenetrable forests in which live undersized, but evil tribes of hunters. Western steppes ruled by nomads who live with robbery, plundering the cities.",
@@ -2270,7 +2270,7 @@ define worlds = {
     },
     4: {
         "name": "medieval",
-        "families": shared_families["medieval"],
+        "families": SHARED_FAMILIES["medieval"],
         "descriptions": [
             "My country has a very beautiful nature: a lot of forests, meadows, rivers and lakes. The mountains are covered with shiny snowcaps. All the lands are owned by the barons and knights, who serve to the king and collect tributes from peasants living near their castles. Ordinary people live a difficult life.",
             "In my world every man has his place and everyone knows what to do. Kings and barons ruled their lands, knights fight with enemies, artisans make pots and tools, farmers plow the land, and the priests are praying for all of them and help with good advice.",
@@ -2279,7 +2279,7 @@ define worlds = {
     },
     5: {
         "name": "darkfantasy",
-        "families": shared_families["darkfantasy"],
+        "families": SHARED_FAMILIES["darkfantasy"],
         "descriptions": [
             "As I can remember, we always had a hard time. It is said that once upon a time, under the old empire, people live richly and happily. But now the forests are full of robbers and wild animals, barons cannot, or do not, want to maintain order in their lands, and the peasants under their oppression starve almost every winter.",
             "Life in my world is not easy. In the dark forests lurk terrible creatures that can ruin an entire village. Eastern necromancers raise an army of undead, and warlocks rule with western lands, whispering orders to kings. Of course there are heroes who fight back evil, but they are too few.",
@@ -2288,7 +2288,7 @@ define worlds = {
     },
     6: {
         "name": "highfantasy",
-        "families": shared_families["highfantasy"],
+        "families": SHARED_FAMILIES["highfantasy"],
         "descriptions": [
             "My world is ruled by powerful archmages, who form the Great Conclave and decide the fate of mortals on it. But they do not interfere in ordinary life. Cities thrive, although, of course, wealth breeds corruption and theft. And sorcerers' experiments sometimes end with serious troubles.",
             "My world is arena of war between good and evil. Union of elves, humans, and dwarves from immemorial time opposes the machinations of King Necromancer who wants to enslave all the free land and populate them with his ugly slaves: goblins, trolls and dragons.",
@@ -2297,7 +2297,7 @@ define worlds = {
     },
     7: {
         "name": "steampunk",
-        "families": shared_families["steampunk"],
+        "families": SHARED_FAMILIES["steampunk"],
         "descriptions": [
             "My world is ruled by science and technology. There are several advanced empires that are vying for influence in the underdeveloped but resource-rich, colonies. The advantage will go to the one with the most modern battleships, airships and steam engines.",
             "Science and technology is developed very high in my world. We use advanced steam engines for transport and industry. To plan production we use a powerful arithmometers. For transcontinental flights we have giant zeppelins.",
@@ -2306,7 +2306,7 @@ define worlds = {
     },
     8: {
         "name": "industrial",
-        "families": shared_families["industrial"],
+        "families": SHARED_FAMILIES["industrial"],
         "descriptions": [
             "Although in my world there are many different states, everyone understands that the real power is in the hands of bankers and industrialists. Working people create trade unions and go on strike, but the government will not tolerate such disturbances and suppress them very severely. People are angry, many of them live in poverty and cannot find work.",
             "In my world there is a very big war, it is even called World War, because it involves almost all the states. Bombing, artillery shelling, gas attacks - all this has become habitually not only for the soldiers in the trenches but also for civilians. The food is not enough, everything is rationed.",
@@ -2315,7 +2315,7 @@ define worlds = {
     },
     9: {
         "name": "modern",
-        "families": shared_families["modern"],
+        "families": SHARED_FAMILIES["modern"],
         "descriptions": [
             "In my world there are a lot of different countries, but only some of them are really well developed and rich. In the others reigns poverty and devastation, many of them ruled by dictators. These backward countries are hotbeds of terrorism and for the civilized countries sometimes it is necessary to use force.",
             "We have one country that is richer and more powerful than the others. But although everyone tries to be equal to it, there is now a severe crisis and because of that economy suffers all over the world. Unemployment growing, inflation rising. People all over the world go out to the demonstrations. In many countries civil wars have already started.",
@@ -2324,7 +2324,7 @@ define worlds = {
     },
     10: {
         "name": "cyberpunk",
-        "families": shared_families["cyberpunk"],
+        "families": SHARED_FAMILIES["cyberpunk"],
         "descriptions": [
             "My world is ruled by information. Global network connects the most remote corners of the planet. In the Web you can find everything: movies, music, games, and every sort of pornography. 95% of the population lives on allowances, barely enough for food. But as long as there is entertainment, there are no objections.",
             "My world is divided into States and Enclaves. Though more people live in the States, they are just the dying form of social organization. Enclaves are entirely owned by corporations and obey corporate laws. And it is Enclaves that own most of the wealth and technology.",
@@ -2333,7 +2333,7 @@ define worlds = {
     },
     11: {
         "name": "utopia",
-        "families": shared_families["utopia"],
+        "families": SHARED_FAMILIES["utopia"],
         "descriptions": [
             "In my world people have reached harmony with nature and forget forever about famine, wars, crimes, and diseases. A flexible system of governance involving all the adult population of the planet can quickly solve any problems and fairly distribute the resources.",
             "In our world science and technology have developed so far that there is no need for hard work and competition for resources. Laws are written by outstanding people of culture and only in the poetic form. In the upbringing of children special attention is paid to the development of the aesthetic sense.",
@@ -2342,7 +2342,7 @@ define worlds = {
     },
     12: {
         "name": "darkfuture",
-        "families": shared_families["darkfuture"],
+        "families": SHARED_FAMILIES["darkfuture"],
         "descriptions": [
             "In my world I come from the one true state. We live by the precepts of the Great Leader and are constantly fighting for freedom and brotherhood. The enemies are trying to break us and poison with their propaganda, but we know that only our people live happily and freely. All that is necessary is distributed equitably.",
             "In my world there are three states, but only in ours do people live organized and happily. Big Brother is always watching over us and helps not to go astray. Ministry of Truth explains all the unclear questions. Norms on human food are growing steadily, and the war is about to end with our unconditional victory.",
@@ -2351,11 +2351,11 @@ define worlds = {
     },
     13: {
         "name": "space",
-        "families": shared_families["space"],
+        "families": SHARED_FAMILIES["space"],
         "descriptions": [
-            "The universe contains many inhabited worlds, and we can move freely between them thanks to the hyperdrive. Thousands of planets are united in the Galactic Republic, controlled by the Senate. Of course, each of the worlds has their own view of life, and conflicts are frequent. The threat of separatism is greater than ever.",
-            "The universe is much bigger than any one world. Our planet has united into a global state and colonized many worlds. But the universe is infinite. We were exploring it, getting acquainted with alien civilizations, learning and developing.",
-            "Under the shadow of the Golden Throne of the Eternal Emperor, the people's empire thrives in thousands of worlds. But the dangers are innumerable: xenos, heretics, nightmarish creatures of the Warp. Only thanks to the dedication of the Imperial Guard, Space Marines, Inquisition, and Ecclesiarchy we are still alive."
+            "The universe contains many inhabited WORLDS, and we can move freely between them thanks to the hyperdrive. Thousands of planets are united in the Galactic Republic, controlled by the Senate. Of course, each of the WORLDS has their own view of life, and conflicts are frequent. The threat of separatism is greater than ever.",
+            "The universe is much bigger than any one world. Our planet has united into a global state and colonized many WORLDS. But the universe is infinite. We were exploring it, getting acquainted with alien civilizations, learning and developing.",
+            "Under the shadow of the Golden Throne of the Eternal Emperor, the people's empire thrives in thousands of WORLDS. But the dangers are innumerable: xenos, heretics, nightmarish creatures of the Warp. Only thanks to the dedication of the Imperial Guard, Space Marines, Inquisition, and Ecclesiarchy we are still alive."
         ]
     }
 }
@@ -2533,7 +2533,7 @@ default occupation_description = {
     "astrofarmer": "I ran a space farm. Just a handful of people and machines keeping everything alive. Quiet, isolated, with the same faces every day. Lonely, but steady.",
     "installer": "With few options, I joined a space rigging crew. Heavy exosuits, zero-G welding — rough work, but it suited me. It felt real."
 }
-define dic_girl_equipment_neck_mod = {
+define DIC_GIRL_EQUIPMENT_NECK_MOD = {
     "Chain with Pendant": {
         "desc": "A chain from precious metal with a shaped pendant perfectly accentuates the style and elegance of your slave.",
         "icon": "scene/item/item_plain_pendant",
@@ -2583,7 +2583,7 @@ define dic_girl_equipment_neck_mod = {
         "escape": False,
     },
 }
-define dic_slave_moodlevel = {
+define DIC_SLAVE_MOODLEVEL = {
     0:  "{color=#cd0000}Depressed{/color}",
     1:  "{color=#be0000}Dysphoric{/color}",
     2:  "{color=#af0000}Sullen{/color}",
@@ -2599,7 +2599,7 @@ define dic_slave_moodlevel = {
 }
 
 # I know is part is a bullshit, but it works
-define dic_slave_moodlevel_no_color = {
+define DIC_SLAVE_MOODLEVEL_NO_COLOR = {
     "{color=#cd0000}Depressed{/color}": "Depressed",
     "Depressed": "Depressed",
     "{color=#be0000}Dysphoric{/color}": "Dysphoric",
@@ -2625,7 +2625,7 @@ define dic_slave_moodlevel_no_color = {
     "{color=#009900}Ecstatic+{/color}": "Ecstatic+",
     "Ecstatic+": "Ecstatic+"
 }
-define dic_slave_moodlevel2 = {
+define DIC_SLAVE_MOODLEVEL2 = {
     "Depressed": "{color=#cd0000}Depressed{/color}",
     "{color=#cd0000}Depressed{/color}": "{color=#cd0000}Depressed{/color}",
     "Dysphoric": "{color=#be0000}Dysphoric{/color}",
@@ -2651,14 +2651,14 @@ define dic_slave_moodlevel2 = {
     "Ecstatic+": "{color=#009900}Ecstatic+{/color}",
     "{color=#009900}Ecstatic+{/color}": "{color=#009900}Ecstatic+{/color}"
 }
-define dic_idle = [
+define DIC_IDLE = [
     "sits at the window, leaning her elbows on the sill and looking at the street. Either she counts crows, or stares at passers-by. Perhaps she is bored, but it's still better than many of the lessons that you could burden her with.",
     "aimlessly wanders around the house, examining different parts of the interior. Perhaps she is bored, but it's still better than many of the lessons that you could burden her with.",
     "lays down to rest and spends her leisure time in blissful slumber. Perhaps she is bored, but it's still better than many of the lessons that you could burden her with.",
     "spends her free time immersed in her own feelings, whispering something under her breath. Perhaps she is bored, but it's still better than many of the lessons that you could burden her with.",
     "spends her free time quietly humming a song of her distant homeland. Perhaps she is bored, but it's still better than many of the lessons that you could burden her with."
 ]
-define dic_maid = [
+define DIC_MAID = [
     "[all_girls_list[girl_index]['name']] has spent an hour doing the housework but did not achieve any success. She only aggravated the existing mess: raised dust, put things in piles, and could not even wash the clothes or make the bed.",
     "[all_girls_list[girl_index]['name']] spent too much time on cleaning, especially when you consider her modest results. The room became a little tidier, but the order is not perfect, and some things remained unmade and unfinished.",
     "[all_girls_list[girl_index]['name']] conscientiously collected the dirty clothes and washed them, washed the dishes, swept the floor, and made the bed. Your premises have become noticeably cleaner, although the order is still not ideal.",
@@ -2666,13 +2666,13 @@ define dic_maid = [
     "[all_girls_list[girl_index]['name']] restored order quickly and competently. She washed up all the dishes, washed and hung clothes out to dry, washed the floor, made the bed and wiped down all dusty surfaces.",
     "Like a typhoon with a broom, [all_girls_list[girl_index]['name']] sweeps through the house, leaving a trail of order and cleanliness. Only half an hour's work - and all the rooms of the house shine with pristine purity. She leaves nothing left undone! Spotless!"
 ]
-define dic_bath_master = [
+define DIC_BATH_MASTER = [
     "  In your bath you relax and enjoy the warm waters. Sweat, tears, vaginal secretions, and worse – all just part of a slave master’s life. It’s an endless, glamorless, thankless job that’s gotta be done, but ahh, there’ nothing like washing off a hard day at work. Cleanliness – It’s the guarantee of health!",
     "  [all_girls_list[girl_index]['name']] helps you to relax and freshen up before bedtime. She carefully and gently cleanses your whole body, then wipes you dry with a soft towel and delivers the bathrobe and slippers.",
     "  [all_girls_list[girl_index]['name']] helps you to relax and freshen up before bedtime. She carefully and gently cleanses your whole body, then wipes you dry with a soft towel and delivers the bathrobe and slippers.",
     "  [all_girls_list[girl_index]['name']] takes away your slave to the bathroom and cleans her well with soap and sponge."
 ]
-define bathing_slave_alone = {
+define BATHING_SLAVE_ALONE = {
     "arrogant": "  Eying you with a disdainful look and strictly demanding that you not spy on her, [all_girls_list[girl_index]['name']] proceeds to the bathroom and indulges herself with water procedures. Of course, you unceremoniously drop in to make sure she is cleaning up carefully and understands who sets the rules here.",
     "broken": "  With a completely indifferent face [all_girls_list[girl_index]['name']] proceeds to the bathroom, turns the water on and begins to methodically lather and bathe, like some retarded machine. She does not pay attention to you watching her. The whole process takes less than ten minutes.",
     "depresive": "  [all_girls_list[girl_index]['name']] dejectedly goes to the bathroom and begins to wash. It seems that this procedure is not interesting for her: she is thinking about something else and sighs often. You have to hurry her not to waste time in vain.",
@@ -2690,7 +2690,7 @@ define bathing_slave_alone = {
     "soft": "  [all_girls_list[girl_index]['name']] is obviously pleased to be able to wash off the dirt and soak in warm water. You hear her humming softly, and you peer in at her."
 }
 
-define dic_specializations = {
+define DIC_SPECIALIZATIONS = {
     "Servant": ["maid", "cooking"],
     "Assistant": ["secretary", "elocution"],
     "Witch Doctor": ["nursing", "alchemy", "witchcraft"],
@@ -2701,7 +2701,7 @@ define dic_specializations = {
     "Concubine":["sex"]
 }
 
-define dic_girl_rules_broken_explain = {
+define DIC_GIRL_RULES_BROKEN_EXPLAIN = {
     "act_as_cook": " [all_girls_list[girl_index]['name']] refuses to prepare meals for you.",
     "act_as_maid": " [all_girls_list[girl_index]['name']] refuses to clean the house.",
     "bath_slave": " [all_girls_list[girl_index]['name']] refuses to bathe you.",
@@ -2717,7 +2717,7 @@ define dic_girl_rules_broken_explain = {
     "no_masturbation":" [all_girls_list[girl_index]['name']] WIP.",
     "use_vaginal_beads":" [all_girls_list[girl_index]['name']] refuses to use the vaginal beads."
 }
-define dic_girl_rules_special_text = {
+define DIC_GIRL_RULES_SPECIAL_TEXT = {
     "behave_alarm":{
         "assistant_pass":" [all_girls_list[girl_index]['name']] does not want to provide your morning blowjob, so your assistant forces her.",
         "assistant_fail":" [all_girls_list[girl_index]['name']] Your assistant lacks the strength and fighting skill to compel her.",
@@ -2767,7 +2767,7 @@ define dic_girl_rules_special_text = {
         "good_job":" [all_girls_list[girl_index]['name']] She seems to enjoy the sensations."
     }
 }
-define dic_auto_tasks = {
+define DIC_AUTO_TASKS = {
     "slave_auto_sleep": {
         "condition": "slave_auto_sleep",
         "text": night_rules_mini_fuctions.sleep_text,
@@ -2813,7 +2813,7 @@ define dic_auto_tasks = {
         "extra": night_rules_mini_fuctions.deny_orgasm_extra,
     }
 }
-define dic_slave_rules = {
+define DIC_SLAVE_RULES = {
     "act_as_cook": {
         "condition": rules_fuctions.act_as_cook_condition,
         "extra": rules_fuctions.act_as_cook_extra,
@@ -2911,7 +2911,7 @@ define dic_slave_rules = {
         "count": False
     }
 }
-define dic_slave_rules_capital = {
+define DIC_SLAVE_RULES_CAPITAL = {
     "act_as_cook": "Act as cook -",
     "act_as_maid": "Act as maid -",
     "bath_slave": "Bath slave -",

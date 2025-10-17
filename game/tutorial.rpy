@@ -26,7 +26,7 @@ screen mistress_angelika2():
     add "characters/mistress_angelika.webp"pos(0.3, 0.3785) anchor (0.5, 0.5) xsize 795 ysize 535
     key "K_SPACE" action SetVariable("angelika_speech_text_count", angelika_speech_text_count + 1),Jump("Tutorial")
 screen angelika_speech():
-    text angelika_speech_text[angelika_speech_text_count] pos (0.02, 0.78) size 20 font "consolas.ttf" xmaximum 750 
+    text ANGELIKA_SPEECH_TEXT[angelika_speech_text_count] pos (0.02, 0.78) size 20 font "consolas.ttf" xmaximum 750 
 screen angelika_buttons():
     vbox:
         xalign 0.655
@@ -50,7 +50,7 @@ screen angelika_display():
         text "Information for consideration:" size 30 color "#000000" font "fonts/victoriana.ttf" anchor (0.5, 0.5)
     vbox:
         pos(0.650,0.25)
-        text attitude_text["haughty"][0] size 20 color "#191970" font "fonts/Segoe Print.ttf" anchor (0.0,0.0)
+        text ATTITUDE_TEXT["haughty"][0] size 20 color "#191970" font "fonts/Segoe Print.ttf" anchor (0.0,0.0)
         add "spacer" size (0,60)    
         text "   It seems from this lady depends the final decision about my entry into the guild. Most likely, this is just a formality, but it is necessary to remain vigilant. She looks like a person who does not forgive weakness and enjoys suffering neighbors…" xmaximum 425 size 20 color "#191970" font "fonts/Segoe Print.ttf" anchor (0.0,0.0)
         text "   What the hell?! She looks like a complete bitch, though sexy." xmaximum 425 size 20 color "#191970" font "fonts/Segoe Print.ttf" anchor (0.0,0.0)
@@ -97,7 +97,7 @@ screen slaver_guild():
                 action MainMenu(confirm=False)
     text "{color=#000000}I must choose which lecture I want to hear, or I can ask about the conditions of the examination or ask to start when I am ready.{/color}" pos (0.02, 0.78) size 20 font "consolas.ttf" xmaximum 750 
 screen lecture_screen():
-    text tutorial_lectureGIGA[lecture_name][angelika_speech_text_count] pos (0.02, 0.78) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
+    text TUTORIAL_LECTUREGIGA[lecture_name][angelika_speech_text_count] pos (0.02, 0.78) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
 screen lecture_screenbuttons():   
     vbox:
         xalign 0.655
@@ -113,7 +113,7 @@ screen lecture_screenbuttons():
 screen choose_inicial_girl_screen():
     add "bg/interiors/classic_dungeon.webp"pos(0.004,0.007111) anchor (0.0, 0.0) xsize 795 ysize 535
     text "Choose your slave" pos(0.315, 0.04) anchor (0.5, 0.5) size 36 color "#ffff00" font "fonts/victoriana.ttf"
-    text demo_girl_text[demo_girl_text_index] pos (0.02, 0.78) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
+    text DEMO_GIRL_TEXT[demo_girl_text_index] pos (0.02, 0.78) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
     add "demo/choose_slave_standard.webp" pos(0.004,0.007111) anchor (0.0, 0.0) xsize 795 ysize 535
     for girl in girl_selection_list_image:
         add girl pos(0.004,0.007111) anchor (0.0, 0.0) xsize 795 ysize 535
@@ -123,15 +123,15 @@ screen choose_inicial_girl_screen():
         ypos 35
         spacing 2
         text "{u}ATTRIBUTES{/u}" font "fonts/Segoe Print.ttf" color "000000" size 16
-        for key, values in dic_slave_attributes.items():
+        for key, values in DIC_SLAVE_ATTRIBUTES.items():
             if key != "physical":
                 textbutton values[all_girls_list[girl_index]["attributes"][key]]:
                     style "attribute_custom_slave" + str(all_girls_list[girl_index]["attributes"][key])
-                    action SetVariable("attribute_track_index",key),SetVariable("attribute_track_basic",key),SetVariable("dictionary_track_index",7),SetVariable("dictionary_name",dic_slave_attributes),SetVariable("attribute_checkbox",True),SetVariable("attributeisphysical",False),Jump("choose_inicial_girl")
+                    action SetVariable("attribute_track_index",key),SetVariable("attribute_track_basic",key),SetVariable("dictionary_track_index",7),SetVariable("dictionary_name",DIC_SLAVE_ATTRIBUTES),SetVariable("attribute_checkbox",True),SetVariable("attributeisphysical",False),Jump("choose_inicial_girl")
             else:
                 textbutton values[all_girls_list[girl_index]["attributes"][key]]:
                     style "attribute_custom_physical_special" + str(all_girls_list[girl_index]["attributes"][key])
-                    action SetVariable("attribute_track_index",key),SetVariable("attribute_track_basic",key),SetVariable("dictionary_track_index",7),SetVariable("dictionary_name",dic_slave_attributes),SetVariable("attribute_checkbox",True),SetVariable("attributeisphysical",True),Jump("choose_inicial_girl")                    
+                    action SetVariable("attribute_track_index",key),SetVariable("attribute_track_basic",key),SetVariable("dictionary_track_index",7),SetVariable("dictionary_name",DIC_SLAVE_ATTRIBUTES),SetVariable("attribute_checkbox",True),SetVariable("attributeisphysical",True),Jump("choose_inicial_girl")                    
  
 
 
@@ -139,7 +139,7 @@ screen choose_inicial_girl_screen():
         text "{u}TRAITS{/u}"font "fonts/Segoe Print.ttf" color "000000" size 16
 
 
-        for key, values in dic_traits_skills.items():
+        for key, values in DIC_TRAITS_SKILLS.items():
 
             $ skill_info = traits_skills[key]
             $ val = skill_info.get("value", 0)
@@ -161,10 +161,10 @@ screen choose_inicial_girl_screen():
 
                 textbutton label_text:
                     style style_used
-                    action SetVariable("attribute_track_index", key), SetVariable("dictionary_track_index", val), SetVariable("dictionary_name", dic_traits_skills_descriptions), SetVariable("customboxcheck", True), Jump("choose_inicial_girl")
+                    action SetVariable("attribute_track_index", key), SetVariable("dictionary_track_index", val), SetVariable("dictionary_name", DIC_TRAITS_SKILLS_DESCRIPTIONS), SetVariable("customboxcheck", True), Jump("choose_inicial_girl")
      
             ################ - i'm a genus -rec3ks
-        for key, values in dic_traits_sexual.items():
+        for key, values in DIC_TRAITS_SEXUAL.items():
            
             $ skill_info = traits_sexual[key]
             $ val = skill_info.get("value", 0)
@@ -187,8 +187,8 @@ screen choose_inicial_girl_screen():
 
                 textbutton label_text:
                     style style_used
-                    action SetVariable("attribute_track_index", key), SetVariable("dictionary_track_index", val), SetVariable("dictionary_name", dic_traits_sexual_descriptions), SetVariable("customboxcheck", True), Jump("choose_inicial_girl")
-        for key, values in dic_traits_miscellaneous.items():
+                    action SetVariable("attribute_track_index", key), SetVariable("dictionary_track_index", val), SetVariable("dictionary_name", DIC_TRAITS_SEXUAL_DESCRIPTIONS), SetVariable("customboxcheck", True), Jump("choose_inicial_girl")
+        for key, values in DIC_TRAITS_MISCELLANEOUS.items():
 
             $ skill_info = traits_miscellaneous[key]
             $ val = skill_info.get("value", 0)
@@ -210,8 +210,8 @@ screen choose_inicial_girl_screen():
 
                 textbutton label_text:
                     style style_used
-                    action SetVariable("attribute_track_index", key),SetVariable("dictionary_track_index", val),SetVariable("dictionary_name", dic_traits_miscellaneous_description),SetVariable("customboxcheck", True),Jump("choose_inicial_girl")
-        for key, values in dic_traits_aura.items():
+                    action SetVariable("attribute_track_index", key),SetVariable("dictionary_track_index", val),SetVariable("dictionary_name", DIC_TRAITS_MISCELLANEOUS_DESCRIPTION),SetVariable("customboxcheck", True),Jump("choose_inicial_girl")
+        for key, values in DIC_TRAITS_AURA.items():
 
             $ skill_info = traits_aura[key]
             $ val = skill_info.get("value", 0)
@@ -233,8 +233,8 @@ screen choose_inicial_girl_screen():
 
                 textbutton label_text:
                     style style_used
-                    action SetVariable("attribute_track_index", key),SetVariable("dictionary_track_index", val),SetVariable("dictionary_name", dic_traits_aura_description),SetVariable("customboxcheck", True),Jump("choose_inicial_girl")
-        for key, values in dic_traits_attributes.items():
+                    action SetVariable("attribute_track_index", key),SetVariable("dictionary_track_index", val),SetVariable("dictionary_name", DIC_TRAITS_AURA_DESCRIPTION),SetVariable("customboxcheck", True),Jump("choose_inicial_girl")
+        for key, values in DIC_TRAITS_ATTRIBUTES.items():
 
             $ skill_info = traits_attributes[key]
             $ val = skill_info.get("value", 0)
@@ -256,7 +256,7 @@ screen choose_inicial_girl_screen():
 
                 textbutton label_text:
                     style style_used
-                    action SetVariable("attribute_track_index", key),SetVariable("dictionary_track_index", val),SetVariable("dictionary_name", dic_traits_attributes_description),SetVariable("customboxcheck", True),Jump("choose_inicial_girl")
+                    action SetVariable("attribute_track_index", key),SetVariable("dictionary_track_index", val),SetVariable("dictionary_name", DIC_TRAITS_ATTRIBUTES_DESCRIPTION),SetVariable("customboxcheck", True),Jump("choose_inicial_girl")
 
 
     vbox:
@@ -270,7 +270,7 @@ screen choose_inicial_girl_screen():
             idle "buttons/auk_fwrd.webp" anchor (0.5, 0.5)
             hover "buttons/auk_fwrd_hover.webp"
             action SetVariable("is_tutorial",True),Jump("iniciation_label")
-    for girl_path, xpos in inicial_girls:
+    for girl_path, xpos in INICIAL_GIRLS:
         button:
             xpos xpos
             ypos 0
@@ -301,13 +301,13 @@ screen tutorial_description():
     vbox:
         pos (0.5, 0.3)
   
-        text dic_slave_attributes_keys[attribute_track_basic]:
+        text DIC_SLAVE_ATTRIBUTES_KEYS[attribute_track_basic]:
             color "#191970" 
             anchor (0.5,0.5)
             size 20
             font "fonts/Segoe Print.ttf"
         for values in range(6):  # 0 to 5 inclusive
-            textbutton dic_slave_attributes[attribute_track_basic][values] anchor (0.5,0.5):
+            textbutton DIC_SLAVE_ATTRIBUTES[attribute_track_basic][values] anchor (0.5,0.5):
                 style "attribute_check_slave" + str(values)
                 action Jump(infobox_jump)
 
@@ -327,13 +327,13 @@ screen tutorial_descriptionphysical():
     vbox:
         pos (0.5, 0.3)
   
-        text dic_slave_attributes_keys[attribute_track_basic]:
+        text DIC_SLAVE_ATTRIBUTES_KEYS[attribute_track_basic]:
             color "#191970" 
             anchor (0.5,0.5)
             size 20
             font "fonts/Segoe Print.ttf"
         for values in range(6):  # 0 to 5 inclusive
-            textbutton dic_slave_attributes[attribute_track_basic][values] anchor (0.5,0.5):
+            textbutton DIC_SLAVE_ATTRIBUTES[attribute_track_basic][values] anchor (0.5,0.5):
                 style "attribute_custom_physical" + str(values)
                 action Jump(infobox_jump)
 

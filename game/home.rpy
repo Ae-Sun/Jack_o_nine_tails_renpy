@@ -14,10 +14,9 @@ default testvariable10 = 0
 
 
 ####
-default flag = True # variable ensure not duplication
 default selected_json_data = None  # This will hold the content of the selected JSON
 default all_hygiene_multidic = {} #  not important variable need to make screen logic 
-default home_condition = dic_home_condition[5] #  not important variable need to make screen logic 
+default home_condition = DIC_HOME_CONDITION[5] #  not important variable need to make screen logic 
 default home_hygiene_value = 5 # this variable is used to track the hygiene value of the home
 default home_mess_value = 0 # this variable is used to track the hygiene value rate of the home
 default farm_food = {
@@ -140,6 +139,7 @@ default master_auto = {
     "cook": False,
     "clean": False
 }
+default stored_yesterday_energy = 0
 default interaction_textdisplay_screen_text = ""
 default yesterday_exhaustion = 0
 default did_bath_yesterday = False
@@ -417,9 +417,9 @@ label iniciation_label:
         jump equipment_check
     else:
         if is_normal_start == True:
-            $ mc_image = dic_custom_character_selection[mc][0]
-            $ mc_image2 = dic_custom_character_selection[mc][1]
-            $ mc = dic_mc_inicial_stats[mc][0]
+            $ mc_image = DIC_CUSTOM_CHARACTER_SELECTION[mc][0]
+            $ mc_image2 = DIC_CUSTOM_CHARACTER_SELECTION[mc][1]
+            $ mc = DIC_MC_INICIAL_STATS[mc][0]
             if faction_36 == "Camira Great House":
                 $ master_house_reputation["camira_house"] = 1
             if faction_36 == "Serpis Great House":
@@ -430,8 +430,8 @@ label iniciation_label:
                 $ master_house_reputation["corvus_house"] = 1
             $ master_house_reputation["home_estate"] = "poor_house"
         else:
-            $ mc_image = dic_custom_character_selection[dic_charactersOnlyName[characterOnlyNameIndex]][0]
-            $ mc_image2 = dic_custom_character_selection[dic_charactersOnlyName[characterOnlyNameIndex]][1]
+            $ mc_image = DIC_CUSTOM_CHARACTER_SELECTION[DIC_CHARACTERSONLYNAME[characterOnlyNameIndex]][0]
+            $ mc_image2 = DIC_CUSTOM_CHARACTER_SELECTION[DIC_CHARACTERSONLYNAME[characterOnlyNameIndex]][1]
             if reputation_value_1 == 0:
                 $ master_house_reputation["home_estate"] = "poor_house"
             elif reputation_value_1 == 1:
@@ -449,61 +449,57 @@ label next_day_labellabel:
     if home_estate["kitchen"]["storage_ingredients"] > home_estate["kitchen"]["storage_capacity"]:
         $ cryo_ingredients_loss_calculation()
     python:
-        if flag:
-            flag = False
-            is_auspex_active = False
-            is_slave_nearly_fainted = False
-            domini_dictum_active = False
-            slave_nearly_fainted = False
-            already_prepared = False
-            already_ate = False
+        is_auspex_active = False
+        is_slave_nearly_fainted = False
+        domini_dictum_active = False
+        slave_nearly_fainted = False
+        already_prepared = False
+        already_ate = False
+        day_tracker += 1
+        after_sex_effects -= 1
+        pos_show_counter -= 1
 
-            energy_value += strength_value_1 *2 + 2 - yesterday_exhaustion
-            energy_value = min(10, energy_value)
-            yesterday_exhaustion = 0
-            day_tracker += 1
-            after_sex_effects -= 1
-            pos_show_counter -= 1
+        master_libido_update()
+        master_moodlet_update()
+        all_rise_excitement_update()
+        master_new_day_energy_update()
+        if debt_tracker > 0:
+            debt_tracker -= 1
+            if debt_tracker == 0 and debt > 0:
+                msg("As in any other city, in the Eternal Rome it is reckless to forget to repay money you have borrowed. You died a disgraceful death at the hand of the moneylender's henchmen…")
+                gameover = True
+        girls_count = 0
+        save_girl_index = girl_index
+        girls_keys = list(all_girls_list.keys())
+        for i in range(len(girls_keys)):
+            idx = (save_girl_index + i) % len(girls_keys)
+            girl_index = girls_keys[idx]
+            if all_girls_list[girl_index]["conscience"]:
 
-            master_libido_update()
-            master_moodlet_update()
-            all_rise_excitement_update()
-            if debt_tracker > 0:
-                debt_tracker -= 1
-                if debt_tracker == 0 and debt > 0:
-                    msg("As in any other city, in the Eternal Rome it is reckless to forget to repay money you have borrowed. You died a disgraceful death at the hand of the moneylender's henchmen…")
-                    gameover = True
-            girls_count = 0
-            save_girl_index = girl_index
-            girls_keys = list(all_girls_list.keys())
-            for i in range(len(girls_keys)):
-                idx = (save_girl_index + i) % len(girls_keys)
-                girl_index = girls_keys[idx]
-                if all_girls_list[girl_index]["conscience"]:
+                girls_count += 1
+                slave_dead_for_low_endurance_update()
+                slave_attack_escape_update()                
+                rules_reset_update() # must go before rules
+                # Rules
+                for rules in auto_list:
+                    rules()
+                moodlet_new_day_slave_update()
+                assistant_passive_stats_update()
+                style_daring_energised_drop_update()
+                slave_healing_and_dependence_update()
+                slave_menstruation_pregnant_update()
+                slave_daily_bonus_update()
+                girl_already_done_update()
+                #TODO if not all_girls_list[girl_index]["assistant"]: # WIP assistent cooking code skipped
+                #TODO NEXT THING TO DO 
 
-                    girls_count += 1
-                    slave_dead_for_low_endurance_update()
-                    slave_attack_escape_update()                
-                    rules_reset_update() # must go before rules
-                    # Rules
-                    for rules in auto_list:
-                        rules()
-                    energy_and_sleep_update() 
-                    moodlet_new_day_slave_update()
-                    assistant_passive_stats_update()
-                    style_daring_energised_drop_update()
-                    slave_healing_and_dependence_update()
-                    slave_menstruation_pregnant_update()
-                    slave_daily_bonus_update()
-                    girl_already_done_update()
-                    #TODO if not all_girls_list[girl_index]["assistant"]: # WIP assistent cooking code skipped
-                    #TODO NEXT THING TO DO 
-
-                    well_rest_bonus_update()
-                    brand_effect_activation()
-                    diet_update()
-                    spoiling_update()
-                minor_update() # half disable because there's a bug that i dont know how to fix TODO - the hygiene rate is increase when going rollback 
+                well_rest_bonus_update()
+                brand_effect_activation()
+                diet_update()
+                sleeping_effects_update()
+                new_day_energy_update()
+                spoiling_update()
+            minor_update() # half disable because there's a bug that i dont know how to fix TODO - the hygiene rate is increase when going rollback 
 
         # save master pass mood
         master_past_mood = mood_value_10
@@ -520,8 +516,8 @@ label next_day_labellabel:
 
         # Dirt and Hygiene from sleep, time, and normal house use - master and slave - crushboss/rec3ks
         
-        home_mess_value += dic_hygiene_value_rate["idle"] * len(all_girls_list)
-        hygiene_experience_value_9 += dic_hygiene_value_rate["idle"]
+        home_mess_value += DIC_HYGIENE_VALUE_RATE["idle"] * len(all_girls_list)
+        hygiene_experience_value_9 += DIC_HYGIENE_VALUE_RATE["idle"]
 
 
     jump Next_day_event
@@ -534,7 +530,7 @@ label Next_day_event:
             idx = (save_girl_index + i) % (len(girls_keys))
             girl_index = girls_keys[idx]
             girl = all_girls_list[girl_index]
-            for a, b in dic_auto_tasks.items():
+            for a, b in DIC_AUTO_TASKS.items():
                 if girl[a]:
                     # Handle optional extras like target_skill or display_meat
                     if "extra" in b:
@@ -553,7 +549,7 @@ label Next_day_event:
                         pic_displayed = girl["fullimage"] + ".webp"
                         room_name = "Hall"
                         next_day_event_screen_text = ""
-                        next_day_event_screen_text += "{u}Rules broken:{/u} " + dic_slave_rules_capital[rules_broken] + "\n"
+                        next_day_event_screen_text += "{u}Rules broken:{/u} " + DIC_SLAVE_RULES_CAPITAL[rules_broken] + "\n"
                         next_day_event_screen_text += girl["rules_explain"][rules_broken]
                         girl["rules_broken_log"] += next_day_event_screen_text + "\n"
                         girl["rules_broken"][rules_broken] = False
@@ -576,13 +572,13 @@ label Next_day_event:
 
         if master_auto["clean"]:
             pic_displayed = "scene/master_clean.webp"
-            next_day_event_screen_text = dic_master_clean[stewardship_value_13]
+            next_day_event_screen_text = DIC_MASTER_CLEAN[stewardship_value_13]
             room_name = "Hall"
             master_auto["clean"] = False
             renpy.call_screen("next_day_event_screen")
         if master_auto["cook"]:
             pic_displayed = "scene/master_cooking.webp"
-            next_day_event_screen_text = master_cook_description[food_meat_info["quality"]] 
+            next_day_event_screen_text = MASTER_COOK_DESCRIPTION[food_meat_info["quality"]] 
             room_name = "Kitchen"
             master_auto["cook"] = False
             display_meat = True
@@ -646,7 +642,7 @@ screen next_day_event_screen():
     else:
         #TODO need imprement cooking snd 
         text "Tonight's dinner:" pos (0.03, 0.77) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
-        text food_meat_info["name"] + " " +  "[[" + dic_slave_tier_classification_colored[food_meat_info["quality"]] + "]" pos (0.30, 0.80) anchor (0.5, 0) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
+        text food_meat_info["name"] + " " +  "[[" + DIC_SLAVE_TIER_CLASSIFICATION_COLORED[food_meat_info["quality"]] + "]" pos (0.30, 0.80) anchor (0.5, 0) size 20 font "consolas.ttf" xmaximum 750 color "#000000"
 screen information_for_consideration_screen():
     vbox:
         pos(0.82,0.05)
@@ -671,7 +667,6 @@ label Home:
     hide screen information_for_consideration_screen
 
     python:
-        flag = True 
         infobox_jump = "Home"
         all_hygiene_calculation()
         cryo_amount_calculation() 
@@ -766,7 +761,7 @@ label equipment_check:
                         if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["revealed"]:
                             attribute_track_index = "exhibitionism"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"] 
-                            dictionary_name = dic_traits_miscellaneous_description
+                            dictionary_name = DIC_TRAITS_MISCELLANEOUS_DESCRIPTION
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["revealed"] = True
 
@@ -844,7 +839,7 @@ label equipment_check:
                 case "Wedding Dress":
                     girl["learning_bonus"]["sex"] += girl["aura"]["devotion"]
                     girl["style_plus"] += 3
-                    if girl["attributes"]["pride"] >=3 and dic_girl_psy_status[girl["psy_status"]] <= 0:
+                    if girl["attributes"]["pride"] >=3 and DIC_GIRL_PSY_STATUS[girl["psy_status"]] <= 0:
                         girl["mood_state"]["good_mood"]["clothes"]["active"] = True
                     if min(girl["aura"]["devotion"],girl["mood"],allure_value_3) >=3: 
                         girl["daily_bonus"]["devotion"] += 1
@@ -856,7 +851,7 @@ label equipment_check:
                         girl["daily_bonus"]["pride"] += 1
                     girl["style_plus"] -= 2
                     if girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["cowtrait"]["value"] < 0 and girl["skills"]["cow"] < 3 and girl["skills"]["pet"] < 3:
-                        if girl["conscience"] and dic_girl_psy_status[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
+                        if girl["conscience"] and DIC_GIRL_PSY_STATUS[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
                             slave_rebellion_fight = True
                     if girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["cowtrait"]["value"] != 0:
                         girl["worn_mood"] += girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["cowtrait"]["value"] * 3
@@ -885,14 +880,14 @@ label equipment_check:
                     girl["style_plus"] -= 2
                     girl["exotic_plus"] += 1
                     if girl["attributes"]["pride"] < 4 and girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] <= 0 and girl["skills"]["pet"] < 3 and girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] <= 0:
-                        if girl["conscience"] and dic_girl_psy_status[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
+                        if girl["conscience"] and DIC_GIRL_PSY_STATUS[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
                             slave_rebellion_fight = True
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] != 0:
                         girl["worn_mood"] += girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] * 3
                         if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["revealed"]:
                             attribute_track_index = "deprivation_attitude"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] 
-                            dictionary_name = dic_traits_miscellaneous_description
+                            dictionary_name = DIC_TRAITS_MISCELLANEOUS_DESCRIPTION
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["revealed"] = True
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] <= 0:
@@ -920,14 +915,14 @@ label equipment_check:
                     girl["learning_bonus"]["pony"] -= 10
                     girl["learning_bonus"]["cow"] -= 10
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] <= 0:
-                        if girl["conscience"] and dic_girl_psy_status[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
+                        if girl["conscience"] and DIC_GIRL_PSY_STATUS[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
                             slave_rebellion_fight = True
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] != 0:
                         girl["worn_mood"] += girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] * 5
                         if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["revealed"]:
                             attribute_track_index = "deprivation_attitude"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] 
-                            dictionary_name = dic_traits_miscellaneous_description
+                            dictionary_name = DIC_TRAITS_MISCELLANEOUS_DESCRIPTION
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["revealed"] = True
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] <= 0:
@@ -971,14 +966,14 @@ label equipment_check:
                     girl["learning_bonus"]["pony"] += 4
                     girl["style_plus"] -= 2
                     if girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] <= 0:
-                        if girl["conscience"] and dic_girl_psy_status[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
+                        if girl["conscience"] and DIC_GIRL_PSY_STATUS[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
                             slave_rebellion_fight = True
                     if girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] != 0:
                         girl["worn_mood"] += girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] *3
                         if not girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["revealed"]:
                             attribute_track_index = "ponytrait"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] 
-                            dictionary_name = dic_traits_skills_descriptions
+                            dictionary_name = DIC_TRAITS_SKILLS_DESCRIPTIONS
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["revealed"] = True
                     elif girl["races_won"] < 4 or girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] <= 0:
@@ -989,7 +984,7 @@ label equipment_check:
                         if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["revealed"]:
                             attribute_track_index = "deprivation_attitude"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] 
-                            dictionary_name = dic_traits_miscellaneous_description
+                            dictionary_name = DIC_TRAITS_MISCELLANEOUS_DESCRIPTION
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["revealed"] = True
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"] != 0:
@@ -997,7 +992,7 @@ label equipment_check:
                         if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["revealed"]:
                             attribute_track_index = "exhibitionism"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"] 
-                            dictionary_name = dic_traits_miscellaneous_description
+                            dictionary_name = DIC_TRAITS_MISCELLANEOUS_DESCRIPTION
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["revealed"] = True
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"] <= 0:
@@ -1010,13 +1005,13 @@ label equipment_check:
                     girl["style_plus"] -= 1
                     
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] < 0:
-                        if girl["conscience"] and dic_girl_psy_status[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
+                        if girl["conscience"] and DIC_GIRL_PSY_STATUS[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
                             slave_rebellion_fight = True
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] != 0:
                         if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["revealed"]:
                             attribute_track_index = "deprivation_attitude"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] 
-                            dictionary_name = dic_traits_miscellaneous_description
+                            dictionary_name = DIC_TRAITS_MISCELLANEOUS_DESCRIPTION
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["revealed"] = True         
             match girl["equipment"]["feet"]:
@@ -1028,13 +1023,13 @@ label equipment_check:
                     girl["style_plus"] -= 1
                     
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] < 0:
-                        if girl["conscience"] and dic_girl_psy_status[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
+                        if girl["conscience"] and DIC_GIRL_PSY_STATUS[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
                             slave_rebellion_fight = True
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] != 0:
                         if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["revealed"]:
                             attribute_track_index = "deprivation_attitude"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["value"] 
-                            dictionary_name = dic_traits_miscellaneous_description
+                            dictionary_name = DIC_TRAITS_MISCELLANEOUS_DESCRIPTION
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["deprivation_attitude"]["revealed"] = True         
                 case "Soft Slippers":
@@ -1075,7 +1070,7 @@ label equipment_check:
                         if not girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["revealed"]:
                             attribute_track_index = "ponytrait"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] 
-                            dictionary_name = dic_traits_skills_descriptions
+                            dictionary_name = DIC_TRAITS_SKILLS_DESCRIPTIONS
                             customboxcheck = True
                     if girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] <= 0 and girl["races_won"] < 4:
                         girl["mood_state"]["bad_mood"]["clothes"]["active"] = True
@@ -1115,11 +1110,11 @@ label equipment_check:
                         if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["masochism"]["revealed"]:
                             attribute_track_index = "masochism"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["masochism"]["value"] 
-                            dictionary_name = dic_traits_miscellaneous_description
+                            dictionary_name = DIC_TRAITS_MISCELLANEOUS_DESCRIPTION
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["masochism"]["revealed"] = True
                     if girl["attributes"]["pride"] <= 4 or girl["arousal"] == 0 and girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["masochism"]["value"] <= 0:
-                        if girl["conscience"] and dic_girl_psy_status[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
+                        if girl["conscience"] and DIC_GIRL_PSY_STATUS[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
                             slave_rebellion_fight = True
                     if girl["arousal"] == 0 and girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["masochism"]["value"] < 0:
                         girl["mood_state"]["bad_mood"]["clothes"]["active"] = True
@@ -1194,13 +1189,13 @@ label equipment_check:
                     girl["daily_bonus"]["taming"] += 2
                     girl["style_plus"] -= 2
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["masochism"]["value"] <= 0:
-                        if girl["conscience"] and dic_girl_psy_status[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
+                        if girl["conscience"] and DIC_GIRL_PSY_STATUS[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
                             slave_rebellion_fight = True
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["masochism"]["value"] != 0:
                         if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["masochism"]["revealed"]:
                             attribute_track_index = "masochism"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["masochism"]["value"] 
-                            dictionary_name = dic_traits_miscellaneous_description
+                            dictionary_name = DIC_TRAITS_MISCELLANEOUS_DESCRIPTION
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["masochism"]["revealed"] = True
                     if girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["masochism"]["value"] != 2:
@@ -1212,7 +1207,7 @@ label equipment_check:
                         if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["passion_luxury"]["revealed"]:
                             attribute_track_index = "passion_luxury"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["passion_luxury"]["value"] 
-                            dictionary_name = dic_traits_miscellaneous_description
+                            dictionary_name = DIC_TRAITS_MISCELLANEOUS_DESCRIPTION
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["passion_luxury"]["revealed"] = True
                 case "Hairnet":
@@ -1237,7 +1232,7 @@ label equipment_check:
                         if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["passion_luxury"]["revealed"]:
                             attribute_track_index = "passion_luxury"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["passion_luxury"]["value"] 
-                            dictionary_name = dic_traits_miscellaneous_description
+                            dictionary_name = DIC_TRAITS_MISCELLANEOUS_DESCRIPTION
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["passion_luxury"]["revealed"] = True
                 case "Exotic Wig":
@@ -1251,14 +1246,14 @@ label equipment_check:
                     if girl["attributes"]["pride"] < 4:
                         girl["daily_bonus"]["pride"] += 1
                     if girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] <= 0:
-                        if girl["conscience"] and dic_girl_psy_status[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
+                        if girl["conscience"] and DIC_GIRL_PSY_STATUS[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
                             slave_rebellion_fight = True
                     if girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] != 0:
                         girl["worn_mood"] += girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] *3
                         if not girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["revealed"]:
                             attribute_track_index = "ponytrait"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] 
-                            dictionary_name = dic_traits_skills_descriptions
+                            dictionary_name = DIC_TRAITS_SKILLS_DESCRIPTIONS
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["revealed"] = True
                     if girl["races_won"] < 4 and girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] <= 0:
@@ -1273,7 +1268,7 @@ label equipment_check:
                     girl["learning_bonus"]["pet"] += 2
                     girl["style_plus"] -= 1
                     if girl["skills"]["pet"] < 3 and girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] < 0:
-                        if girl["conscience"] and dic_girl_psy_status[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
+                        if girl["conscience"] and DIC_GIRL_PSY_STATUS[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
                             slave_rebellion_fight = True
                     if girl["skills"]["pet"] > 2 and girl["attributes"]["pride"] > 2 or girl["aura"]["devotion"] > 1:
                         if girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] > 0:
@@ -1282,7 +1277,7 @@ label equipment_check:
                     girl["daily_bonus"]["taming"] += 1
                     girl["learning_bonus"]["pet"] += 1
                     girl["style_plus"] -= 1
-                    if girl["conscience"] and dic_girl_psy_status[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
+                    if girl["conscience"] and DIC_GIRL_PSY_STATUS[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
                         slave_rebellion_fight = True
                 case "Steel Collar":
                     girl["mood_state"]["bad_mood"]["clothes"]["active"] = True
@@ -1290,7 +1285,7 @@ label equipment_check:
                     girl["style_plus"] -= 2
                     if girl["attributes"]["pride"] < 2:
                         girl["daily_bonus"]["pride"] += 1
-                    if girl["conscience"] and dic_girl_psy_status[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
+                    if girl["conscience"] and DIC_GIRL_PSY_STATUS[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
                         slave_rebellion_fight = True
                 case "Spiked Collar":
                     girl["daily_bonus"]["taming"] += 1
@@ -1298,7 +1293,7 @@ label equipment_check:
                     girl["learning_bonus"]["gladiatrix"] += 1
                     girl["style_plus"] -= 1
                     if girl["skills"]["gladiatrix"] < 3 and girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["gladiatrixtrait"]["value"] < 0:
-                        if girl["conscience"] and dic_girl_psy_status[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
+                        if girl["conscience"] and DIC_GIRL_PSY_STATUS[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
                             slave_rebellion_fight = True
                     if girl["skills"]["gladiatrix"] > 2 and girl["attributes"]["pride"] <3 and girl["attributes"]["temperament"] > 2:
                         girl["worn_mood"] += 5
@@ -1320,7 +1315,7 @@ label equipment_check:
                         if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["passion_luxury"]["revealed"]:
                             attribute_track_index = "passion_luxury"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["passion_luxury"]["value"] 
-                            dictionary_name = dic_traits_miscellaneous_description
+                            dictionary_name = DIC_TRAITS_MISCELLANEOUS_DESCRIPTION
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["passion_luxury"]["revealed"] = True
             
@@ -1333,7 +1328,7 @@ label equipment_check:
                     if girl["attributes"]["pride"] < 4:   
                         girl["daily_bonus"]["pride"] += 1
                     if girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] <= 0 and girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] <= 0:
-                        if girl["conscience"] and dic_girl_psy_status[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
+                        if girl["conscience"] and DIC_GIRL_PSY_STATUS[girl["psy_status"]] > 0 and girl["obedience"] < 0 and not girl["beaten_ever"] and not girl["domini_dictum_ever"]:
                             slave_rebellion_fight = True
                     if girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] <= 0 and girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] <= 0 and girl["races_won"] <= 7 and girl["psy_status"] != "horny":
                         girl["mood_state"]["bad_mood"]["clothes"]["active"] = True
@@ -1342,14 +1337,14 @@ label equipment_check:
                         if not girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["revealed"]:
                             attribute_track_index = "ponytrait"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] 
-                            dictionary_name = dic_traits_skills_descriptions
+                            dictionary_name = DIC_TRAITS_SKILLS_DESCRIPTIONS
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["revealed"] = True
                     if girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] != 0:
                         if not girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["revealed"]:
                             attribute_track_index = "pettrait"
                             dictionary_track_index = girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] 
-                            dictionary_name = dic_traits_skills_descriptions
+                            dictionary_name = DIC_TRAITS_SKILLS_DESCRIPTIONS
                             customboxcheck = True
                             girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["revealed"] = True
                     if girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["ponytrait"]["value"] > 0 or girl["traits"]["traits_hidden"]["traits_skills(1/8)"]["pettrait"]["value"] > 0:
@@ -1372,7 +1367,7 @@ label equipment_check:
                     if not girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["revealed"]:
                         attribute_track_index = "exhibitionism"
                         dictionary_track_index = girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["value"] 
-                        dictionary_name = dic_traits_miscellaneous_description
+                        dictionary_name = DIC_TRAITS_MISCELLANEOUS_DESCRIPTION
                         customboxcheck = True
                         girl["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]["exhibitionism"]["revealed"] = True
                         # show exhibition text -rec3ks
@@ -1392,7 +1387,7 @@ screen spellbook_info():
     key "K_SPACE" action SetVariable("current_menu", 4),Jump("Home")
     add bgstyle2 xsize 1280 ysize 720
     add home_decoration_mini pos(0.004,0.007111) anchor (0.0, 0.0) xsize 795 ysize 535
-    text dic_spellbook_info[dic_spellbook_info_index] pos (0.02, 0.78) size 20 color "#000000" font "consolas.ttf" xmaximum 750 
+    text DIC_SPELLBOOK_INFO[dic_spellbook_info_index] pos (0.02, 0.78) size 20 color "#000000" font "consolas.ttf" xmaximum 750 
     vbox:
         yalign 0.3
         xalign 0.10
@@ -1547,7 +1542,7 @@ screen home_menu_auspex():
     add home_decoration_mini pos(0.004,0.007111) anchor (0.0, 0.0) xsize 795 ysize 535
     if magic_value_17 > 0:
         add "magic.webp"  pos(0.004,0.007111) anchor (0.0, 0.0) xsize 795 ysize 535
-        text spells_books_description["Auspex"]["cast"] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.02, 0.78) xmaximum 750
+        text SPELLS_BOOKS_DESCRIPTION["Auspex"]["cast"] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.02, 0.78) xmaximum 750
         vbox:
             xalign 0.655
             yalign 0.96
@@ -1560,7 +1555,7 @@ screen home_menu_auspex():
                 hover "buttons/auk_fwrd_hover.webp"
                 action SetVariable("current_menu", 103),Hide("home_menu_auspex"),SetVariable("is_auspex_active", True),Jump("Home")
     else:
-        text spells_books_description["Auspex"]["fail"] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.02, 0.78) xmaximum 750  
+        text SPELLS_BOOKS_DESCRIPTION["Auspex"]["fail"] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.02, 0.78) xmaximum 750  
         vbox:
             xalign 0.655
             yalign 0.96
@@ -1768,11 +1763,11 @@ screen slave_anatomy_menu():
         pos(0.21,0.42)
 
         if all_girls_list[girl_index]["age"]==0:
-            text dic_girl_boobs_text["young"][all_girls_list[girl_index]["boobs"]] size 16 color "#000000" font "fonts/Segoe Print.ttf"
+            text DIC_GIRL_BOOBS_TEXT["young"][all_girls_list[girl_index]["boobs"]] size 16 color "#000000" font "fonts/Segoe Print.ttf"
         elif all_girls_list[girl_index]["age"]==1:
-            text dic_girl_boobs_text["loli"][all_girls_list[girl_index]["boobs"]] size 16 color "#000000" font "fonts/Segoe Print.ttf"
+            text DIC_GIRL_BOOBS_TEXT["loli"][all_girls_list[girl_index]["boobs"]] size 16 color "#000000" font "fonts/Segoe Print.ttf"
         elif all_girls_list[girl_index]["age"]==2:
-            text dic_girl_boobs_text["mature"][all_girls_list[girl_index]["boobs"]] size 16 color "#000000" font "fonts/Segoe Print.ttf"
+            text DIC_GIRL_BOOBS_TEXT["mature"][all_girls_list[girl_index]["boobs"]] size 16 color "#000000" font "fonts/Segoe Print.ttf"
         if all_girls_list[girl_index]["lactation"]:
             text "Lactating" size 16 color "#000000" font "fonts/Segoe Print.ttf"
         else:
@@ -1781,29 +1776,29 @@ screen slave_anatomy_menu():
             text "Nipples pierced" size 16 color "#000000" font "fonts/Segoe Print.ttf"
         else:
             text "Nipples not pierced" size 16 color "#000000" font "fonts/Segoe Print.ttf"
-        text dic_girl_breast_modification[all_girls_list[girl_index]["breast_modification"]] size 16 color "#000000" font "fonts/Segoe Print.ttf"
-        text dic_girl_age_text[all_girls_list[girl_index]["age"]] size 16 color "#000000" font "fonts/Segoe Print.ttf"
+        text DIC_GIRL_BREAST_MODIFICATION[all_girls_list[girl_index]["breast_modification"]] size 16 color "#000000" font "fonts/Segoe Print.ttf"
+        text DIC_GIRL_AGE_TEXT[all_girls_list[girl_index]["age"]] size 16 color "#000000" font "fonts/Segoe Print.ttf"
     vbox:
         pos(0.64,0.42)
-        text dic_girl_vaginal_tightness[all_girls_list[girl_index]["vaginal_tightness"]] size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
-        text dic_girl_anal_tightness[all_girls_list[girl_index]["anal_tightness"]] size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
+        text DIC_GIRL_VAGINAL_TIGHTNESS[all_girls_list[girl_index]["vaginal_tightness"]] size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
+        text DIC_GIRL_ANAL_TIGHTNESS[all_girls_list[girl_index]["anal_tightness"]] size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
         if all_girls_list[girl_index]["equipment"]["clitoris"]["pierced"]:
             text "Clitoris pierced" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
         else:
             text "Clitoris not pierced" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
-        text dic_girl_vagina_modification[all_girls_list[girl_index]["vagina_modification"]] size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
-        text dic_girl_brand[all_girls_list[girl_index]["brand"]] size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
+        text DIC_GIRL_VAGINA_MODIFICATION[all_girls_list[girl_index]["vagina_modification"]] size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
+        text DIC_GIRL_BRAND[all_girls_list[girl_index]["brand"]] size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
     vbox:
         pos(0.215,0.62)
 
-        text "{color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["beauty"]] + "}Beauty{/color}{color=#0000D8} ={/color} {color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["natural_beauty"]] + "} Natural Beauty{/color}{color=#0000D8} +{/color} Neoplasty{color=#0000D8} - ({/color} No Scars{color=#0000D8} +{/color} Bruises{color=#0000D8} +{/color} Physique{color=#0000D8}){/color}" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf" 
-        text "{color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["style"]] + "}Style{/color} {color=#0000D8}={/color} Clothes{color=#0000D8} +{/color} {color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["natural_beauty"]] + "} Natural Beauty{/color}{color=#0000D8} +{/color} Tangled Hair{color=#0000D8} +{/color} Scent, Nails & Pelage{color=#0000D8} +{/color} {color=[natural_grace_color]}Natural Grace{/color}{color=#0000D8} -{/color}{color=#" + dic_color_level[all_girls_list[girl_index]["hygiene"]] + "} Hygiene{/color}" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf" 
-        text "{color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["exoticism"]] + "}Exoticism{/color} {color=#0000D8}={/color} {color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["natural_exoticism"]] + "}Natural Exoticism{/color}{color=#0000D8} +{/color} No Tattoos{color=#0000D8} +{/color} No Piercings{color=#0000D8} +{/color} Clothes" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf"
+        text "{color=#" + DIC_COLOR_LEVEL[all_girls_list[girl_index]["attributes"]["beauty"]] + "}Beauty{/color}{color=#0000D8} ={/color} {color=#" + DIC_COLOR_LEVEL[all_girls_list[girl_index]["attributes"]["natural_beauty"]] + "} Natural Beauty{/color}{color=#0000D8} +{/color} Neoplasty{color=#0000D8} - ({/color} No Scars{color=#0000D8} +{/color} Bruises{color=#0000D8} +{/color} Physique{color=#0000D8}){/color}" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf" 
+        text "{color=#" + DIC_COLOR_LEVEL[all_girls_list[girl_index]["attributes"]["style"]] + "}Style{/color} {color=#0000D8}={/color} Clothes{color=#0000D8} +{/color} {color=#" + DIC_COLOR_LEVEL[all_girls_list[girl_index]["attributes"]["natural_beauty"]] + "} Natural Beauty{/color}{color=#0000D8} +{/color} Tangled Hair{color=#0000D8} +{/color} Scent, Nails & Pelage{color=#0000D8} +{/color} {color=[natural_grace_color]}Natural Grace{/color}{color=#0000D8} -{/color}{color=#" + DIC_COLOR_LEVEL[all_girls_list[girl_index]["hygiene"]] + "} Hygiene{/color}" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf" 
+        text "{color=#" + DIC_COLOR_LEVEL[all_girls_list[girl_index]["attributes"]["exoticism"]] + "}Exoticism{/color} {color=#0000D8}={/color} {color=#" + DIC_COLOR_LEVEL[all_girls_list[girl_index]["attributes"]["natural_exoticism"]] + "}Natural Exoticism{/color}{color=#0000D8} +{/color} No Tattoos{color=#0000D8} +{/color} No Piercings{color=#0000D8} +{/color} Clothes" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf"
         add "spacer" size(0,2)
         if is_auspex_active:
             spacing(-2)
             text "Aura {color=#0000D8}={/color} No Devotion {color=#0000D8}-{/color} (No Despair {color=#0000D8}+{/color} Not Spoiled)" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf" 
-            text "Charm    {color=#0000D8}={/color} Unknown{color=#0000D8} +{/color} Unknown{color=#0000D8} +{/color}{color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["style"]] + "} Style{/color}{color=#0000D8} +{/color} {color=#" + dic_color_level[all_girls_list[girl_index]["attributes"]["exoticism"]] + "}Exoticism{/color}{color=#0000D8} +{/color} Aura{color=#0000D8} +{/color} Weight{color=#0000D8} -{/color} No Scars{color=#0000D8} -{/color} No Bruises" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf" 
+            text "Charm    {color=#0000D8}={/color} Unknown{color=#0000D8} +{/color} Unknown{color=#0000D8} +{/color}{color=#" + DIC_COLOR_LEVEL[all_girls_list[girl_index]["attributes"]["style"]] + "} Style{/color}{color=#0000D8} +{/color} {color=#" + DIC_COLOR_LEVEL[all_girls_list[girl_index]["attributes"]["exoticism"]] + "}Exoticism{/color}{color=#0000D8} +{/color} Aura{color=#0000D8} +{/color} Weight{color=#0000D8} -{/color} No Scars{color=#0000D8} -{/color} No Bruises" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf" 
         else:
             text "You must cast Auspex to view the aura and charm rating of your slave" xalign 0.5 size 14 color "#000000" font "fonts/Segoe Print.ttf" 
 screen slave_equipment_menu():
@@ -1812,11 +1807,11 @@ screen slave_equipment_menu():
     text equipment_choice_image_text size 15 color "#000000" font "fonts/Consolas.ttf" pos(0.40,0.82) xmaximum 500
     key "K_SPACE" action SetVariable("current_menu", 0),SetVariable("text_slave_conditions_index", "default"),Jump("Home")
     if available_options != 2:
-        key "K_1" action SetVariable("equipment_choice", dic_inventory_move_down[(dic_inventory_move_up[equipment_choice]+1) % 13]),Jump("Home")
-        key "K_2" action SetVariable("equipment_choice", dic_inventory_move_down[(dic_inventory_move_up[equipment_choice]-1) % 13]),Jump("Home")
+        key "K_1" action SetVariable("equipment_choice", DIC_INVENTORY_MOVE_DOWN[(DIC_INVENTORY_MOVE_UP[equipment_choice]+1) % 13]),Jump("Home")
+        key "K_2" action SetVariable("equipment_choice", DIC_INVENTORY_MOVE_DOWN[(DIC_INVENTORY_MOVE_UP[equipment_choice]-1) % 13]),Jump("Home")
     if available_options == 2:
-        key "K_1" action SetVariable("equipment_choice", dic_combat_move_down[(dic_combat_move_up[equipment_choice]+1) % 5]),Jump("Home")
-        key "K_2" action SetVariable("equipment_choice", dic_combat_move_down[(dic_combat_move_up[equipment_choice]-1) % 5]),Jump("Home")
+        key "K_1" action SetVariable("equipment_choice", DIC_COMBAT_MOVE_DOWN[(DIC_COMBAT_MOVE_UP[equipment_choice]+1) % 5]),Jump("Home")
+        key "K_2" action SetVariable("equipment_choice", DIC_COMBAT_MOVE_DOWN[(DIC_COMBAT_MOVE_UP[equipment_choice]-1) % 5]),Jump("Home")
     vbox:
         pos(0.24,0.068)
         text "{u}SLAVE EQUIPMENT{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf"
@@ -2031,19 +2026,19 @@ screen slave_equipment_menu():
             anchor(1.0,0.0)
             spacing -2
             text "" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
-            for values in range(0,len(inventory_type[equipment_choice])):
-                if all_girls_list[girl_index]["equipment"][equipment_choice] != dic_combat_full[inventory_type[equipment_choice][values]]:
+            for values in range(0,len(INVENTORY_TYPE[equipment_choice])):
+                if all_girls_list[girl_index]["equipment"][equipment_choice] != DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]]:
                     if equipment_choice == "armour":
                         if values == 0:
                             textbutton "- Remove -" xalign 1.0: 
                                 style "slave_equipment_menu_button2"
                                 action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice,"Without armour"),SetDict(inventory, inventory_track, inventory[inventory_track]+1),SetVariable("inventory_track", ""), Jump("Home")
-                        elif inventory[inventory_type[equipment_choice][values]] > 0:
-                            textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                        elif inventory[INVENTORY_TYPE[equipment_choice][values]] > 0:
+                            textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                 style "slave_equipment_menu_button2"
-                                action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, dic_combat_full[inventory_type[equipment_choice][values]]),SetDict(inventory, inventory_type[equipment_choice][values], inventory[inventory_type[equipment_choice][values]]-1),SetVariable("inventory_track", inventory_type[equipment_choice][values]),SetDict(inventory, inventory_track, inventory[inventory_track]+1), Jump("Home")
+                                action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]]),SetDict(inventory, INVENTORY_TYPE[equipment_choice][values], inventory[INVENTORY_TYPE[equipment_choice][values]]-1),SetVariable("inventory_track", INVENTORY_TYPE[equipment_choice][values]),SetDict(inventory, inventory_track, inventory[inventory_track]+1), Jump("Home")
                         else:
-                            textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                            textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                 style "slave_equipment_menu_button"
                                 action NullAction()
                     elif equipment_choice in ["amulet","ring"]:
@@ -2052,50 +2047,50 @@ screen slave_equipment_menu():
                                 textbutton "- Remove -" xalign 1.0: 
                                     style "slave_equipment_menu_button2"
                                     action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice,""),SetDict(inventory, inventory_track, inventory[inventory_track]+1),SetVariable("inventory_track", ""),Jump("Home")
-                        elif inventory[inventory_type[equipment_choice][values]] > 0:
-                            textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                        elif inventory[INVENTORY_TYPE[equipment_choice][values]] > 0:
+                            textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                 style "slave_equipment_menu_button2"
-                                action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, dic_combat_full[inventory_type[equipment_choice][values]]),SetDict(inventory, inventory_type[equipment_choice][values], inventory[inventory_type[equipment_choice][values]]-1),SetVariable("inventory_track", inventory_type[equipment_choice][values]),SetDict(inventory, inventory_track, inventory[inventory_track]+1), Jump("Home")
+                                action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]]),SetDict(inventory, INVENTORY_TYPE[equipment_choice][values], inventory[INVENTORY_TYPE[equipment_choice][values]]-1),SetVariable("inventory_track", INVENTORY_TYPE[equipment_choice][values]),SetDict(inventory, inventory_track, inventory[inventory_track]+1), Jump("Home")
                         else:
-                            textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                            textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                 style "slave_equipment_menu_button"
                                 action NullAction()
                     elif equipment_choice == "weapon":
                         python:
                             if all_girls_list[girl_index]["equipment"]["weapon"] != "Fist":
-                                inventory_track_weapon = dic_combat_full_inv[all_girls_list[girl_index]["equipment"]["weapon"]]
+                                inventory_track_weapon = DIC_COMBAT_FULL_INV[all_girls_list[girl_index]["equipment"]["weapon"]]
                             else:
                                 inventory_track_weapon = ""
-                        if all_girls_list[girl_index]["equipment"]["weapon2"] != dic_combat_full[inventory_type[equipment_choice][values]] or all_girls_list[girl_index]["equipment"]["weapon2"] == "Fist":
+                        if all_girls_list[girl_index]["equipment"]["weapon2"] != DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] or all_girls_list[girl_index]["equipment"]["weapon2"] == "Fist":
                                 if values == 0:
                                     textbutton "- Remove -" xalign 1.0: 
                                         style "slave_equipment_menu_button2"
                                         action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice,"Fist"),SetDict(inventory, inventory_track_weapon, inventory[inventory_track_weapon]+1),SetVariable("inventory_track_weapon", ""),Jump("Home")
-                                elif inventory[inventory_type[equipment_choice][values]] > 0:
-                                    textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                                elif inventory[INVENTORY_TYPE[equipment_choice][values]] > 0:
+                                    textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                         style "slave_equipment_menu_button2"
-                                        action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, dic_combat_full[inventory_type[equipment_choice][values]]),SetDict(inventory, inventory_type[equipment_choice][values], inventory[inventory_type[equipment_choice][values]]-1),SetVariable("inventory_track_weapon", inventory_type[equipment_choice][values]),SetDict(inventory, inventory_track_weapon, inventory[inventory_track_weapon]+1), Jump("Home")
+                                        action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]]),SetDict(inventory, INVENTORY_TYPE[equipment_choice][values], inventory[INVENTORY_TYPE[equipment_choice][values]]-1),SetVariable("inventory_track_weapon", INVENTORY_TYPE[equipment_choice][values]),SetDict(inventory, inventory_track_weapon, inventory[inventory_track_weapon]+1), Jump("Home")
                                 else:
-                                    textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                                    textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                         style "slave_equipment_menu_button"
                                         action NullAction()
                     elif equipment_choice == "weapon2":
                         python:
                             if all_girls_list[girl_index]["equipment"]["weapon2"] != "Fist":
-                                inventory_track_weapon2 = dic_combat_full_inv[all_girls_list[girl_index]["equipment"]["weapon2"]]
+                                inventory_track_weapon2 = DIC_COMBAT_FULL_INV[all_girls_list[girl_index]["equipment"]["weapon2"]]
                             else:
                                 inventory_track_weapon2 = ""
-                        if all_girls_list[girl_index]["equipment"]["weapon"] != dic_combat_full[inventory_type[equipment_choice][values]] or all_girls_list[girl_index]["equipment"]["weapon"] == "Fist":
+                        if all_girls_list[girl_index]["equipment"]["weapon"] != DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] or all_girls_list[girl_index]["equipment"]["weapon"] == "Fist":
                             if values == 0:
                                 textbutton "- Remove -" xalign 1.0: 
                                     style "slave_equipment_menu_button2"
                                     action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice,"Fist"),SetDict(inventory, inventory_track_weapon2, inventory[inventory_track_weapon2]+1),SetVariable("inventory_track_weapon2", ""),Jump("Home")
-                            elif inventory[inventory_type[equipment_choice][values]] > 0:
-                                textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                            elif inventory[INVENTORY_TYPE[equipment_choice][values]] > 0:
+                                textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                     style "slave_equipment_menu_button2"
-                                    action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, dic_combat_full[inventory_type[equipment_choice][values]]),SetDict(inventory, inventory_type[equipment_choice][values], inventory[inventory_type[equipment_choice][values]]-1),SetVariable("inventory_track_weapon2", inventory_type[equipment_choice][values]),SetDict(inventory, inventory_track_weapon2, inventory[inventory_track_weapon2]+1), Jump("Home")
+                                    action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]]),SetDict(inventory, INVENTORY_TYPE[equipment_choice][values], inventory[INVENTORY_TYPE[equipment_choice][values]]-1),SetVariable("inventory_track_weapon2", INVENTORY_TYPE[equipment_choice][values]),SetDict(inventory, inventory_track_weapon2, inventory[inventory_track_weapon2]+1), Jump("Home")
                             else:
-                                textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                                textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                         style "slave_equipment_menu_button"
                                         action NullAction()
 
@@ -2106,18 +2101,18 @@ screen slave_equipment_menu():
             spacing -2
             text "" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
             if available_options == 2:
-                for values in range(0,len(inventory_type[equipment_choice])):
-                    if all_girls_list[girl_index]["equipment"][equipment_choice] != dic_combat_full[inventory_type[equipment_choice][values]]:
-                        if (all_girls_list[girl_index]["equipment"]["weapon2"] != dic_combat_full[inventory_type[equipment_choice][values]] or all_girls_list[girl_index]["equipment"]["weapon2"] == "Fist") and (all_girls_list[girl_index]["equipment"]["weapon"] != dic_combat_full[inventory_type[equipment_choice][values]] or all_girls_list[girl_index]["equipment"]["weapon"] == "Fist"):
-                            if inventory[inventory_type[equipment_choice][values]] == "-":
+                for values in range(0,len(INVENTORY_TYPE[equipment_choice])):
+                    if all_girls_list[girl_index]["equipment"][equipment_choice] != DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]]:
+                        if (all_girls_list[girl_index]["equipment"]["weapon2"] != DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] or all_girls_list[girl_index]["equipment"]["weapon2"] == "Fist") and (all_girls_list[girl_index]["equipment"]["weapon"] != DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] or all_girls_list[girl_index]["equipment"]["weapon"] == "Fist"):
+                            if inventory[INVENTORY_TYPE[equipment_choice][values]] == "-":
                                 if all_girls_list[girl_index]["equipment"][equipment_choice] != "":
-                                    text str(inventory[inventory_type[equipment_choice][values]]) xalign 0.5:
+                                    text str(inventory[INVENTORY_TYPE[equipment_choice][values]]) xalign 0.5:
                                         style "slave_equipment_menu_button2_text"
-                            elif inventory[inventory_type[equipment_choice][values]] > 0:
-                                text str(inventory[inventory_type[equipment_choice][values]]) xalign 0.5:
+                            elif inventory[INVENTORY_TYPE[equipment_choice][values]] > 0:
+                                text str(inventory[INVENTORY_TYPE[equipment_choice][values]]) xalign 0.5:
                                     style "slave_equipment_menu_button2_text"
                             else:
-                                text str(inventory[inventory_type[equipment_choice][values]]) xalign 0.5:
+                                text str(inventory[INVENTORY_TYPE[equipment_choice][values]]) xalign 0.5:
                                     style "slave_equipment_menu_button_text"
     vbox:
         pos(0.62,0.068)
@@ -2134,62 +2129,62 @@ screen slave_equipment_menu():
             text "{color=#6B0084}{u}Mood bonus for clothes{/u}{/color}: " + str(all_girls_list[girl_index]["worn_mood"]) xalign 1.0 size 10 color "#000000" font "fonts/Segoe Print.ttf"
 
         elif available_options == 1:
-            for values in inventory_type[equipment_choice]:
-                if all_girls_list[girl_index]["equipment"][equipment_choice] != dic_girl_clothing_full[values]["name"]:
+            for values in INVENTORY_TYPE[equipment_choice]:
+                if all_girls_list[girl_index]["equipment"][equipment_choice] != DIC_GIRL_CLOTHING_FULL[values]["name"]:
                     if equipment_choice not in ["tongue","nipples","navel","clitoris","earrings"]:
-                        if dic_girl_clothing_full[values]["name"] == "Naked":
+                        if DIC_GIRL_CLOTHING_FULL[values]["name"] == "Naked":
                             textbutton "- Strip -" xalign 1.0:
                                 style "slave_equipment_menu_button2"
-                                action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, dic_girl_clothing_full[values]["name"]),SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
-                        elif dic_girl_clothing_full[values]["name"] == "":
+                                action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, DIC_GIRL_CLOTHING_FULL[values]["name"]),SetVariable("equipment_choice_image", DIC_GIRL_CLOTHING_FULL[values]["icon"]),SetVariable("equipment_choice_image_text", DIC_GIRL_CLOTHING_FULL[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
+                        elif DIC_GIRL_CLOTHING_FULL[values]["name"] == "":
                             textbutton "- Remove -" xalign 1.0:
                                 style "slave_equipment_menu_button2"
-                                action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice,""),SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
+                                action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice,""),SetVariable("equipment_choice_image", DIC_GIRL_CLOTHING_FULL[values]["icon"]),SetVariable("equipment_choice_image_text", DIC_GIRL_CLOTHING_FULL[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
                         elif all_girls_list[girl_index]["equipment"]["aura_bound"][values] == True:
                             hbox:
                                 xalign 1.0
-                                textbutton dic_girl_clothing_full[values]["name"] xalign 1.0:
+                                textbutton DIC_GIRL_CLOTHING_FULL[values]["name"] xalign 1.0:
                                     style "slave_equipment_menu_button3"
-                                    action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, dic_girl_clothing_full[values]["name"]),SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
-                                    hovered SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"])
+                                    action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, DIC_GIRL_CLOTHING_FULL[values]["name"]),SetVariable("equipment_choice_image", DIC_GIRL_CLOTHING_FULL[values]["icon"]),SetVariable("equipment_choice_image_text", DIC_GIRL_CLOTHING_FULL[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
+                                    hovered SetVariable("equipment_choice_image", DIC_GIRL_CLOTHING_FULL[values]["icon"]),SetVariable("equipment_choice_image_text", DIC_GIRL_CLOTHING_FULL[values]["desc"])
                                 add "aurabound.webp" size(15,15) xalign 1.0 yalign 0.5
                         elif inventory[values]:
-                            textbutton dic_girl_clothing_full[values]["name"] xalign 1.0:
+                            textbutton DIC_GIRL_CLOTHING_FULL[values]["name"] xalign 1.0:
                                 style "slave_equipment_menu_button2"
-                                action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, dic_girl_clothing_full[values]["name"]), SetDict(inventory, values, inventory[values] - 1), SetDict(all_girls_list[girl_index]["equipment"]["aura_bound"], values, True),SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
-                                hovered SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"])
+                                action SetDict(all_girls_list[girl_index]["equipment"], equipment_choice, DIC_GIRL_CLOTHING_FULL[values]["name"]), SetDict(inventory, values, inventory[values] - 1), SetDict(all_girls_list[girl_index]["equipment"]["aura_bound"], values, True),SetVariable("equipment_choice_image", DIC_GIRL_CLOTHING_FULL[values]["icon"]),SetVariable("equipment_choice_image_text", DIC_GIRL_CLOTHING_FULL[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
+                                hovered SetVariable("equipment_choice_image", DIC_GIRL_CLOTHING_FULL[values]["icon"]),SetVariable("equipment_choice_image_text", DIC_GIRL_CLOTHING_FULL[values]["desc"])
 
                         else:
-                            textbutton dic_girl_clothing_full[values]["name"] xalign 1.0:
+                            textbutton DIC_GIRL_CLOTHING_FULL[values]["name"] xalign 1.0:
                                 style "slave_equipment_menu_button"
                                 action NullAction()
-                                hovered SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"])
+                                hovered SetVariable("equipment_choice_image", DIC_GIRL_CLOTHING_FULL[values]["icon"]),SetVariable("equipment_choice_image_text", DIC_GIRL_CLOTHING_FULL[values]["desc"])
 
                     else:
                         if all_girls_list[girl_index]["equipment"][equipment_choice]["pierced"]:
-                            if all_girls_list[girl_index]["equipment"][equipment_choice]["type"] != dic_girl_clothing_full[values]["name"]:
+                            if all_girls_list[girl_index]["equipment"][equipment_choice]["type"] != DIC_GIRL_CLOTHING_FULL[values]["name"]:
                                 if all_girls_list[girl_index]["equipment"]["aura_bound"][values] == True:
                                     hbox:
                                         xalign 1.0
-                                        textbutton dic_girl_clothing_full[values]["name"] xalign 1.0:
+                                        textbutton DIC_GIRL_CLOTHING_FULL[values]["name"] xalign 1.0:
                                             style "slave_equipment_menu_button3"
-                                            action SetDict(all_girls_list[girl_index]["equipment"][equipment_choice], "type", dic_girl_clothing_full[values]["name"]),SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
-                                            hovered SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"])
+                                            action SetDict(all_girls_list[girl_index]["equipment"][equipment_choice], "type", DIC_GIRL_CLOTHING_FULL[values]["name"]),SetVariable("equipment_choice_image", DIC_GIRL_CLOTHING_FULL[values]["icon"]),SetVariable("equipment_choice_image_text", DIC_GIRL_CLOTHING_FULL[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
+                                            hovered SetVariable("equipment_choice_image", DIC_GIRL_CLOTHING_FULL[values]["icon"]),SetVariable("equipment_choice_image_text", DIC_GIRL_CLOTHING_FULL[values]["desc"])
                                         add "aurabound.webp" size(15,15) xalign 1.0 yalign 0.5
-                                elif dic_girl_clothing_full[values]["name"] == "":
+                                elif DIC_GIRL_CLOTHING_FULL[values]["name"] == "":
                                     textbutton "- Remove -" xalign 1.0:
                                         style "slave_equipment_menu_button2"
-                                        action SetDict(all_girls_list[girl_index]["equipment"][equipment_choice], "type", ""),SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
+                                        action SetDict(all_girls_list[girl_index]["equipment"][equipment_choice], "type", ""),SetVariable("equipment_choice_image", DIC_GIRL_CLOTHING_FULL[values]["icon"]),SetVariable("equipment_choice_image_text", DIC_GIRL_CLOTHING_FULL[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
                                 elif inventory[values] > 0:
-                                    textbutton dic_girl_clothing_full[values]["name"] xalign 1.0:
+                                    textbutton DIC_GIRL_CLOTHING_FULL[values]["name"] xalign 1.0:
                                         style "slave_equipment_menu_button2"
-                                        action SetDict(all_girls_list[girl_index]["equipment"][equipment_choice], "type", dic_girl_clothing_full[values]["name"]), SetDict(inventory, values, inventory[values] - 1), SetDict(all_girls_list[girl_index]["equipment"]["aura_bound"], values, True),SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
-                                        hovered SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"])
+                                        action SetDict(all_girls_list[girl_index]["equipment"][equipment_choice], "type", DIC_GIRL_CLOTHING_FULL[values]["name"]), SetDict(inventory, values, inventory[values] - 1), SetDict(all_girls_list[girl_index]["equipment"]["aura_bound"], values, True),SetVariable("equipment_choice_image", DIC_GIRL_CLOTHING_FULL[values]["icon"]),SetVariable("equipment_choice_image_text", DIC_GIRL_CLOTHING_FULL[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
+                                        hovered SetVariable("equipment_choice_image", DIC_GIRL_CLOTHING_FULL[values]["icon"]),SetVariable("equipment_choice_image_text", DIC_GIRL_CLOTHING_FULL[values]["desc"])
                                 else:
-                                    textbutton dic_girl_clothing_full[values]["name"] xalign 1.0:
+                                    textbutton DIC_GIRL_CLOTHING_FULL[values]["name"] xalign 1.0:
                                         style "slave_equipment_menu_button"
-                                        action SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]), SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"])
-                                        hovered SetVariable("equipment_choice_image", dic_girl_clothing_full[values]["icon"]),SetVariable("equipment_choice_image_text", dic_girl_clothing_full[values]["desc"])
+                                        action SetVariable("equipment_choice_image", DIC_GIRL_CLOTHING_FULL[values]["icon"]), SetVariable("equipment_choice_image_text", DIC_GIRL_CLOTHING_FULL[values]["desc"])
+                                        hovered SetVariable("equipment_choice_image", DIC_GIRL_CLOTHING_FULL[values]["icon"]),SetVariable("equipment_choice_image_text", DIC_GIRL_CLOTHING_FULL[values]["desc"])
             if equipment_choice in ["tongue","nipples","navel","clitoris","earrings"]:          
                 if all_girls_list[girl_index]["equipment"][equipment_choice]["pierced"] == False:
                     textbutton equipment_choice + " (Not pierced)" xalign 1.0:
@@ -2200,8 +2195,8 @@ screen slave_equipment_menu():
         spacing -2
         text "" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
         if available_options == 1:
-            for values in inventory_type[equipment_choice]:
-                if all_girls_list[girl_index]["equipment"][equipment_choice] != dic_girl_clothing_full[values]["name"]:
+            for values in INVENTORY_TYPE[equipment_choice]:
+                if all_girls_list[girl_index]["equipment"][equipment_choice] != DIC_GIRL_CLOTHING_FULL[values]["name"]:
                     if equipment_choice not in ["tongue","nipples","navel","clitoris","earrings"]:
                         if inventory[values] == "-":
                             text str(inventory[values]) xalign 0.5:
@@ -2214,8 +2209,8 @@ screen slave_equipment_menu():
                                 style "slave_equipment_menu_button_text"
                     else:
                         if all_girls_list[girl_index]["equipment"][equipment_choice]["pierced"]:
-                            if all_girls_list[girl_index]["equipment"][equipment_choice]["type"] != dic_girl_clothing_full[values]["name"]:
-                                if dic_girl_clothing_full[values]["name"] == "":
+                            if all_girls_list[girl_index]["equipment"][equipment_choice]["type"] != DIC_GIRL_CLOTHING_FULL[values]["name"]:
+                                if DIC_GIRL_CLOTHING_FULL[values]["name"] == "":
                                     text "-" xalign 0.5:
                                         style "slave_equipment_menu_button2_text"
                                 elif inventory[values] > 0:
@@ -2228,62 +2223,62 @@ screen slave_aura_menu():
     add "page_aura.webp" xsize 795 ysize 535 pos(0.5028,0.42) anchor (0.5,0.5)
     key "K_SPACE" action SetVariable("current_menu", 0),SetVariable("text_slave_conditions_index", "default"),Jump("Home")
     if not is_auspex_active:
-        text dic_slave_aura_conditions["nocast"] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.21,0.82) xmaximum 750  
+        text DIC_SLAVE_AURA_CONDITIONS["nocast"] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.21,0.82) xmaximum 750  
         textbutton "Cast auspex ( 2 sparks)" pos(0.40,0.92):
             style "slave_aura_button"
             action Show("home_menu_auspex") ,Show("information_for_consideration_screen"), SetVariable("sparks_37",sparks_37 -2), SetVariable("room_name", "Hall")
     else:
-        text dic_slave_aura_conditions["casted"] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.21,0.82) xmaximum 750  
+        text DIC_SLAVE_AURA_CONDITIONS["casted"] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.21,0.82) xmaximum 750  
     if is_auspex_active:
         vbox: 
             pos (0.22,0.08)
             spacing(20)
             if aura_is_hover and "obedience" == aura_check_hover:
                 if all_girls_list[girl_index]["obedience"] >= 0 and all_girls_list[girl_index]["obedience"] < 10:
-                    textbutton aura_descriptions_no_color["obedience"][all_girls_list[girl_index]["obedience"]] xmaximum 750:
+                    textbutton AURA_DESCRIPTIONS_NO_COLOR["obedience"][all_girls_list[girl_index]["obedience"]] xmaximum 750:
                         style "aura_description_button"
                         action NullAction()
                         hovered SetVariable("aura_is_hover", True), SetVariable("aura_check_hover", "obedience"), Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "obedience")
                         unhovered SetVariable("aura_is_hover", False), Hide("description_slave_attributes")
                 elif all_girls_list[girl_index]["obedience"] > 9:
-                    textbutton aura_descriptions_no_color["obedience"][10] xmaximum 750:
+                    textbutton AURA_DESCRIPTIONS_NO_COLOR["obedience"][10] xmaximum 750:
                         style "aura_description_button"
                         action NullAction()
                         hovered SetVariable("aura_is_hover", True), SetVariable("aura_check_hover", "obedience"), Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "obedience")
                         unhovered SetVariable("aura_is_hover", False), Hide("description_slave_attributes")
                 elif all_girls_list[girl_index]["obedience"] < 0 and all_girls_list[girl_index]["obedience"] > -10:
-                    textbutton aura_descriptions_no_color["obedience"][(all_girls_list[girl_index]["obedience"])*-1 + 10] xmaximum 750:
+                    textbutton AURA_DESCRIPTIONS_NO_COLOR["obedience"][(all_girls_list[girl_index]["obedience"])*-1 + 10] xmaximum 750:
                         style "aura_description_button"
                         action NullAction()
                         hovered SetVariable("aura_is_hover", True), SetVariable("aura_check_hover", "obedience"), Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "obedience")
                         unhovered SetVariable("aura_is_hover", False), Hide("description_slave_attributes")
                 elif all_girls_list[girl_index]["obedience"] < -9:
-                    textbutton aura_descriptions_no_color["obedience"][-1] xmaximum 750:
+                    textbutton AURA_DESCRIPTIONS_NO_COLOR["obedience"][-1] xmaximum 750:
                         style "aura_description_button"
                         action NullAction()
                         hovered SetVariable("aura_is_hover", True), SetVariable("aura_check_hover", "obedience"), Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "obedience")
                         unhovered SetVariable("aura_is_hover", False), Hide("description_slave_attributes")
             else:
                 if all_girls_list[girl_index]["obedience"] >= 0 and all_girls_list[girl_index]["obedience"] < 10:
-                    textbutton aura_descriptions["obedience"][all_girls_list[girl_index]["obedience"]] xmaximum 750:
+                    textbutton AURA_DESCRIPTIONS["obedience"][all_girls_list[girl_index]["obedience"]] xmaximum 750:
                         style "aura_description_button"
                         action NullAction()
                         hovered SetVariable("aura_is_hover", True), SetVariable("aura_check_hover", "obedience"), Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "obedience")
                         unhovered SetVariable("aura_is_hover", False), Hide("description_slave_attributes")
                 elif all_girls_list[girl_index]["obedience"] > 9:
-                    textbutton aura_descriptions["obedience"][10] xmaximum 750:
+                    textbutton AURA_DESCRIPTIONS["obedience"][10] xmaximum 750:
                         style "aura_description_button"
                         action NullAction()
                         hovered SetVariable("aura_is_hover", True), SetVariable("aura_check_hover", "obedience"), Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "obedience")
                         unhovered SetVariable("aura_is_hover", False), Hide("description_slave_attributes")
                 elif all_girls_list[girl_index]["obedience"] < 0 and all_girls_list[girl_index]["obedience"] > -10:
-                    textbutton aura_descriptions["obedience"][(all_girls_list[girl_index]["obedience"])*-1 + 10] xmaximum 750:
+                    textbutton AURA_DESCRIPTIONS["obedience"][(all_girls_list[girl_index]["obedience"])*-1 + 10] xmaximum 750:
                         style "aura_description_button"
                         action NullAction()
                         hovered SetVariable("aura_is_hover", True), SetVariable("aura_check_hover", "obedience"), Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "obedience")
                         unhovered SetVariable("aura_is_hover", False), Hide("description_slave_attributes")
                 elif all_girls_list[girl_index]["obedience"] < -9:
-                    textbutton aura_descriptions["obedience"][-1] xmaximum 750:
+                    textbutton AURA_DESCRIPTIONS["obedience"][-1] xmaximum 750:
                         style "aura_description_button"
                         action NullAction()
                         hovered SetVariable("aura_is_hover", True), SetVariable("aura_check_hover", "obedience"), Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "obedience")
@@ -2292,15 +2287,15 @@ screen slave_aura_menu():
                 python:
                     supermacy_text = ""
                     if master_supermacy - all_girls_list[girl_index]["supermacy"] > 2:
-                        supermacy_text = aura_descriptions_no_color["supermacy"][4]
+                        supermacy_text = AURA_DESCRIPTIONS_NO_COLOR["supermacy"][4]
                     if master_supermacy > all_girls_list[girl_index]["supermacy"]:
-                        supermacy_text = aura_descriptions_no_color["supermacy"][3]
+                        supermacy_text = AURA_DESCRIPTIONS_NO_COLOR["supermacy"][3]
                     if master_supermacy == all_girls_list[girl_index]["supermacy"]:
-                        supermacy_text = aura_descriptions_no_color["supermacy"][2]
+                        supermacy_text = AURA_DESCRIPTIONS_NO_COLOR["supermacy"][2]
                     if master_supermacy < all_girls_list[girl_index]["supermacy"]:
-                        supermacy_text = aura_descriptions_no_color["supermacy"][1]
+                        supermacy_text = AURA_DESCRIPTIONS_NO_COLOR["supermacy"][1]
                     if master_supermacy - all_girls_list[girl_index]["supermacy"] < -2:
-                        supermacy_text = aura_descriptions_no_color["supermacy"][0]
+                        supermacy_text = AURA_DESCRIPTIONS_NO_COLOR["supermacy"][0]
                 textbutton supermacy_text xmaximum 750:
                     style "aura_description_button"
                     action NullAction()
@@ -2311,15 +2306,15 @@ screen slave_aura_menu():
                 python:
                     supermacy_text = ""
                     if master_supermacy - all_girls_list[girl_index]["supermacy"] > 2:
-                        supermacy_text = aura_descriptions["supermacy"][4]
+                        supermacy_text = AURA_DESCRIPTIONS["supermacy"][4]
                     if master_supermacy > all_girls_list[girl_index]["supermacy"]:
-                        supermacy_text = aura_descriptions["supermacy"][3]
+                        supermacy_text = AURA_DESCRIPTIONS["supermacy"][3]
                     if master_supermacy == all_girls_list[girl_index]["supermacy"]:
-                        supermacy_text = aura_descriptions["supermacy"][2]
+                        supermacy_text = AURA_DESCRIPTIONS["supermacy"][2]
                     if master_supermacy < all_girls_list[girl_index]["supermacy"]:
-                        supermacy_text = aura_descriptions["supermacy"][1]
+                        supermacy_text = AURA_DESCRIPTIONS["supermacy"][1]
                     if master_supermacy - all_girls_list[girl_index]["supermacy"] < -2:
-                        supermacy_text = aura_descriptions["supermacy"][0]                
+                        supermacy_text = AURA_DESCRIPTIONS["supermacy"][0]                
                 textbutton supermacy_text xmaximum 750:
                     style "aura_description_button"
                     action NullAction()
@@ -2327,13 +2322,13 @@ screen slave_aura_menu():
                     unhovered SetVariable("aura_is_hover", False)
 
             if aura_is_hover and "arousal" == aura_check_hover: 
-                textbutton aura_descriptions2_no_color["arousal"][all_girls_list[girl_index]["arousal"]] xmaximum 750:
+                textbutton AURA_DESCRIPTIONS2_NO_COLOR["arousal"][all_girls_list[girl_index]["arousal"]] xmaximum 750:
                     style "aura_description_button"
                     action NullAction()
                     hovered SetVariable("aura_is_hover", True), SetVariable("aura_check_hover", "arousal")
                     unhovered SetVariable("aura_is_hover", False)
             else:
-                textbutton aura_descriptions2["arousal"][all_girls_list[girl_index]["arousal"]] xmaximum 750:
+                textbutton AURA_DESCRIPTIONS2["arousal"][all_girls_list[girl_index]["arousal"]] xmaximum 750:
                     style "aura_description_button"
                     action NullAction()
                     hovered SetVariable("aura_is_hover", True), SetVariable("aura_check_hover", "arousal")
@@ -2342,13 +2337,13 @@ screen slave_aura_menu():
             # Display aura description buttons in a loop
             for aura_key in ["fear", "despair", "awareness", "taming", "habit", "spoil", "devotion"]:
                 if aura_is_hover and aura_key == aura_check_hover: 
-                    textbutton aura_descriptions2_no_color[aura_key][all_girls_list[girl_index]["aura"][aura_key]] xmaximum 750:
+                    textbutton AURA_DESCRIPTIONS2_NO_COLOR[aura_key][all_girls_list[girl_index]["aura"][aura_key]] xmaximum 750:
                         style "aura_description_button"
                         action NullAction()
                         hovered SetVariable("aura_is_hover", True), SetVariable("aura_check_hover", aura_key),Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", aura_key)
                         unhovered SetVariable("aura_is_hover", False),Hide("description_slave_attributes")
                 else:
-                    textbutton aura_descriptions2[aura_key][all_girls_list[girl_index]["aura"][aura_key]] xmaximum 750:
+                    textbutton AURA_DESCRIPTIONS2[aura_key][all_girls_list[girl_index]["aura"][aura_key]] xmaximum 750:
                         style "aura_description_button"
                         action NullAction()
                         hovered SetVariable("aura_is_hover", True), SetVariable("aura_check_hover", aura_key),Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", aura_key)
@@ -2358,7 +2353,7 @@ screen slave_rules_menu():
     add "padding.webp" xsize 230 ysize 535 pos(0.2835,0.42) anchor (0.5,0.5)
     add "padding.webp" xsize 230 ysize 535 pos(0.724,0.42) anchor (0.5,0.5)
     key "K_SPACE" action SetVariable("current_menu", 0),SetVariable("text_slave_conditions_index", "default"),Jump("Home")
-    text dic_slave_conditions[text_slave_conditions_index] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.21,0.82) xmaximum 750
+    text DIC_SLAVE_CONDITIONS[text_slave_conditions_index] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.21,0.82) xmaximum 750
     vbox:
         pos(0.20,0.05)
         anchor (0.0,0.0)
@@ -2383,19 +2378,19 @@ screen slave_rules_menu():
                 imagebutton:
                     idle "buttons/unsel_button.webp"
                     hover "buttons/unsel_button_hover.webp"
-                    action SetDict(all_girls_list[girl_index], "sleep", i),SetVariable("text_slave_conditions_index",dic_slave_conditions_sleep[i]), Jump("Home")
+                    action SetDict(all_girls_list[girl_index], "sleep", i),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_SLEEP[i]), Jump("Home")
         add "spacer" size(0,19.5)
         for i in range(3):
             if all_girls_list[girl_index]["diet"] == i:
                 imagebutton:
                     idle "buttons/sel_button.webp"
                     hover "buttons/sel_button_hover.webp"
-                    action SetDict(all_girls_list[girl_index], "diet", 3),SetVariable("text_slave_conditions_index", dic_slave_conditions_food[3]), Jump("Home")
+                    action SetDict(all_girls_list[girl_index], "diet", 3),SetVariable("text_slave_conditions_index", DIC_SLAVE_CONDITIONS_FOOD[3]), Jump("Home")
             else:
                 imagebutton:
                     idle "buttons/unsel_button.webp"
                     hover "buttons/unsel_button_hover.webp"
-                    action SetDict(all_girls_list[girl_index], "diet", i),SetVariable("text_slave_conditions_index", dic_slave_conditions_food[i]), Jump("Home")
+                    action SetDict(all_girls_list[girl_index], "diet", i),SetVariable("text_slave_conditions_index", DIC_SLAVE_CONDITIONS_FOOD[i]), Jump("Home")
         if all_girls_list[girl_index]["your_leftovers"]:
             imagebutton:
                 idle "buttons/sel_button.webp"
@@ -2429,13 +2424,13 @@ screen slave_rules_menu():
                     imagebutton:
                         idle "buttons/unsel_button.webp"
                         hover "buttons/unsel_button_hover.webp"
-                        action SetDict(all_girls_list[girl_index], "portion_size", i),SetVariable("text_slave_conditions_index",dic_slave_conditions_portion[i]), Jump("Home")
+                        action SetDict(all_girls_list[girl_index], "portion_size", i),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_PORTION[i]), Jump("Home")
         else:
             for i in range(4):
                 imagebutton:
                     idle "buttons/unactive_button.webp"
                     hover "buttons/unactive_button_hover.webp"
-                    action SetDict(all_girls_list[girl_index], "diet", 0),SetDict(all_girls_list[girl_index], "portion_size", i),SetVariable("text_slave_conditions_index",dic_slave_conditions_food[0]), Jump("Home")
+                    action SetDict(all_girls_list[girl_index], "diet", 0),SetDict(all_girls_list[girl_index], "portion_size", i),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_FOOD[0]), Jump("Home")
     vbox:
         pos(0.225,0.09)
         anchor (0.0,0.0)
@@ -2458,27 +2453,27 @@ screen slave_rules_menu():
         if all_girls_list[girl_index]["diet"] == 0:
             textbutton "- Dehydrated food": 
                 style "slave_screen_order_button"
-                action SetDict(all_girls_list[girl_index], "diet", 3),SetVariable("text_slave_conditions_index",dic_slave_conditions_food[3]), Jump("Home")
+                action SetDict(all_girls_list[girl_index], "diet", 3),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_FOOD[3]), Jump("Home")
         else:
             textbutton "- Dehydrated food": 
                 style "slave_screen_order_button"
-                action SetDict(all_girls_list[girl_index], "diet", 0),SetVariable("text_slave_conditions_index",dic_slave_conditions_food[0]), Jump("Home")
+                action SetDict(all_girls_list[girl_index], "diet", 0),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_FOOD[0]), Jump("Home")
         if all_girls_list[girl_index]["diet"] == 1:
             textbutton "- Canned food": 
                 style "slave_screen_order_button"
-                action SetDict(all_girls_list[girl_index], "diet", 3),SetVariable("text_slave_conditions_index",dic_slave_conditions_food[3]), Jump("Home")
+                action SetDict(all_girls_list[girl_index], "diet", 3),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_FOOD[3]), Jump("Home")
         else:
             textbutton "- Canned food": 
                 style "slave_screen_order_button"
-                action SetDict(all_girls_list[girl_index], "diet", 1),SetVariable("text_slave_conditions_index",dic_slave_conditions_food[1]), Jump("Home")
+                action SetDict(all_girls_list[girl_index], "diet", 1),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_FOOD[1]), Jump("Home")
         if all_girls_list[girl_index]["diet"] == 2:
             textbutton "- Fiend's cum": 
                 style "slave_screen_order_button"
-                action SetDict(all_girls_list[girl_index], "diet", 3),SetVariable("text_slave_conditions_index",dic_slave_conditions_food[3]), Jump("Home")
+                action SetDict(all_girls_list[girl_index], "diet", 3),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_FOOD[3]), Jump("Home")
         else:
             textbutton "- Fiend's cum": 
                 style "slave_screen_order_button"
-                action SetDict(all_girls_list[girl_index], "diet", 2),SetVariable("text_slave_conditions_index",dic_slave_conditions_food[2]), Jump("Home")
+                action SetDict(all_girls_list[girl_index], "diet", 2),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_FOOD[2]), Jump("Home")
         if all_girls_list[girl_index]["your_leftovers"]:
             textbutton "- Your leftovers": 
                 style "slave_screen_order_button"
@@ -2499,29 +2494,29 @@ screen slave_rules_menu():
         if all_girls_list[girl_index]["diet"] != 3:
             textbutton "- Restricted":
                 style "slave_screen_order_button"
-                action SetDict(all_girls_list[girl_index], "portion_size", 0),SetVariable("text_slave_conditions_index",dic_slave_conditions_portion[0]), Jump("Home")
+                action SetDict(all_girls_list[girl_index], "portion_size", 0),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_PORTION[0]), Jump("Home")
             textbutton "- Moderate":
                 style "slave_screen_order_button"
-                action SetDict(all_girls_list[girl_index], "portion_size", 1),SetVariable("text_slave_conditions_index",dic_slave_conditions_portion[1]), Jump("Home")
+                action SetDict(all_girls_list[girl_index], "portion_size", 1),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_PORTION[1]), Jump("Home")
             textbutton "- Generous":
                 style "slave_screen_order_button"
-                action SetDict(all_girls_list[girl_index], "portion_size", 2),SetVariable("text_slave_conditions_index",dic_slave_conditions_portion[2]), Jump("Home")
+                action SetDict(all_girls_list[girl_index], "portion_size", 2),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_PORTION[2]), Jump("Home")
             textbutton "- Calculated":
                 style "slave_screen_order_button"
-                action SetDict(all_girls_list[girl_index], "portion_size", 3),SetVariable("text_slave_conditions_index",dic_slave_conditions_portion[3]), Jump("Home")
+                action SetDict(all_girls_list[girl_index], "portion_size", 3),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_PORTION[3]), Jump("Home")
         else:
             textbutton "- Restricted":
                 style "slave_screen_order_button"
-                action SetDict(all_girls_list[girl_index], "diet", 0),SetDict(all_girls_list[girl_index], "portion_size", 0),SetVariable("text_slave_conditions_index",dic_slave_conditions_food[0]), Jump("Home")
+                action SetDict(all_girls_list[girl_index], "diet", 0),SetDict(all_girls_list[girl_index], "portion_size", 0),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_FOOD[0]), Jump("Home")
             textbutton "- Moderate":
                 style "slave_screen_order_button"
-                action SetDict(all_girls_list[girl_index], "diet", 0),SetDict(all_girls_list[girl_index], "portion_size", 1),SetVariable("text_slave_conditions_index",dic_slave_conditions_food[0]), Jump("Home")
+                action SetDict(all_girls_list[girl_index], "diet", 0),SetDict(all_girls_list[girl_index], "portion_size", 1),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_FOOD[0]), Jump("Home")
             textbutton "- Generous":
                 style "slave_screen_order_button"
-                action SetDict(all_girls_list[girl_index], "diet", 0),SetDict(all_girls_list[girl_index], "portion_size", 2),SetVariable("text_slave_conditions_index",dic_slave_conditions_food[0]), Jump("Home")
+                action SetDict(all_girls_list[girl_index], "diet", 0),SetDict(all_girls_list[girl_index], "portion_size", 2),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_FOOD[0]), Jump("Home")
             textbutton "- Calculated":
                 style "slave_screen_order_button"
-                action SetDict(all_girls_list[girl_index], "diet", 0),SetDict(all_girls_list[girl_index], "portion_size", 3),SetVariable("text_slave_conditions_index",dic_slave_conditions_food[0]), Jump("Home")
+                action SetDict(all_girls_list[girl_index], "diet", 0),SetDict(all_girls_list[girl_index], "portion_size", 3),SetVariable("text_slave_conditions_index",DIC_SLAVE_CONDITIONS_FOOD[0]), Jump("Home")
                 
         add "spacer" size(0,25)
         textbutton str(all_girls_list[girl_index]["calories"]*100):
@@ -2530,7 +2525,7 @@ screen slave_rules_menu():
     vbox:
         pos(0.807,0.05)
         anchor (1.0,0.0)
-        if all_girls_list[girl_index]["rules"]["rules_count"] >= dic_overnight_rules_count[dic_overnight_rules_count_index]:
+        if all_girls_list[girl_index]["rules"]["rules_count"] >= DIC_OVERNIGHT_RULES_COUNT[dic_overnight_rules_count_index]:
             text "{color=#FFD700}RULES: ([str(all_girls_list[girl_index]['rules']['rules_count'])]){/color}" size 16 font "fonts/Segoe Print.ttf"
         else:
             text "{color=#FFD700}RULES: ({/color}{color=#CD0000}[str(all_girls_list[girl_index]['rules']['rules_count'])]{/color}{color=#FFD700}){/color}" size 16 font "fonts/Segoe Print.ttf"
@@ -2538,7 +2533,7 @@ screen slave_rules_menu():
         pos(0.802,0.095)
         anchor (1.0,0.0)
         spacing 6
-        for a, b in dic_slave_rules.items():
+        for a, b in DIC_SLAVE_RULES.items():
             if "extra" in b:
                 if b["extra"]():
                     imagebutton:
@@ -2577,29 +2572,29 @@ screen slave_rules_menu():
     vbox:
         pos(0.65,0.09)
         anchor (0.0,0.0)
-        for a, b in dic_slave_rules.items():
+        for a, b in DIC_SLAVE_RULES.items():
             if "extra" in b:
                 if b["extra"]():
-                    textbutton dic_slave_rules_capital[a] xalign 1.0: 
+                    textbutton DIC_SLAVE_RULES_CAPITAL[a] xalign 1.0: 
                         style "slave_screen_order_button"
                         action Show("msg", msg_text=b["extra_text"])
                     continue
             if b["count"]:
                 if b["condition"](all_girls_list[girl_index]):
-                    textbutton dic_slave_rules_capital[a] xalign 1.0: 
+                    textbutton DIC_SLAVE_RULES_CAPITAL[a] xalign 1.0: 
                         style "slave_screen_order_button"
                         action SetDict(all_girls_list[girl_index]["rules"],a, False), SetVariable("text_slave_conditions_index", b["disable"]), SetDict(all_girls_list[girl_index]["rules"],"rules_count",all_girls_list[girl_index]["rules"]["rules_count"] - 1), Jump("Home")
                 else:
-                    textbutton dic_slave_rules_capital[a] xalign 1.0: 
+                    textbutton DIC_SLAVE_RULES_CAPITAL[a] xalign 1.0: 
                         style "slave_screen_order_button"
                         action SetDict(all_girls_list[girl_index]["rules"],a, True), SetVariable("text_slave_conditions_index", b["active"]), SetDict(all_girls_list[girl_index]["rules"],"rules_count",all_girls_list[girl_index]["rules"]["rules_count"] + 1), Jump("Home")
             else:
                 if b["condition"](all_girls_list[girl_index]):
-                    textbutton dic_slave_rules_capital[a] xalign 1.0: 
+                    textbutton DIC_SLAVE_RULES_CAPITAL[a] xalign 1.0: 
                         style "slave_screen_order_button"
                         action SetDict(all_girls_list[girl_index]["rules"],a, False), SetVariable("text_slave_conditions_index", b["disable"]), Jump("Home")
                 else:
-                    textbutton dic_slave_rules_capital[a] xalign 1.0: 
+                    textbutton DIC_SLAVE_RULES_CAPITAL[a] xalign 1.0: 
                         style "slave_screen_order_button"
                         action SetDict(all_girls_list[girl_index]["rules"],a, True), SetVariable("text_slave_conditions_index", b["active"]), Jump("Home")
         if all_girls_list[girl_index]["rules_broken_log"] != "":
@@ -2702,28 +2697,28 @@ screen screen_attributes_skills_sexual_slave():
     vbox:
         pos(0.01,0.02)
         text "Name: " + all_girls_list[girl_index]["name"] size 16 color "#000000" font "fonts/Segoe Print.ttf"
-        text "Age: " + dic_girl_age_text[all_girls_list[girl_index]["age"]] size 16 color "#000000" font "fonts/Segoe Print.ttf"
+        text "Age: " + DIC_GIRL_AGE_TEXT[all_girls_list[girl_index]["age"]] size 16 color "#000000" font "fonts/Segoe Print.ttf"
         text "Owned for: " + str(day_tracker - all_girls_list[girl_index]["day_bought"]) + " days" size 16 color "#000000" font "fonts/Segoe Print.ttf"
         text "Rank:" size 16 color "#000000" font "fonts/Segoe Print.ttf"
         text "{u}ATTRIBUTES{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf"
-        for key, values in dic_slave_attributes.items():
+        for key, values in DIC_SLAVE_ATTRIBUTES.items():
             if key != "physical":
                 textbutton values[all_girls_list[girl_index]["attributes"][key]]:
                     style "attribute_custom_slave" + str(all_girls_list[girl_index]["attributes"][key])
-                    action SetVariable("attribute_track_index",key),SetVariable("attribute_track_basic",key),SetVariable("dictionary_track_index",7),SetVariable("dictionary_name",dic_slave_attributes),SetVariable("attribute_checkbox",True),SetVariable("attributeisphysical",False),Jump("Home")
+                    action SetVariable("attribute_track_index",key),SetVariable("attribute_track_basic",key),SetVariable("dictionary_track_index",7),SetVariable("dictionary_name",DIC_SLAVE_ATTRIBUTES),SetVariable("attribute_checkbox",True),SetVariable("attributeisphysical",False),Jump("Home")
                     hovered Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", key)
                     unhovered Hide("description_slave_attributes")
             else:
                 textbutton values[all_girls_list[girl_index]["attributes"][key]]:
                     style "attribute_custom_physical_special" + str(all_girls_list[girl_index]["attributes"][key])
-                    action SetVariable("attribute_track_index",key),SetVariable("attribute_track_basic",key),SetVariable("dictionary_track_index",7),SetVariable("dictionary_name",dic_slave_attributes),SetVariable("attribute_checkbox",True),SetVariable("attributeisphysical",True),Jump("Home")                    
+                    action SetVariable("attribute_track_index",key),SetVariable("attribute_track_basic",key),SetVariable("dictionary_track_index",7),SetVariable("dictionary_name",DIC_SLAVE_ATTRIBUTES),SetVariable("attribute_checkbox",True),SetVariable("attributeisphysical",True),Jump("Home")                    
                     hovered Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", key)
                     unhovered Hide("description_slave_attributes")
         textbutton all_girls_list[girl_index]["mood_label"]:
             style "attribute_custom_slave0"
             action Show("mood_attributes")
-            hovered SetDict(all_girls_list[girl_index],"mood_label",dic_slave_moodlevel_no_color[all_girls_list[girl_index]["mood_label"]])
-            unhovered SetDict(all_girls_list[girl_index],"mood_label",dic_slave_moodlevel2[all_girls_list[girl_index]["mood_label"]])
+            hovered SetDict(all_girls_list[girl_index],"mood_label",DIC_SLAVE_MOODLEVEL_NO_COLOR[all_girls_list[girl_index]["mood_label"]])
+            unhovered SetDict(all_girls_list[girl_index],"mood_label",DIC_SLAVE_MOODLEVEL2[all_girls_list[girl_index]["mood_label"]])
         text "{u}TRAITS{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf"
         python:
             traits_skills = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_skills(1/8)"]
@@ -2731,7 +2726,7 @@ screen screen_attributes_skills_sexual_slave():
             traits_miscellaneous = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_miscellaneous(1/12)"]
             traits_aura = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_aura(1/16)"]
             traits_attributes = all_girls_list[girl_index]["traits"]["traits_hidden"]["traits_attributes(1/20)"]
-        for key, values in dic_traits_skills.items():
+        for key, values in DIC_TRAITS_SKILLS.items():
 
             $ skill_info = traits_skills[key]
             $ val = skill_info.get("value", 0)
@@ -2753,11 +2748,11 @@ screen screen_attributes_skills_sexual_slave():
 
                 textbutton label_text:
                     style style_used
-                    action SetVariable("attribute_track_index", key), SetVariable("dictionary_track_index", val), SetVariable("dictionary_name", dic_traits_skills_descriptions), SetVariable("customboxcheck", True), Jump("Home")
+                    action SetVariable("attribute_track_index", key), SetVariable("dictionary_track_index", val), SetVariable("dictionary_name", DIC_TRAITS_SKILLS_DESCRIPTIONS), SetVariable("customboxcheck", True), Jump("Home")
                     hovered Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "default")
                     unhovered Hide("description_slave_attributes")
             ################ - i'm a genus -rec3ks
-        for key, values in dic_traits_sexual.items():
+        for key, values in DIC_TRAITS_SEXUAL.items():
            
             $ skill_info = traits_sexual[key]
             $ val = skill_info.get("value", 0)
@@ -2780,10 +2775,10 @@ screen screen_attributes_skills_sexual_slave():
 
                 textbutton label_text:
                     style style_used
-                    action SetVariable("attribute_track_index", "mood"), SetVariable("dictionary_track_index", wip), SetVariable("dictionary_name", dic_slave_mood_show), SetVariable("customboxcheck", True), Jump("Home")
+                    action SetVariable("attribute_track_index", "mood"), SetVariable("dictionary_track_index", wip), SetVariable("dictionary_name", DIC_SLAVE_MOOD_SHOW), SetVariable("customboxcheck", True), Jump("Home")
                     hovered Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "default")
                     unhovered Hide("description_slave_attributes")
-        for key, values in dic_traits_miscellaneous.items():
+        for key, values in DIC_TRAITS_MISCELLANEOUS.items():
 
             $ skill_info = traits_miscellaneous[key]
             $ val = skill_info.get("value", 0)
@@ -2805,10 +2800,10 @@ screen screen_attributes_skills_sexual_slave():
 
                 textbutton label_text:
                     style style_used
-                    action SetVariable("attribute_track_index", key),SetVariable("dictionary_track_index", val),SetVariable("dictionary_name", dic_traits_miscellaneous_description),SetVariable("customboxcheck", True),Jump("Home")
+                    action SetVariable("attribute_track_index", key),SetVariable("dictionary_track_index", val),SetVariable("dictionary_name", DIC_TRAITS_MISCELLANEOUS_DESCRIPTION),SetVariable("customboxcheck", True),Jump("Home")
                     hovered Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", key)
                     unhovered Hide("description_slave_attributes")
-        for key, values in dic_traits_aura.items():
+        for key, values in DIC_TRAITS_AURA.items():
 
             $ skill_info = traits_aura[key]
             $ val = skill_info.get("value", 0)
@@ -2830,10 +2825,10 @@ screen screen_attributes_skills_sexual_slave():
 
                 textbutton label_text:
                     style style_used
-                    action SetVariable("attribute_track_index", key),SetVariable("dictionary_track_index", val),SetVariable("dictionary_name", dic_traits_aura_description),SetVariable("customboxcheck", True),Jump("Home")
+                    action SetVariable("attribute_track_index", key),SetVariable("dictionary_track_index", val),SetVariable("dictionary_name", DIC_TRAITS_AURA_DESCRIPTION),SetVariable("customboxcheck", True),Jump("Home")
                     hovered Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "default")
                     unhovered Hide("description_slave_attributes")
-        for key, values in dic_traits_attributes.items():
+        for key, values in DIC_TRAITS_ATTRIBUTES.items():
 
             $ skill_info = traits_attributes[key]
             $ val = skill_info.get("value", 0)
@@ -2855,14 +2850,14 @@ screen screen_attributes_skills_sexual_slave():
 
                 textbutton label_text:
                     style style_used
-                    action SetVariable("attribute_track_index", key),SetVariable("dictionary_track_index", val),SetVariable("dictionary_name", dic_traits_attributes_description),SetVariable("customboxcheck", True),Jump("Home")
+                    action SetVariable("attribute_track_index", key),SetVariable("dictionary_track_index", val),SetVariable("dictionary_name", DIC_TRAITS_ATTRIBUTES_DESCRIPTION),SetVariable("customboxcheck", True),Jump("Home")
                     hovered Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", "default")
                     unhovered Hide("description_slave_attributes")
     vbox:
         pos(0.99,0.02)
         anchor (1.0,0.0)
         text "{u}                     SKILLS{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
-        for key, values in dic_slave_skills.items():
+        for key, values in DIC_SLAVE_SKILLS.items():
             if key in all_girls_list[girl_index]["skills"]:
                 textbutton values[all_girls_list[girl_index]["skills"][key]]:
                     style "attribute_custom_slave" + str(all_girls_list[girl_index]["skills"][key]) xalign 1.0
@@ -2870,7 +2865,7 @@ screen screen_attributes_skills_sexual_slave():
                     hovered Show("description_slave_attributes"),SetVariable("description_slave_attributes_track_value", key)
                     unhovered Hide("description_slave_attributes")
         text "{u}     SEX TECHNIQUES{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
-        for key, values in dic_slave_skills_sexual.items():
+        for key, values in DIC_SLAVE_SKILLS_SEXUAL.items():
             if key in all_girls_list[girl_index]["sex_experience"][key]:
                 textbutton values[all_girls_list[girl_index]["sex_experience"][key][key]]:
                     style "attribute_custom_slave" + str(all_girls_list[girl_index]["sex_experience"][key][key]) xalign 1.0
@@ -2888,102 +2883,102 @@ screen description_slave_attributes():
         frame:
             pos(curx + 150,cury)
             style "description_slave_attributes_frame"
-            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]] style "description_slave_attributes_frame_text"
+            text DIC_SLAVE_ATTRIBUTES_DESCRIPTION_KEYS[description_slave_attributes_track_value] + " " + DIC_SLAVE_TIER_CLASSIFICATION[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]] style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value in ["endurance", "empathy", "temperament","intelligence","nature",]:
         frame:
             pos(curx + 150,cury)
             style "description_slave_attributes_frame"
-            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]] +"; " + str(all_girls_list[girl_index]["experience"]["attributes"][description_slave_attributes_track_value]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]]) + ")" style "description_slave_attributes_frame_text"
+            text DIC_SLAVE_ATTRIBUTES_DESCRIPTION_KEYS[description_slave_attributes_track_value] + " " + DIC_SLAVE_TIER_CLASSIFICATION[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]] +"; " + str(all_girls_list[girl_index]["experience"]["attributes"][description_slave_attributes_track_value]) + " (+" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]]) + "/" + str(ATTRIBUTES_MIN_THRESHOLD[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]]) + ")" style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value == "pride":
         frame:
             pos(curx + 150,cury)
             style "description_slave_attributes_frame"
-            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification_physical[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]] +"; " + str(all_girls_list[girl_index]["experience"]["attributes"][description_slave_attributes_track_value]) + " (+" + str(attributes_max_threshold_inverse[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]]) + "/" + str(attributes_min_threshold_inverse[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]]) + ")" style "description_slave_attributes_frame_text"
+            text DIC_SLAVE_ATTRIBUTES_DESCRIPTION_KEYS[description_slave_attributes_track_value] + " " + DIC_SLAVE_TIER_CLASSIFICATION_PHYSICAL[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]] +"; " + str(all_girls_list[girl_index]["experience"]["attributes"][description_slave_attributes_track_value]) + " (+" + str(ATTRIBUTES_MAX_THRESHOLD_INVERSE[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]]) + "/" + str(ATTRIBUTES_MIN_THRESHOLD_INVERSE[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]]) + ")" style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value == "physical":
         frame:
             pos(curx + 150,cury)
             style "description_slave_attributes_frame"
-            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification_physical[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]] +"; " + str(all_girls_list[girl_index]["experience"]["attributes"][description_slave_attributes_track_value]) + " (+" + str(attributes_max_threshold_inverse[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]]) + "/" + str(attributes_min_threshold_inverse[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]]) + ")" style "description_slave_attributes_frame_text"
-    if description_slave_attributes_track_value in dic_traits_miscellaneous:
+            text DIC_SLAVE_ATTRIBUTES_DESCRIPTION_KEYS[description_slave_attributes_track_value] + " " + DIC_SLAVE_TIER_CLASSIFICATION_PHYSICAL[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]] +"; " + str(all_girls_list[girl_index]["experience"]["attributes"][description_slave_attributes_track_value]) + " (+" + str(ATTRIBUTES_MAX_THRESHOLD_INVERSE[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]]) + "/" + str(ATTRIBUTES_MIN_THRESHOLD_INVERSE[all_girls_list[girl_index]["attributes"][description_slave_attributes_track_value]]) + ")" style "description_slave_attributes_frame_text"
+    if description_slave_attributes_track_value in DIC_TRAITS_MISCELLANEOUS:
         frame:
             pos(curx + 150,cury)
             style "description_slave_attributes_frame"
-            text str(all_girls_list[girl_index]['experience']['traits_miscellaneous'][description_slave_attributes_track_value]) + " | " + str(dic_dificulty_traits_avance[all_girls_list[girl_index]['traits']['traits_hidden']['traits_miscellaneous(1/12)'][description_slave_attributes_track_value]['value']]) style "description_slave_attributes_frame_text"
+            text str(all_girls_list[girl_index]['experience']['traits_miscellaneous'][description_slave_attributes_track_value]) + " | " + str(DIC_DIFICULTY_TRAITS_AVANCE[all_girls_list[girl_index]['traits']['traits_hidden']['traits_miscellaneous(1/12)'][description_slave_attributes_track_value]['value']]) style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value == "petting":
         frame:
             pos(curx - 150,cury)
             style "description_slave_attributes_frame"
-            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value][description_slave_attributes_track_value]] + " " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["handjob"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["handjob"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["footjob"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["footjob"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["rubbing"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["rubbing"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["titjob"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["titjob"]]) style "description_slave_attributes_frame_text"
+            text DIC_SLAVE_ATTRIBUTES_DESCRIPTION_KEYS[description_slave_attributes_track_value] + " " + DIC_SLAVE_TIER_CLASSIFICATION[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value][description_slave_attributes_track_value]] + " " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["handjob"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["handjob"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["footjob"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["footjob"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["rubbing"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["rubbing"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["titjob"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["titjob"]]) style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value == "oral_pleasure":
         frame:
             pos(curx - 150,cury)
             style "description_slave_attributes_frame"
-            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value][description_slave_attributes_track_value]] + " " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["kissing"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["kissing"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["licking"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["licking"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["blowjob"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["blowjob"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["deep_throat"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["deep_throat"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["rimming"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["rimming"]]) style "description_slave_attributes_frame_little_text"
+            text DIC_SLAVE_ATTRIBUTES_DESCRIPTION_KEYS[description_slave_attributes_track_value] + " " + DIC_SLAVE_TIER_CLASSIFICATION[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value][description_slave_attributes_track_value]] + " " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["kissing"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["kissing"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["licking"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["licking"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["blowjob"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["blowjob"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["deep_throat"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["deep_throat"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["rimming"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["rimming"]]) style "description_slave_attributes_frame_little_text"
     if description_slave_attributes_track_value == "penetration":
         frame:
             pos(curx - 150,cury)
             style "description_slave_attributes_frame"
-            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value][description_slave_attributes_track_value]] + " " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["vaginal_sex"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["vaginal_sex"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["fisting"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["fisting"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["anal_sex"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["anal_sex"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["anal_fisting"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["anal_fisting"]]) style "description_slave_attributes_frame_little_text"
+            text DIC_SLAVE_ATTRIBUTES_DESCRIPTION_KEYS[description_slave_attributes_track_value] + " " + DIC_SLAVE_TIER_CLASSIFICATION[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value][description_slave_attributes_track_value]] + " " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["vaginal_sex"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["vaginal_sex"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["fisting"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["fisting"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["anal_sex"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["anal_sex"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["anal_fisting"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["anal_fisting"]]) style "description_slave_attributes_frame_little_text"
     if description_slave_attributes_track_value == "group_sex":
         frame:
             pos(curx - 150,cury)
             style "description_slave_attributes_frame"
-            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value][description_slave_attributes_track_value]] + " " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["threesome"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["threesome"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["bukkake"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["bukkake"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["doble_penetration"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["doble_penetration"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["triple_penetration"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["triple_penetration"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["gangbang"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["gangbang"]]) style "description_slave_attributes_frame_little_text"
+            text DIC_SLAVE_ATTRIBUTES_DESCRIPTION_KEYS[description_slave_attributes_track_value] + " " + DIC_SLAVE_TIER_CLASSIFICATION[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value][description_slave_attributes_track_value]] + " " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["threesome"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["threesome"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["bukkake"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["bukkake"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["doble_penetration"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["doble_penetration"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["triple_penetration"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["triple_penetration"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["gangbang"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["gangbang"]]) style "description_slave_attributes_frame_little_text"
     if description_slave_attributes_track_value == "demostration":
         frame:
             pos(curx - 150,cury)
             style "description_slave_attributes_frame"
-            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value][description_slave_attributes_track_value]] + " " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["seduction"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["seduction"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["masturbation"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["masturbation"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["dildo"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["dildo"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["humiliation"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["humiliation"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["exhibitionism"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["exhibitionism"]]) style "description_slave_attributes_frame_little_text"
+            text DIC_SLAVE_ATTRIBUTES_DESCRIPTION_KEYS[description_slave_attributes_track_value] + " " + DIC_SLAVE_TIER_CLASSIFICATION[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value][description_slave_attributes_track_value]] + " " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["seduction"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["seduction"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["masturbation"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["masturbation"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["dildo"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["dildo"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["humiliation"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["humiliation"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["exhibitionism"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["exhibitionism"]]) style "description_slave_attributes_frame_little_text"
     if description_slave_attributes_track_value in all_girls_list[girl_index]["skills"]:
         frame:
             pos(curx - 150,cury)
             style "description_slave_attributes_frame"
-            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification[all_girls_list[girl_index]["skills"][description_slave_attributes_track_value]] +"; " + str(all_girls_list[girl_index]["experience"]["skills"][description_slave_attributes_track_value]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["skills"][description_slave_attributes_track_value]]) + ")" style "description_slave_attributes_frame_text"
+            text DIC_SLAVE_ATTRIBUTES_DESCRIPTION_KEYS[description_slave_attributes_track_value] + " " + DIC_SLAVE_TIER_CLASSIFICATION[all_girls_list[girl_index]["skills"][description_slave_attributes_track_value]] +"; " + str(all_girls_list[girl_index]["experience"]["skills"][description_slave_attributes_track_value]) + " (+" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["skills"][description_slave_attributes_track_value]]) + ")" style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value == "fetishism":
         frame:
             pos(curx - 150,cury)
             style "description_slave_attributes_frame"
-            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value][description_slave_attributes_track_value]] + " " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["enema"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["enema"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["masochism"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["masochism"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["self-torture"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["self-torture"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["golden_shower"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["golden_shower"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["scat"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["scat"]]) style "description_slave_attributes_frame_little_text"
+            text DIC_SLAVE_ATTRIBUTES_DESCRIPTION_KEYS[description_slave_attributes_track_value] + " " + DIC_SLAVE_TIER_CLASSIFICATION[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value][description_slave_attributes_track_value]] + " " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["enema"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["enema"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["masochism"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["masochism"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["self-torture"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["self-torture"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["golden_shower"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["golden_shower"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["scat"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["scat"]]) style "description_slave_attributes_frame_little_text"
     if description_slave_attributes_track_value == "xenophily":
         frame:
             pos(curx - 150,cury)
             style "description_slave_attributes_frame"
-            text dic_slave_attributes_description_keys[description_slave_attributes_track_value] + " " + dic_slave_tier_classification[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value][description_slave_attributes_track_value]] + " " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["dog_mating"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["dog_mating"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["pig_mating"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["pig_mating"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["house_mating"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["house_mating"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["spider_mating"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["spider_mating"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["sea_tentacle_mating"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["sea_tentacle_mating"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["field_mating"]) + "/" + str(attributes_max_threshold[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["field_mating"]]) style "description_slave_attributes_frame_little_text"
+            text DIC_SLAVE_ATTRIBUTES_DESCRIPTION_KEYS[description_slave_attributes_track_value] + " " + DIC_SLAVE_TIER_CLASSIFICATION[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value][description_slave_attributes_track_value]] + " " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["dog_mating"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["dog_mating"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["pig_mating"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["pig_mating"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["house_mating"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["house_mating"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["spider_mating"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["spider_mating"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["sea_tentacle_mating"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["sea_tentacle_mating"]]) + " | " + str(all_girls_list[girl_index]["experience"]["sex_experience"][description_slave_attributes_track_value]["field_mating"]) + "/" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["sex_experience"][description_slave_attributes_track_value]["field_mating"]]) style "description_slave_attributes_frame_little_text"
     if description_slave_attributes_track_value == "fear":
         frame:
             pos(curx ,cury + 50)
             style "description_slave_attributes_frame"
-            text "Fear " + str(all_girls_list[girl_index]["aura"]["fear"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["fear"]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["aura"]["fear"]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["aura"]["fear"]]) + ")" style "description_slave_attributes_frame_text"
+            text "Fear " + str(all_girls_list[girl_index]["aura"]["fear"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["fear"]) + " (+" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["aura"]["fear"]]) + "/" + str(ATTRIBUTES_MIN_THRESHOLD[all_girls_list[girl_index]["aura"]["fear"]]) + ")" style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value == "despair":
         frame:
             pos(curx ,cury + 50)
             style "description_slave_attributes_frame"
-            text "Despair " + str(all_girls_list[girl_index]["aura"]["despair"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["despair"]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["aura"]["despair"]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["aura"]["despair"]]) + ")" style "description_slave_attributes_frame_text"
+            text "Despair " + str(all_girls_list[girl_index]["aura"]["despair"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["despair"]) + " (+" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["aura"]["despair"]]) + "/" + str(ATTRIBUTES_MIN_THRESHOLD[all_girls_list[girl_index]["aura"]["despair"]]) + ")" style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value == "awareness":
         frame:
             pos(curx ,cury + 50)
             style "description_slave_attributes_frame"
-            text "Awareness " + str(all_girls_list[girl_index]["aura"]["awareness"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["awareness"]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["aura"]["awareness"]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["aura"]["awareness"]]) + ")" style "description_slave_attributes_frame_text"
+            text "Awareness " + str(all_girls_list[girl_index]["aura"]["awareness"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["awareness"]) + " (+" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["aura"]["awareness"]]) + "/" + str(ATTRIBUTES_MIN_THRESHOLD[all_girls_list[girl_index]["aura"]["awareness"]]) + ")" style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value == "taming":
         frame:
             pos(curx ,cury + 50)
             style "description_slave_attributes_frame"  
-            text "Taming " + str(all_girls_list[girl_index]["aura"]["taming"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["taming"]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["aura"]["taming"]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["aura"]["taming"]]) + ")" style "description_slave_attributes_frame_text"
+            text "Taming " + str(all_girls_list[girl_index]["aura"]["taming"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["taming"]) + " (+" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["aura"]["taming"]]) + "/" + str(ATTRIBUTES_MIN_THRESHOLD[all_girls_list[girl_index]["aura"]["taming"]]) + ")" style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value == "habit":
         frame:
             pos(curx ,cury + 50)
             style "description_slave_attributes_frame"
-            text "Habit " + str(all_girls_list[girl_index]["aura"]["habit"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["habit"]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["aura"]["habit"]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["aura"]["habit"]]) + ")" style "description_slave_attributes_frame_text"
+            text "Habit " + str(all_girls_list[girl_index]["aura"]["habit"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["habit"]) + " (+" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["aura"]["habit"]]) + "/" + str(ATTRIBUTES_MIN_THRESHOLD[all_girls_list[girl_index]["aura"]["habit"]]) + ")" style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value == "spoil":
         frame:
             pos(curx ,cury + 50)
             style "description_slave_attributes_frame"
-            text "Spoil " + str(all_girls_list[girl_index]["aura"]["spoil"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["spoil"]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["aura"]["spoil"]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["aura"]["spoil"]]) + ")" style "description_slave_attributes_frame_text"
+            text "Spoil " + str(all_girls_list[girl_index]["aura"]["spoil"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["spoil"]) + " (+" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["aura"]["spoil"]]) + "/" + str(ATTRIBUTES_MIN_THRESHOLD[all_girls_list[girl_index]["aura"]["spoil"]]) + ")" style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value == "devotion":
         frame:
             pos(curx ,cury + 50)
             style "description_slave_attributes_frame"
-            text "Devotion " + str(all_girls_list[girl_index]["aura"]["devotion"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["devotion"]) + " (+" + str(attributes_max_threshold[all_girls_list[girl_index]["aura"]["devotion"]]) + "/" + str(attributes_min_threshold[all_girls_list[girl_index]["aura"]["devotion"]]) + ")" style "description_slave_attributes_frame_text"
+            text "Devotion " + str(all_girls_list[girl_index]["aura"]["devotion"]) + " ; " + str(all_girls_list[girl_index]["experience"]["aura"]["devotion"]) + " (+" + str(ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index]["aura"]["devotion"]]) + "/" + str(ATTRIBUTES_MIN_THRESHOLD[all_girls_list[girl_index]["aura"]["devotion"]]) + ")" style "description_slave_attributes_frame_text"
     if description_slave_attributes_track_value == "obedience":
         frame:
             pos(curx,cury +50)
@@ -3001,16 +2996,16 @@ screen homehome_attributes_menu():
         textbutton mood_textvalue_10 anchor (0.5,0.5):
             style "slave_mood_style"
             action SetVariable("current_menu",203), Jump("Home")
-            hovered SetVariable("mood_textvalue_10",dic_slave_moodlevel_no_color[mood_textvalue_10])
-            unhovered SetVariable("mood_textvalue_10",dic_slave_moodlevel2[mood_textvalue_10])
+            hovered SetVariable("mood_textvalue_10",DIC_SLAVE_MOODLEVEL_NO_COLOR[mood_textvalue_10])
+            unhovered SetVariable("mood_textvalue_10",DIC_SLAVE_MOODLEVEL2[mood_textvalue_10])
         textbutton excitement_textvalue anchor (0.5,0.5):
             style "slave_mood_style"
             action Show("excitement_screen")
-            hovered SetVariable("excitement_textvalue",dic_master_excitement[excitement_value])
-            unhovered SetVariable("excitement_textvalue",dic_master_excitement_colored[excitement_value])
-        textbutton dic_hygiene_condition[hygiene_value_9] anchor (0.5,0.5):
+            hovered SetVariable("excitement_textvalue",DIC_MASTER_EXCITEMENT[excitement_value])
+            unhovered SetVariable("excitement_textvalue",DIC_MASTER_EXCITEMENT_COLORED[excitement_value])
+        textbutton DIC_HYGIENE_CONDITION[hygiene_value_9] anchor (0.5,0.5):
             style "home_condition_style" + str(hygiene_value_9)
-            action SetVariable("all_hygiene_multidic",dic_hygiene_condition), Show("all_hygiene_attributes")
+            action SetVariable("all_hygiene_multidic",DIC_HYGIENE_CONDITION), Show("all_hygiene_attributes")
         add "spacer" size(0,60)
         if girl_index in all_girls_list and "ava_clear" in all_girls_list[girl_index] and all_girls_list[girl_index]["conscience"]:
             imagebutton anchor (0.5,0.5):
@@ -3031,8 +3026,8 @@ screen homehome_attributes_menu():
             textbutton all_girls_list[girl_index]["mood_label"] anchor (0.5,0.5):
                 style "slave_mood_style"
                 action Show("mood_attributes")
-                hovered SetDict(all_girls_list[girl_index],"mood_label",dic_slave_moodlevel_no_color[all_girls_list[girl_index]["mood_label"]])
-                unhovered SetDict(all_girls_list[girl_index],"mood_label",dic_slave_moodlevel2[all_girls_list[girl_index]["mood_label"]])
+                hovered SetDict(all_girls_list[girl_index],"mood_label",DIC_SLAVE_MOODLEVEL_NO_COLOR[all_girls_list[girl_index]["mood_label"]])
+                unhovered SetDict(all_girls_list[girl_index],"mood_label",DIC_SLAVE_MOODLEVEL2[all_girls_list[girl_index]["mood_label"]])
 
             if all_girls_list[girl_index]["achievements"] > 0:
                 textbutton "Excelled [[" + str(all_girls_list[girl_index]["achievements"]) + "]" anchor (0.5,0.5):
@@ -3048,9 +3043,9 @@ screen homehome_attributes_menu():
                     action Show("msg",msg_text="{b}Guilty{/b}\n potential guilty is capped by fear + 1, main factor: fear, oft-repeated tasks give more guilt,  awared slave feel more guilt, and slaves who were already punished in the same day expect MORE subsequent punishments")
 
 
-            textbutton dic_hygiene_condition[all_girls_list[girl_index]["hygiene"]] anchor (0.5,0.5):
+            textbutton DIC_HYGIENE_CONDITION[all_girls_list[girl_index]["hygiene"]] anchor (0.5,0.5):
                 style "home_condition_style" + str(all_girls_list[girl_index]["hygiene"])
-                action SetVariable("all_hygiene_multidic",dic_hygiene_condition), Show("all_hygiene_attributes")
+                action SetVariable("all_hygiene_multidic",DIC_HYGIENE_CONDITION), Show("all_hygiene_attributes")
         else:
             text "" color "#000000" font "fonts/Segoe Print.ttf" size 12
             text "" color "#000000" font "fonts/Segoe Print.ttf" size 12
@@ -3059,17 +3054,17 @@ screen homehome_attributes_menu():
         add "blank_ava.webp" size(140,140) anchor (0.5,0.5)
         add "spacer" size(0,-55)
         text "No assistant" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
-        textbutton dic_home_condition[home_hygiene_value] anchor (0.5,0.5):
+        textbutton DIC_HOME_CONDITION[home_hygiene_value] anchor (0.5,0.5):
             style "home_condition_style" + str(home_hygiene_value)
-            action SetVariable("all_hygiene_multidic",dic_home_condition), Show("all_hygiene_attributes")
+            action SetVariable("all_hygiene_multidic",DIC_HOME_CONDITION), Show("all_hygiene_attributes")
         text "Cannned food" anchor (0.5,0.5) color "#000000" font "fonts/Segoe Print.ttf" size 12
     if len(all_girls_list) > 0:
         add "black" pos(0.84572,0.36361) xysize(27,20)
         textbutton all_girls_list[girl_index]["rating_text_display"] pos(0.8465,0.365):
             style "rating_button"
             action Show("msg",msg_text=all_girls_list[girl_index]["rating_help_text"])
-            hovered SetDict(all_girls_list[girl_index], "rating_text_display",dic_rating[all_girls_list[girl_index]["rating"]])
-            unhovered SetDict(all_girls_list[girl_index], "rating_text_display",dic_rating_colored[all_girls_list[girl_index]["rating"]])
+            hovered SetDict(all_girls_list[girl_index], "rating_text_display",DIC_RATING[all_girls_list[girl_index]["rating"]])
+            unhovered SetDict(all_girls_list[girl_index], "rating_text_display",DIC_RATING_COLORED[all_girls_list[girl_index]["rating"]])
 
     vbox:
         pos(0.97,0.335)
@@ -3174,7 +3169,7 @@ screen mood_attributes():
             size 20
             font "fonts/Segoe Print.ttf"
         for values in range(11):  # 0 to 10 inclusive
-            textbutton dic_slave_mood_show["mood"][values] anchor (0.5,0.5):
+            textbutton DIC_SLAVE_MOOD_SHOW["mood"][values] anchor (0.5,0.5):
                 style "attribute_mood"
                 action NullAction()
     text " Press space to close this window.":
@@ -3234,7 +3229,7 @@ screen all_hygiene_attributes():
 screen all_hygiene_attributes2():
     zorder 5
     add "gui/confirm_frame.png" at truecenter
-    if all_hygiene_multidic == dic_hygiene_condition:
+    if all_hygiene_multidic == DIC_HYGIENE_CONDITION:
         text "{b}HYGIENE:{/b}\n  Hygiene affect the mood and style " xmaximum  445 pos (0.33, 0.28) color "#191970" size 14 font "fonts/Segoe Print.ttf"
     else:
         text "{b}HOUSE MESS:{/b}\n  HOUSE MESS affect the slave's and master mood " xmaximum  445 pos (0.33, 0.28) color "#191970" size 14 font "fonts/Segoe Print.ttf"
@@ -3251,7 +3246,7 @@ screen all_hygiene_attributes2():
 screen master_attributes_screen():
     key "K_SPACE" action SetVariable("current_menu", 0),Hide("master_attributes_screen"),Hide("master_objectives"),Hide("master_objectives2"),SetVariable("master_screen_text",""),Jump("Home")
     add bgstyle3 xsize 1280 ysize 720
-    text dic_master_screen_text[master_screen_text] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.21,0.82) xmaximum 750
+    text DIC_MASTER_SCREEN_TEXT[master_screen_text] size 18 color "#000000" font "fonts/Consolas.ttf" pos(0.21,0.82) xmaximum 750
     imagebutton:
         idle "buttons/close_button.webp" pos (1004,1)
         hover "buttons/close_button_hover.webp"
@@ -3345,47 +3340,47 @@ screen master_attributes_screen():
         text "Slaver: " + mc size 16 color "#000000" font "fonts/Segoe Print.ttf"
         add "spacer" size(0,20)
         text "{u}CHARACTERISTICS{/u}: "  size 16 color "#000000" font "fonts/Segoe Print.ttf"
-        textbutton dic_mc_attribute["STRENGTH"][strength_value_1]:
+        textbutton DIC_MC_ATTRIBUTE["STRENGTH"][strength_value_1]:
             style "attribute_button_custom" + str(strength_value_1 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "STRENGTH")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "STRENGTH")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["PERSONALITY"][personality_value_2]:
+        textbutton DIC_MC_ATTRIBUTE["PERSONALITY"][personality_value_2]:
             style "attribute_button_custom" + str(personality_value_2 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "PERSONALITY")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "PERSONALITY")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["ALLURE"][allure_value_3]:
+        textbutton DIC_MC_ATTRIBUTE["ALLURE"][allure_value_3]:
             style "attribute_button_custom" + str(allure_value_3 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "ALLURE")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "ALLURE")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["LIBIDO"][libido_value_4]:
+        textbutton DIC_MC_ATTRIBUTE["LIBIDO"][libido_value_4]:
             style "attribute_button_custom" + str(libido_value_4 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "LIBIDO")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "LIBIDO")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["DOMINANCE"][dominance_value_5]:
+        textbutton DIC_MC_ATTRIBUTE["DOMINANCE"][dominance_value_5]:
             style "attribute_button_custom" + str(dominance_value_5 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "DOMINANCE")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "DOMINANCE")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["BRAND REPUTATION"][brand_reputation_value_6]:
+        textbutton DIC_MC_ATTRIBUTE["BRAND REPUTATION"][brand_reputation_value_6]:
             style "attribute_button_custom" + str(brand_reputation_value_6 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "BRAND REPUTATION")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "BRAND REPUTATION")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["GUILD REPUTATION"][guild_reputation_value_7]:
+        textbutton DIC_MC_ATTRIBUTE["GUILD REPUTATION"][guild_reputation_value_7]:
             style "attribute_button_custom" + str(guild_reputation_value_7 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "GUILD REPUTATION")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "GUILD REPUTATION")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["STANDARD OF LIVING"][standard_of_living_value_8]:
+        textbutton DIC_MC_ATTRIBUTE["STANDARD OF LIVING"][standard_of_living_value_8]:
             style "attribute_button_custom" + str(standard_of_living_value_8 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "STANDARD OF LIVING")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "STANDARD OF LIVING")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["HYGIENE"][hygiene_value_9]:
+        textbutton DIC_MC_ATTRIBUTE["HYGIENE"][hygiene_value_9]:
             style "attribute_button_custom" + str(hygiene_value_9 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "HYGIENE")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "HYGIENE")
@@ -3393,7 +3388,7 @@ screen master_attributes_screen():
         textbutton mood_textvalue_10:
             style "attribute_button_custom2" 
             action NullAction()
-        textbutton dic_mc_attribute["INJURIES"][injuries_value_11]:
+        textbutton DIC_MC_ATTRIBUTE["INJURIES"][injuries_value_11]:
             style "injuries_display" + str(injuries_value_11 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "INJURIES")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "INJURIES")
@@ -3565,68 +3560,68 @@ screen master_attributes_screen():
         pos(0.99,0.02)
         anchor (1.0,0.0)
         text "{u}                     SKILLS{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
-        textbutton dic_mc_attribute["TEACHING"][teaching_value_12] xalign 1.0:
+        textbutton DIC_MC_ATTRIBUTE["TEACHING"][teaching_value_12] xalign 1.0:
             style "attribute_button_custom" + str(teaching_value_12 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "TEACHING")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "TEACHING")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["STEWARDSHIP"][stewardship_value_13] xalign 1.0:
+        textbutton DIC_MC_ATTRIBUTE["STEWARDSHIP"][stewardship_value_13] xalign 1.0:
             style "attribute_button_custom" + str(stewardship_value_13 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "STEWARDSHIP")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "STEWARDSHIP")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["ARTISTRY"][artistry_value_14] xalign 1.0:
+        textbutton DIC_MC_ATTRIBUTE["ARTISTRY"][artistry_value_14] xalign 1.0:
             style "attribute_button_custom" + str(artistry_value_14 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "ARTISTRY")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "ARTISTRY")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["MEDIC"][medic_value_15] xalign 1.0:
+        textbutton DIC_MC_ATTRIBUTE["MEDIC"][medic_value_15] xalign 1.0:
             style "attribute_button_custom" + str(medic_value_15 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "MEDIC")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "MEDIC")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["FIGHTER"][fighter_value_16] xalign 1.0:
+        textbutton DIC_MC_ATTRIBUTE["FIGHTER"][fighter_value_16] xalign 1.0:
             style "attribute_button_custom" + str(fighter_value_16 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "FIGHTER")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "FIGHTER")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["MAGIC"][magic_value_17] xalign 1.0:
+        textbutton DIC_MC_ATTRIBUTE["MAGIC"][magic_value_17] xalign 1.0:
             style "attribute_button_custom" + str(magic_value_17 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "MAGIC")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "MAGIC")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["FLAGELLATION"][flagellation_value_18] xalign 1.0:
+        textbutton DIC_MC_ATTRIBUTE["FLAGELLATION"][flagellation_value_18] xalign 1.0:
             style "attribute_button_custom" + str(flagellation_value_18 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "FLAGELLATION")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "FLAGELLATION")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["TORTURE"][torture_value_19] xalign 1.0:
+        textbutton DIC_MC_ATTRIBUTE["TORTURE"][torture_value_19] xalign 1.0:
             style "attribute_button_custom" + str(torture_value_19 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "TORTURE")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "TORTURE")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["BINDING"][binding_value_20] xalign 1.0:
+        textbutton DIC_MC_ATTRIBUTE["BINDING"][binding_value_20] xalign 1.0:
             style "attribute_button_custom" + str(binding_value_20 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "BINDING")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "BINDING")
             unhovered Hide("description_master_attributes")
         text "{u}     SEX TECHNIQUES{/u}" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
-        textbutton dic_mc_attribute["PETTING"][petting_value_21] xalign 1.0:
+        textbutton DIC_MC_ATTRIBUTE["PETTING"][petting_value_21] xalign 1.0:
             style "attribute_button_custom" + str(petting_value_21 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "PETTING")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "PETTING")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["ORAL SEX"][oral_sex_value_22] xalign 1.0:
+        textbutton DIC_MC_ATTRIBUTE["ORAL SEX"][oral_sex_value_22] xalign 1.0:
             style "attribute_button_custom" + str(oral_sex_value_22 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "ORAL SEX")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "ORAL SEX")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["PENETRATION"][penetration_value_23] xalign 1.0:
+        textbutton DIC_MC_ATTRIBUTE["PENETRATION"][penetration_value_23] xalign 1.0:
             style "attribute_button_custom" + str(penetration_value_23 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "PENETRATION")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "PENETRATION")
             unhovered Hide("description_master_attributes")
-        textbutton dic_mc_attribute["FETISHISM"][fetishism_value_24] xalign 1.0:
+        textbutton DIC_MC_ATTRIBUTE["FETISHISM"][fetishism_value_24] xalign 1.0:
             style "attribute_button_custom" + str(fetishism_value_24 + 1)
             action Show("custom_value_information"), SetVariable("customboxcheck", True), SetVariable("dic_mc_normal_selection_textdescription_value", "FETISHISM")
             hovered Show("description_master_attributes"), SetVariable("description_master_attributes_track_value", "FETISHISM")
@@ -3641,135 +3636,135 @@ screen description_master_attributes():
         frame:
             pos(curx + 150,cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["STRENGTH"][strength_value_1] +" "+ dic_slave_tier_classification[strength_value_1] + " | " + str(strength_experience_value_1) + "/" + str(dic_master_cap["STRENGTH"][strength_value_1])  style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["STRENGTH"][strength_value_1] +" "+ DIC_SLAVE_TIER_CLASSIFICATION[strength_value_1] + " | " + str(strength_experience_value_1) + "/" + str(DIC_MASTER_CAP["STRENGTH"][strength_value_1])  style "description_slave_attributes_frame_text"
     elif description_master_attributes_track_value == "PERSONALITY":
         frame:
             pos(curx + 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["PERSONALITY"][personality_value_2] + " " + dic_slave_tier_classification[personality_value_2] + " | " + str(personality_experience_value_2) + "/" + str(dic_master_cap["PERSONALITY"][personality_value_2]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["PERSONALITY"][personality_value_2] + " " + DIC_SLAVE_TIER_CLASSIFICATION[personality_value_2] + " | " + str(personality_experience_value_2) + "/" + str(DIC_MASTER_CAP["PERSONALITY"][personality_value_2]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "ALLURE":
         frame:
             pos(curx + 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["ALLURE"][allure_value_3] + " " + dic_slave_tier_classification[allure_value_3] + " | " + str(allure_value_3) + "/" + str(dic_master_cap["ALLURE"][allure_value_3]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["ALLURE"][allure_value_3] + " " + DIC_SLAVE_TIER_CLASSIFICATION[allure_value_3] + " | " + str(allure_value_3) + "/" + str(DIC_MASTER_CAP["ALLURE"][allure_value_3]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "LIBIDO":
         frame:
             pos(curx + 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["LIBIDO"][libido_value_4] + " " + dic_slave_tier_classification[libido_value_4] + " | " + str(libido_experience_value_4) + "/" + str(dic_master_cap["LIBIDO"][libido_value_4]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["LIBIDO"][libido_value_4] + " " + DIC_SLAVE_TIER_CLASSIFICATION[libido_value_4] + " | " + str(libido_experience_value_4) + "/" + str(DIC_MASTER_CAP["LIBIDO"][libido_value_4]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "DOMINANCE":
         frame:
             pos(curx + 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["DOMINANCE"][dominance_value_5] + " " + dic_slave_tier_classification[dominance_value_5] + " | " + str(dominance_experience_value_5) + "/" + str(dic_master_cap["DOMINANCE"][dominance_value_5]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["DOMINANCE"][dominance_value_5] + " " + DIC_SLAVE_TIER_CLASSIFICATION[dominance_value_5] + " | " + str(dominance_experience_value_5) + "/" + str(DIC_MASTER_CAP["DOMINANCE"][dominance_value_5]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "BRAND REPUTATION":
         frame:
             pos(curx + 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["BRAND REPUTATION"][brand_reputation_value_6] + " " + dic_slave_tier_classification[brand_reputation_value_6] + " | " + str(brand_reputation_experience_value_6) + "/" + str(dic_master_cap["BRAND REPUTATION"][brand_reputation_value_6]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["BRAND REPUTATION"][brand_reputation_value_6] + " " + DIC_SLAVE_TIER_CLASSIFICATION[brand_reputation_value_6] + " | " + str(brand_reputation_experience_value_6) + "/" + str(DIC_MASTER_CAP["BRAND REPUTATION"][brand_reputation_value_6]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "GUILD REPUTATION":
         frame:
             pos(curx + 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["GUILD REPUTATION"][guild_reputation_value_7] + " " + dic_slave_tier_classification[guild_reputation_value_7] + " | " + str(guild_reputation_experience_value_7) + "/" + str(dic_master_cap["GUILD REPUTATION"][guild_reputation_value_7]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["GUILD REPUTATION"][guild_reputation_value_7] + " " + DIC_SLAVE_TIER_CLASSIFICATION[guild_reputation_value_7] + " | " + str(guild_reputation_experience_value_7) + "/" + str(DIC_MASTER_CAP["GUILD REPUTATION"][guild_reputation_value_7]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "STANDARD OF LIVING":
         frame:
             pos(curx + 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["STANDARD OF LIVING"][standard_of_living_value_8] + " " + dic_slave_tier_classification[standard_of_living_value_8] + " | " + str(standard_of_living_value_8) + "/" + str(dic_master_cap["STANDARD OF LIVING"][standard_of_living_value_8]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["STANDARD OF LIVING"][standard_of_living_value_8] + " " + DIC_SLAVE_TIER_CLASSIFICATION[standard_of_living_value_8] + " | " + str(standard_of_living_value_8) + "/" + str(DIC_MASTER_CAP["STANDARD OF LIVING"][standard_of_living_value_8]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "HYGIENE":
         frame:
             pos(curx + 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["HYGIENE"][hygiene_value_9] + " " + dic_slave_tier_classification[hygiene_value_9] + " | " + str(hygiene_value_9) + "/" + str(dic_master_cap["HYGIENE"][hygiene_value_9]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["HYGIENE"][hygiene_value_9] + " " + DIC_SLAVE_TIER_CLASSIFICATION[hygiene_value_9] + " | " + str(hygiene_value_9) + "/" + str(DIC_MASTER_CAP["HYGIENE"][hygiene_value_9]) style "description_slave_attributes_frame_text"
     elif description_master_attributes_track_value == "INJURIES":
         frame:
             pos(curx + 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["INJURIES"][injuries_value_11] + " " + dic_slave_tier_classification[injuries_value_11] + " | " + str(injuries_experience_value_11) + "/" + str(dic_master_cap["INJURIES"][injuries_value_11]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["INJURIES"][injuries_value_11] + " " + DIC_SLAVE_TIER_CLASSIFICATION[injuries_value_11] + " | " + str(injuries_experience_value_11) + "/" + str(DIC_MASTER_CAP["INJURIES"][injuries_value_11]) style "description_slave_attributes_frame_text"
     elif description_master_attributes_track_value == "TEACHING":
         frame:
             pos(curx - 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["TEACHING"][teaching_value_12] + " | " + str(teaching_experience_value_12) + "/" + str(dic_master_cap["TEACHING"][teaching_value_12]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["TEACHING"][teaching_value_12] + " | " + str(teaching_experience_value_12) + "/" + str(DIC_MASTER_CAP["TEACHING"][teaching_value_12]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "STEWARDSHIP":
         frame:
             pos(curx - 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["STEWARDSHIP"][stewardship_value_13] + " | " + str(stewardship_experience_value_13) + "/" + str(dic_master_cap["STEWARDSHIP"][stewardship_value_13]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["STEWARDSHIP"][stewardship_value_13] + " | " + str(stewardship_experience_value_13) + "/" + str(DIC_MASTER_CAP["STEWARDSHIP"][stewardship_value_13]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "ARTISTRY":
         frame:
             pos(curx - 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["ARTISTRY"][artistry_value_14] + " | " + str(artistry_experience_value_14) + "/" + str(dic_master_cap["ARTISTRY"][artistry_value_14]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["ARTISTRY"][artistry_value_14] + " | " + str(artistry_experience_value_14) + "/" + str(DIC_MASTER_CAP["ARTISTRY"][artistry_value_14]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "MEDIC":
         frame:
             pos(curx - 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["MEDIC"][medic_value_15] + " | " + str(medic_experience_value_15) + "/" + str(dic_master_cap["MEDIC"][medic_value_15]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["MEDIC"][medic_value_15] + " | " + str(medic_experience_value_15) + "/" + str(DIC_MASTER_CAP["MEDIC"][medic_value_15]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "FIGHTER":
         frame:
             pos(curx - 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["FIGHTER"][fighter_value_16] + " | " + str(fighter_experience_value_16) + "/" + str(dic_master_cap["FIGHTER"][fighter_value_16]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["FIGHTER"][fighter_value_16] + " | " + str(fighter_experience_value_16) + "/" + str(DIC_MASTER_CAP["FIGHTER"][fighter_value_16]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "MAGIC":
         frame:
             pos(curx - 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["MAGIC"][magic_value_17] + " | " + str(magic_experience_value_17) + "/" + str(dic_master_cap["MAGIC"][magic_value_17]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["MAGIC"][magic_value_17] + " | " + str(magic_experience_value_17) + "/" + str(DIC_MASTER_CAP["MAGIC"][magic_value_17]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "FLAGELLATION":
         frame:
             pos(curx - 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["FLAGELLATION"][flagellation_value_18] + " | " + str(flagellation_experience_value_18) + "/" + str(dic_master_cap["FLAGELLATION"][flagellation_value_18]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["FLAGELLATION"][flagellation_value_18] + " | " + str(flagellation_experience_value_18) + "/" + str(DIC_MASTER_CAP["FLAGELLATION"][flagellation_value_18]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "TORTURE":
         frame:
             pos(curx - 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["TORTURE"][torture_value_19] + " | " + str(torture_experience_value_19) + "/" + str(dic_master_cap["TORTURE"][torture_value_19]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["TORTURE"][torture_value_19] + " | " + str(torture_experience_value_19) + "/" + str(DIC_MASTER_CAP["TORTURE"][torture_value_19]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "BINDING":
         frame:
             pos(curx - 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["BINDING"][binding_value_20] + " | " + str(binding_experience_value_20) + "/" + str(dic_master_cap["BINDING"][binding_value_20]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["BINDING"][binding_value_20] + " | " + str(binding_experience_value_20) + "/" + str(DIC_MASTER_CAP["BINDING"][binding_value_20]) style "description_slave_attributes_frame_text"
     elif description_master_attributes_track_value == "PETTING":
         frame:
             pos(curx - 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["PETTING"][petting_value_21] + " | " + str(petting_experience_value_21) + "/" + str(dic_master_cap["PETTING"][petting_value_21]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["PETTING"][petting_value_21] + " | " + str(petting_experience_value_21) + "/" + str(DIC_MASTER_CAP["PETTING"][petting_value_21]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "ORAL SEX":
         frame:
             pos(curx - 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["ORAL SEX"][oral_sex_value_22] + " | " + str(oral_sex_experience_value_22) + "/" + str(dic_master_cap["ORAL SEX"][oral_sex_value_22]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["ORAL SEX"][oral_sex_value_22] + " | " + str(oral_sex_experience_value_22) + "/" + str(DIC_MASTER_CAP["ORAL SEX"][oral_sex_value_22]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "PENETRATION":
         frame:
             pos(curx - 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["PENETRATION"][penetration_value_23] + " | " + str(penetration_experience_value_23) + "/" + str(dic_master_cap["PENETRATION"][penetration_value_23]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["PENETRATION"][penetration_value_23] + " | " + str(penetration_experience_value_23) + "/" + str(DIC_MASTER_CAP["PENETRATION"][penetration_value_23]) style "description_slave_attributes_frame_text"
 
     elif description_master_attributes_track_value == "FETISHISM":
         frame:
             pos(curx - 150, cury)
             style "description_slave_attributes_frame"
-            text dic_mc_attribute["FETISHISM"][fetishism_value_24] + " | " + str(fetishism_experience_value_24) + "/" + str(dic_master_cap["FETISHISM"][fetishism_value_24]) style "description_slave_attributes_frame_text"
+            text DIC_MC_ATTRIBUTE["FETISHISM"][fetishism_value_24] + " | " + str(fetishism_experience_value_24) + "/" + str(DIC_MASTER_CAP["FETISHISM"][fetishism_value_24]) style "description_slave_attributes_frame_text"
 screen master_storage():
     add "bg/page_blank.webp" xsize 795 ysize 535 pos(0.5028,0.42) anchor (0.5,0.5)
     vbox:
@@ -3865,15 +3860,15 @@ screen master_objectives2():
         if master_objectives_index == "guild_examination":
             text "To complete the Guild examination, I must raise the rating of my slave at least to {color=#6B0084}C+ rank{/color}" size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
         if master_objectives_index == "reputation":
-            textbutton dic_master_reputation_objectives["brand_fame"][reputation_value_1] xmaximum 750 :
+            textbutton DIC_MASTER_REPUTATION_OBJECTIVES["brand_fame"][reputation_value_1] xmaximum 750 :
                 style "attribute_button_custom" + str(reputation_value_1 +1)
-            textbutton dic_master_reputation_objectives["camira_fame"][reputation_value_1] xmaximum 750 :
+            textbutton DIC_MASTER_REPUTATION_OBJECTIVES["camira_fame"][reputation_value_1] xmaximum 750 :
                 style "attribute_button_custom" + str(master_house_reputation["camira_house"] +1)
-            textbutton dic_master_reputation_objectives["serpis_fame"][reputation_value_1] xmaximum 750 :
+            textbutton DIC_MASTER_REPUTATION_OBJECTIVES["serpis_fame"][reputation_value_1] xmaximum 750 :
                 style "attribute_button_custom" + str(master_house_reputation["serpis_house"] +1)
-            textbutton dic_master_reputation_objectives["taurus_fame"][reputation_value_1] xmaximum 750 :
+            textbutton DIC_MASTER_REPUTATION_OBJECTIVES["taurus_fame"][reputation_value_1] xmaximum 750 :
                 style "attribute_button_custom" + str(master_house_reputation["taurus_house"] +1)
-            textbutton dic_master_reputation_objectives["corvus_fame"][reputation_value_1] xmaximum 750 :
+            textbutton DIC_MASTER_REPUTATION_OBJECTIVES["corvus_fame"][reputation_value_1] xmaximum 750 :
                 style "attribute_button_custom" + str(master_house_reputation["corvus_house"] +1)
         if master_objectives_index == "patrician":
             text "   In Rome, there are five persons who are able to give me the status of patrician and lead me to the category of honorary citizens:" size 16 color "#191970" font "fonts/Segoe Print.ttf" xmaximum 750 
@@ -4067,19 +4062,19 @@ screen master_equipment_menu():
             anchor(1.0,0.0)
             spacing -2
             text "" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
-            for values in range(0,len(inventory_type[equipment_choice])):
-                if master_combat_equipment[equipment_choice] != dic_combat_full[inventory_type[equipment_choice][values]]:
+            for values in range(0,len(INVENTORY_TYPE[equipment_choice])):
+                if master_combat_equipment[equipment_choice] != DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]]:
                     if equipment_choice == "armour":
                         if values == 0:
                             textbutton "- Remove -" xalign 1.0: 
                                 style "slave_equipment_menu_button2"
                                 action SetDict(master_combat_equipment, equipment_choice,"Without armour"),SetDict(inventory, inventory_track, inventory[inventory_track]+1),SetVariable("inventory_track", ""), Jump("Home")
-                        elif inventory[inventory_type[equipment_choice][values]] > 0:
-                            textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                        elif inventory[INVENTORY_TYPE[equipment_choice][values]] > 0:
+                            textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                 style "slave_equipment_menu_button2"
-                                action SetDict(master_combat_equipment, equipment_choice, dic_combat_full[inventory_type[equipment_choice][values]]),SetDict(inventory, inventory_type[equipment_choice][values], inventory[inventory_type[equipment_choice][values]]-1),SetVariable("inventory_track", inventory_type[equipment_choice][values]),SetDict(inventory, inventory_track, inventory[inventory_track]+1), Jump("Home")
+                                action SetDict(master_combat_equipment, equipment_choice, DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]]),SetDict(inventory, INVENTORY_TYPE[equipment_choice][values], inventory[INVENTORY_TYPE[equipment_choice][values]]-1),SetVariable("inventory_track", INVENTORY_TYPE[equipment_choice][values]),SetDict(inventory, inventory_track, inventory[inventory_track]+1), Jump("Home")
                         else:
-                            textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                            textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                 style "slave_equipment_menu_button"
                                 action NullAction()
                     elif equipment_choice in ["amulet","ring"]:
@@ -4088,50 +4083,50 @@ screen master_equipment_menu():
                                 textbutton "- Remove -" xalign 1.0: 
                                     style "slave_equipment_menu_button2"
                                     action SetDict(master_combat_equipment, equipment_choice,""),SetDict(inventory, inventory_track, inventory[inventory_track]+1),SetVariable("inventory_track", ""),Jump("Home")
-                        elif inventory[inventory_type[equipment_choice][values]] > 0:
-                            textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                        elif inventory[INVENTORY_TYPE[equipment_choice][values]] > 0:
+                            textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                 style "slave_equipment_menu_button2"
-                                action SetDict(master_combat_equipment, equipment_choice, dic_combat_full[inventory_type[equipment_choice][values]]),SetDict(inventory, inventory_type[equipment_choice][values], inventory[inventory_type[equipment_choice][values]]-1),SetVariable("inventory_track", inventory_type[equipment_choice][values]),SetDict(inventory, inventory_track, inventory[inventory_track]+1), Jump("Home")
+                                action SetDict(master_combat_equipment, equipment_choice, DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]]),SetDict(inventory, INVENTORY_TYPE[equipment_choice][values], inventory[INVENTORY_TYPE[equipment_choice][values]]-1),SetVariable("inventory_track", INVENTORY_TYPE[equipment_choice][values]),SetDict(inventory, inventory_track, inventory[inventory_track]+1), Jump("Home")
                         else:
-                            textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                            textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                 style "slave_equipment_menu_button"
                                 action NullAction()
                     elif equipment_choice == "weapon":
                         python:
                             if master_combat_equipment["weapon"] != "Fist":
-                                inventory_track_weapon = dic_combat_full_inv[master_combat_equipment["weapon"]]
+                                inventory_track_weapon = DIC_COMBAT_FULL_INV[master_combat_equipment["weapon"]]
                             else:
                                 inventory_track_weapon = ""
-                        if master_combat_equipment["weapon2"] != dic_combat_full[inventory_type[equipment_choice][values]] or master_combat_equipment["weapon2"] == "Fist":
+                        if master_combat_equipment["weapon2"] != DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] or master_combat_equipment["weapon2"] == "Fist":
                                 if values == 0:
                                     textbutton "- Remove -" xalign 1.0: 
                                         style "slave_equipment_menu_button2"
                                         action SetDict(master_combat_equipment, equipment_choice,"Fist"),SetDict(inventory, inventory_track_weapon, inventory[inventory_track_weapon]+1),SetVariable("inventory_track_weapon", ""),Jump("Home")
-                                elif inventory[inventory_type[equipment_choice][values]] > 0:
-                                    textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                                elif inventory[INVENTORY_TYPE[equipment_choice][values]] > 0:
+                                    textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                         style "slave_equipment_menu_button2"
-                                        action SetDict(master_combat_equipment, equipment_choice, dic_combat_full[inventory_type[equipment_choice][values]]),SetDict(inventory, inventory_type[equipment_choice][values], inventory[inventory_type[equipment_choice][values]]-1),SetVariable("inventory_track_weapon", inventory_type[equipment_choice][values]),SetDict(inventory, inventory_track_weapon, inventory[inventory_track_weapon]+1), Jump("Home")
+                                        action SetDict(master_combat_equipment, equipment_choice, DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]]),SetDict(inventory, INVENTORY_TYPE[equipment_choice][values], inventory[INVENTORY_TYPE[equipment_choice][values]]-1),SetVariable("inventory_track_weapon", INVENTORY_TYPE[equipment_choice][values]),SetDict(inventory, inventory_track_weapon, inventory[inventory_track_weapon]+1), Jump("Home")
                                 else:
-                                    textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                                    textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                         style "slave_equipment_menu_button"
                                         action NullAction()
                     elif equipment_choice == "weapon2":
                         python:
                             if master_combat_equipment["weapon2"] != "Fist":
-                                inventory_track_weapon2 = dic_combat_full_inv[master_combat_equipment["weapon2"]]
+                                inventory_track_weapon2 = DIC_COMBAT_FULL_INV[master_combat_equipment["weapon2"]]
                             else:
                                 inventory_track_weapon2 = ""
-                        if master_combat_equipment["weapon"] != dic_combat_full[inventory_type[equipment_choice][values]] or master_combat_equipment["weapon"] == "Fist":
+                        if master_combat_equipment["weapon"] != DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] or master_combat_equipment["weapon"] == "Fist":
                             if values == 0:
                                 textbutton "- Remove -" xalign 1.0: 
                                     style "slave_equipment_menu_button2"
                                     action SetDict(master_combat_equipment, equipment_choice,"Fist"),SetDict(inventory, inventory_track_weapon2, inventory[inventory_track_weapon2]+1),SetVariable("inventory_track_weapon2", ""),Jump("Home")
-                            elif inventory[inventory_type[equipment_choice][values]] > 0:
-                                textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                            elif inventory[INVENTORY_TYPE[equipment_choice][values]] > 0:
+                                textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                     style "slave_equipment_menu_button2"
-                                    action SetDict(master_combat_equipment, equipment_choice, dic_combat_full[inventory_type[equipment_choice][values]]),SetDict(inventory, inventory_type[equipment_choice][values], inventory[inventory_type[equipment_choice][values]]-1),SetVariable("inventory_track_weapon2", inventory_type[equipment_choice][values]),SetDict(inventory, inventory_track_weapon2, inventory[inventory_track_weapon2]+1), Jump("Home")
+                                    action SetDict(master_combat_equipment, equipment_choice, DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]]),SetDict(inventory, INVENTORY_TYPE[equipment_choice][values], inventory[INVENTORY_TYPE[equipment_choice][values]]-1),SetVariable("inventory_track_weapon2", INVENTORY_TYPE[equipment_choice][values]),SetDict(inventory, inventory_track_weapon2, inventory[inventory_track_weapon2]+1), Jump("Home")
                             else:
-                                textbutton dic_combat_full[inventory_type[equipment_choice][values]] xalign 1.0:
+                                textbutton DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] xalign 1.0:
                                         style "slave_equipment_menu_button"
                                         action NullAction()
         vbox:   
@@ -4139,18 +4134,18 @@ screen master_equipment_menu():
             spacing -2
             text "" size 16 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
             if available_options == 2:
-                for values in range(0,len(inventory_type[equipment_choice])):
-                    if master_combat_equipment[equipment_choice] != dic_combat_full[inventory_type[equipment_choice][values]]:
-                        if (master_combat_equipment["weapon2"] != dic_combat_full[inventory_type[equipment_choice][values]] or master_combat_equipment["weapon2"] == "Fist") and (master_combat_equipment["weapon"] != dic_combat_full[inventory_type[equipment_choice][values]] or master_combat_equipment["weapon"] == "Fist"):
-                            if inventory[inventory_type[equipment_choice][values]] == "-":
+                for values in range(0,len(INVENTORY_TYPE[equipment_choice])):
+                    if master_combat_equipment[equipment_choice] != DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]]:
+                        if (master_combat_equipment["weapon2"] != DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] or master_combat_equipment["weapon2"] == "Fist") and (master_combat_equipment["weapon"] != DIC_COMBAT_FULL[INVENTORY_TYPE[equipment_choice][values]] or master_combat_equipment["weapon"] == "Fist"):
+                            if inventory[INVENTORY_TYPE[equipment_choice][values]] == "-":
                                 if master_combat_equipment[equipment_choice] != "":
-                                    text str(inventory[inventory_type[equipment_choice][values]]) xalign 0.5:
+                                    text str(inventory[INVENTORY_TYPE[equipment_choice][values]]) xalign 0.5:
                                         style "slave_equipment_menu_button2_text"
-                            elif inventory[inventory_type[equipment_choice][values]] > 0:
-                                text str(inventory[inventory_type[equipment_choice][values]]) xalign 0.5:
+                            elif inventory[INVENTORY_TYPE[equipment_choice][values]] > 0:
+                                text str(inventory[INVENTORY_TYPE[equipment_choice][values]]) xalign 0.5:
                                     style "slave_equipment_menu_button2_text"
                             else:
-                                text str(inventory[inventory_type[equipment_choice][values]]) xalign 0.5:
+                                text str(inventory[INVENTORY_TYPE[equipment_choice][values]]) xalign 0.5:
                                     style "slave_equipment_menu_button_text"
     vbox:
         pos(0.62,0.068)
@@ -4160,40 +4155,40 @@ screen master_equipment_menu():
             text "{u}Active effects:{/u}" size 14 color "#000000" font "fonts/Segoe Print.ttf" xalign 1.0
             #TODO ADD CLOTHES EFFECT DESCRIPTION how much bonus it give you for wearing that stuff
         elif available_options == 1:
-            for values in master_inventory_type[equipment_choice]:
+            for values in MASTER_INVENTORY_TYPE[equipment_choice]:
                 if equipment_choice not in ["accessories1","accessories2","accessories3","accessories4","accessories5"]:
                     if equipment_choice != "clothes":
                         if master_equipment[equipment_choice] != "":
                             textbutton "- Remove -" xalign 1.0:
                                 style "slave_equipment_menu_button2"
                                 action SetDict(master_equipment, equipment_choice,""),SetVariable("available_options", 0), Jump("equipment_check")
-                    if master_equipment[equipment_choice] != dic_master_items[values]["name"]:
+                    if master_equipment[equipment_choice] != DIC_MASTER_ITEMS[values]["name"]:
                         if inventory[values] > 0:
-                            textbutton dic_master_items[values]["name"] xalign 1.0:
+                            textbutton DIC_MASTER_ITEMS[values]["name"] xalign 1.0:
                                 style "slave_equipment_menu_button2"
-                                action SetDict(master_equipment, equipment_choice, dic_master_items[values]["name"]), SetVariable("master_equipment_choice_image", dic_master_items[values]["image"]),SetVariable("master_equipment_choice_image_text", dic_master_items[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
-                                hovered SetVariable("master_equipment_choice_image", dic_master_items[values]["image"]),SetVariable("master_equipment_choice_image_text", dic_master_items[values]["desc"])
+                                action SetDict(master_equipment, equipment_choice, DIC_MASTER_ITEMS[values]["name"]), SetVariable("master_equipment_choice_image", DIC_MASTER_ITEMS[values]["image"]),SetVariable("master_equipment_choice_image_text", DIC_MASTER_ITEMS[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
+                                hovered SetVariable("master_equipment_choice_image", DIC_MASTER_ITEMS[values]["image"]),SetVariable("master_equipment_choice_image_text", DIC_MASTER_ITEMS[values]["desc"])
 
                         else:
-                            textbutton dic_master_items[values]["name"] xalign 1.0:
+                            textbutton DIC_MASTER_ITEMS[values]["name"] xalign 1.0:
                                 style "slave_equipment_menu_button"
                                 action NullAction()
-                                hovered SetVariable("master_equipment_choice_image", dic_master_items[values]["image"]),SetVariable("master_equipment_choice_image_text", dic_master_items[values]["desc"])
+                                hovered SetVariable("master_equipment_choice_image", DIC_MASTER_ITEMS[values]["image"]),SetVariable("master_equipment_choice_image_text", DIC_MASTER_ITEMS[values]["desc"])
                 else:    
                     if master_equipment[equipment_choice] != "":
                         textbutton "- Remove -" xalign 1.0:
                             style "slave_equipment_menu_button2"
                             action SetDict(master_equipment, equipment_choice,""),SetVariable("available_options", 0), Jump("equipment_check")
-                    if master_equipment[equipment_choice] != dic_master_items[values]["name"]:
+                    if master_equipment[equipment_choice] != DIC_MASTER_ITEMS[values]["name"]:
                         if inventory[values] > 0:
-                            if dic_master_items[values]["name"] not in [master_equipment["accessories1"],master_equipment["accessories2"],master_equipment["accessories3"],master_equipment["accessories4"],master_equipment["accessories5"]]: 
-                                textbutton dic_master_items[values]["name"] xalign 1.0:
+                            if DIC_MASTER_ITEMS[values]["name"] not in [master_equipment["accessories1"],master_equipment["accessories2"],master_equipment["accessories3"],master_equipment["accessories4"],master_equipment["accessories5"]]: 
+                                textbutton DIC_MASTER_ITEMS[values]["name"] xalign 1.0:
                                     style "slave_equipment_menu_button2"
-                                    action SetDict(master_equipment, equipment_choice, dic_master_items[values]["name"]), SetVariable("master_equipment_choice_image", dic_master_items[values]["image"]),SetVariable("master_equipment_choice_image_text", dic_master_items[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
-                                    hovered SetVariable("master_equipment_choice_image", dic_master_items[values]["image"]),SetVariable("master_equipment_choice_image_text", dic_master_items[values]["desc"])
+                                    action SetDict(master_equipment, equipment_choice, DIC_MASTER_ITEMS[values]["name"]), SetVariable("master_equipment_choice_image", DIC_MASTER_ITEMS[values]["image"]),SetVariable("master_equipment_choice_image_text", DIC_MASTER_ITEMS[values]["desc"]),SetVariable("available_options", 0), Jump("equipment_check")
+                                    hovered SetVariable("master_equipment_choice_image", DIC_MASTER_ITEMS[values]["image"]),SetVariable("master_equipment_choice_image_text", DIC_MASTER_ITEMS[values]["desc"])
 
                         else:
-                            textbutton dic_master_items[values]["name"] xalign 1.0:
+                            textbutton DIC_MASTER_ITEMS[values]["name"] xalign 1.0:
                                 style "slave_equipment_menu_button"
                                 action NullAction()
-                                hovered SetVariable("master_equipment_choice_image", dic_master_items[values]["image"]),SetVariable("master_equipment_choice_image_text", dic_master_items[values]["desc"])
+                                hovered SetVariable("master_equipment_choice_image", DIC_MASTER_ITEMS[values]["image"]),SetVariable("master_equipment_choice_image_text", DIC_MASTER_ITEMS[values]["desc"])
