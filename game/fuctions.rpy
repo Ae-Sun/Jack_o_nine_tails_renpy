@@ -2954,9 +2954,21 @@ init python:
         energy_value += stored_yesterday_energy - yesterday_exhaustion
         if energy_value < 0:
             strength_experience_value_1 += energy_value*3
-        energy_value += (strength_value_1 - injuries_value_11)*2
+        energy_value += (strength_value_1 + injuries_value_11 - 5)*2 #TODO NEED TO FIX THIS, THE ENERGY VALUE IS BEHAVING WEIRD
         stored_yesterday_energy = 0
         yesterday_exhaustion = 0
+    def cap_max_energy_cap():
+        global energy_value, medic_value_15
+        if medic_value_15 == 5:
+            n = 1
+        elif medic_value_15 == 6:
+            n = 2
+        else:
+            n = 0
+        energy_value = min(max(10 + n, strength_value_1 + n),energy_value)
+        girl["energy"] = min(max(10 + n, girl["attributes"]["endurance"] + n), girl["energy"])
+
+    
 
 
 

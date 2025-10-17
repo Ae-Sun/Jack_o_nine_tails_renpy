@@ -1,33 +1,33 @@
-2025-10-17 10:56:08 UTC
+2025-10-17 15:19:46 UTC
 Windows-11-10.0.26100-SP0
 Ren'Py 8.4.1.25072401
 
-Early init took 160 ms
-Loading error handling took 99 ms
-Loading script took 1733 ms
+Early init took 193 ms
+Loading error handling took 70 ms
+Loading script took 1780 ms
 Loading save slot metadata took 32 ms
 Loading persistent took 0 ms
-Running init code took 305 ms
-Loading analysis data took 12 ms
+Running init code took 315 ms
+Loading analysis data took 11 ms
 Analyze and compile ATL took 2 ms
 Reloading save slot metadata took 13 ms
-Dump and make backups took 61 ms
-Cleaning cache took 1 ms
-Making clean stores took 0 ms
-Initial gc took 79 ms
+Dump and make backups took 52 ms
+Cleaning cache took 0 ms
+Making clean stores took 1 ms
+Initial gc took 67 ms
 DPI scale factor: 2.500000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 346 ms
-Init translation took 6 ms
-Cleaning stores took 0 ms
+Creating interface object took 359 ms
+Init translation took 5 ms
+Cleaning stores took 1 ms
 Load screen analysis took 63 ms
-Analyze screens took 2 ms
-Save screen analysis took 0 ms
+Analyze screens took 3 ms
+Save screen analysis took 1 ms
 Save pyanalysis took 0 ms
 Save bytecode took 55 ms
-Running _start took 1 ms
-Interface start took 1009 ms
+Running _start took 0 ms
+Interface start took 787 ms
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 3840, 2400)
@@ -39,7 +39,3 @@ Version: '4.6.0 NVIDIA 576.83'
 Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
 Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
 Maximum texture size: 4096x4096
-Cleaning stores took 1 ms
-Load screen analysis took 51 ms
-Analyze screens took 0 ms
-Running _start took 1 ms

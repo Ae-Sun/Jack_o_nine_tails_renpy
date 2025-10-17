@@ -679,6 +679,7 @@ label Home:
             obedience_difficulty_adjustment()
             girl_index_save = girl_index
             for girl_index in all_girls_list:
+                cap_max_energy_cap()
                 all_girls_list[girl_index]["skills"]["athletics"] = all_girls_list[girl_index]["attributes"]["endurance"]
                 maxmotivation = max(all_girls_list[girl_index]["aura"]["fear"],all_girls_list[girl_index]["aura"]["devotion"],all_girls_list[girl_index]["aura"]["spoil"],all_girls_list[girl_index]["aura"]["habit"],all_girls_list[girl_index]["aura"]["awareness"],all_girls_list[girl_index]["aura"]["taming"],all_girls_list[girl_index]["arousal"])
                 slave_psy_hardness = max(all_girls_list[girl_index]["attributes"]["temperament"],all_girls_list[girl_index]["attributes"]["nature"],(5 - all_girls_list[girl_index]["attributes"]["pride"]),all_girls_list[girl_index]["attributes"]["intelligence"]) #TODO I STILL NEED TO ADD COURAGE
