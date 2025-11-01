@@ -499,6 +499,7 @@ label next_day_labellabel:
                 sleeping_effects_update()
                 new_day_energy_update()
                 spoiling_update()
+                despair_update()
             minor_update() # half disable because there's a bug that i dont know how to fix TODO - the hygiene rate is increase when going rollback 
 
         # save master pass mood

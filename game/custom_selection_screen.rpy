@@ -4,7 +4,7 @@ default mc_name_save ="rec3ks"
 default customcheck = True
 default customboxcheck = False
 default dic_mc_normal_selection_textdescription_value_index = 0
-default dic_custom_start_difficulty_selection_index_index = 1
+default overall_difficulty_level = 1
 default alltier_s = False
 default custom_points = 0
 default green_or_red = "#009900"
@@ -79,7 +79,7 @@ label Custom_Start:
         $ sparks_37                  = 999999
         $ alltier_s                  = False
     if difficult_sparks_mantain:
-        $ sparks_37 = DIC_CUSTOM_START_DIFFICULTY_SELECTION[DIC_CUSTOM_START_DIFFICULTY_SELECTION_INDEX[dic_custom_start_difficulty_selection_index_index]][1]
+        $ sparks_37 = DIC_CUSTOM_START_DIFFICULTY_SELECTION[DIC_CUSTOM_START_DIFFICULTY_SELECTION_INDEX[overall_difficulty_level]][1]
         $ difficult_sparks_mantain = False
     # creating new temporal values
     $ reputationstyle= 2
@@ -119,8 +119,8 @@ label Custom_Start:
     $ penetration_textvalue_23 = DIC_MC_ATTRIBUTE["PENETRATION"][penetration_value_23]
     $ fetishism_textvalue_24 = DIC_MC_ATTRIBUTE["FETISHISM"][fetishism_value_24]
     $ reputation_textvalue_1 = DIC_MC_ATTRIBUTE["REPUTATION"][reputation_value_1]
-    $ custom_difficulty_textvalue = DIC_CUSTOM_START_DIFFICULTY_SELECTION[DIC_CUSTOM_START_DIFFICULTY_SELECTION_INDEX[dic_custom_start_difficulty_selection_index_index]][0]
-    $ custom_points = DIC_CUSTOM_START_DIFFICULTY_SELECTION[DIC_CUSTOM_START_DIFFICULTY_SELECTION_INDEX[dic_custom_start_difficulty_selection_index_index]][2]
+    $ custom_difficulty_textvalue = DIC_CUSTOM_START_DIFFICULTY_SELECTION[DIC_CUSTOM_START_DIFFICULTY_SELECTION_INDEX[overall_difficulty_level]][0]
+    $ custom_points = DIC_CUSTOM_START_DIFFICULTY_SELECTION[DIC_CUSTOM_START_DIFFICULTY_SELECTION_INDEX[overall_difficulty_level]][2]
     $ characterOnlyNameIndex = pre_characterOnlyNameIndex % 12
     show screen points_tier_text2
     if namechange == True:
@@ -133,7 +133,7 @@ label Custom_Start:
                 mc = name
         $ namechange = False
         jump Custom_Start
-    if dic_custom_start_difficulty_selection_index_index == 0:
+    if overall_difficulty_level == 0:
         show screen s_tier_button
         hide screen points_tier_text
         if reputationstyle + reputation_value_1 == 7:
@@ -146,7 +146,7 @@ label Custom_Start:
             $ reputation_textvalue_1 = DIC_MC_ATTRIBUTE["REPUTATION"][reputation_value_1]
             $ dic_mc_normal_selection_textdescription_value = "WHITE TOWN"
             show screen custom_value_information2
-    $ custom_points = custom_points - CUSTOM_SKILL_COST_VALUE[strength_value_1] - CUSTOM_SKILL_COST_VALUE[personality_value_2] - CUSTOM_SKILL_COST_VALUE[allure_value_3] - CUSTOM_SKILL_COST_VALUE[libido_value_4] - CUSTOM_SKILL_COST_VALUE[dominance_value_5] - CUSTOM_SKILL_COST_VALUE[brand_reputation_value_6] - CUSTOM_SKILL_COST_VALUE[guild_reputation_value_7] - CUSTOM_SKILL_COST_VALUE[standard_of_living_value_8] - CUSTOM_SKILL_COST_VALUE[hygiene_value_9] - CUSTOM_SKILL_COST_VALUE[mood_value_10] - CUSTOM_SKILL_COST_VALUE[injuries_value_11] - CUSTOM_SKILL_COST_VALUE[teaching_value_12] - CUSTOM_SKILL_COST_VALUE[stewardship_value_13] - CUSTOM_SKILL_COST_VALUE[artistry_value_14] - CUSTOM_SKILL_COST_VALUE[medic_value_15] - CUSTOM_SKILL_COST_VALUE[fighter_value_16] - CUSTOM_SKILL_COST_VALUE[magic_value_17] - CUSTOM_SKILL_COST_VALUE[flagellation_value_18] - CUSTOM_SKILL_COST_VALUE[torture_value_19] - CUSTOM_SKILL_COST_VALUE[binding_value_20] - CUSTOM_SKILL_COST_VALUE[petting_value_21] - CUSTOM_SKILL_COST_VALUE[oral_sex_value_22] - CUSTOM_SKILL_COST_VALUE[penetration_value_23] - CUSTOM_SKILL_COST_VALUE[fetishism_value_24] - CUSTOM_SKILL_COST_VALUE[reputation_value_1] - int((sparks_37 - DIC_CUSTOM_START_DIFFICULTY_SELECTION[DIC_CUSTOM_START_DIFFICULTY_SELECTION_INDEX[dic_custom_start_difficulty_selection_index_index]][1])/10)
+    $ custom_points = custom_points - CUSTOM_SKILL_COST_VALUE[strength_value_1] - CUSTOM_SKILL_COST_VALUE[personality_value_2] - CUSTOM_SKILL_COST_VALUE[allure_value_3] - CUSTOM_SKILL_COST_VALUE[libido_value_4] - CUSTOM_SKILL_COST_VALUE[dominance_value_5] - CUSTOM_SKILL_COST_VALUE[brand_reputation_value_6] - CUSTOM_SKILL_COST_VALUE[guild_reputation_value_7] - CUSTOM_SKILL_COST_VALUE[standard_of_living_value_8] - CUSTOM_SKILL_COST_VALUE[hygiene_value_9] - CUSTOM_SKILL_COST_VALUE[mood_value_10] - CUSTOM_SKILL_COST_VALUE[injuries_value_11] - CUSTOM_SKILL_COST_VALUE[teaching_value_12] - CUSTOM_SKILL_COST_VALUE[stewardship_value_13] - CUSTOM_SKILL_COST_VALUE[artistry_value_14] - CUSTOM_SKILL_COST_VALUE[medic_value_15] - CUSTOM_SKILL_COST_VALUE[fighter_value_16] - CUSTOM_SKILL_COST_VALUE[magic_value_17] - CUSTOM_SKILL_COST_VALUE[flagellation_value_18] - CUSTOM_SKILL_COST_VALUE[torture_value_19] - CUSTOM_SKILL_COST_VALUE[binding_value_20] - CUSTOM_SKILL_COST_VALUE[petting_value_21] - CUSTOM_SKILL_COST_VALUE[oral_sex_value_22] - CUSTOM_SKILL_COST_VALUE[penetration_value_23] - CUSTOM_SKILL_COST_VALUE[fetishism_value_24] - CUSTOM_SKILL_COST_VALUE[reputation_value_1] - int((sparks_37 - DIC_CUSTOM_START_DIFFICULTY_SELECTION[DIC_CUSTOM_START_DIFFICULTY_SELECTION_INDEX[overall_difficulty_level]][1])/10)
     
     if custom_points < 0:
         $ green_or_red = "#CD0000"
@@ -360,7 +360,7 @@ screen custom_selection():
             hover "buttons/Minus_hover.webp"
             action (
                 SetVariable("difficult_sparks_mantain", True),
-                SetVariable("dic_custom_start_difficulty_selection_index_index", max(dic_custom_start_difficulty_selection_index_index - 1, 0)),
+                SetVariable("overall_difficulty_level", max(overall_difficulty_level - 1, 0)),
                 Jump("Custom_Start")
 )            yalign 0.5
         text custom_difficulty_textvalue:
@@ -373,7 +373,7 @@ screen custom_selection():
             hover "buttons/Plus_hover.webp"
             action (
                 SetVariable("difficult_sparks_mantain", True),
-                SetVariable("dic_custom_start_difficulty_selection_index_index", min(dic_custom_start_difficulty_selection_index_index + 1, 2)),
+                SetVariable("overall_difficulty_level", min(overall_difficulty_level + 1, 2)),
                 Jump("Custom_Start")
 )            yalign 0.5
     hbox:
@@ -401,7 +401,7 @@ screen custom_selection():
         imagebutton:
             idle "buttons/Plus.webp"
             hover "buttons/Plus_hover.webp"
-            action SetVariable("sparks_37",min(sparks_37+100,CUSTOM_SELECTION_MAX_CAP_SPARKS[dic_custom_start_difficulty_selection_index_index])), Jump("Custom_Start")
+            action SetVariable("sparks_37",min(sparks_37+100,CUSTOM_SELECTION_MAX_CAP_SPARKS[overall_difficulty_level])), Jump("Custom_Start")
             yalign 0.5
     textbutton "Start" pos (0.5, 0.945) anchor (0.5, 0.5):
         style "start_button"

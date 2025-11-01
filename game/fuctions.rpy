@@ -209,11 +209,11 @@ init python:
             elif interaction_teach_type == 'coach_teaches_slave':
                 slave_diligence += 5
         # NORMAL DIFFICULTY OVERRIDING, I'm going to do something eazier, because I believe the original code is just complicating things -rec3ks
-        if dic_custom_start_difficulty_selection_index_index == 0:
+        if overall_difficulty_level == 0:
             slave_diligence += 2
-        elif dic_custom_start_difficulty_selection_index_index == 1:
+        elif overall_difficulty_level == 1:
             slave_diligence += 1
-        elif dic_custom_start_difficulty_selection_index_index == 2:
+        elif overall_difficulty_level == 2:
             slave_diligence += 0
         # SPECIAL CASES
         if domini_dictum_active and interaction_willingness < 0 or all_girls_list[girl_index]["psy_status"] == "broken":
@@ -511,6 +511,7 @@ init python:
                 girl["mood_state"]["good_mood"][key]["accustomed_value"] = min(5, girl["mood_state"]["good_mood"][key]["accustomed_value"] + 1)
         for key in DIC_SLAVE_MOOD["bad_mood"]:
             if girl["mood_state"]["bad_mood"][key]["active"]:
+                #BAD MOOD CAN'T BE ACCOSTUMATED
                 # girl["mood_state"]["bad_mood"][key]["accustomed_value"] = max(-10, girl["mood_state"]["bad_mood"][key]["accustomed_value"] - 1)
                 # if girl["mood_state"]["bad_mood"][key]["accustomed_value"] <= 0:
                 #     girl["mood_state"]["bad_mood"][key]["accustomed"] = True
@@ -635,7 +636,34 @@ init python:
             reduce_check( "aura","spoil")
         spoiling_increase()
         spoiling_reduce()
-    
+    def despair_update():
+        girl = all_girls_list[girl_index]
+        if girl["mood"] < 0:
+            match overall_difficulty_level:
+                case 0:
+                    despair_condition = 8
+                case 1:
+                    despair_condition = 6
+                case 2:
+                    despair_condition = 4
+            despair_level = girl["attributes"]["empathy"] + girl["mood"]
+            if despair_level >= despair_condition:
+                girl["experience"]["aura"]["despair"] += girl["attributes"]["empathy"]
+                increase_check( "aura","despair")
+            else:
+                girl["experience"]["aura"]["despair"] -= girl["aura"]["devotion"]*3 + girl["aura"]["awareness"]*2 + girl["aura"]["habit"]*2 + girl["mood"]
+                reduce_check( "aura","despair")
+            if girl["aura"]["despair"] > 0:
+                girl["experience"]["attributes"]["temperament"] -= girl["aura"]["despair"]
+                girl["experience"]["attributes"]["nature"] -= girl["aura"]["despair"]
+                reduce_check( "attributes","temperament")
+                reduce_check( "attributes","nature")
+                if girl["aura"]["despair"] > (4 - girl["attributes"]["empathy"]):
+                    girl["mood_state"]["bad_mood"]["angst"]["active"] = True
+                    girl["mood_state"]["bad_mood"]["angst"]["weight"] = girl["aura"]["despair"]/2
+                    girl["mood_state"]["bad_mood"]["angst"]["duration"] = girl["aura"]["despair"]*2
+                
+                
     def diet_update():
         girl = all_girls_list[girl_index]
         def calories_check():
@@ -2208,16 +2236,16 @@ init python:
             mood_textvalue_10 = DIC_SLAVE_MOODLEVEL[11]
     def obedience_difficulty_adjustment():
         global slave_difficulty, slave_obedience_bonus, dic_overnight_rules_count_index
-        global dic_custom_start_difficulty_selection_index_index
-        if dic_custom_start_difficulty_selection_index_index == 0:
+        global overall_difficulty_level
+        if overall_difficulty_level == 0:
             slave_obedience_bonus = 4
             slave_difficulty = 2
             dic_overnight_rules_count_index = 0
-        elif dic_custom_start_difficulty_selection_index_index == 1:
+        elif overall_difficulty_level == 1:
             slave_obedience_bonus = 0
             slave_difficulty = 4
             dic_overnight_rules_count_index = 1
-        elif dic_custom_start_difficulty_selection_index_index == 2:
+        elif overall_difficulty_level == 2:
             slave_obedience_bonus = 0
             slave_difficulty = 14 - min(8, 4*all_girls_list[girl_index]["aura"]["devotion"])
             dic_overnight_rules_count_index =2
@@ -2683,6 +2711,7 @@ init python:
                 master_mood_state["good_mood"][key]["accustomed_value"] = min(5, master_mood_state["good_mood"][key]["accustomed_value"] + 1)
         for key in DIC_MASTER_MOOD["bad_mood"]:
             if master_mood_state["bad_mood"][key]["active"]:
+                # THIS CODE IS COMMENTED BECAUSE BAD MOOD CAN'T BE ACCUSTOMED
                 # master_mood_state["bad_mood"][key]["accustomed_value"] = max(-10, master_mood_state["bad_mood"][key]["accustomed_value"] - 1)
                 # if master_mood_state["bad_mood"][key]["accustomed_value"] <= 0:
                 #     master_mood_state["bad_mood"][key]["accustomed"] = True
