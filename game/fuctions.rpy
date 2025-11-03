@@ -662,7 +662,20 @@ init python:
                     girl["mood_state"]["bad_mood"]["angst"]["active"] = True
                     girl["mood_state"]["bad_mood"]["angst"]["weight"] = girl["aura"]["despair"]/2
                     girl["mood_state"]["bad_mood"]["angst"]["duration"] = girl["aura"]["despair"]*2
-                
+    def fear_update():
+        girl = all_girls_list[girl_index]
+        if (girl["experience"]["aura"]["fear"] > 0 
+            and girl["mood"] > 0):
+            #devotion bigger than fear
+            if girl["aura"]["devotion"] > girl["aura"]["fear"]:
+                girl["aura"]["fear"] = max(0, girl["aura"]["fear"] - 1)
+            #devotion smaller than fear but not zero
+            elif girl["aura"]["devotion"] > 0:
+                girl["experience"]["aura"]["fear"] -= girl["aura"]["devotion"]*3
+                reduce_check( "aura","fear")
+            #TODO NEXT TO DO
+        
+    
                 
     def diet_update():
         girl = all_girls_list[girl_index]
