@@ -542,7 +542,29 @@ define DIC_MASTER_EXCITEMENT_COLORED = {
     4: "{color=#009FEF}Ardent{/color}",
     5: "{color=#009900}Blazing{/color}"
 }
-
+define DIC_MASTER_STAT_MAPPING = {
+    "STRENGTH": ("strength_value_1", "strength_experience_value_1"),
+    "PERSONALITY": ("personality_value_2", "personality_experience_value_2"),
+    "LIBIDO": ("libido_value_4", "libido_experience_value_4"),
+    "DOMINANCE": ("dominance_value_5", "dominance_experience_value_5"),
+    "BRAND REPUTATION": ("brand_reputation_value_6", "brand_reputation_experience_value_6"),
+    "GUILD REPUTATION": ("guild_reputation_value_7", "guild_reputation_experience_value_7"),
+    "HYGIENE": ("hygiene_value_9", "hygiene_experience_value_9"),
+    "INJURIES": ("injuries_value_11", "injuries_experience_value_11"),
+    "TEACHING": ("teaching_value_12", "teaching_experience_value_12"),
+    "STEWARDSHIP": ("stewardship_value_13", "stewardship_experience_value_13"),
+    "ARTISTRY": ("artistry_value_14", "artistry_experience_value_14"),
+    "MEDIC": ("medic_value_15", "medic_experience_value_15"),
+    "FIGHTER": ("fighter_value_16", "fighter_experience_value_16"),
+    "MAGIC": ("magic_value_17", "magic_experience_value_17"),
+    "FLAGELLATION": ("flagellation_value_18", "flagellation_experience_value_18"),
+    "TORTURE": ("torture_value_19", "torture_experience_value_19"),
+    "BINDING": ("binding_value_20", "binding_experience_value_20"),
+    "PETTING": ("petting_value_21", "petting_experience_value_21"),
+    "ORAL SEX": ("oral_sex_value_22", "oral_sex_experience_value_22"),
+    "PENETRATION": ("penetration_value_23", "penetration_experience_value_23"),
+    "FETISHISM": ("fetishism_value_24", "fetishism_experience_value_24"),
+}
 ###############################################################################################################################################################################################################
 ###############################################################################################################################################################################################################
 ###############################################################################################################################################################################################################
@@ -655,6 +677,8 @@ default ring_35 =""
 default faction_36 =""
 default sparks_37 =""
 ###################################################
+default master_visage = 0
+default master_haircut = 0
 default mc ="Jack"
 default master_supermacy = 0
 default characterOnlyNameIndex = 0

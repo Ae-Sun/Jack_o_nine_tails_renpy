@@ -41,6 +41,54 @@ init python:
         if all_girls_list[girl_index]["experience"][x][a] >= ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index][x][a]] and all_girls_list[girl_index][x][a] < 5:
             all_girls_list[girl_index]["experience"][x][a] -= ATTRIBUTES_MAX_THRESHOLD[all_girls_list[girl_index][x][a]]
             all_girls_list[girl_index][x][a] = all_girls_list[girl_index][x][a] + 1
+    def master_stat_check():
+        global strength_value_1, personality_value_2, libido_value_4, dominance_value_5
+        global brand_reputation_value_6, guild_reputation_value_7, hygiene_value_9
+        global injuries_value_11, teaching_value_12, stewardship_value_13
+        global artistry_value_14, medic_value_15, fighter_value_16, magic_value_17
+        global flagellation_value_18, torture_value_19, binding_value_20, petting_value_21
+        global oral_sex_value_22, penetration_value_23, fetishism_value_24
+        
+        global strength_experience_value_1, personality_experience_value_2
+        global libido_experience_value_4, dominance_experience_value_5
+        global brand_reputation_experience_value_6, guild_reputation_experience_value_7
+        global hygiene_experience_value_9, injuries_experience_value_11
+        global teaching_experience_value_12, stewardship_experience_value_13
+        global artistry_experience_value_14, medic_experience_value_15
+        global fighter_experience_value_16, magic_experience_value_17
+        global flagellation_experience_value_18, torture_experience_value_19
+        global binding_experience_value_20, petting_experience_value_21
+        global oral_sex_experience_value_22, penetration_experience_value_23
+        global fetishism_experience_value_24
+        
+        # Revisar todas las stats
+        for stat_name in DIC_MASTER_STAT_MAPPING:
+            value_var_name = DIC_MASTER_STAT_MAPPING[stat_name][0]
+            exp_var_name = DIC_MASTER_STAT_MAPPING[stat_name][1]
+            
+            current_experience = globals()[exp_var_name]
+            
+            # Capear experiencia a 0 como mínimo
+            if current_experience < 0:
+                globals()[exp_var_name] = 0
+                current_experience = 0
+            
+            caps = DIC_MASTER_CAP[stat_name]
+            
+            # Calcular el nivel basándose en la experiencia acumulada
+            new_level = 0
+            for i in range(len(caps) - 1):
+                if current_experience >= caps[i]:
+                    new_level = i + 1
+                else:
+                    break
+            
+            # Capear al nivel máximo (5)
+            new_level = min(new_level, 5)
+            
+            # Actualizar el valor
+            globals()[value_var_name] = new_level
+        
     def msg(x):
         renpy.show_screen("msg", msg_text=x)
     def meat_evaluation():
@@ -673,10 +721,106 @@ init python:
             elif girl["aura"]["devotion"] > 0:
                 girl["experience"]["aura"]["fear"] -= girl["aura"]["devotion"]*3
                 reduce_check( "aura","fear")
-            #TODO NEXT TO DO
+            if (girl["aura"]["fear"] > girl["aura"]["devotion"]
+                and girl["aura"]["fear"] > (girl["attributes"]["nature"] - girl["attributes"]["empathy"])):
+                girl["mood_state"]["bad_mood"]["fear"]["active"] = True
+    def devotion_update():
+        girl = all_girls_list[girl_index]
+        global dominance_value_5 , personality_value_2, dic_overnight_rules_count_index
+
         
-    
+        # Growing devotion - i.e. Daily Devotion Bonus
+        devotion_app = min(
+            girl["aura"]["devotion"],
+            girl["aura"]["habit"],
+            girl["aura"]["awareness"],
+            girl["aura"]["taming"]
+        )
+        
+        if (devotion_app == girl["aura"]["devotion"] 
+            and girl["rules"]["rules_count"] >= DIC_OVERNIGHT_RULES_COUNT[dic_overnight_rules_count_index]):
+            
+            if (min(girl["obedience"], girl["mood"]) > 0 
+                and max(girl["aura"]["despair"], girl["aura"]["spoil"]) == 0 
+                and max(girl["aura"]["fear"], (5 - girl["attributes"]["pride"])) < 5):
                 
+                devotion_basis = (girl["aura"]["habit"] + girl["aura"]["awareness"] + girl["aura"]["taming"]) / 3
+                devotion_boost = min(girl["mood"], devotion_basis)
+                
+                if devotion_boost < 1:
+                    devotion_boost = 1
+                
+                girl["experience"]["aura"]["devotion"] += devotion_boost
+                increase_check("aura", "devotion")
+        
+        # Lowering devotion progress if the slave is severely mishandled
+        if (girl["aura"]["despair"] > 2 
+            or (girl["aura"]["fear"] > 4 and girl["mood"] < 0)):
+            
+            girl["experience"]["aura"]["devotion"] -= (
+                girl["attributes"]["pride"] + 
+                girl["attributes"]["nature"] + 
+                girl["attributes"]["temperament"]
+            )
+            reduce_check("aura", "devotion")
+        
+        # Love begins with true devotion
+        if (girl["aura"]["devotion"] >= 5 
+            and master_domination >= 5 
+            and master_cha >= 5):
+            
+            girl["mood_state"]["good_mood"]["slave_love"]["active"] = True
+            girl["mood_state"]["good_mood"]["slave_love"]["weight"] = 1  # O el valor que uses
+            girl["attributes"]["empathy"] += 1
+            increase_check("attributes", "empathy")  
+    def easy_difficulty_bonus_and_update():
+        global overall_difficulty_level, strength_value_1, dominance_value_5, fighter_value_16, personality_value_2
+        
+        if overall_difficulty_level == 1:  # Easy difficulty
+            devotion_basis = (strength_value_1 + dominance_value_5 + fighter_value_16 + personality_value_2) / 5
+            
+            if devotion_basis < 1:
+                devotion_basis = 1
+            
+            girl = all_girls_list[girl_index]
+            
+            girl["experience"]["aura"]["devotion"] += devotion_basis
+            girl["experience"]["aura"]["habit"] += 1
+            girl["experience"]["aura"]["awareness"] += 1
+            girl["experience"]["aura"]["taming"] += 1
+            girl["experience"]["aura"]["spoil"] -= 5
+            girl["experience"]["aura"]["despair"] -= 5
+            
+            increase_check("aura", "devotion")
+            increase_check("aura", "habit")
+            increase_check("aura", "awareness")
+            increase_check("aura", "taming")
+            reduce_check("aura", "spoil")
+            reduce_check("aura", "despair")
+    def master_stats_update():
+        global personality_value_2, personality_experience_value_2, estate_quality_modifier, standard_of_living_value_8
+        global home_hygiene_value, master_equipment, master_visage, master_haircut
+        
+        if min(estate_quality_modifier, standard_of_living_value_8) > personality_value_2 + (5 - home_hygiene_value):
+            personality_experience_value_2 += 1
+        elif personality_value_2 > min(standard_of_living_value_8 - 1, estate_quality_modifier):
+            personality_experience_value_2 -= 1
+        
+        if ("Snake Talisman" in [master_equipment['accessories1'],
+                                    master_equipment['accessories2'],
+                                    master_equipment['accessories3'],
+                                    master_equipment['accessories4'],
+                                    master_equipment['accessories5']]
+            and personality_value_2 < 3):
+            personality_experience_value_2 += 1
+        
+        if master_visage > 0:
+            master_visage -= 1
+        
+        if master_haircut > 0:
+            master_haircut -= 1
+            
+
     def diet_update():
         girl = all_girls_list[girl_index]
         def calories_check():

@@ -1,14 +1,20 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/screens.rpy", line 1123, in execute_default
-    default quick_menu = True
-Exception: store.quick_menu is being given a default a second time.
+  File "game/home.rpy", line 671, in script
+    python:
+  File "game/home.rpy", line 678, in <module>
+    master_stat_check()
+    ~~~~~~~~~~~~~~~~~^^
+  File "game/fuctions.rpy", line 69, in master_stat_check
+    current_experience = globals()[exp_var_name]
+                         ~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'allure_experience_value_3'
 
 -- Full Traceback ------------------------------------------------------------
 
 Traceback (most recent call last):
-  File "renpy/common/00start.rpy", line 195, in script
+  File "game/home.rpy", line 671, in script
     python:
   File "renpy/ast.py", line 1187, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
@@ -16,17 +22,15 @@ Traceback (most recent call last):
   File "renpy/python.py", line 1260, in py_exec_bytecode
     exec(bytecode, globals, locals)
     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/common/00start.rpy", line 196, in <module>
-    renpy.execute_default_statement(True)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
-  File "renpy/exports/statementexports.py", line 375, in execute_default_statement
-    i.execute_default(start)
-    ~~~~~~~~~~~~~~~~~^^^^^^^
-  File "game/screens.rpy", line 1123, in execute_default
-    default quick_menu = True
-Exception: store.quick_menu is being given a default a second time.
+  File "game/home.rpy", line 678, in <module>
+    master_stat_check()
+    ~~~~~~~~~~~~~~~~~^^
+  File "game/fuctions.rpy", line 69, in master_stat_check
+    current_experience = globals()[exp_var_name]
+                         ~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'allure_experience_value_3'
 
-Windows-11-10.0.26100-SP0 AMD64
+Windows-11-10.0.26200-SP0 AMD64
 Ren'Py 8.4.1.25072401
 JONT Port by Rec3ks ver. 0.0.67
-Fri Oct 17 11:44:28 2025
+Sun Nov  9 23:00:36 2025

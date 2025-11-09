@@ -492,7 +492,6 @@ label next_day_labellabel:
                 girl_already_done_update()
                 #TODO if not all_girls_list[girl_index]["assistant"]: # WIP assistent cooking code skipped
                 #TODO NEXT THING TO DO 
-
                 well_rest_bonus_update()
                 brand_effect_activation()
                 diet_update()
@@ -500,6 +499,8 @@ label next_day_labellabel:
                 new_day_energy_update()
                 spoiling_update()
                 despair_update()
+                devotion_update()
+                easy_difficulty_bonus_and_update()
             minor_update() # half disable because there's a bug that i dont know how to fix TODO - the hygiene rate is increase when going rollback 
 
         # save master pass mood
@@ -674,6 +675,7 @@ label Home:
         master_moodlet_calculation()
         master_mood_calculation()
         master_excitement_check()
+        master_stat_check()
         if len(all_girls_list) > 0: #slave calculation part 
             beauty_style_exoticism_slave_calculation()
             sex_experience_average_calculation()

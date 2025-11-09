@@ -1,33 +1,168 @@
-2025-10-17 15:19:46 UTC
-Windows-11-10.0.26100-SP0
+2025-11-09 21:54:03 UTC
+Windows-11-10.0.26200-SP0
 Ren'Py 8.4.1.25072401
 
-Early init took 193 ms
-Loading error handling took 70 ms
-Loading script took 1780 ms
-Loading save slot metadata took 32 ms
-Loading persistent took 0 ms
-Running init code took 315 ms
-Loading analysis data took 11 ms
+Early init took 168 ms
+Loading error handling took 75 ms
+Loading script took 2150 ms
+Loading save slot metadata took 57 ms
+Loading persistent took 2 ms
+ - Init at renpy/common/00images.rpy:72 took 299 ms.
+Running init code took 694 ms
+Loading analysis data took 15 ms
 Analyze and compile ATL took 2 ms
-Reloading save slot metadata took 13 ms
-Dump and make backups took 52 ms
+Reloading save slot metadata took 16 ms
+Dump and make backups took 68 ms
 Cleaning cache took 0 ms
 Making clean stores took 1 ms
-Initial gc took 67 ms
+Initial gc took 77 ms
 DPI scale factor: 2.500000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 359 ms
-Init translation took 5 ms
-Cleaning stores took 1 ms
-Load screen analysis took 63 ms
+Creating interface object took 477 ms
+Init translation took 7 ms
+Cleaning stores took 0 ms
+Load screen analysis took 73 ms
 Analyze screens took 3 ms
 Save screen analysis took 1 ms
 Save pyanalysis took 0 ms
-Save bytecode took 55 ms
+Save bytecode took 57 ms
+Running _start took 2 ms
+Interface start took 961 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/home.rpy", line 671, in script
+    python:
+  File "renpy/ast.py", line 1187, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/python.py", line 1260, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "game/home.rpy", line 678, in <module>
+    master_stat_check()
+    ~~~~~~~~~~~~~~~~~^^
+  File "game/fuctions.rpy", line 65, in master_stat_check
+    current_experience = globals()[exp_var_name]
+                         ~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'allure_experience_value_3'
+
+While running game code:
+  File "game/home.rpy", line 671, in script
+    python:
+  File "game/home.rpy", line 678, in <module>
+    master_stat_check()
+    ~~~~~~~~~~~~~~~~~^^
+  File "game/fuctions.rpy", line 65, in master_stat_check
+    current_experience = globals()[exp_var_name]
+                         ~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'allure_experience_value_3'
+Resetting cache.
+Early init took 114 ms
+Loading error handling took 49 ms
+Loading script took 506 ms
+Loading save slot metadata took 20 ms
+Loading persistent took 0 ms
+Running init code took 276 ms
+Loading analysis data took 10 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 12 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 55 ms
+Cleaning cache took 1 ms
+Making clean stores took 0 ms
+Initial gc took 130 ms
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 315 ms
+Init translation took 5 ms
+Cleaning stores took 0 ms
+Load screen analysis took 1 ms
+Analyze screens took 31 ms
+Save screen analysis took 36 ms
+Save pyanalysis took 0 ms
+Save bytecode took 5 ms
 Running _start took 0 ms
-Interface start took 787 ms
+Interface start took 808 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 3840, 2400)
+swap interval: 1 frames
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.83'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 3840, 'current_h': 2400, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(3800, 2138) drawable=(3800, 2138)
+Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/home.rpy", line 671, in script
+    python:
+  File "renpy/ast.py", line 1187, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/python.py", line 1260, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "game/home.rpy", line 678, in <module>
+    master_stat_check()
+    ~~~~~~~~~~~~~~~~~^^
+  File "game/fuctions.rpy", line 69, in master_stat_check
+    current_experience = globals()[exp_var_name]
+                         ~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'allure_experience_value_3'
+
+While running game code:
+  File "game/home.rpy", line 671, in script
+    python:
+  File "game/home.rpy", line 678, in <module>
+    master_stat_check()
+    ~~~~~~~~~~~~~~~~~^^
+  File "game/fuctions.rpy", line 69, in master_stat_check
+    current_experience = globals()[exp_var_name]
+                         ~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'allure_experience_value_3'
+Resetting cache.
+Early init took 99 ms
+Loading error handling took 31 ms
+Loading script took 248 ms
+Loading save slot metadata took 19 ms
+Loading persistent took 0 ms
+Running init code took 267 ms
+Loading analysis data took 11 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 11 ms
+Backing up script files to 'C:\\Users\\User\\AppData\\Roaming/RenPy/backups\\Jack_o_nine_tails_renpy':
+Dump and make backups took 57 ms
+Cleaning cache took 0 ms
+Making clean stores took 0 ms
+Initial gc took 120 ms
+DPI scale factor: 2.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 313 ms
+Init translation took 6 ms
+Cleaning stores took 0 ms
+Load screen analysis took 1 ms
+Analyze screens took 32 ms
+Save screen analysis took 37 ms
+Save pyanalysis took 0 ms
+Save bytecode took 1 ms
+Running _start took 1 ms
+Interface start took 774 ms
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 3840, 2400)
