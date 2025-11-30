@@ -501,7 +501,9 @@ label next_day_labellabel:
                 despair_update()
                 devotion_update()
                 easy_difficulty_bonus_and_update()
-            minor_update() # half disable because there's a bug that i dont know how to fix TODO - the hygiene rate is increase when going rollback 
+            minor_update() # half disable because there's a bug that i dont know how to fix TODO - the hygiene rate is increase when going rollback
+            master_stats_update()
+             
 
         # save master pass mood
         master_past_mood = mood_value_10

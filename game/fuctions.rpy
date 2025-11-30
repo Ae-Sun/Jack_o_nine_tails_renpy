@@ -799,7 +799,7 @@ init python:
             reduce_check("aura", "despair")
     def master_stats_update():
         global personality_value_2, personality_experience_value_2, estate_quality_modifier, standard_of_living_value_8
-        global home_hygiene_value, master_equipment, master_visage, master_haircut
+        global home_hygiene_value, master_equipment, master_visage, master_haircut, pos_show_counter
         
         if min(estate_quality_modifier, standard_of_living_value_8) > personality_value_2 + (5 - home_hygiene_value):
             personality_experience_value_2 += 1
@@ -819,6 +819,14 @@ init python:
         
         if master_haircut > 0:
             master_haircut -= 1
+        if pos_show_counter < (brand_reputation_value_6 + personality_value_2)/2 -1 - mood_value_10:
+            master_mood_state["bad_mood"]["neg_boring"]["active"] = True
+            master_mood_state["bad_mood"]["neg_boring"]["weight"] = 1
+            master_mood_state["bad_mood"]["neg_boring"]["duration"] = random.randint(3, 5)
+            master_mood_state["good_mood"]["pos_show"]["active"] = False
+            
+
+            
             
 
     def diet_update():
